@@ -1,0 +1,383 @@
+# Git and GitHub {#git-github-intro}
+
+## Version-control and Git
+
+### Version control: general concept and its usefulness  
+
+Version control is a system that helps track and manage file changes over time. It’s widely used in software development, but its applications extend to any field where file management is essential, including document editing, research, and project management. At its core, version control provides a historical record of changes. It allows users to revert to previous versions, identify when and why changes were made, and work collaboratively without the risk of overwriting each other’s work.
+
+There are two main types of version control: centralized and distributed. Centralized version control systems, such as Subversion (SVN), store files in a central repository. Users check out files, make changes, and then commit them back to the central repository. While effective, centralized systems can be vulnerable if the central server fails. Distributed version control systems, like Git, address this by allowing every user to have a complete copy of the repository on their local machine. This setup enhances collaboration and provides redundancy, as users can work offline and synchronize changes with others when connected.
+
+<figure>
+<a title="Jason Long, CC BY 3.0 &lt;https://creativecommons.org/licenses/by/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Git_icon.svg"><img width="64" alt="Git icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/64px-Git_icon.svg.png?20220905010122"></a>
+<fig-caption>Git icon</fig-caption>
+</figure>
+
+### Benefits of Version Control
+
+- *Collaboration*: Version control systems make collaboration easier and more efficient by allowing multiple users to simultaneously work on the same project. With distributed systems like Git, branches can be created for different features or tasks, and changes can later be seamlessly merged into the main project. This enables teams to work independently and minimize conflicts.
+
+- *Historical Tracking*: Version control systems keep a detailed history of all changes made to the files. This allows users to see who made changes, when, and why. If an issue arises, it’s possible to revert to a previous state without losing any data, making debugging easier.
+
+- *Backup and Redundancy*: In distributed systems, each user’s local copy is a backup of the entire project. This redundancy reduces the risk of data loss due to server failures or other issues and allows users to work offline and sync changes later.
+
+- *Version Management*: Version control systems assign unique identifiers to each change, per commit and file changed, usually called "Git hash" or “commit hash”. A Git hash a 40-character hexadecimal string, such as 2d3acf90f35989df8f262dc50beadc4ee3ae1560, derived from the contents of the commit, including its parent commit(s), timestamp, and author details [REF]. These identifiers allow users to switch between different versions of the project easily. It’s also possible to create branches for experimental features and merge them with the main project once they’re stable, facilitating smoother integration of new features.
+
+- *Enhanced Workflow*: Many version control systems support automated processes such as Continuous Integration (CI) and Continuous Deployment (CD), which streamline development and testing. These systems can automatically test changes before they are merged, ensuring higher code quality and reducing the risk of introducing bugs.
+
+Overall, version control systems are crucial tools in modern project management and development workflows. They enable collaboration, ensure data integrity, and improve productivity by providing a structured approach to managing changes in any type of project.
+
+Get a short introduction to Git by watching the official Git Documentation videos [here](https://git-scm.com/videos). 
+
+## Git terminology
+
+Here are some essential Git terms to know:
+
+::: {layout="[[2,1], [1]]"}
+
+- **Repository**: A storage space for your project files and their history. Repositories can be local (on your computer) or remote (on platforms like GitHub).
+  
+- **Initialise**: configure a specific local directory (your "working directory") as a local repository by creating all necessary files for Git to work.
+
+- **Add**/**Stage**: adds a change in the working directory to the staging area, telling Git to include updates to a particular file in the next commit. However, adding or staging doesn't really affect the repository since changes are not actually recorded until they are committed (see below).
+
+<a title="Cmglee, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Git_data_flow_simplified.svg"><img width="256" alt="Git data flow simplified" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Git_data_flow_simplified.svg/256px-Git_data_flow_simplified.svg.png?20120710215449"></a>
+
+:::
+
+- **Commit**: A snapshot of changes in the repository. Each commit has a unique ID, allowing you to track and revert changes as needed [[1](https://git-scm.com/docs/gitglossary)].
+
+- **Branch**: A separate line of development. The default branch is usually called `main` or `master`. Branches allow you to work on features independently before merging them into the main project [[2](https://www.pluralsight.com/resources/blog/cloud/git-terms-explained)].
+
+- **Merge**: The process of integrating changes from one branch into another. Typically, this involves merging a feature branch into the main branch.
+
+- **Pull**: A command that fetches changes from a remote repository and merges them into your local branch, ensuring your local work is up-to-date with the remote [[2](https://www.pluralsight.com/resources/blog/cloud/git-terms-explained)].
+
+- **Push**: Uploads your commits from the local repository to the remote repository, making your changes available to others.
+
+Understanding these terms is crucial for effective Git usage and collaboration in any project.
+
+::: {.callout-note collapse="true"}
+#### See also
+
+- @noauthor_git_nodate-1  
+- @noauthor_git_nodate-2  
+
+:::
+
+::: {.callout-caution  collapse="true"}
+## CHECK: Git software installation {.unnumbered}
+
+To verify if Git is installed on your machine, follow these steps:
+
+1. **Open Command Prompt** (Windows 10 or 11)
+   - Press `Win + R`, type `cmd`, and hit Enter.
+   - Alternatively, you can search for "Command Prompt" in the Start menu and select it.
+
+2. **Check for Git**
+   - In the Command Prompt window, type the following command and press Enter:
+     ```bash
+     git --version
+     ```
+   - If Git is installed, you will see the installed version, e.g., `git version 2.34.1`.
+   - If Git is not installed, you will receive an error message or see that the command is unrecognized. You can download the installer from [git-scm.com](https://git-scm.com) and follow the installation instructions.
+
+:::
+
+## GitHub
+
+### What is GitHub?
+
+GitHub is a cloud-based platform that enables developers to store, manage, and collaborate on code repositories. It builds on Git, a version control system, by adding collaborative features like pull requests, issue tracking, and discussions, which make it easier for teams to work together on software projects. 
+
+GitHub also offers hosting for open-source projects, allowing anyone to contribute or review code. With integrations for CI/CD, project management tools, and documentation, GitHub is a popular choice for developers worldwide to manage both personal and professional projects.
+
+<figure>
+<a title="GitHub Inc., MIT &lt;http://opensource.org/licenses/mit-license.php&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"><img width="64" alt="Octicons-mark-github" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/512px-Octicons-mark-github.svg.png?20180806170715"></a>
+<fig-caption>GitHub icon</fig-caption>
+</figure>
+
+
+::: {.callout-caution  collapse="true"}
+## CHECK: GitHub user and GitHub Desktop installation {.unnumbered}
+
+### Check GitHub Desktop Installation {.unnumbered}
+To verify that GitHub Desktop is installed:
+
+- On **Windows**: Go to the Start menu, search for "GitHub Desktop," and open the app. If it launches successfully, GitHub Desktop is installed.
+- On **macOS**: Use Spotlight Search (`Cmd + Space`), type "GitHub Desktop," and press Enter. If the app opens, it is installed.
+
+If you don’t have GitHub Desktop, you can download it from [desktop.github.com](https://desktop.github.com) and follow the installation instructions [[1](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop)][[2](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/setting-up-github-desktop)].
+
+### Verify GitHub User {.unnumbered}
+To check if you are signed in as a GitHub user:
+
+- Open **GitHub Desktop**.
+- Go to **File > Options** (on Windows) or **GitHub Desktop > Preferences** (on macOS).
+- Under the **Accounts** tab, you should see your GitHub username and avatar if you are signed in. If not, you can sign in with your GitHub credentials here.
+
+### Bookmark your GitHub user profile page {.unnumbered}
+In your Internet browser, make sure that your own GitHub user profile page is saved in Bookmarks for easy access later. 
+
+:::
+
+### GitHub terminology
+
+Understanding the core vocabulary associated with GitHub operations can help users make the most of this platform, especially for collaborative or open-source projects. Here are some key concepts to keep in mind:
+
+- **Forking**: Forking creates a personal copy of someone else’s GitHub repository in your account. It allows users to experiment with changes without affecting the original repository, and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.
+
+- **Cloning**: Cloning involves creating a local copy of a repository on your machine. By cloning a repository, users can work offline and change files that can later be pushed back to the GitHub repository. This process is essential for local development, allowing users to commit changes and manage their workflow effectively with Git commands.
+
+- **Pull Requests**: A pull request (PR) is a way to propose changes in a repository. After modifying a forked or branched version of a repository, a developer can open a pull request, which initiates a review process. This feature is central to collaboration on GitHub, allowing others to review, discuss, and approve proposed changes before they are merged into the main branch.
+
+- **Branching**: A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches are used for development or testing. Branches are typically merged into the main branch once they are finalized.
+
+- **Commits and Push**: A commit is a snapshot of changes in the repository. Every commit includes a message describing the changes, and each commit builds upon previous ones, creating a history of the repository's development. Pushing is uploading these commits to GitHub from a local repository. After a series of commits on a local branch, a user can push these changes to the corresponding branch on GitHub to keep the remote repository up-to-date.
+
+- **Gists**: A gist is a simple way to share code snippets or single files. Gists can be public or secret, and they are particularly useful for sharing configuration files or code examples. Users can fork and edit Gists, making them a lightweight collaboration and code-sharing tool.
+
+- **Issues and Discussions**: Issues are GitHub’s built-in tracking system for bugs, tasks, and feature requests. They allow users to report problems, suggest new features, and engage in conversations related to the project. Discussions provide a more open forum-style setting for broader conversation, enabling users to share ideas, ask questions, and contribute knowledge that might not directly relate to specific code changes.
+
+::: {.callout-note collapse="true"}
+#### See also
+
+- @noauthor_cloning_nodate  
+- @noauthor_github_nodate  
+- @noauthor_how_2023  
+- @noauthor_difference_2021  
+
+:::
+
+### Working with GitHub
+
+GitHub offers various workflows to manage repositories. Here are three common methods:
+
+::: {.callout-note collapse="true"}
+#### Local with GitHub Desktop {.unnumbered}
+
+For those who prefer a graphical user interface (GUI):
+
+**Cloning a Repository**
+
+- Open GitHub Desktop.  
+- Go to File > Clone Repository.  
+- Select the repository and click "Clone."
+
+**Creating a New Branch**
+
+- Click on the "Current Branch" dropdown.  
+- Select "New Branch," name it, and click "Create Branch."
+
+**Making Changes**
+
+- Edit files in your editor.
+
+**Committing Changes**
+
+- Return to GitHub Desktop.  
+- Stage changed files by ticking the boxes.  
+- Write a summary of changes and click "Commit to new-branch."
+
+**Pushing Changes**
+
+- Click "Push origin" to upload your changes.
+
+:::
+
+::: {.callout-note collapse="true"}
+#### Remote with Web Browser {.unnumbered}
+You can also work directly on GitHub.com:
+
+**Forking a Repository**
+
+- Go to the repository page. 
+- Click on the Fork button in the top-right corner of the page.  
+- Choose an owner (user or organisation), a name and description for the new fork repository. The default will always be a exact copy of the original repository. Select whether to copy only the main branch. Click "Create fork".  
+
+**Cloning a Repository**
+
+- Go to the repository page.  
+- Click the green "Code" button and continue the cloning process locally, using console commands (copying link) or with GitHub Desktop.
+
+**Creating a New Branch**
+
+- Click the branch dropdown on the main page.  
+- Type a new branch name and click "Create branch."
+
+**Making Changes**
+
+- Navigate to the file (and branch) you want to edit.  
+- Click the pencil icon to edit.  
+- Make your changes and scroll down to the "Commit changes" section.
+
+**Committing Changes**
+
+- Enter a commit message.  
+- Choose whether to "commit directly to main" or "Commit to a new branch...".
+
+**Pushing Changes**
+
+(No push is needed as changes are automatically saved to GitHub.)
+
+:::
+
+::: {.callout-note collapse="true"}
+#### Local with Console Commands (advanced users) {.unnumbered}
+
+To work with Git via the command line:
+
+**Navigate to the directory to hold the local copy**
+```bash
+cd path/to/local/directory
+```
+
+**Cloning a Repository**
+```bash
+git clone https://github.com/username/repository.git
+```
+
+**Creating a New Branch**
+```bash
+git checkout -b new-branch
+```
+
+**Making Changes**
+Edit files in your favorite text editor or IDE.
+
+**Committing Changes**
+```bash
+git add .
+git commit -m "Describe your changes"
+```
+
+**Pushing Changes**
+```bash
+git push origin new-branch
+```
+
+:::
+
+These workflows enable flexibility in how you manage your projects on GitHub.
+
+### Markdown (GitHub-flavoured)
+
+When Markdown files (.md) are placed in a GitHub repository, they will be automatically rendered within GitHub web interface by default, while the raw code can still be seen and edited in Markdown.
+
+There are some particularities about how Markdown files will be rendered in GitHub through Internet browsers. Consult [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) for knowing more about them.
+
+### How to organise repositories
+
+When structuring your repositories, following some common conventions for organizing files in subdirectories is helpful. This makes projects more readable and more accessible for others to navigate. Here are some commonly used subdirectories:
+
+When software development is a significant part:  
+* `source/` or `src/`: Contains the main source code for the project.  
+* `documentation/`, `docs/`, or `doc/`: Stores documentation, such as guides or API references.  
+* `tests/`: Includes test scripts to ensure code functionality.  
+* `bin/`: Holds executable scripts or binaries.  
+* `config/`: Contains configuration files, like YAML or JSON.  
+
+When rendering a document or a graphical user interface, such as LaTeX documents, websites, web apps, or video games:  
+* `assets`: to hold files and subdirectories with closed content and functionality files.  
+  * `assets/images/`, `assets/media/`, etc.: Holds all images or other media files generated externally (not by the repository's source code).  
+  * `assets/styles.css` or `assets/css/`: all CSS code for formatting HTML objects.  
+  * `assets/js/`: JavaScript source code enabling interactive functionalities (it would also apply for other programming languages in similar position). Source code of this kind might also be placed inside the source code folder, if present.  
+
+These folder structures are conventions and not strict rules. You can adapt or modify them based on your project's needs. 
+
+There are several community-based proposals for standards, including tools that can help automate the creation of a new project directory with conventional files. For example, for a typical Data Science project using Python see [Cookiecutter Data Science](https://github.com/drivendataorg/cookiecutter-data-science).
+
+::: {.callout-note collapse="true"}
+#### See also
+
+- @jimmy_how_2022  
+- @zestyclose-low-6403_how_2023  
+- @danijar_can_2019 
+- @suhail_structuring_2024   
+- @cioara_how_2018  
+
+:::
+
+### Conventional files
+
+  * `README.md`: Provides an overview of the project, including what it does, how to set it up, and how to contribute. A few sections examples are:  
+    * General description  
+    * Authors and/or contributors  
+    * Acknowledgements  
+    * Funding  
+    * Installation or use instructions  
+    * Contributing  
+  * `LICENSE`: Specifies the terms under which the content of the repository can be used, modified, and distributed. There are many licenses, varying in *permissiveness* and *type of content*. Generally, for projects involving both code and other kinds of content, we recommend CC0-1.0 or MIT. See [https://choosealicense.com/](https://choosealicense.com/) and [GitHub Docs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)). 
+  * `CITATION.cff`: human- and machine-readable citation information for software (and datasets). See example [here](https://citation-file-format.github.io/#:~:text=cff%20file%3F-,CITATION.,to%20correctly%20cite%20their%20software.).  
+  * `.gitignore`: Lists files and directories that Git should ignore, such as build outputs and temporary files.  
+  * `CHANGELOG.md`: This file logs a chronological record of all notable changes made to the project, often following conventions like Conventional Commits.  
+  * `references.bib`: a file containing references in BibTex format, which can be cited within the markdown files of the repository.  
+
+### Version Tags and Releases on GitHub
+
+To manage different versions of your project, GitHub allows you to create **tags** and **releases**:
+
+1. **Create a Tag**:
+   - Open your repository on GitHub and navigate to the **Releases** section.
+   - Click **Draft a new release**.
+   - In the **Tag version** field, type a version number (e.g., `v1.0.0`) to create a new tag (see more in the note below).
+   - Specify the target branch or commit for this tag.
+
+2. **Create a Release**:
+   - After tagging, enter details such as the release **title** and **description**.
+   - Optionally, add **release notes** to summarize changes or new features [[1](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)].
+   - Click **Publish release** to make it public.
+
+Releases are tied to tags and provide a stable reference for each version, making it easy for users to download specific versions of your project [[2](https://stackoverflow.com/questions/19727632/how-to-handle-releases-of-markdown-document-on-github)].
+
+::: {.callout-note collapse="true"}
+#### About versioning {.unnumbered}
+
+If unfamiliar with the logic behind versioning, consult the reference to [Semantic Versioning](https://semver.org/), which can also be found on the right of the "Create a new release" page in GitHub. Their summary states:
+
+> Given a version number MAJOR.MINOR.PATCH, increment the:  
+> 1. MAJOR version when you make incompatible API changes  
+> 2. MINOR version when you add functionality in a backward compatible manner  
+> 3. PATCH version when you make backward compatible bug fixes  
+
+However, if your repository is not about creating software products and services, we can do well by simply obeying a few general conventions:
+
+* Add a PATCH version **discretionally** when correcting bugs, typos, tuning aesthetics, etc, or *refactoring* code (explained in @sec-r-programming).
+* Add a MINOR version when expanding code functionality or adding new content (text sections, images)
+* Add a new PATCH or MINOR version every time the repository reaches a natural stable point (i.e., there are no changes planned any time soon).
+* Make sure that every new MAJOR version is released (GitHub) and published (Zenodo, see below).  
+
+:::
+
+::: {.callout-note collapse="true"}
+#### See also
+
+- @noauthor_creating_2024 
+- @noauthor_automatically_nodate  
+- @signell_how_2013  
+:::
+
+### Establishing a GitHub-Zenodo Connection
+
+To link your GitHub repository with Zenodo and enable citation via DOI:
+
+1. **Login to Zenodo**: Go to [Zenodo](https://zenodo.org) and sign in or create an account.
+2. **Authorize GitHub Access**:
+   - Click on your profile in Zenodo and select **Linked accounts**.
+   - Choose **Connect** next to GitHub.
+   - You will be redirected to GitHub to authorize Zenodo’s access. Approve the request to complete the connection.
+3. **Select Repository for DOI Generation**:
+   - In Zenodo, navigate to **GitHub** in the **Linked Accounts** section.
+   - Enable DOI generation for the desired repository. Zenodo will automatically mint DOIs for any new release you publish.
+
+This connection allows you to generate and manage DOIs for GitHub repositories, enhancing your project’s citation and research accessibility.
+
+::: {.callout-note collapse="true"}
+#### See also
+
+- @noauthor_referencing_nodate  
+- @noauthor_zenodo_nodate  
+- @noauthor_created_nodate  
+- @noauthor_module-5-open-research-software-and-open-sourcecontent_developmenttask_2md_nodate  
+- @noauthor_issue_nodate  
+:::

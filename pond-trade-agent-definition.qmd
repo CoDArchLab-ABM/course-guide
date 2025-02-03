@@ -1,0 +1,162 @@
+# Defining and initialising agents
+
+In Block B, we will finally build a version of PondTrade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.
+
+So that we can cover all the steps at a good pace, we will not be delving into the same details as in Block A. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like [Text Compare!](https://text-compare.com/)). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu. 
+
+## Refresing the specificacions of the conceptual model
+
+Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original PondTrade repository, this will cover the development steps 6 to 9.
+
+![Pond Trade conceptual model at start (first tier)](assets/images/0_conceptAtStart_firstTier.png)  
+*Pond Trade conceptual model at start (first tier)*
+
+One of the necessary first steps in implementing and ABM model is to define the types of agents we plan to have, based on our initial conceptual model. We must emphasise the *plan* part here. There is always the possibility that we will revise the conceptual model up to the point that we will require more or fewer specifications about the agents.
+
+## Agent declaration
+
+According to our conceptual model so far, we need two types of agents:
+
+- `settlements`: fixed to a coastal patch and with an "economic size" (`sizeLevel`). Create traders according to their size. 
+- `traders`: mobile agents but with a fixed base at a settlement (`base`).
+
+```NetLogo
+breed [ settlements settlement ]
+breed [ traders trader ]
+
+settlements-own [ sizeLevel ]
+
+traders-own [ base ]
+```
+
+::: {.callout-caution}
+
+Notice that we intentionally avoid naming the size of settlements as `size`, since it is a NetLogo primitive used to scale the pixel size turtles in the view screen.
+
+:::
+
+## Creating `settlements`
+
+We then write a procedure to handle the creation of all settlements, which under the PondTrade specifications, should always be placed in an empty land patch adjacent to at least one water patch (*i.e.*, coastal settlements).
+
+```NetLogo
+to create-coastal-settlements
+
+  ; consider only coastal patches
+  let coastalPatches patches with [(isLand = true) and (any? neighbors with [isLand = false])]
+
+  repeat numberOfSettlements
+  [
+    ; ask a random coastal patch without a settlement already
+    ask one-of coastalPatches with [not any? settlements-here]
+    [
+      sprout-settlements 1 ; creates one "turtle" of breed settlements
+      [
+        set sizeLevel 1 + random 10; sets a random arbitrary size level for the settlement (between 1 and 10)
+
+        ; give meaningful display proportional to size
+        set shape "circle 2"
+        set size 1 + sizeLevel / 3
+      ]
+      ; exclude this patch from the pool of coastal patches
+      set coastalPatches other coastalPatches
+    ]
+  ]
+
+end
+```
+
+We are introducing the parameter `numberOfSettlements`, which we add to the interface tab as a slider (*e.g.*, spanning from 0 to 100 by increments of 1). We randomise `sizeLevel` to get a sense of how we will visualise these agents.
+
+## Creating `traders`
+
+We implement the procedure for creating `traders`, which is a call to all settlements to generate several traders proportional to ita `sizelevel`. We give them a nice sailboat shape and place them randomly inside the pond.
+
+```NetLogo
+to create-traders-per-settlement
+
+  ask settlements
+  [
+    let thisSettlement self ; to avoid the confusion of nested agent queries
+    hatch-traders round sizeLevel ; use the sizeLevel variable as the number of traders based in the settlement
+    [
+      set base thisSettlement
+
+      ; give meaningful display related to base
+      set shape "sailboat side" ; import this shape from the library (Tools > Shape editor > import from library)
+      set color [color] of base
+      set size 3
+
+      ; place it somewhere in the pond, randomly for now (if not, the command "hatch-breed" will place them in the same patch of the settlement)
+      move-to one-of patches with [isLand = false]
+    ]
+  ]
+
+end
+```
+
+## Adapting `setup` (initialisation)
+
+Add these procedures to `setup`, after `create-map`:
+
+```NetLogo
+to setup
+
+  clear-all
+
+  ; set the random seed so we can reproduce the same experiment
+  random-seed seed
+
+  create-map
+
+  create-coastal-settlements
+
+  create-traders-per-settlement
+
+end
+```
+
+Press the Set up button and observe the outcome.
+
+Given the appearance of the view screen so far, we might foresee it becoming too populated by agent icons later. As a precaution, let us enable a simple visualisation option, to switch on and off the settlement icons:
+
+```NetLogo
+to setup
+
+  clear-all
+
+  ; set the random seed so we can reproduce the same experiment
+  random-seed seed
+
+  create-map
+
+  create-coastal-settlements
+
+  create-traders-per-settlement
+
+  update-display
+
+end
+
+to update-display
+
+  ask settlements [ set hidden? not showSettlements ]
+
+end
+```
+
+![Pond Trade step 6](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface.png)  
+*Pond Trade step 6*
+
+## Check agent variable inheritance
+
+Unless specified otherwise, all new turtles created with `create-<BREED>` or `sprout-<BREED>` are assigned a random colour. In this case, settlements were created by specific patches with `sprout-settlements`, and these created traders with `hatch-traders`. Unlike `create` and `sprout`, the `hatch` command assumes that all variables in common between the creator (`turtle`) and the created (`turtle`) are to be inherited.
+
+To check this after initialising your agents, right-click on top of a trader and select "trader \<WHO NUMBER> > inspect trader \<WHO NUMBER>".
+
+![Pond Trade step 6 - "View" right-click context menu](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_context-menu.png)
+
+You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader `base`. This time, however, write the `inspect settlement <WHO NUMBER>` directly into the console. You can now verify that the trader and settlement were assigned the exact same colour.
+
+![Pond Trade step 6 - agent detail](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_agentDetail.png)  
+*Pond Trade step 6 - agent detail*

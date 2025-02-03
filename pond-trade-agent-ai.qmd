@@ -1,0 +1,628 @@
+# Programming agent AI
+
+## Modelling behaviour
+
+We advance into implementing the behaviour rules, *i.e.* Artificial Inteligence, of each agent type, particularly `traders`. The conceptual model specifies the following: 
+
+- `settlements`: produce goods according to their size and a productivity term. They create or destroy traders according to their current size. 
+- `traders`: take some goods from their base and deliver them to another settlement, which is chosen based on the size of other settlements and the distance between these and the base settlement. Traders will then return with goods from that settlement back to the base and restart the cycle.
+
+Implementing this will take us several steps in development (up to step 9). Given the importance and potential complexity of these behaviours, let us start by implementing the most fundamental aspect: the traders' criterium for choosing a destination settlement. We have mentioned "distance", yet how should traders measure such distance in a heterogeneous terrain?
+
+## Implementing path finding
+
+In the original repository of the PondTrade model, you will notice an initial attempt to approach this aspect through a simple network implementation, using NetLogo's `links` ([PondTrade_step07_agent AI v1_links.nlogo](https://github.com/Andros-Spica/PondTrade/blob/master/PondTrade_step07_agent%20AI%20v1_links.nlogo)). This approach is similar to other ABM and network-based models applied to topics of trade and settlement interactions.
+
+However, as you may know, there can be a significant difference between a straight line measurement (Euclidean distance) and a more complex path cost calculation that uses terrain data. As the PondTrade model eventually did, we will to "complicate" our design and make a proper "least-cost route" calculation using this as a perfect excuse for learning.
+
+But how should we implement a least-cost path algorithm in NetLogo? We follow our modular philosophy, search and find an implementation of the [A* (A-star) algorithm in NetLogo User Community Models](http://ccl.northwestern.edu/netlogo/models/community/Astardemo1). We get the main fragment of the code and adapt it to our purposes, making sure we keep a clear reference to the source as a commentary header:shown. Do the same to check the information about this trader `base`. This time, however, write the `inspect settlement <WHO NUMBER>` directly into the console. You can now verify that the trader and settlement were assigned the same colour.
+
+```NetLogo
+patches-own
+[
+  isLand
+  pathCost
+  
+  ;;; path-finding related
+  parent-patch ; patch's predecessor
+  f ; the value of knowledge plus heuristic cost function f()
+  g ; the value of knowledge cost function g()
+  h ; the value of heuristic cost function h()
+]
+
+...
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; A* path finding algorithm ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; modified from Meghendra Singh's Astardemo1 model in NetLogo User Community Models
+; http://ccl.northwestern.edu/netlogo/models/community/Astardemo1
+; modified lines/fragments are marked with ";-------------------------------*"
+; In this version, patches have different movement cost.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; the actual implementation of the A* path finding algorithm
+; it takes the source and destination patches as inputs
+; and reports the optimal path if one exists between them as output
+to-report find-a-path [ source-patch destination-patch]
+
+  ; initialize all variables to default values
+  let search-done? false
+  let search-path []
+  let current-patch 0
+  let open [] ;-------------------------------*
+  let closed [] ;-------------------------------*
+
+  ;-------------------------------*
+  ask patches with [ f != 0 ]
+  [
+    set f 0
+    set h 0
+    set g 0
+  ]
+  ;-------------------------------*
+
+  ; add source patch in the open list
+  set open lput source-patch open
+
+  ; loop until we reach the destination or the open list becomes empty
+  while [ search-done? != true]
+  [
+    ifelse length open != 0
+    [
+      ; sort the patches in open list in increasing order of their f() values
+      set open sort-by [ [?1 ?2] -> [f] of ?1 < [f] of ?2 ] open
+
+      ; take the first patch in the open list
+      ; as the current patch (which is currently being explored (n))
+      ; and remove it from the open list
+      set current-patch item 0 open
+      set open remove-item 0 open
+
+      ; add the current patch to the closed list
+      set closed lput current-patch closed
+
+      ; explore the Von Neumann (left, right, top and bottom) neighbors of the current patch
+      ask current-patch
+      [
+        ; if any of the neighbors is the destination stop the search process
+        ifelse any? neighbors4 with [ (pxcor = [ pxcor ] of destination-patch) and (pycor = [pycor] of destination-patch)] ;-------------------------------*
+        [
+          set search-done? true
+        ]
+        [
+          ; the neighbors should not already explored patches (part of the closed list)
+          ask neighbors4 with [ (not member? self closed) and (self != parent-patch) ] ;-------------------------------*
+          [
+            ; the neighbors to be explored should also not be the source or
+            ; destination patches or already a part of the open list (unexplored patches list)
+            if not member? self open and self != source-patch and self != destination-patch
+            [
+              ;set pcolor 45 ;-------------------------------*
+
+              ; add the eligible patch to the open list
+              set open lput self open
+
+              ; update the path finding variables of the eligible patch
+              set parent-patch current-patch
+              set g [g] of parent-patch + pathCost ;-------------------------------*
+              set h distance destination-patch
+              set f (g + h)
+            ]
+          ]
+        ]
+;        if self != source-patch ;-------------------------------*
+;        [
+;          set pcolor 35
+;        ]
+      ]
+    ]
+    [
+      ; if a path is not found (search is incomplete) and the open list is exhausted
+      ; display a user message and report an empty search path list.
+      user-message( "A path from the source to the destination does not exist." )
+      report []
+    ]
+  ]
+
+  ; if a path is found (search completed) add the current patch
+  ; (node adjacent to the destination) to the search path.
+  set search-path lput current-patch search-path
+
+  ; trace the search path from the current patch
+  ; all the way to the source patch using the parent patch
+  ; variable which was set during the search for every patch that was explored
+  let temp first search-path
+  while [ temp != source-patch ]
+  [
+;    ask temp ;-------------------------------*
+;    [
+;      set pcolor 85
+;    ]
+    set search-path lput [parent-patch] of temp search-path
+    set temp [parent-patch] of temp
+  ]
+
+  ; add the destination patch to the front of the search path
+  set search-path fput destination-patch search-path
+
+  ; reverse the search path so that it starts from a patch adjacent to the
+  ; source patch and ends at the destination patch
+  set search-path reverse search-path
+
+  ; report the search path
+  report search-path
+end
+```
+
+Because our model assigns different path costs for each patch (*i.e.*, land or water), we must create a new procedure that assigns these costs and add a call to it just after the other steps in `create-map`:
+
+```NetLogo
+to create-map
+
+  ...
+
+  assign-path-cost
+
+  paint-patches
+
+end
+
+...
+
+to assign-path-cost
+
+  ask patches
+  [
+    ifelse (isLand = false)
+    [ set pathCost 1 ] ; arbitrary unit for now
+    [ set pathCost relativePathCostInLand ] ; defined by parameter in relation to the cost of path in water (i.e., 1)
+  ]
+
+end
+```
+
+We are forced then to introduce another parameter, `relativePathCostInLand`, which specifies how much the movement on land costs in relation to the movement on the water. Add a slider in the interface (from 0 to 100, by 0.01, default value at 50).
+
+Given the special circumstance of traders arriving and leaving settlements, let us introduce a differential value for `pathCost` in patches with settlements. For this we should modify `create-coastal-settlements` and introduce the parameter `relativePathCostInPort` (from 0 to 100, by 0.01, default value at 10):
+
+```NetLogo
+to create-coastal-settlements
+
+  ; consider only coastal patches
+  let coastalPatches patches with [(isLand = true) and (any? neighbors with [isLand = false])]
+
+  repeat numberOfSettlements
+  [
+    ; ask a random coastal patch without a settlement already
+    ask one-of coastalPatches with [not any? settlements-here]
+    [
+      sprout-settlements 1 ; creates one "turtle" of breed settlements
+      [
+        set sizeLevel 1 + random 10 ; sets a random arbitrary size level for the settlement (between 1 and 10)
+
+        ; give meaningful display proportional to size
+        set shape "circle 2"
+        set size 1 + sizeLevel / 3
+      ]
+      ; replace the land path cost with the port pathCost
+      set pathCost relativePathCostInPort
+      ; exclude this patch from the pool of coastal patches
+      set coastalPatches other coastalPatches
+    ]
+  ]
+
+end
+```
+
+Notice that `relativePathCostInPort` will generally not affect A* results since routes will always have two patches with this `pathCost`. However, it does matter because routes will more likely avoid going through a third settlement if a path through water is available.
+
+## Testing the algorithm
+
+You can now experiment with the A* algorithm by running `setup`as it is, and then `find-a-path` between two patches of your choosing. To observe how the algorithm works, you can "uncomment" the lines, including code about colouring patches within the algorithm code. Then, reduce the simulation speed in the interface and rerun the procedure.
+
+|  |  |  |  |
+| --- | --- | --- | --- |
+| <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process0.png" width="100"> | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process1.png" width="100"> | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process2.png" width="100"> | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process3.png" width="100"> |
+
+Notice how the large difference in path cost between land and water (x50) makes A* avoid drawing a route through land, practically until all adjacent water patches are explored.
+
+## Adapting model schedule
+
+Now that we have confirmed the code we just introduced let us implement everything we will need to call A* and keep track of all routes between settlements. Given that A* takes time to compute, we should make everything possible to avoid repeating the calculation of routes.
+
+```NetLogo
+globals [ routes ]
+
+...
+
+to setup
+
+  reset-timer
+  clear-all
+
+  ; set the random seed so we can reproduce the same experiment
+  random-seed seed
+
+  create-map
+
+  create-coastal-settlements
+
+  set-routes
+
+  create-traders-per-settlement
+
+  update-display
+
+  output-print (word "Set up took " timer " seconds.")
+
+end
+
+...
+
+to set-routes
+
+  set routes [] ; initialize/reset the routes as an empty list
+
+  let settlementsWithoutRoutes settlements ; helper variable to keep track of which settlement already searched for routes
+
+  ask settlements
+  [
+    let thisSettlement self
+
+    ask other settlementsWithoutRoutes
+    [
+      let optimalRoute find-a-path ([patch-here] of thisSettlement) ([patch-here] of self) ; find the optimal route to this settlement
+      set routes lput optimalRoute routes ; add the optimal route to the end of the routes list
+
+      ; paint route patches in shades of red depending on route frequency
+      foreach optimalRoute
+      [ ?1 ->
+        ask ?1
+        [
+          ifelse (pcolor = 106 or pcolor = 54) ; if its the first route crossing the patch
+          [
+            set pcolor 11
+          ]
+          [
+            set pcolor min (list (pcolor + 1) (19)) ; sets a maximum at 19 (the brightest)
+          ]
+        ]
+      ]
+    ]
+
+    set settlementsWithoutRoutes other settlementsWithoutRoutes
+
+  ]
+
+end
+```
+
+Running the code as it is will generate the maximum number of routes given the settlements present (*e.g.*, if `numberOfSettlements = 10`, it will be 45 or 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1). We store each route as a `list` of `patches`, and all routes as a `list` of routes (`routes`). These will be globally accessible by all traders in our model.
+
+Notice that it takes a considerable time to calculate all possible routes, and the number of settlements increases this time exponentially. At this point, we should be aware of how to stop NetLogo while still running a long command. Go to Tools > Halt. This might not work if NetLogo interface is unresponsive. Then the only options are to wait or quit or force-quit NetLogo.
+
+## Decision making
+
+Having the calculation of routes solved, we now must use them to inform the decision of traders. Let us create a procedure to be called by traders named `choose-destination`, for which we will need to implement a few "helper" procedures:
+
+```NetLogo
+traders-own [ base route destination direction lastPosition ]
+
+...
+
+to choose-destination ; ego = trader
+
+  let thisTrader self
+
+  ; get routes connecting the base settlement
+  let routesFromBase get-routes-from-settlement [base] of thisTrader
+
+  ; order these routes by benefit/cost ratio
+  set routesFromBase sort-by [ [?1 ?2] -> benefit-cost-of-route ?1 > benefit-cost-of-route ?2 ] routesFromBase
+
+  ; print the options available
+;  foreach routesFromBase
+;  [
+;    print "==============================================================="
+;    print "route between:"
+;    print [who] of get-origin-and-destination ?
+;    print "has the benefit-cost ratio of:"
+;    print benefit-cost-of-route ?
+;  ]
+;  print "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x"
+
+  ; select the one with higher benefit/cost ratio
+  set route first routesFromBase
+
+  ; mark the most effective route
+  foreach route
+  [ ?1 ->
+    ask ?1 [ set pcolor yellow ]
+  ]
+
+  ; get the settlement of destination
+  set destination one-of (get-origin-and-destination route) with [who != [who] of ([base] of thisTrader)]
+
+end
+
+...
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Get and set routes (helper 'to-report' procedures) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to-report get-route [ settlement1 settlement2 ] ; accepts two settlements and returns a route
+
+  ; get routes connecting settlement1
+  let routesFromSettlement1 filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = settlement1) or
+    ([one-of settlements-here] of last ?1 = settlement1)
+  ] routes
+
+  ; get the route connecting settlement2 from the previous list
+  let routeFromSettlement1ToSettlement2 filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = settlement2) or
+    ([one-of settlements-here] of last ?1 = settlement2)
+  ] routesFromSettlement1
+
+  report first routeFromSettlement1ToSettlement2
+
+end
+
+to-report get-routes-from-settlement [ aSettlement ] ; accepts a settlement and return a list of routes
+
+  report filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = aSettlement) or
+    ([one-of settlements-here] of last ?1 = aSettlement)
+  ] routes
+
+end
+
+to-report get-origin-and-destination [ aRoute ] ; accepts a route and returns a turtle-set with two settlements
+
+  report (turtle-set ([ one-of settlements-here ] of first aRoute) ([one-of settlements-here ] of last aRoute))
+
+end
+
+to-report benefit-cost-of-route [ aRoute ] ; accepts a route and returns a number (the benefit/cost ratio of the route)
+
+  let cost 0
+
+  foreach aRoute ; for every patch in the given route
+  [ ?1 ->
+    set cost cost + [pathCost] of ?1
+  ]
+
+  let originAndDestination get-origin-and-destination aRoute
+  let benefit 0
+  ask originAndDestination [ set benefit benefit + sizeLevel ] ; the benefit is the sum of the sizeLevel of the two settlements
+
+  report benefit / cost
+
+end
+```
+
+Notice that `get-route` is only helpful for debugging and querying the information in `routes`.
+
+To inform the traders' decisions, we specify a very simple calculation of the potential gain of a route (sum of sizeLevel of origin and destination) and calculate a ratio between the benefit and cost of routes. Traders will then compare these ratios for all possible routes from its base settlement and choose the one with the highest value.
+
+## Movement
+
+Once a destination is decided, traders must move towards it and then, once there, start the return trip. We implement this behaviour assuming that movement must go through each patch center in the route and that traders move at a maximum speed of `1 / [pathCost] of patch-here`, meaning they will be delayed in proportion to the local value of `pathCost`. 
+
+```NetLogo
+to move-to-destination ; ego = trader
+
+  ; update lastPosition if in a patch center
+  if ((xcor = [pxcor] of patch-here) and (ycor = [pycor] of patch-here))
+  [
+    set lastPosition patch-here
+  ]
+  ; find where in the route list is the trader
+  let currentPosition position lastPosition route
+
+  ; set direction if in a settlement
+  ifelse (currentPosition = 0) ; in the first extreme of the route list
+  [
+    set direction 1 ; move in the route list towards larger index numbers
+  ]
+  [
+    if (currentPosition = (length route - 1)) ; in the last extreme of the route list
+    [
+      set direction -1 ; move in the route list towards smaller index numbers
+    ]
+  ]
+  ; else the trader is in route to either the base or the destination
+
+  ; move through the route following direction
+  let targetPatch item (currentPosition + direction) route
+  ;move-to targetPatch ; constant travel time (1 patch per tick)
+  facexy ([pxcor] of targetPatch) ([pycor] of targetPatch)
+  forward min (
+    list
+    (1 / [pathCost] of patch-here) ; the maximum distance in a tick in the current patch
+    (distancexy ([pxcor] of targetPatch) ([pycor] of targetPatch)) ; the distance to the target patch
+    )
+
+end
+```
+
+We wrap up this development step by finally implementing our preliminary model cycle, ordering the behaviour of traders within the conventional `go` procedure:
+
+```NetLogo
+to go
+
+  ask traders
+  [
+    if (patch-here = [patch-here] of base) ; update the destination whenever in the base settlement
+    [
+      choose-destination
+    ]
+    move-to-destination
+  ]
+
+end
+```
+
+As we specified in our conceptual model, traders will choose a destination whenever they are at their base and move towards their current destination.
+
+## Enhancing visualisation
+
+To help visualise routes, implement the following version of `update-display`, call it at the end of `setup`, and add two switches, `showRoutes` and `showActiveRoutes` to the interface:
+
+```NetLogo
+to setup
+
+  clear-all
+  reset-ticks
+
+  ; set the random seed so we can reproduce the same experiment
+  random-seed seed
+
+  create-map
+
+  create-coastal-settlements
+
+  set-routes
+
+  create-traders-per-settlement
+
+  update-display
+
+end
+
+...
+
+to update-display
+
+  paint-routes
+  paint-active-routes
+
+  ; scale the size of settlements according to their dynamic free-scaled sizeLevel
+  let maxSettlementSize max [sizeLevel] of settlements
+
+  ask settlements
+  [
+    set hidden? not showSettlements
+    set size 1 + (sizeLevel / maxSettlementSize) * 9
+  ]
+
+end
+
+to paint-routes
+
+  ; resets route patches to the terrain color
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1 [ paint-terrain ]
+    ]
+  ]
+
+  ; paint route patches in shades of red depending on route frequency
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1
+      [
+        if (showRoutes)
+        [
+          ifelse (pcolor < 11 or pcolor > 19) ; if its the first route crossing the patch
+          [
+            set pcolor 11
+          ]
+          [
+            set pcolor min (list (pcolor + 1) (19)) ; sets a maximum at 19 (the brightest)
+          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to paint-active-routes
+
+  ask traders
+  [
+    foreach route
+    [ ?1 ->
+      ask ?1
+      [
+        ifelse (showActiveRoutes)
+        [
+          set pcolor yellow
+        ]
+        [
+          if (not showRoutes) ; if not displaying all routes
+          [
+            ; resets to the patch terrain color
+            paint-terrain
+          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+```
+
+## Testing agent behaviour
+
+As a temporary "hack", replace the code `create-traders-per-settlement` with the following:
+
+```NetLogo
+to create-traders-per-settlement
+
+  ; For now, we create only one trader to better control its behaviour
+  ask one-of settlements
+  [
+    let thisSettlement self
+
+    hatch-traders 1
+    [
+      set base thisSettlement
+
+      set shape "sailboat side" ; import this shape from the library (Tools > Shape editor > import from library)
+      set color [color] of base
+      set size 3
+    ]
+  ]
+
+; the previous code for creating traders can be commented out
+; by adding ';' at the beggining of each line, or
+; by selecting several lines and either selecting 'Edit > Comment' or pressing 'ctrl + ;'.
+;  ask settlements
+;  [
+;    let thisSettlement self ; to avoid the confusion of nested agent queries
+;    hatch-traders round sizeLevel ; use the sizeLevel variable as the number of traders based in the settlement
+;    [
+;      set base thisSettlement
+;
+;      ; give meaningful display related to base
+;      set shape "sailboat side" ; import this shape from the library (Tools > Shape editor > import from library)
+;      set color [color] of base
+;      set size 3
+;
+;      ; place it somewhere in the pond, randomly for now (if not, the command "hatch-breed" will place them in the same patch of the settlement)
+;      move-to one-of patches with [isLand = false]
+;    ]
+;  ]
+
+end
+```
+
+Reduce `numberOfSettlements`, vary `seed`, and run `setup` again. Run `go` repeatedly to observe the behaviour of the loner trader.
+
+![Pond Trade step 7](assets/screenshots/BlockB_PondTrade_step07_agent AI-v2_AStar-interface.png)  
+*Pond Trade step 7*

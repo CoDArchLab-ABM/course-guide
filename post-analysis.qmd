@@ -1,0 +1,20 @@
+# Analysis of simulation results {#post-analysis}
+
+## Single run visualisation and analysis
+
+
+## Parameter exploration visualisations
+
+
+## Statistical inference on simulation results
+
+
+## Use of machine learning for sensitivity analysis
+
+
+## Use of machine learning for parameter callibration
+
+
+## Use of machine learning for model selection
+
+Carrignon, S., Brughmans, T., & Romanowska, I. (2020). Tableware trade in the Roman East: Exploring cultural and economic transmission with agent-based modelling and approximate Bayesian computation. PLOS ONE, 15(11), e0240414. <a href="https://doi.org/10.1371/journal.pone.0240414">10.1371/journal.pone.0240414</a>

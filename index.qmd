@@ -1,0 +1,87 @@
+# Course overview {.unnumbered}
+
+```{r, echo=FALSE}
+library(kableExtra)
+```
+
+```{r, echo=FALSE}
+dates <- as.Date(
+  c("2025.02.03", 
+    "2025.02.04", 
+    "2025.02.05", 
+    "2025.02.06", 
+    "2025.02.07"),
+  "%Y.%m.%d")
+
+dates_with_weekdays <- sort(rep(paste(dates, weekdays(dates), sep = " - "), 2))
+
+day_time_blocks <- rep(c("morning", "afternoon"), length(dates))
+
+dates_with_day_and_time <- paste(dates_with_weekdays, day_time_blocks)
+
+session_data <- cbind.data.frame(
+  Session = day_time_blocks,
+  Block = dates_with_weekdays,
+  Topic = c("Introduction",
+            "Conceptual modelling",
+            "Model repository with Git and GitHub",
+            "Knowing the software: NetLogo",
+            "Pond Trade",
+            "free practice",
+            "Messara Trade",
+            "free practice",
+            "Experimentation and analysis",
+            "free practice")
+)
+session_data$Block <- factor(session_data$Block, unique(session_data$Block))
+```
+
+[Agent-based modelling for archaeologists. From concept to application and publication (14436.0398)](https://vvz.ruhr-uni-bochum.de/campus/all/event.asp?gguid=0xE2AAF8DAB10F4972B8854C6EDC49A4DD&from=&tabID=1&tguid=0x5980070F0C7A42899012ACFE7660AC4B&objgguid=NEW&lang=de)
+
+**Time slot**: Week 2-5 February, Monday to Friday
+
+Monday 3, c. 9:30 - 17h
+Tuesday 4 - Friday 7, c. 10:00 - 17h
+Every day we will have pauses and an hour for lunch (c.
+12h).
+
+**Place**: Küpperstift, Kerpener Str., 30, 2nd floor (125/02) [CoDArchLab](https://archaeologie.phil-fak.uni-koeln.de/institut/fachgebiete/archaeoinformatik/codarchlab)
+
+**Course instructor**: Andreas Angourakis
+
+## **Course summary**
+
+This course introduces the basic concepts and workflow of simulation and agent-based modelling (ABM), as used in archaeology.
+
+More specifically, we will cover the prototyping of a conceptual model into a working simulation model, the 'refactoring' of code (cleaning, restructuring, optimizing), the re-use of published model parts and algorithms, the exploration of alternative designs, and the use of geographic, climatic and archaeological data to frame the model in a specific case study.
+
+This tutorial uses [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible well-established modelling platform known for its relatively low-level entry requirements in terms of programming experience. It has been particularly used in social sciences and ecology for research and educational purposes.
+
+The course offers implementation examples of path cost analysis, hydrological and land productivity modelling, network dynamics, and cultural evolution. Additionally, we learn the basics of Git and GitHub for version control, which will help us organize, maintain, and share models and related materials.
+
+## **Course schedule**
+
+```{r, echo=FALSE}
+schedule_table <- knitr::kable(session_data[,c("Session", "Topic")], row.names = TRUE)
+schedule_table <- kableExtra::pack_rows(schedule_table, index = table(session_data$Block), background = "#a9a9a9")
+schedule_table
+```
+
+## **Evaluation**
+
+Attendance and completion of two milestones, individually or as a group:
+
+1. A conceptual model representing a system of interest, corresponding to an original case study or a selected published model;
+
+2. An implemented agent-based simulation model based on the conceptual model. 
+
+## Acknowledgements
+
+The conception of the course structure, as well as the short summaries, exercises, and images shown in each chapter, greatly benefited from [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) used as companion writer and programmer. As such, we own greatly to the current richness of reference information freely available on Internet.
+
+The models and services used are:
+
+- [ChatGPT](https://chatgpt.com/) (GPT-4o) by OpenAI for brainstorming, text and code writing suggestions, collection and articulation of references.  
+- [Google NotebookLM](https://notebooklm.google/) for summary of references and text writing suggestions.
+- [WebChatGPT](https://tools.zmo.ai/webchatgpt), a free browser extension that enhances ChatGPT by providing Internet access directly within the chat interface, used to aid Internet search.
+- [Leonardo.ai](https://app.leonardo.ai/) (user tokens) for generating purely aesthetic visual assets.

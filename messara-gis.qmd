@@ -1,0 +1,299 @@
+# Importing spatial data: elevation and site data {#messara-gis}
+
+To build the Messara Trade model, we will take several advanced steps. Through a sequence of module development, we will reach a final version that extends the Pond Trade model to a 'grounded' production process and contextual data that refers specifically to our case study.
+
+We advance with a minor revision to our previous conceptual model:
+
+![Pond Trade conceptual model at step 14 (second tier)](assets/images/0_conceptAtStep14_secondTier.png)  
+*Pond Trade conceptual model at step 14 (second tier)*
+
+## The `gis`extension
+
+The NetLogo default installation includes an extension to support GIS that can be used by adding the following to the first section of your script:
+
+```NetLogo
+extensions [ gis ]
+```
+
+This extension allows you to perform a variety of GIS operations and to connect patch and turtle behaviour to data expressed in GIS files, supporting both vector and raster. The description of its contents can be found here: https://ccl.northwestern.edu/netlogo/docs/gis.html
+
+We will only reference a few aspects of GIS in NetLogo. You will find useful examples in NetLogo's Models Library (*e.g.*, Sample Models > Code Examples > Extensions Examples > gis > GIS General Examples).
+
+## Loading GIS data
+
+We start by loading all GIS data into separate NetLogo variables. To know about the formats this extension accepts, see here: https://ccl.northwestern.edu/netlogo/docs/gis.html#gis:load-dataset. 
+
+```NetLogo
+globals
+[
+  ;;; GIS data holders
+  sitesData_EMIII-MMIA
+  sitesData_MMIB
+  elevationData
+  riversData
+]
+
+...
+
+to load-gis
+
+  ; Load all of our datasets
+  set sitesData_EMIII-MMIA gis:load-dataset "data/Cretedata/EMIII_MMIAsites.shp"
+  set sitesData_MMIB gis:load-dataset "data/Cretedata/MMIBsites.shp"
+
+  set elevationData gis:load-dataset "data/Cretedata/dem15.asc"
+  set riversData gis:load-dataset "data/Cretedata/rivers.shp"
+
+  ; Set the world envelope to the union of all of our dataset's envelopes
+  gis:set-world-envelope (gis:envelope-of elevationData)
+
+end
+```
+
+The files in "data/Cretedata/" were distributed during our in-person session, courtesy of Dr Eleftheria Paliou (University of Cologne). Site coordinates were randomly shifted in QGIS to be published online after the session.
+
+We are using:
+
+- Two shape files containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see [Minoan Chronology](https://en.wikipedia.org/wiki/Minoan_chronology)):  
+  - `EMIII_MMIAsites.shp`: sites dating from the Prepalatial Period, specifically the Early Minoan III (EMIII) and Middle Minoan IA (MMIA) Periods
+  - `MMIBsites.shp`: sites dating from the Protopalatial Period, specifically the Middle Minoan IB (MMIB) Period
+- A DEM raster file: `dem15.asc` (elevation of the terrain with a 15m resolution)
+- A third shape file, `rivers.shp`, contains line data with the rivers within the region.
+
+## Readjusting `world` settings
+
+The second step is ensuring that our world and world view in NetLogo fits the data we want to feed into them. In this case, we need to reduce the DEM resolution to handle all patch processes in a reasonable computation time.
+
+```Netlogo
+globals
+[
+  width
+  height
+
+  ;;; GIS data holders
+  sitesData_EMIII-MMIA
+  sitesData_MMIB
+  elevationData
+  riversData
+]
+
+to set-world-dimensions
+
+  ;;; for better performance, we take a multiple fraction of the dimensions of elevationData,
+  ;;; so that patches will get average values or more regular sets of pixels
+
+  let patchXpixelScale 0.1 ;;; keep it less than 0.25
+  let pixelExtentMargin 50
+
+  set width ceiling ((pixelExtentMargin + gis:width-of elevationData) * patchXpixelScale)
+  set height ceiling ((pixelExtentMargin + gis:height-of elevationData) * patchXpixelScale)
+
+  resize-world 0 width 0 height
+
+  set-patch-size 3
+
+end
+```
+
+## Applying GIS data to patches
+
+Next, we effectively apply the data to patches using the gis extension primitives:
+
+```NetLogo
+globals
+[
+  patchesWithElevationData
+  noElevationDataTag
+  maxElevation
+
+  width
+  height
+
+  ;;; GIS data holders
+  sitesData_EMIII-MMIA
+  sitesData_MMIB
+  elevationData
+  riversData
+]
+
+breed [ sites site ]
+
+sites-own
+[
+  name
+  siteType
+  period
+]
+
+patches-own
+[
+  elevation
+  isRiver
+]
+
+to setup-patches
+
+  setup-elevation
+
+  setup-rivers
+
+end
+
+to setup-elevation
+
+  gis:apply-raster elevationData elevation
+
+  set patchesWithElevationData patches with [(elevation <= 0) or (elevation >= 0)]
+  
+  ;;; replace NaN values added by the gis extension with noElevationDataTag, so it does not generate problems after
+  set noElevationDataTag -9999
+  ask patches with [not ((elevation <= 0) or (elevation >= 0))] [ set elevation noElevationDataTag ]
+
+  set maxElevation max [elevation] of patchesWithElevationData
+
+end
+
+to setup-rivers
+
+  ask patchesWithElevationData
+  [
+    set isRiver gis:intersects? riversData self
+  ]
+
+end
+
+to setup-sites
+
+  ;;; gis extension will re-use a site, if it was already created in a position,
+  ;;; and modify any values we already set.
+  ;;; In order to avoid this, we cannot use gis:create-turtles-from-points
+  
+  let datasetPeriod "EMIII-MMIA"
+  foreach gis:feature-list-of sitesData_EMIII-MMIA 
+  [
+    vectorFeature ->
+    
+    create-site-from-feature vectorFeature datasetPeriod
+  ]
+  
+  set datasetPeriod "MMIB"
+  foreach gis:feature-list-of sitesData_MMIB 
+  [
+    vectorFeature ->
+    
+    create-site-from-feature vectorFeature datasetPeriod
+  ]
+
+end
+
+to create-site-from-feature [ vectorFeature datasetPeriod ]
+  
+  let coordTuple gis:location-of (first (first (gis:vertex-lists-of vectorFeature)))
+  let featureName gis:property-value vectorFeature "NAME"
+  let featureType gis:property-value vectorFeature "TYPE"
+
+  let long item 0 coordTuple
+  let lat item 1 coordTuple
+
+  create-sites 1
+  [ 
+    setxy long lat
+    set name featureName
+    set siteType featureType
+    set period datasetPeriod
+    
+    set shape "dot"
+  ]
+  
+end
+```
+
+Notice that the gis extension generates NaN values on those patches outside the raster data. NetLogo does not handle NaNs, which can become a problem later. To solve this, we create a patch-set variable to filter patches with elevation data (`patchesWithElevationData`) and use a constant `noElevationDataTag` with an impossible elevation value to mark those outside the heightmap. From now on, we need to be careful not to use the `patches` primitive, which will call both kinds of patches.
+
+## Higher level procedure: `create-map`
+
+We wrap up everything in a procedure `create-map`:
+
+```NetLogo
+to create-map
+
+  load-gis  ;; load in the GIS data
+
+  set-world-dimensions ;; set world dimensions according to GIS data
+
+  setup-patches ;; use GIS data to set patch variables
+
+  setup-sites ;; create site agents with properties from sitesData
+
+end
+```
+
+## Visualisation
+
+Finally, we need to add some extra code in order to display our data: 
+
+```NetLogo
+to update-display
+
+  display-rivers
+
+  display-sites
+
+  paint-elevation
+
+end
+
+to display-sites
+
+  ;;; sites dated to EMIII-MMIA: yellow
+  gis:set-drawing-color yellow
+  gis:draw sitesData_EMIII-MMIA 2
+
+  ;;; sites dated to MMIB: red
+  gis:set-drawing-color red
+  gis:draw sitesData_MMIB 2
+
+  ;;; sites dated to both EMIII-MMIA and MMIB: orange
+
+end
+
+to display-rivers
+
+  gis:set-drawing-color blue
+  gis:draw riversData 1
+
+end
+
+to paint-elevation
+
+  ;;; paint patches according to elevation
+  ;;; NOTE: we must filter out those patches outside the DEM
+  ask patchesWithElevationData
+  [
+    let elevationGradient 100 + (155 * (elevation / maxElevation))
+    set pcolor rgb (elevationGradient - 100) elevationGradient 0
+  ]
+
+end
+```
+
+## Set up procedure and testing
+
+We then we place both in a higher-level procedure, using the conventional `setup` (and adding its button):
+
+```NetLogo
+to setup
+
+  clear-all
+
+  create-map
+
+  update-display
+
+end
+```
+
+![Screenshot of the 'load-gis-data' module](assets/screenshots/BlockC_module1_load-gis-data interface.png)  
+*Screenshot of the 'load-gis-data' module*
+
+See the fully implemented version of this module: `BlockC_module1_load-gis-data.nlogo`.

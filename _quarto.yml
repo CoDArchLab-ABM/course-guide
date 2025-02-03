@@ -1,0 +1,82 @@
+project:
+  type: book
+  output-dir: docs
+
+execute:
+  freeze: auto
+  
+book:
+  title: "Agent-based modelling for archaeologists. From concept to application and publication"
+  author: # vgl. https://quarto.org/docs/journals/authors.html
+  - name: Andreas Angourakis
+    orcid: 0000-0002-9946-8142
+    email: Andreas.Angourakis@ruhr-uni-bochum.de
+    affiliation: 
+      - name: Institut für Archäologische Wissenschaften, Ruhr University Bochum
+        url: https://www.ruhr-uni-bochum.de/archaeologie
+      - name: Institute of Archaeology, University of Cologne
+        url: https://archaeologie.phil-fak.uni-koeln.de/
+    attributes:
+      corresponding: true
+      equal-contributor: true
+  date: today
+  date-format: DD MMMM, YYYY
+  search: true
+  repo-url: https://github.com/CoDArchLab-ABM/course-guide/
+  repo-actions: [edit]
+  site-url: https://codarchlab-abm.github.io/course-guide/
+  page-navigation: true
+  cover-image: assets/images/AlbedoBase_XL_Within_a_bustling_cityscape_of_Cologne_Germany_a_2.jpg
+  sidebar:
+    collapse-level: 1
+  chapters:
+    - index.qmd
+    - part: "Introduction"
+      chapters: 
+        - intro-abm.qmd
+        - intro-abm-arch.qmd
+        - intro-abm-method.qmd
+    - part: "Conceptual modelling"
+      chapters:
+        - concept-intro-pop-dyn.qmd
+        - concept-pond-trade.qmd
+    - part: "Model repository with Git and GitHub"
+      chapters:
+        - git-github-intro.qmd
+        - git-github-practice.qmd
+    - part: "Knowing the software: NetLogo"
+      chapters:
+        - netlogo-intro.qmd
+        - netlogo-language-basics.qmd
+        - netlogo-practice.qmd
+    - part: "Pond Trade"
+      chapters:
+        - pond-trade-agent-definition.qmd
+        - pond-trade-agent-ai.qmd
+        - pond-trade-mechanims.qmd
+        - pond-trade-cultural-vectors.qmd
+        - pond-trade-stats.qmd
+    - part: "Messara Trade"
+      chapters:
+        - messara-gis.qmd
+        - messara-water-flow.qmd
+        - messara-weather.qmd
+        - messara-soil-water.qmd
+        - messara-routes.qmd
+        - messara-pond-trade.qmd
+    - part: "After the storm"
+      chapters:
+        - post-experiments.qmd
+        - post-analysis.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+comments:
+  hypothesis: true
+  
+format:
+  html:
+    theme: lumen
+    fig-format: svg
+    css: assets/styles.css

@@ -1,0 +1,122 @@
+# ABM in archaeology {#intro-abm-arch}
+
+ABM has conceptual roots and applications in other fields relatively early, hand-to-hand with the history of computer science. However, this methodology was formed as it is today and introduced more broadly into social sciences only in the 1990s.
+
+ABM has been exceptionally well accepted by archaeologists, given its pre-adaptation towards distributed and stochastic processes. Most phenomena of interest for archaeology can be represented with ABM, to the satisfaction of archaeologists. Other modelling and simulation approaches (*e.g.*, Dynamic Systems) were and still are used but often encounter great resistance due to their higher abstraction and simplification.  
+
+## A transdisciplinar approach
+
+ABM flexibility is also very much appreciated by researchers involved in archaeology, given that it is a discipline both historically and thematically positioned in-between other disciplines in the overlap of the so-called natural and artificial worlds. An ABM model can handle multiple layers of entities and relationships, allowing it to integrate entire models under the same hood.
+
+The same advantage was exploited by disciplines such as ecology, environmental science, and geography. The approach used by these disciplines has been the main motor driving the development of models in archaeology for more than two decades. Some authors have named this *trans*disciplinary framework as the research of socio-ecological systems (SES), which has been defined in close relationship with the more general *complexity science* approach. One of the first cases of public success of ABM in archaeology, the model that become known as *Artificial Anasazi* model [@Axtell2002], emerged from this approach and as a collaboration between researchers orbiting the [Santa Fe Institute](https://www.santafe.edu/).
+
+Despite its positive influence in pushing the field forward, the SES approach has also limited the diversity of scope and theory used with ABM in archaeology. ABM under SES aligns particularly well, for example, with research questions related to landscape and environmental archaeology and formulated from a perspective biased towards processualism. This tutorial is no exception. To the potential "new-blood" in this field, I recommend always keeping the mind open to all questions and theoretical frameworks, particularly those you are already invested in.
+
+ABM in archaeology has been a prolific field, despite being still enclosed in a small community. Here, we will only cover a small part of the field, specifically from my perspective. For a broader introduction to the multitude of contributions in this field, I refer to any of the many introductions included in References. I recommend the recent textbook by Romanowska, Wren & Crabtree [-@romanowska_agent-based_2021], which also includes many practical exercises in NetLogo, using a programming style and philosophy significantly different from this tutorial.
+
+## Domains of application and examples
+
+Here is a non-exhaustive list of examples of simulation and ABM in archaeology organised by topics:
+
+- **Physico-chemical dynamics**
+  - *Artefact production*: operational chain (*chaîne opératóire*), authorship and style, material transformations during manufacturing [@sorensen_fireproxies_2018], use and deposition [@gravel-miguel_agent-based_2018].  
+  - *Site formation*: distribution of artefacts and structures [@gravel-miguel_agent-based_2018], preservation, strata formation and taphonomy [@davies_modelling_2016], sample bias.
+
+- **Ecological dynamics**
+  - *Climate patterns*: seasonality [@angourakis_weather_2022], regional variations, climate change [@bocquet-appel_multi-agent_2014].  
+  - *Soils*: erosion and sediment accumulation [@kabora_how_2020; @robinson_modelling_2018; @ullah_water_2019].
+  - *Hydrological dynamics*: water availability, run-off, irrigation [@altaweel_salinization_2012; @altaweel_assessing_2012]. 
+  - *Vegetation*: plant domestication [@angourakis_human-plant_2022], crop dynamics [@angourakis_weather_2022; @baum_slash_2016; @boogers_sagascape_2022; @Christiansen2006a; @Joyce2019; @robinson_modelling_2018], deforestation and fires [@boogers_sagascape_2022; @nikulina_hunter-gatherer_2024; @snitker_evaluating_2021; @snitker_identifying_2018].  
+  - *Non-human animal behaviour*: dynamics of wild populations under human influence [@morrison_agent-based_2017], domestic animal population dynamics [@gunther_animal_2021], herd behaviour, animal husbandry, transhumance [@gunther_animal_2021] (See also [the Dairy-versus-Transhumance model](https://github.com/Andros-Spica/dairy-vs-transhumance), my own work, still under development).  
+  
+- **Anthropological dynamics**
+  - *Individuals*: pedestrian dynamics [@lake_use_2001], foraging [@brantingham_measuring_2006; @Oestmo2016], metabolism, kinship [@Rogers2013a], health and population dynamics (mating and marriage, reproduction, mortality) [@verhagen_modelling_2019], cognition (memory, rationality and learning) [@mokom_modeling_2015; @premo_cultural_2016; @Sousa2019; @acerbi_individual-based_2020], individual-to-individual cooperation and competition [@graham_behaviour_2009; @Sousa2019; @white_subsistence_2013].
+  - *Groups*: household organization and microeconomics [@Christiansen2006a; @Joyce2019], emergence of alliances and organisations [@Cioffi-Revilla2015a; @white_subsistence_2013], group-to-group cooperation and competition [@angourakis_land_2014; @angourakis_food_2015; @Angourakis2017a; @Cioffi-Revilla2015a; @Rogers2013a], group mobility [@Rogers2013a; @Santos2015a], logistics and military tactics [@RubioCampillo2012; @rubio-campillo_development_2014; @verhagen_modelling_2019], prestige, reward and punishment, social learning, cultural transmission and norm emergence [@gower-winter_self-adapting_2022; @mokom_modeling_2015; @premo_cultural_2016; @Drost2018; @acerbi_individual-based_2020]. 
+  - *Settlements*: population dynamics [@verhagen_modelling_2019; @crema_simulation_2014], resource exploitation [@boogers_sagascape_2022], trade [@carrignon_tableware_2020; @chliaoutakis_agent-based_2020; @lawall_netlogo_2018; @ortega_towards_2014; @sakahira_generating_2021], migration, macro-economics, urbanisation, cultural evolution [@carrignon_tableware_2020; @gower-winter_self-adapting_2022; @lake_cultural_2012; @mokom_modeling_2015; @sakahira_generating_2021], settlement patterns and land use [@altaweel_evaluating_2015; @chliaoutakis_agent-based_2020; @angourakis_land_2014; @Angourakis2017a; @boogers_sagascape_2022; @Joyce2019; @robinson_modelling_2018; @Rogers2013a; @snitker_identifying_2018; @ullah_water_2019], politogenesis [@Cioffi-Revilla2015a; @Rogers2013a; @turchin_historical_2018], catastrophic collapse or abandonment [@kohler_emergence_2012; @mcanany_leaving_2015; ].
+  - *Regional to global*: cooperation and competition between territorial states [@turchin_historical_2018], trade routes [@chliaoutakis_agent-based_2020; @lawall_netlogo_2018; @ortega_towards_2014], human species dispersal [@callegari_agent-based_2013] and genetic and cultural diffusions [@bocquet-appel_multi-agent_2014; @kovacevic_simulating_2015; @mokom_modeling_2015]
+
+## Examples
+
+* "Artificial Anasazi" [@Axtell2002; @Janssen2009]
+
+![Artificial Anasazi model in NetLogo](assets/images/ArtificialAnasazi.PNG)
+
+The Artificial Anasazi model was developed to explore population dynamics in Long House Valley, Arizona. The model represents a population of households, with a simplified food economy based on maize cultivation. By simulating this system, researchers were able to test the hypothesis that climate change was the main cause of the abandonment of the valley.
+
+* "HOMINIDS" [@Griffith2010]
+
+::: {.grid}
+::: {.g-col-6}
+![Griffin et al. 2010, Fig. 1](assets/images/griffin-et-al-2010-fig1.PNG)
+:::
+::: {.g-col-6}
+![Griffin et al. 2010, Fig. 6b](assets/images/griffin-et-al-2010-fig6b.PNG)
+:::
+:::
+
+* "MedLanD" [@Barton2012a]
+
+::: {.grid}
+::: {.g-col-6}			
+![Barton et al. 2012, Fig. 2](assets/images/Barton-et-al-2012-fig2.PNG)
+:::
+::: {.g-col-6}
+![Barton et al. 2012, Fig. 12](assets/images/Barton-et-al-2012-fig12bc.PNG)
+:::
+:::
+
+* "HouseholdsWorld" [@Rogers2012b]
+
+::: {.grid}
+::: {.g-col-6}			
+![Rogers et al. 2012, Fig. 2](assets/images/Rogers-et-al-2012-fig1.PNG)
+:::
+::: {.g-col-6}
+![Rogers et al. 2012, Fig. 12](assets/images/Rogers-et-al-2012-fig5.PNG)
+:::
+:::
+
+* MayaSim [@Heckbert2013]
+
+::: {.grid}
+::: {.g-col-6}			
+<img src="https://jasss.soc.surrey.ac.uk/16/4/11/Figure1.png" style="width: 400px;">
+:::
+::: {.g-col-6}
+<img src="https://jasss.soc.surrey.ac.uk/16/4/11/Figure3.png" style="width: 400px;">
+:::
+:::
+						
+							
+* "Indus Village" [@angourakis_two-rainsindus-village-model_2021; @angourakis_how_2020; @angourakis_weather_2022]
+
+::: {.grid}
+::: {.g-col-6}			
+<img src="https://pub.mdpi-res.com/quaternary/quaternary-05-00025/article_deploy/html/images/quaternary-05-00025-ag.png?1651888892" style="width: 400px; border: none; box-shadow: none; margin-bottom: 0%;" alt="Angourakis et al. 2022, graphical abstract"/>
+:::
+::: {.g-col-6}
+<img src="https://github.com/Andros-Spica/indus-village-model/blob/master/diagrams/RoadMapSoFar_2022-06.png?raw=true" style="width: 400px; border: none; box-shadow: none; margin-bottom: 0%;" alt="Andros-Spica/diagrams/RoadMapSoFar_2022-06.png"/>
+
+:::
+:::
+repository: <a href="https://github.com/Andros-Spica/indus-village-model" target="_blank">https://github.com/Andros-Spica/indus-village-model</a>
+
+## Unfinished bussiness: representation and validation
+
+Despite the relative success and proliferation of agent-based modelling in archaeology, there are still an unsolved debate over the epistemological nature of simulation models as explanatory.
+
+To be explanatory, models must connect to a process as a phenomena, as it is defined to the best of our knowledge (**representation**), and the evidence we raise and select as relevant (**validation**). Agent-based models in archaeology are sometimes dismissed by both archaeologists and non-simulation modellers as faring too far from the realm of archaeological evidence. Why should we dare (or even bother) to simulate past processes that cannot be observed through material remains?
+
+It is unfortunately too easy to ignore the difference between descriptive and explicative models and leave archaeological interpretations imposed on descriptive models unchecked by formalisation. When a descriptive mathematical model is used, a good validation result (fit given a evidence set) does not guarantee that the interpretative model represents the process to which it is attributed. More importantly, good validation can be confused with a good representation.
+
+For example, imagine we, as archaeologists, are convinced that humans were able to feed on a certain kind of rock at some remote point in the past. When applying the most robust methods in cartography and inferential statistics on the evidence of human presence and findings of such rocks, we might find that a positive correlation confirms our belief. However, the representation link between our interpretation and the reality of the past process is weak. Our belief would only hold while impermeable to formalisation and a larger knowledge background. Alternatively, perhaps, we would quickly realise the metabolic constraints of stone digestion.
+
+Modelling is about structuring your thoughts about the world, and mathematical modelling is doing that with extra discipline. Explanatory and particularly simulation modelling, however, is doing that specifically for reconstructing processes, stories, or, in other words, the mechanisms or webs of causality that we presume to be behind the semi-static reality we observe (e.g., archaeological materials).
+
+Non-simulation computational modelling in archaeological research
+<img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/representation-and-validation/representation-and-validation_notSimulation.png?raw=true" alt="types of math models" style="width: 650px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"/>
+
+Simulation modelling in archaeological research
+<img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/representation-and-validation/representation-and-validation.png?raw=true" alt="types of math models" class="fragment" style="width: 650px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"/>
+						
+We will practice the distinction between **phenomena**, **evidence** and **mechanism** when designing our own conceptual model.
