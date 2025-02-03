@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Agent-based modelling for archaeologists. From concept to application and publication - 19&nbsp; Integrating a submodel</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./messara-routes.html" rel="next">
+<link href="./messara-weather.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-gis.html">Messara Trade</a></li><li class="breadcrumb-item"><a href="./messara-soil-water.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Agent-based modelling for archaeologists. From concept to application and publication</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CoDArchLab-ABM/course-guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ABM in archaeology</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to do ABM</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Conceptual modelling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-intro-pop-dyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conceptual design or modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-pond-trade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual design or modeling: the Pond Trade model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Model repository with Git and GitHub</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-github-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-github-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Creating your model repository</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Knowing the software: NetLogo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to NetLogo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-language-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">NetLogo language basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Pond Trade</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-definition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Defining and initialising agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Programming agent AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-mechanims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Implementing mechanisms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-cultural-vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Implementing complex agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Implementing output statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Messara Trade</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-gis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Importing spatial data: elevation and site data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-water-flow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-weather.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-soil-water.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-routes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Scaling up route calculation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-pond-trade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">The MesaraTrade model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+ <span class="menu-text">After the storm</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./post-experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Experimental design in simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./post-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Analysis of simulation results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#module-variables" id="toc-module-variables" class="nav-link active" data-scroll-target="#module-variables"><span class="header-section-number">19.1</span> Module variables</a></li>
+  <li><a href="#module-parameters" id="toc-module-parameters" class="nav-link" data-scroll-target="#module-parameters"><span class="header-section-number">19.2</span> Module parameters</a></li>
+  <li><a href="#connector-variables-and-procedures" id="toc-connector-variables-and-procedures" class="nav-link" data-scroll-target="#connector-variables-and-procedures"><span class="header-section-number">19.3</span> Connector variables and procedures</a></li>
+  <li><a href="#implementing-the-main-algorithm" id="toc-implementing-the-main-algorithm" class="nav-link" data-scroll-target="#implementing-the-main-algorithm"><span class="header-section-number">19.4</span> Implementing the main algorithm</a></li>
+  <li><a href="#merging-with-spatial-data-module" id="toc-merging-with-spatial-data-module" class="nav-link" data-scroll-target="#merging-with-spatial-data-module"><span class="header-section-number">19.5</span> Merging with spatial data module</a></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">19.6</span> Visualisation</a></li>
+  <li><a href="#combining-with-flow-accumulation-algorithm" id="toc-combining-with-flow-accumulation-algorithm" class="nav-link" data-scroll-target="#combining-with-flow-accumulation-algorithm"><span class="header-section-number">19.7</span> Combining with flow accumulation algorithm</a></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><span class="header-section-number">19.8</span> Test</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-soil-water.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-gis.html">Messara Trade</a></li><li class="breadcrumb-item"><a href="./messara-soil-water.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="messara-soil-water" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Let us build the next module, <code>ARID</code>, over what we just implemented in the <code>load-weather-data</code> module.</p>
+<section id="module-variables" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="module-variables"><span class="header-section-number">19.1</span> Module variables</h2>
+<p>Besides the weather variables we have on our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al.&nbsp;2019).</p>
+<pre class="netlogo"><code>globals
+[
+  ...
+
+  ;;; default constants
+
+  MUF ; Water Uptake coefficient (mm^3.mm^-3)
+  WP ; Water content at wilting Point (cm^3.cm^-3)
+
+  ;;;; ETr
+  albedo_min
+  albedo_max
+
+  ;;;; Soil Water Balance model global parameters
+  WHC_min
+  WHC_max
+  DC_min
+  DC_max
+  z_min
+  z_max
+  CN_min
+  CN_max
+
+  ...
+]
+
+...
+
+patches-own
+[
+  ...
+
+  ;;;; soil
+  DC ; Drainage coefficient (mm^3 mm^-3).
+  z ; root zone depth (mm).
+  CN ; Runoff curve number.
+  FC ; Water content at field capacity (cm^3.cm^-3)
+  WHC ; Water Holding Capacity of the soil (cm^3.cm^-3). Typical range from 0.05 to 0.25
+
+  ARID ; ARID index after Woli et al. 2012, ranging form 0 (no water shortage) to 1 (extreme water shortage)
+  WAT ; Water content in the soil profile for the rooting depth (mm)
+  WATp ; Volumetric Soil Water content (fraction : mm.mm-1). calculated as WAT/z
+
+  ;;;; cover
+  albedo ; canopy reflection or albedo
+  netSolarRadiation ; net solar radiation discount canopy reflection or albedo
+  ETr ; reference evapotranspiration
+]</code></pre>
+</section>
+<section id="module-parameters" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="module-parameters"><span class="header-section-number">19.2</span> Module parameters</h2>
+<p>We will use a randomised configuration of most of these patch variables using hyperparameters giving the envelope of variation. The Indus Village eventually escapes this initial solution by calculating these variables based on various datasets and submodels. We will, however, use it for the sake of simplicity. As Wallach et al.&nbsp;(2019), we will use two global variables as constants (<code>MUF</code> and <code>WP</code>) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (<code>parameters-check</code> and <code>parameters-to-default</code>).</p>
+<pre class="netlogo"><code>to set-constants
+
+  ; "constants" are variables that will not be explored as parameters
+  ; and may be used during a simulation.
+
+  ; MUF : Water Uptake coefficient (mm^3 mm^-3)
+  set MUF 0.096
+
+  ; WP : Water content at wilting Point (cm^3.cm^-3)
+  set WP 0.06
+
+end
+
+to set-parameters
+
+  ; set random seed
+  random-seed seed
+
+  ;;; load weather input data from file
+  load-weather-input-data-table
+
+  parameters-check
+
+  ;;; weather parameters are left with default values, but effectively ignored given that input weather is used.
+
+  set albedo_min 1E-6 + random-float 0.3
+  set albedo_max albedo_min + random-float 0.3
+
+  ;;; Soil Water Balance model
+  set WHC_min random-float 0.1
+  set WHC_max WHC_min + random-float 0.1
+  set DC_min 1E-6 + random-float 0.45
+  set DC_max DC_min + random-float 0.45
+  set z_min random-float 1000
+  set z_max z_min + random-float 1000
+  set CN_min random-float 40
+  set CN_max CN_min + random-float 50
+
+end
+
+to parameters-check
+
+  ;;; check if values were reset to 0 (NetLogo does that from time to time...!)
+  ;;; and set default values (assuming they are not 0)
+
+  if (par_albedo_min = 0)                                        [ set par_albedo_min                              0.1 ]
+  if (par_albedo_max = 0)                                        [ set par_albedo_max                              0.5 ]
+
+  if (water-holding-capacity_min = 0)                            [ set water-holding-capacity_min                    0.05 ]
+  if (water-holding-capacity_max = 0)                            [ set water-holding-capacity_max                    0.25 ]
+  if (drainage-coefficient_min = 0)                              [ set drainage-coefficient_min                      0.3 ]
+  if (drainage-coefficient_max = 0)                              [ set drainage-coefficient_max                      0.7 ]
+  if (root-zone-depth_min = 0)                                   [ set root-zone-depth_min                         200 ]
+  if (root-zone-depth_max = 0)                                   [ set root-zone-depth_max                        2000 ]
+  if (runoff-curve_min = 0)                                      [ set runoff-curve_min                             30 ]
+  if (runoff-curve_max = 0)                                      [ set runoff-curve_max                             80 ]
+
+end
+
+to parameters-to-default
+
+  ;;; set parameters to a default value
+  set par_albedo_min                                            0.1
+  set par_albedo_max                                            0.5
+
+  set water-holding-capacity_min                                0.05
+  set water-holding-capacity_max                                0.25
+  set drainage-coefficient_min                                  0.3
+  set drainage-coefficient_max                                  0.7
+  set root-zone-depth_min                                     200
+  set root-zone-depth_max                                    2000
+  set runoff-curve_min                                         30
+  set runoff-curve_max                                         80
+
+end
+
+...
+
+to setup-soil-water-properties
+
+  ask patchesWithElevationData
+  [
+    set albedo albedo_min + random-float (albedo_max - albedo_min)
+
+    ; Water Holding Capacity of the soil (cm^3 cm^-3).
+    set WHC WHC_min + random-float (WHC_max - WHC_min)
+    ; DC :  Drainage coefficient (mm^3 mm^-3)
+    set DC DC_min + random-float (DC_max - DC_min)
+    ; z : root zone depth (mm)
+    set z z_min + random (z_max - z_min)
+    ; CN : Runoff curve number
+    set CN CN_min + random (CN_max - CN_max)
+
+    ; FC : Water content at field capacity (cm^3.cm^-3)
+    set FC WP + WHC
+    ; WAT0 : Initial Water content (mm)
+    set WAT z * FC
+  ]
+
+end</code></pre>
+</section>
+<section id="connector-variables-and-procedures" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="connector-variables-and-procedures"><span class="header-section-number">19.3</span> Connector variables and procedures</h2>
+<p>In our previous implementation of <code>set-day-weather-from-input-data</code>, we must now add a new final step, where <code>netSolarRadiation</code> and <code>ETr</code> (reference evapotranspiration) are set for each patch. We also need to implement a procedure to estimate <code>ETr</code> based on an FAO standard (Allen et al.&nbsp;1998).</p>
+<blockquote class="blockquote">
+<p>Allen, Richard G., Luis S. Pereira, Dirk Raes, and Martin Smith. 1998. Crop Evapotranspiration - FAO Irrigation and Drainage Paper No.&nbsp;56. Rome: FAO. http://www.fao.org/3/X0490E/x0490e00.htm.</p>
+</blockquote>
+<pre class="netlogo"><code>
+to set-day-weather-from-input-data [ dayOfYear year ]
+
+  ...
+
+  ask patchesWithElevationData
+  [
+    set netSolarRadiation (1 - albedo) * solarRadiation
+    set ETr get-ETr
+  ]
+
+end
+
+...
+
+to-report get-ETr
+
+  ;;; useful references:
+  ;;; Suleiman A A and Hoogenboom G 2007
+  ;;; Comparison of Priestley-Taylor and FAO-56 Penman-Monteith for Daily Reference Evapotranspiration Estimation in Georgia
+  ;;; J. Irrig. Drain. Eng. 133 175–82 Online: http://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%282007%29133%3A2%28175%29
+  ;;; also: Jia et al. 2013 - doi:10.4172/2168-9768.1000112
+  ;;; Allen, R. G., Pereira, L. A., Raes, D., and Smith, M. 1998.
+  ;;; “Crop evapotranspiration.”FAO irrigation and  drainage paper 56, FAO, Rome.
+  ;;; also: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; constants found in: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; see also r package: Evapotranspiration (consult source code)
+
+  let windSpeed 2 ; as recommended by: http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+
+  ;;; estimation of saturated vapour pressure (e_s) and actual vapour pressure (e_a)
+  let e_s (get-vapour-pressure T_max + get-vapour-pressure T_min) / 2
+  let e_a get-vapour-pressure T_min
+  ; ... in absence of dew point temperature, as recommended by
+  ; http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+  ; however, possibly min temp &gt; dew temp under arid conditions
+
+  ;;; slope of  the  vapor  pressure-temperature  curve (kPa ºC−1)
+  let DELTA 4098 * (get-vapour-pressure T) / (T + 237.3) ^ 2
+
+  ;;; latent heat of vaporisation = 2.45 MJ.kg^-1
+  let lambda 2.45
+
+  ;;; specific heat at constant pressure, 1.013 10-3 [MJ kg-1 °C-1]
+  let c_p 1.013 * 10 ^ -3
+  ;;; ratio molecular weight of water vapour/dry air
+  let epsilon 0.622
+  ;;; atmospheric pressure (kPa)
+  let P 101.3 * ((293 - 0.0065 * elevation) / 293) ^ 5.26
+  ;;; psychometric constant (kPa ºC−1)
+  let gamma c_p * P / (epsilon * lambda)
+
+  ;;; Penman-Monteith equation from: fao.org/3/X0490E/x0490e0 ; and from: weap21.org/WebHelp/Mabia_Alg ETRef.htm
+
+  ; 900 and 0.34 for the grass reference; 1600 and 0.38 for the alfalfa reference
+  let C_n 900
+  let C_d 0.34
+
+  let ETr_temp (0.408 * DELTA * netSolarRadiation + gamma * (C_n / (T + 273)) * windSpeed * (e_s - e_a)) / (DELTA + gamma * (1 + C_d * windSpeed))
+
+  report ETr_temp
+
+end
+
+to-report get-vapour-pressure [ temp ]
+
+  report (0.6108 * exp(17.27 * temp / (temp + 237.3)))
+
+end</code></pre>
+</section>
+<section id="implementing-the-main-algorithm" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="implementing-the-main-algorithm"><span class="header-section-number">19.4</span> Implementing the main algorithm</h2>
+<p>Next, we add <code>update-WAT</code>, which contains the calculations that finally outputs ARID.</p>
+<pre class="netlogo"><code>to update-WAT
+
+  ; Soil Water Balance model
+  ; Using the approach of:
+  ; 'Working with dynamic crop models: Methods, tools, and examples for agriculture and enviromnent'
+  ;  Daniel Wallach, David Makowski, James W. Jones, François Brun (2006, 2014, 2019)
+  ;  Model description in p. 24-28, R code example in p. 138-144.
+  ;  see also https://github.com/cran/ZeBook/blob/master/R/watbal.model.r
+  ; Some additional info about run off at: https://engineering.purdue.edu/mapserve/LTHIA7/documentation/scs.htm
+  ; and at: https://en.wikipedia.org/wiki/Runoff_curve_number
+
+  ; Maximum abstraction (mm; for run off)
+  let S 25400 / CN - 254
+  ; Initial Abstraction (mm; for run off)
+  let IA 0.2 * S
+  ; WATfc : Maximum Water content at field capacity (mm)
+  let WATfc FC * z
+  ; WATwp : Water content at wilting Point (mm)
+  let WATwp WP * z
+
+  ; Change in Water Before Drainage (Precipitation - Runoff)
+  let RO 0
+  if (RAIN &gt; IA)
+  [ set RO ((RAIN - 0.2 * S) ^ 2) / (RAIN + 0.8 * S) ]
+  ; Calculating the amount of deep drainage
+  let DR 0
+  if (WAT + RAIN - RO &gt; WATfc)
+  [ set DR DC * (WAT + RAIN - RO - WATfc) ]
+
+  ; Calculate rate of change of state variable WAT
+  ; Compute maximum water uptake by plant roots on a day, RWUM
+  let RWUM MUF * (WAT + RAIN - RO - DR - WATwp)
+  ; Calculate the amount of water lost through transpiration (TR)
+  let TR min (list RWUM ETr)
+
+  let dWAT RAIN - RO - DR - TR
+  set WAT WAT + dWAT
+
+  set WATp WAT / z
+
+  set ARID 0
+  if (TR &lt; ETr)
+  [ set ARID 1 - TR / ETr ]
+
+end</code></pre>
+</section>
+<section id="merging-with-spatial-data-module" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="merging-with-spatial-data-module"><span class="header-section-number">19.5</span> Merging with spatial data module</h2>
+<p>Until this point, we are still lacking our spatial data. Let us implement the necessary code to be able to import the processed data we output from the <code>flows</code> module.</p>
+<pre class="netlogo"><code>extensions [ csv gis ]
+
+...
+
+breed [ sites site ]
+
+breed [ flowHolders flowHolder ]
+
+...
+
+globals
+[
+  patchesWithElevationData
+  noElevationDataTag
+  maxElevation
+
+  width
+  height
+
+  ;;; GIS data holders
+  sitesData_EMIII-MMIA
+  sitesData_MMIB
+  elevationData
+  riversData
+
+  ...
+]
+
+sites-own
+[
+  name
+  siteType
+  period
+]
+
+patches-own
+[
+  elevation ; elevation above sea level [m]
+
+  flow_direction        ; the numeric code for the (main) direction of flow or
+                        ; drainage within the land unit.
+                        ; Following Jenson &amp; Domingue (1988) convention:
+                        ; NW = 64,   N = 128,        NE = 1,
+                        ; W = 32,     &lt;CENTRE&gt;,   E = 2,
+                        ; SW = 16,     S = 8,          SE = 4
+
+  flow_receive          ; Boolean variable stating whether or not the land unit receives
+                        ; the flow of a neighbour.
+
+  flow_accumulation     ; the amount of flow units accumulated in the land unit.
+                        ; A Flow unit is the volume of runoff water flowing from one land unit
+                        ; to another (assumed constant and without losses).
+  flow_accumulationState ; the state of the land unit regarding the calculation of flow
+                        ; accumulation (auxiliary variable).
+
+  isRiver
+
+  ...
+]
+
+...
+
+
+to import-map-with-flows
+  
+  import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"
+  
+  ;;; reduce patch size in pixels
+  set-patch-size 3
+  
+end
+
+...
+</code></pre>
+</section>
+<section id="visualisation" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">19.6</span> Visualisation</h2>
+<p>Before advancing, we can implement a display procedure expanding it also to be able to paint patches according to the new patch variables, using the “chooser” parameter <code>display-mode</code>:</p>
+<pre class="netlogo"><code>
+to refresh-view
+  
+  if (display-mode = "elevation")
+  [
+    ask patchesWithElevationData [ display-elevation ]
+  ]
+
+  if (display-mode = "albedo")
+  [
+    ask patchesWithElevationData [ display-albedo ]
+  ]
+
+  if (display-mode = "ETr")
+  [
+    let maxETr max [ETr] of patchesWithElevationData
+    ask patchesWithElevationData [ display-ETr maxETr ]
+  ]
+
+  if (display-mode = "drainage coefficient (DC)")
+  [
+    ask patchesWithElevationData [ display-DC ]
+  ]
+
+  if (display-mode = "root zone depth (z)")
+  [
+    let maxZ max [z] of patchesWithElevationData
+    ask patchesWithElevationData [ display-z maxZ ]
+  ]
+
+  if (display-mode = "runoff curve number (CN)")
+  [
+    let maxCN max [CN] of patchesWithElevationData
+    ask patchesWithElevationData [ display-CN maxCN ]
+  ]
+
+  if (display-mode = "water content at field capacity (FC)")
+  [
+    let maxFC max [FC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-FC maxFC ]
+  ]
+
+  if (display-mode = "water holding Capacity (WHC)")
+  [
+    let maxWHC max [WHC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WHC maxWHC ]
+  ]
+
+  if (display-mode = "soil water content (WATp)")
+  [
+    let maxWATp max [WATp] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WATp maxWATp ]
+  ]
+
+  if (display-mode = "ARID coefficient")
+  [
+    ask patchesWithElevationData [ display-arid ]
+  ]
+
+end
+
+to display-elevation
+
+  let elevationGradient 100 + (155 * (elevation / maxElevation))
+  set pcolor rgb (elevationGradient - 100) elevationGradient 0
+
+end
+
+to display-albedo
+
+  set pcolor 1 + 9 * albedo
+
+end
+
+to display-ETr [ maxETr ]
+
+  ifelse (maxETr = 0)
+  [ set pcolor 25 ]
+  [ set pcolor 22 + 6 * (1 - ETr / maxETr) ]
+
+end
+
+to display-DC
+
+  set pcolor 112 + 6 * (1 - DC)
+
+end
+
+to display-z [ maxZ ]
+
+  set pcolor 42 + 8 * (1 - z / maxZ)
+
+end
+
+to display-CN [ maxCN ]
+
+  set pcolor 72 + 6 * (1 - CN / maxCN)
+
+end
+
+to display-FC [ maxFC ]
+
+  set pcolor 82 + 6 * (1 - FC / maxFC)
+
+end
+
+to display-WHC [ maxWHC ]
+
+  set pcolor 92 + 6 * (1 - WHC / maxWHC)
+
+end
+
+to display-WATp [ maxWATp ]
+
+  set pcolor 102 + 6 * (1 - WATp / maxWATp)
+
+end
+
+to display-ARID
+
+  set pcolor 12 + 6 * ARID
+
+end</code></pre>
+</section>
+<section id="combining-with-flow-accumulation-algorithm" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="combining-with-flow-accumulation-algorithm"><span class="header-section-number">19.7</span> Combining with flow accumulation algorithm</h2>
+<p>Last, we finalise this module by implementing a solution that uses <code>flow_accumulation</code> to modulate the variation in ARID, as a proxy of the effect of the regional hydrology on the local soil water balance. The solution use the patch variable <code>ARID_modifier</code>, set during setup according to the parameter <code>ARID-decrease-per-flow-accumulation</code> and the local relative flow accumulation (flow_accumulation / maxFlowAccumulation). It then modifies <code>ARID</code> each day as a simple scalar.</p>
+<pre class="netlogo"><code>patches-own
+[
+  ...
+
+  ARID_modifier ; modifier coefficient based on the relative value of flow_accumulation
+]
+
+...
+
+to setup
+
+  clear-all
+
+  ; --- loading/testing parameters -----------
+
+  import-map-with-flows ; import-world must be the first step
+
+  set-constants
+
+  set-parameters
+
+  setup-patches
+
+  ; --- core procedures ----------------------
+
+  set currentYear weatherInputData_firstYear
+  set currentDayOfYear 1
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT ]
+
+  ; --- display &amp; output handling ------------------------
+
+  refresh-view
+
+  ; -- time -------------------------------------
+
+  reset-ticks
+
+end
+
+...
+
+to setup-patches
+
+  setup-soil-water-properties
+  
+  setup-ARID-modifier
+
+end
+
+...
+
+to setup-ARID-modifier
+  
+  ask patchesWithElevationData
+  [
+    set ARID_modifier (1 - ARID-decrease-per-flow-accumulation * (flow_accumulation / maxFlowAccumulation))
+  ]
+  
+end
+
+...
+
+to go
+
+  ; --- core procedures -------------------------
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT modify-ARID ]
+
+  ; --- output handling ------------------------
+
+  refresh-view
+
+  ; -- time -------------------------------------
+
+  advance-time
+
+  tick
+
+  ; --- stop conditions -------------------------
+
+  if (currentYear = weatherInputData_lastYear and currentDayOfYear = last weatherInputData_yearLengthInDays) [stop]
+
+end
+
+...
+
+to modify-ARID
+
+  set ARID ARID * ARID_modifier
+
+end</code></pre>
+</section>
+<section id="test" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="test"><span class="header-section-number">19.8</span> Test</h2>
+<p>Our solution to link <code>flow_accumulation</code> and <code>ARID</code> is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we are good enough to go forward.</p>
+<p><img src="assets/screenshots/BlockC_module4_ARID interface_tick100.png" class="img-fluid" alt="Screenshot of the ‘ARID’ module (tick 100)"><br>
+<em>Screenshot of the ‘ARID’ module (tick 100)</em></p>
+<p><img src="assets/screenshots/BlockC_module4_ARID interface_tick150.png" class="img-fluid" alt="Screenshot of the ‘ARID’ module (tick 150)"><br>
+<em>Screenshot of the ‘ARID’ module (tick 150)</em></p>
+<p><img src="assets/screenshots/BlockC_module4_ARID interface_tick200.png" class="img-fluid" alt="Screenshot of the ‘ARID’ module (tick 200)"><br>
+<em>Screenshot of the ‘ARID’ module (tick 200)</em></p>
+<p>See the fully implemented version of this module: <code>BlockC_module3_ARID.nlogo</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./messara-weather.html" class="pagination-link" aria-label="Importing time series: weather data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./messara-routes.html" class="pagination-link" aria-label="Scaling up route calculation">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Scaling up route calculation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-soil-water.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

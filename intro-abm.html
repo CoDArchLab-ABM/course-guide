@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Agent-based modelling for archaeologists. From concept to application and publication - 1&nbsp; Introduction to ABM</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./intro-abm-arch.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-abm.html">Introduction</a></li><li class="breadcrumb-item"><a href="./intro-abm.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Agent-based modelling for archaeologists. From concept to application and publication</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CoDArchLab-ABM/course-guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ABM in archaeology</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to do ABM</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Conceptual modelling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-intro-pop-dyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conceptual design or modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-pond-trade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual design or modeling: the Pond Trade model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Model repository with Git and GitHub</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-github-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-github-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Creating your model repository</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Knowing the software: NetLogo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to NetLogo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-language-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">NetLogo language basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Pond Trade</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-definition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Defining and initialising agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Programming agent AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-mechanims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Implementing mechanisms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-cultural-vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Implementing complex agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Implementing output statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false">
+ <span class="menu-text">Messara Trade</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-gis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Importing spatial data: elevation and site data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-water-flow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-weather.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-soil-water.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-routes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Scaling up route calculation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-pond-trade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">The MesaraTrade model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+ <span class="menu-text">After the storm</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./post-experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Experimental design in simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./post-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Analysis of simulation results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-teaser-schellings-segregation-model" id="toc-a-teaser-schellings-segregation-model" class="nav-link active" data-scroll-target="#a-teaser-schellings-segregation-model"><span class="header-section-number">1.1</span> A teaser: Schelling’s segregation model</a></li>
+  <li><a href="#abm-as-a-tool-for-complexity" id="toc-abm-as-a-tool-for-complexity" class="nav-link" data-scroll-target="#abm-as-a-tool-for-complexity"><span class="header-section-number">1.2</span> ABM as a tool for complexity</a></li>
+  <li><a href="#abm-as-mathematical-models" id="toc-abm-as-mathematical-models" class="nav-link" data-scroll-target="#abm-as-mathematical-models"><span class="header-section-number">1.3</span> ABM as mathematical models</a></li>
+  <li><a href="#abm-as-simulation-models" id="toc-abm-as-simulation-models" class="nav-link" data-scroll-target="#abm-as-simulation-models"><span class="header-section-number">1.4</span> ABM as simulation models</a>
+  <ul class="collapse">
+  <li><a href="#algorithmic-process" id="toc-algorithmic-process" class="nav-link" data-scroll-target="#algorithmic-process"><span class="header-section-number">1.4.1</span> Algorithmic process</a></li>
+  <li><a href="#distributed-processes" id="toc-distributed-processes" class="nav-link" data-scroll-target="#distributed-processes"><span class="header-section-number">1.4.2</span> Distributed processes</a></li>
+  <li><a href="#stochasticity" id="toc-stochasticity" class="nav-link" data-scroll-target="#stochasticity"><span class="header-section-number">1.4.3</span> Stochasticity</a></li>
+  <li><a href="#point-of-comparison" id="toc-point-of-comparison" class="nav-link" data-scroll-target="#point-of-comparison"><span class="header-section-number">1.4.4</span> Point of comparison</a></li>
+  </ul></li>
+  <li><a href="#abm-its-probably-multiparadigm-modelling" id="toc-abm-its-probably-multiparadigm-modelling" class="nav-link" data-scroll-target="#abm-its-probably-multiparadigm-modelling"><span class="header-section-number">1.5</span> ABM? It’s probably multiparadigm modelling</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/intro-abm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-abm.html">Introduction</a></li><li class="breadcrumb-item"><a href="./intro-abm.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="intro-abm" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Agent-based modelling (ABM) is a powerful tool for studying complexity by creating dynamic simulations using formal definitions, rules, and populations, resulting in the study of emergent properties in social and ecological systems. By adopting a bottom-up perspective, it allows for a deeper understanding of the processes that shape real-world phenomena.</p>
+<p>To better contextualise ABM, we start by positioning this modelling approach in relation to other modelling approaches. We then describe ABM’s central concepts, including what makes it often more intuitive and adequate for representing certain types of phenomena, particularly social interactions, yet paradoxically being more complex and unpredictable than other simulation models.</p>
+<section id="a-teaser-schellings-segregation-model" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="a-teaser-schellings-segregation-model"><span class="header-section-number">1.1</span> A teaser: Schelling’s segregation model</h2>
+<p><a href="https://ncase.me/polygons" target="_blank"> <img src="assets/images/ncase-shelling.PNG" alt="ncase-shelling" style="width: 450px; border: none; box-shadow: none; vertical-align:super"> </a></p>
+<p><a href="http://ccl.northwestern.edu/netlogo/models/Segregation" target="_blank"> <img src="assets/images/Segregation Simple interface.png" alt="shelling-netlogo" style="width: 350px; border: none; box-shadow: none"> </a></p>
+</section>
+<section id="abm-as-a-tool-for-complexity" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="abm-as-a-tool-for-complexity"><span class="header-section-number">1.2</span> ABM as a tool for complexity</h2>
+<p>Agent-based modeling (ABM) is a tool that can be used to explore phenomena through the lens of complexity science, that is as manifestations of complex systems. <a href="https://en.wikipedia.org/wiki/Complex_system">Complex systems</a> are characterized by a high number and diversity of causal relationships, non-linearity, self-organization, and self-similarity. ABM is a methodological framework that allows researchers to simulate the dynamics of complex systems. The approach involves:</p>
+<ul>
+<li><strong>Formalizing definitions</strong> of elements within the system.</li>
+<li>Defining <strong>rules as algorithms</strong> to govern interactions between elements.</li>
+<li>Simulating a <strong>population as distributed processes</strong>.</li>
+<li>Creating a <strong>bottom-up approach to modelling</strong> to study emergent properties.</li>
+<li>Incorporating <strong>stochasticity</strong> to generate probabilistic results.</li>
+</ul>
+<p><a title="derivative work: George (talk)
+Conways_game_of_life_breeder.png: Hyperdeath, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Conways_game_of_life_breeder_animation.gif">Game of Life - breeder<br><img alt="Conways game of life breeder animation" src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Conways_game_of_life_breeder_animation.gif?20140304220345"></a></p>
+<p><a href="https://link.medium.com/1uqbZW0M2T" target="_blank"><img src="https://cdn-images-1.medium.com/max/1600/1*yrVzKSeqaA1O3G3HF-AHlw.gif"> <br>Flocking behaviour in ‘Behavioral systems’ by Danil Nagy in ‘Generative Design’, medium.com</a></p>
+<p>ABM is a type of simulation that is particularly useful for modelling social systems because it allows for the representation of human agency and interaction. In ABM, a phenomenon is modelled through populations of autonomous agents and their interactions. This approach contrasts with other modelling techniques that represent causal components as aggregated variables and parameters. The use of distributed computation allows for the generation of complex dynamics that are not reducible to analytical solutions. ABM is also useful for exploring the emergence of social patterns and structures from the bottom up.</p>
+<p>ABM is a modular approach that can integrate parts from other modelling approaches, allowing for a more comprehensive representation of complex systems. For example, ABM can integrate environmental and spatial aspects, the agency of individuals and institutions, group formation, cooperation and competition, cognitive processes, and communication. In archaeology and other disciplines such as geography and environmental sciences, this multiparadigm approach has been favoured. The approach aligns well with the study of socio-ecological systems (SES) which acknowledges the interrelationships between natural and artificial worlds.</p>
+</section>
+<section id="abm-as-mathematical-models" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="abm-as-mathematical-models"><span class="header-section-number">1.3</span> ABM as mathematical models</h2>
+<p>Agent-based models, like all simulation models, are a type of mathematical model. As the term is used in science, we can define models as <strong>representations</strong> of a system or a phenomenon through its essential characteristics, often involving elements, relationships, and underlying assumptions. Mathematical models are simply more advanced in their logical definition through the process of <strong>formalisation</strong>. The <em>informal</em> or <em>less formal</em> models are those that are defined only through natural language speech (<em>e.g.</em>, in a live discussion), text (<em>e.g.</em>, in an article or book), or through certain graphical pieces (<em>e.g.</em>, infographics, diagrams).</p>
+<p>Despite this distinction, there is no genuine opposition between models with different levels of formalisation. Mathematical formalisation is mainly used to implement and test the logic models stated less formally. Among the advantages of mathematical formalisation, the most important are univocity (i.e., things have a single definition) and commensurability (i.e.&nbsp;things can be measured or counted). These properties set formal models apart from models formulated purely with natural languages, among other things, allowing for a significant improvement in the robustness of our reasoning. Keep in mind, though: formalisation can also harm the intelligibility of our models, <em>because</em> they move away from natural languages.</p>
+<p>Within the large family of mathematical models, ABM models lie typically within a category that can be characterised as <em>explicative</em> or <em>mechanistic</em>. Explicative models are focused on an explanation, expressing processes through realistic causal relationships between variables, often including assumptions. Non-explicative or <em>descriptive</em> mathematical models are used more strictly to describe, reproduce or extrapolate the relationship between variables (i.e., most statistical models). The latter models are about <em>patterns</em> or <em>trends</em> in data, while the former are about the <em>mechanisms</em> underlying data, at least as we can define them based on our current understanding of the phenomena’s domain. Unlike descriptive models, explanatory models seek to explain <em>why</em> a phenomenon occurs by formalizing mechanisms through causal relationships.</p>
+<p><img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/from-model-to-simulation-models/from-model-to-simulation-models_p1.png?raw=true" alt="models to math models" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"></p>
+<p>The line between these categories is blurred and confounded by many models and model users. Notice, for example, that the very term “explanation” is widely used in non-mechanistic ways (<em>e.g.</em>, when it is said that the educational level of a person <em>explains</em> that person’s income). However, the bulk of models on each side is considerable, and ABM models, in particular, have traits that are undeniably linked to the formulation of <em>mechanisms</em>.</p>
+<p>To help understand this distinction, we can think about one of the most simple and popular descriptive models used today: the linear regression model. Every regression model is a generalised equation based on a geometric pattern, a straight line in the case of the linear regression:</p>
+<blockquote class="blockquote">
+<p>y = a + b·x</p>
+</blockquote>
+<p><img src="assets/images/LinearModel.png" class="img-fluid" alt="Geometric representation of a linear regression model"><br>
+<em>Geometric representation of a linear regression model</em></p>
+<p>A linear regression model has two variables, x and y, which define two orthogonal dimensions, and two parameters, a and b, which determine the value of y when x = 0 and the tangent of the angle formed by the line with the x dimension. These are “meaningless” (semantically empty) in the model design, even if we deliberately choose x as the “independent” variable, despite how they are interpreted at a higher level of analysis.</p>
+<p>To put an archaeological example, imagine we have two variables measured in a collection of sites, the estimated maximum area and the count of potsherds on the surface. Imagine that we can define a regression model that states a positive correlation exists between them. Assuming our dataset is large enough and not radically biased, we could probably interpret that built area <em>influences</em> (i.e., causes, in a weak sense) the abundance of potsherds on the surface. It would not be necessarily illogical to conclude this. Yet, the relationship described in the model is ultimately a correlation (no archaeologist would think that one is directly causing the other).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="grid">
+<div class="g-col-6">
+<p>Target reality:<br>
+<a title="Santeri Viinamäki, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Green_watering_can.jpg"> <img width="256" alt="Green watering can" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Green_watering_can.jpg/512px-Green_watering_can.jpg" style="border: none; box-shadow: none;"></a></p>
+</div>
+<div class="g-col-6">
+<p>Observations:<br>
+<img width="256" alt="Picture maze solving -observations" src="assets/images/Picture_maze_solving_observations.png" style="border: none; box-shadow: none; margin-bottom: -2%;"></p>
+</div>
+<div class="g-col-6">
+<p>Descriptive model:<br>
+<img width="256" alt="Picture maze solving - descriptive model" src="assets/images/Picture_maze_solving_descrip-model.png" style="border: none; box-shadow: none; margin-bottom: -2%;"></p>
+<p>A model that return the output given the input</p>
+</div>
+<div class="g-col-6">
+<p>Explanatory model:<br>
+<a title="Original: User:Icey, Animation: User:MichaelFrey, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Picture_maze_solving.gif"> <img width="256" alt="Picture maze solving - explanatory model" src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Picture_maze_solving.gif" style="border: none; box-shadow: none; margin-bottom: -2%;"></a></p>
+<p>A model that return the output given the input <strong>and the definition of a mechanism</strong></p>
+</div>
+</div>
+</div>
+</div>
+<p>The trend expressed by the linear model is but a “hint” of the mechanisms that are or could be postulated to explain it. Any hypotheses about the reason behind the correlation must be formulated outside the model, before or after its creation, for instance, by combining it with a natural language model. Thus, a descriptive model is inherently incomplete as an analytic tool and remains trivial unless it is associated with an external explicative model, formal or informal.</p>
+<p>Still, descriptive mathematical models have been proven to be very useful and are widely adopted. Consider that in the field of artificial intelligence, the success of the descriptive models encompassed by <em>machine learning</em> have pushed aside other modelling approaches that uses programmed or procedural rules, from which ABM has branched. Within the exploration of data-driven methods, some scholars have even started to question the concept of “explanation” itself, posing that it might be a well-hidden fallacy of human cognition. On the other hand, it is still debatable how much <em>human</em> understanding can come from descriptive models alone.</p>
+</section>
+<section id="abm-as-simulation-models" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="abm-as-simulation-models"><span class="header-section-number">1.4</span> ABM as simulation models</h2>
+<blockquote class="blockquote">
+<p>“a situation in which a particular set of conditions is created artificially in order to study or experience something that could exist in reality.” <a href="https://www.oxfordlearnersdictionaries.com/definition/american_english/simulation">Oxford Advanced American Dictionary</a></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>“<strong>a</strong>: the imitative representation of the functioning of one system or process by means of the functioning of another a computer simulation of an industrial process<br>
+<strong>b</strong>: examination of a problem often not subject to direct experimentation by means of a simulating device” (<em>simulation</em>, <a href="https://www.merriam-webster.com/dictionary/simulation">Merrian-Webster</a></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>“A simulation is an <strong>imitative representation of a process or system</strong> that could exist in the real world. In this broad sense, simulation can often be used interchangeably with model. Sometimes a clear distinction between the two terms is made, in which simulations require the use of models; the model represents the <strong>key characteristics or behaviors</strong> of the selected system or process, whereas the simulation represents the <strong>evolution of the model over time</strong>. Another way to distinguish between the terms is to define simulation as experimentation with the help of a model.” (<em>Simulation</em>, <a href="https://en.wikipedia.org/wiki/Simulation">Wikipedia</a></p>
+</blockquote>
+<section id="algorithmic-process" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="algorithmic-process"><span class="header-section-number">1.4.1</span> Algorithmic process</h3>
+<p>Simulation is a numerical approach to solve mathematical models. Simulation models are mathematical models that describe a mechanism and when iterated or repeated can represent a process, i.e.&nbsp;change through time <em>caused</em> by the mechanism. They are particularly useful for studying complex systems with non-linear relationships and feedback loops, and can help to generate data that can be used to test the validity of the model. There is a large variety of approaches in simulation; however, they all share this fundamental intent of representation of a process.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="grid">
+<div class="g-col-6">
+<p><strong>Fruit-in-the-basket simulation model</strong></p>
+<p><em>entities</em>: basket, fruits, us (<em>basket-fillers</em>).</p>
+<p><em>mechanism</em>: a basket can contain <span class="math inline">\(N\)</span> fruits (fruit-basket relationship), we can add fruits to the basket (us-fruit and us-basket relationships).</p>
+<p><em>simulation step</em>: if the basket is not full, we add <span class="math inline">\(X\)</span> fruits or less to the basket.</p>
+<p><em>process or dynamics</em>: an empty basket will get full with <span class="math inline">\(N\)</span> fruits after <span class="math inline">\(T\)</span> steps have passed, where <span class="math inline">\(T={ceiling}(N/X)\)</span>.</p>
+<p><em>explanatory</em> meaning: Why the basket has <span class="math inline">\(N\)</span> fruits? <em>Because</em> (a) it can only hold <span class="math inline">\(N\)</span> fruits, and (b) we have added <span class="math inline">\(X\)</span> fruits <span class="math inline">\(T\)</span> times.</p>
+</div>
+<div class="g-col-6">
+<p><img src="assets/images/AlbedoBase_XL_The_basket_capable_of_holding_N_fruits_gradually_0.jpg" class="img-fluid"></p>
+</div>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/images/Gale-Shapley-algorithm.png" class="img-fluid figure-img"></p>
+<figcaption>Pseudo-code for the Gale–Shapley algorithm to solve the <a href="https://en.wikipedia.org/wiki/Stable_marriage_problem">Stable Marriage Problem</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="distributed-processes" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="distributed-processes"><span class="header-section-number">1.4.2</span> Distributed processes</h3>
+<p>Social simulation models, specifically, apply these methods to social science topics, emphasizing the role of human agency and distributed computation. Agent-based modelling (ABM) is a common technique in social simulation, representing a phenomenon through populations of autonomous agents and their interactions.</p>
+<p><a href="http://jasss.soc.surrey.ac.uk/14/3/7.html" target="_blank"><img src="http://jasss.soc.surrey.ac.uk/14/3/7/rebaudo_et_al_figure1_600px.png" alt="Rebaudo et al. 2011" style="width: 450px; border: none; box-shadow: none"><br>Rebaudo et al.&nbsp;2011</a></p>
+<p><a href="https://www.gisagents.org/2016/10/agent-based-modeling-in-geographical.html" target="_blank"><img src="https://3.bp.blogspot.com/-8dBibQOLxv4/V4-Kd1QmFGI/AAAAAAAAJxU/XyvLVDVfzMEDLyRDdh1Sc3z_Nq7z2xPDQCLcB/s640/Figure1.png" alt="Heppenstall and Crooks 2016" style="width: 450px; border: none; box-shadow: none"><br>Heppenstall and Crooks 2016</a></p>
+<p><a href="http://jasss.soc.surrey.ac.uk/12/1/1.html" target="_blank"><img src="http://jasss.soc.surrey.ac.uk/12/1/1/fig1.jpg" alt="Galan et al. 2009" style="width: 450px; border: none; box-shadow: none"><br>Galan et al.&nbsp;2009</a></p>
+<p>In contrast with other mechanistic and dynamic mathematical modelling approaches, ABM seeks to represent a phenomenon by explicitly modelling its parts. Therefore, ABM involves the expectation that the phenomenon at the macro-level <em>emerges</em> (can be deduced) from the dynamics at the micro-level. Moreover, ABM implies that the parts, the agents, constitute ‘populations’, <em>i.e.</em>, they share common properties and behavioural rules. The ‘agency’ behind the term ‘agent’ also implies that these parts have certain autonomy with respect to each other and the environment, which justifies simulating their behaviour at an individual level.</p>
+<p>In practice, ‘autonomy’ often translates as the agents’ ability to take action, move, decide, or even think and remember. Decision-making is a central aspect of agents and most agent designs can be sufficiently expressed as flowcharts. Nevertheless, agent-based models also include entities that are <em>technically</em> agents (on the terms of <a href="https://en.wikipedia.org/wiki/Multi-agent_system">multi-agent systems</a>), but lack many of such abilities or are not considered real/material discrete entities. The most common case is to represent space sectors as agents fixed to unique positions in a grid to facilitate the implementation of distributed spatial processes (<em>e.g.</em>, the growth of vegetation dependent on local factors). This type of agent is more commonly named as “cellular automaton” (<em>cellular automata</em>, in plural), In NetLogo, these entities are predefined as <code>patches</code> and are extensively used in combination with mobile agents in models in ecology and geography.</p>
+<p><img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/from-model-to-simulation-models/from-model-to-simulation-models_p2.png?raw=true" alt="types of math models" class="fragment" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"></p>
+</section>
+<section id="stochasticity" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="stochasticity"><span class="header-section-number">1.4.3</span> Stochasticity</h3>
+<p>An important and distinctive aspect of agent-based models is that they are unavoidably <em>stochastic</em>, i.e., at least some processes are fed by random sequences. By definition, the order in which agents of a type perform their processes should not be predefined and, overall, should not be the same followed every iteration of the model. Thus, the only unbiased way of <em>scheduling</em> processes in ABM is to randomize all distributed sequences. This is (usually) not the case in models based on differential/difference equations, where the equations calculating variables are solved following a particular fixed order.</p>
+<p>Methodologically, introducing randomness is a way of accounting for the entire spectrum of possibilities, whenever a certain aspect of the model is undertheorised or cannot be controlled in real scenarios. More importantly, it is justified whenever the modeller believes that the intended behaviour is independent of a specific value or order.</p>
+<p>For those with no previous experience with computer science: note that “random” for a computer is not like “rolling dices”. We are getting values of a preordered sequence presumably unrelated to the process at hand. The programs creating these sequences are called <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">pseudorandom number generator</a> or RNG, for short. Sequences will be different every time we run our program (<em>i.e.</em>, simulation), unless we preset the RNG using a specific ‘seed’, an integer often spanning a massive range of positive and negative numbers. Setting a particular RNG seed is, in fact, good practice, and helps enforce the reproducibility of simulation results.</p>
+<p>This technique is also helpful in creating variation within a population of agents or between the global conditions of simulation runs. Such a thing is accomplished by drawing the values of variables from probability distributions, defined through <em>hyperparameters</em> (<em>e.g.</em>, drawing the age of individuals in a classroom from a normal distribution defined by two parameters, <code>age_mean</code> and <code>age_standardDeviation</code>). Unfortunately, a typical bad practice is not exposing such hyperparameters, having these ‘hard-coded’ as if their value were an intrinsic part of the model and thus the mechanisms it represents. This bad coding element, often called “magic numbers”, can and should be addressed during model implementation.</p>
+</section>
+<section id="point-of-comparison" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="point-of-comparison"><span class="header-section-number">1.4.4</span> Point of comparison</h3>
+<p>Compared to other modelling and simulation approaches, ABM is more intuitive but also more complex.</p>
+<p>For example, the <a href="https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations">Lotka-Volterra predator-prey model</a> in ecology is a pair of differential equations that are relatively simple and conceptually straightforward.</p>
+<p><span class="math display">\[
+\frac{dx}{dt}=\alpha x-\beta xy
+\]</span> <span class="math display">\[
+\frac{dy}{dt}=\gamma y+\delta xy
+\]</span></p>
+<p>where <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are the population density of prey and predator, respectively. <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> are the maximum intrinsic growth rate of each population and <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\delta\)</span> are the effect of the presence of predators on prey and of prey on predators. Note that the first effect is negative and the second is positive.</p>
+<p>This simple model has became very famous for being able to express the following dynamics:</p>
+<blockquote class="blockquote">
+<p>assumption: prey population grows based on unspecified resources (<em>intrinsic growth rate</em>)<br>
+more prey → more food for predators, so more predators will survive and reproduce<br>
+more predators → more prey will be killed, so less prey will survive and reproduce<br>
+less prey → less food for predators, so fewer predators will survive and reproduce<br>
+fewer predators → less prey will be killed, so more prey will survive and reproduce<br>
+more prey → more food … (the cycle begins again)</p>
+</blockquote>
+<p style="text-align: center;">
+<a title="AspidistraK, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lotka_Volterra_dynamics.svg"><img width="400" style="background-color: white" alt="Lotka Volterra dynamics" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Lotka_Volterra_dynamics.svg/512px-Lotka_Volterra_dynamics.svg.png"></a> <br> <i style="color: grey;">Example of Lotka Volterra dynamics</i>
+</p>
+<p>The same model can also be implemented with ABM (see the comparison in <a href="http://ccl.northwestern.edu/netlogo/models/WolfSheepPredation(DockedHybrid)">NetLogo’s Model Library Wolf-Sheep Predation (Docked Hybrid)</a>). The ABM implementation requires many additional specifications on how predator and prey agents should behave individually. Even though it is not strictly necessary to represent the core mechanism, ABM variations of the Lotka-Volterra model often aim to include more complexity. In the case of the Wolf-Sheep model mentioned, there is an explicit account of the base resource (<em>i.e.</em>, the prey of the prey), named <code>grass</code>, which is implemented as a property of spatial units. These additional specifications normally help the model be more intuitive and realistic but also significantly complicate the model design and implementation, even though generating similar aggregate dynamics as the equation-based version (<em>i.e.</em>, oscillation harmony between prey and predator populations).</p>
+<p style="text-align: center;">
+<a title="SethTisue, GPL <http://www.gnu.org/licenses/gpl.html>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Netlogo-ui.png"><img width="512" alt="Netlogo-ui" style="width: 450px; height: 350px; object-fit: cover; object-position: 0% 0%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Netlogo-ui.png/512px-Netlogo-ui.png"></a> <br> <i style="color: grey;">NetLogo user interface running the Wolf-Sheep Predation model</i>
+</p>
+</section>
+</section>
+<section id="abm-its-probably-multiparadigm-modelling" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="abm-its-probably-multiparadigm-modelling"><span class="header-section-number">1.5</span> ABM? It’s probably multiparadigm modelling</h2>
+<p>Last, another significant advantage of ABM is that it can include parts (algorithms, submodels) that belong to other modelling approaches. For example, we can quickly devise a model where a population of agents runs in parallel with a full-fledged Dynamic Systems model through a set of difference equations. Commonly, ABM models are ensembles created with parts that technically are not ABM. This is why some ABM modellers and modelling platforms use terms like “multiparadigm modelling” or “hybrid modelling”, which is more precise for many cases. Unfortunately, these were not adopted more widely and “agent-based modelling” continues to be the most common term, particularly in archaeology.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Course overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Course overview</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./intro-abm-arch.html" class="pagination-link" aria-label="ABM in archaeology">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ABM in archaeology</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/intro-abm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

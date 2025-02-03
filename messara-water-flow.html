@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Agent-based modelling for archaeologists. From concept to application and publication - 17&nbsp; Calculating water flow accumulation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./messara-weather.html" rel="next">
+<link href="./messara-gis.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-gis.html">Messara Trade</a></li><li class="breadcrumb-item"><a href="./messara-water-flow.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Agent-based modelling for archaeologists. From concept to application and publication</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CoDArchLab-ABM/course-guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ABM in archaeology</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">How to do ABM</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Conceptual modelling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-intro-pop-dyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conceptual design or modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-pond-trade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual design or modeling: the Pond Trade model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+ <span class="menu-text">Model repository with Git and GitHub</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-github-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./git-github-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Creating your model repository</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+ <span class="menu-text">Knowing the software: NetLogo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to NetLogo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-language-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">NetLogo language basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./netlogo-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false">
+ <span class="menu-text">Pond Trade</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-definition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Defining and initialising agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Programming agent AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-mechanims.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Implementing mechanisms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-cultural-vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Implementing complex agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Implementing output statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Messara Trade</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-gis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Importing spatial data: elevation and site data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-water-flow.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-weather.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-soil-water.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-routes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Scaling up route calculation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-pond-trade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">The MesaraTrade model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false">
+ <span class="menu-text">After the storm</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./post-experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Experimental design in simulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./post-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Analysis of simulation results</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#water-flow-algorithm" id="toc-water-flow-algorithm" class="nav-link active" data-scroll-target="#water-flow-algorithm"><span class="header-section-number">17.1</span> Water flow algorithm</a></li>
+  <li><a href="#adding-the-main-procedures" id="toc-adding-the-main-procedures" class="nav-link" data-scroll-target="#adding-the-main-procedures"><span class="header-section-number">17.2</span> Adding the main procedures</a></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">17.3</span> Visualisation</a></li>
+  <li><a href="#assessing-fit" id="toc-assessing-fit" class="nav-link" data-scroll-target="#assessing-fit"><span class="header-section-number">17.4</span> Assessing fit</a></li>
+  <li><a href="#improving-fit-with-fill-sink" id="toc-improving-fit-with-fill-sink" class="nav-link" data-scroll-target="#improving-fit-with-fill-sink"><span class="header-section-number">17.5</span> Improving fit with <code>fill-sink</code></a></li>
+  <li><a href="#implementing-a-feature-to-export-and-import-world" id="toc-implementing-a-feature-to-export-and-import-world" class="nav-link" data-scroll-target="#implementing-a-feature-to-export-and-import-world"><span class="header-section-number">17.6</span> Implementing a feature to export and import <code>world</code></a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-water-flow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-gis.html">Messara Trade</a></li><li class="breadcrumb-item"><a href="./messara-water-flow.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="messara-water-flow" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="water-flow-algorithm" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="water-flow-algorithm"><span class="header-section-number">17.1</span> Water flow algorithm</h2>
+<p>Towards our calculation of land productivity, we advance using our GIS data in combination with parts of the Land submodel in the <a href="https://github.com/Andros-Spica/indus-village-model">Indus Village model</a> (Angourakis 2021). Our objective in this step is to reach a flow accumulation value for each patch according to their relative elevation within the terrain. This will serve as a proxy of the region hydrology beyond the data we have on rivers.</p>
+<p>The submodel is based on the algorithm described in Jenson &amp; Domingue (1988) through the implementation used by Huang &amp; Lee (2015).</p>
+<blockquote class="blockquote">
+<p>Jenson, S. K., and J. O. Domingue. 1988. ‘Extracting Topographic Structure from Digital Elevation Data for Geographic Information System Analysis’. Photogrammetric Engineering and Remote Sensing 54 (11): 1593–1600.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Huang, Pin Chun, and Kwan Tun Lee. 2015. ‘A Simple Depression-Filling Method for Raster and Irregular Elevation Datasets’. Journal of Earth System Science 124 (8): 1653–65. https://doi.org/10.1007/s12040-015-0641-2.</p>
+</blockquote>
+</section>
+<section id="adding-the-main-procedures" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="adding-the-main-procedures"><span class="header-section-number">17.2</span> Adding the main procedures</h2>
+<p>The algorithm uses a numeric codification of the eight neighbour directions and a tag that classifies patches as “start”, “pending”, “done”, progressively converting the formers into the latter. Patches on the edge of the map are directed automatically towards the outside. Because this is an significant piece of code based on a specific reference, we will enclose all related procedures within a especial commentary note:</p>
+<pre class="netlogo"><code>globals
+[
+  ...
+
+  ;;; variables
+  maxFlowAccumulation
+]
+
+...
+
+patches-own
+[
+  elevation ; elevation above sea level [m]
+
+  flow_direction        ; the numeric code for the (main) direction of flow or
+                        ; drainage within the land unit.
+                        ; Following Jenson &amp; Domingue (1988) convention:
+                        ; NW = 64,   N = 128,        NE = 1,
+                        ; W = 32,     &lt;CENTRE&gt;,   E = 2,
+                        ; SW = 16,     S = 8,          SE = 4
+
+  flow_receive          ; Boolean variable stating whether or not the land unit receives
+                        ; the flow of a neighbour.
+
+  flow_accumulation     ; the amount of flow units accumulated in the land unit.
+                        ; A Flow unit is the volume of runoff water flowing from one land unit
+                        ; to another (assumed constant and without losses).
+  flow_accumulationState ; the state of the land unit regarding the calculation of flow
+                        ; accumulation (auxiliary variable).
+
+  isRiver
+]
+
+...
+
+;=======================================================================================================
+;;; START of algorithms based on:
+;;; Jenson, S. K., &amp; Domingue, J. O. (1988).
+;;; Extracting topographic structure from digital elevation data for geographic information system analysis.
+;;; Photogrammetric engineering and remote sensing, 54(11), 1593-1600.
+;;; ===BUT used elsewhere, such as in the algorithms based on:
+;;; Huang, P., Lee, K.T. A simple depression-filling method for raster and irregular elevation datasets.
+;;; J Earth Syst Sci 124, 1653–1665 (2015). https://doi.org/10.1007/s12040-015-0641-2
+;=======================================================================================================
+
+to-report get-drop-from [ aPatch ] ; ego = patch
+
+  ; "Distance- weighted drop is calculated by subtracting the neighbor’s value from the center cell’s value
+  ; and dividing by the distance from the center cell, √2 for a corner cell and one for a noncorner cell." (p. 1594)
+
+  report ([elevation] of aPatch - elevation) / (distance aPatch)
+
+end
+
+to-report is-at-edge ; ego = patch
+
+  report any? neighbors with [elevation = noElevationDataTag]
+
+end
+
+to-report has-flow-direction-code ; ego = patch
+
+  if (member? flow_direction [ 1 2 4 8 16 32 64 128 ]) [ report true ]
+
+  report false
+
+end
+
+to-report flow-direction-is [ centralPatch ]
+
+  if (flow_direction = get-flow-direction-encoding ([pxcor] of centralPatch - pxcor) ([pycor] of centralPatch - pycor))
+  [ report true ]
+
+  report false
+
+end
+
+to-report get-flow-direction-encoding [ x y ]
+
+  if (x = -1 and y = -1) [ report 16 ] ; Southwest
+  if (x = -1 and y = 0) [ report 32 ]  ; West
+  if (x = -1 and y = 1) [ report 64 ]  ; Northwest
+
+  if (x = 0 and y = -1) [ report 8 ]   ; South
+  if (x = 0 and y = 1) [ report 128 ]  ; North
+
+  if (x = 1 and y = -1) [ report 4 ]   ; Southeast
+  if (x = 1 and y = 0) [ report 2 ]    ; East
+  if (x = 1 and y = 1) [ report 1 ]    ; Northeast
+
+end
+
+to-report get-patch-in-flow-direction [ neighborEncoding ] ; ego = patch
+
+  ; 64 128 1
+  ; 32  x  2
+  ; 16  8  4
+
+  if (neighborEncoding = 16) [ report patch (pxcor - 1) (pycor - 1) ]
+  if (neighborEncoding = 32) [ report patch (pxcor - 1) (pycor) ]
+  if (neighborEncoding = 64) [ report patch (pxcor - 1) (pycor + 1) ]
+
+  if (neighborEncoding = 8) [ report patch (pxcor) (pycor - 1) ]
+  if (neighborEncoding = 128) [ report patch (pxcor) (pycor + 1) ]
+
+  if (neighborEncoding = 4) [ report patch (pxcor + 1) (pycor - 1) ]
+  if (neighborEncoding = 2) [ report patch (pxcor + 1) (pycor) ]
+  if (neighborEncoding = 1) [ report patch (pxcor + 1) (pycor + 1) ]
+
+  report nobody
+
+end
+
+to-report flow-direction-is-loop ; ego = patch
+
+  let thisPatch self
+  let dowstreamPatch get-patch-in-flow-direction flow_direction
+  ;print (word "thisPatch: " thisPatch "dowstreamPatch: " dowstreamPatch)
+
+  if (dowstreamPatch != nobody)
+  [ report [flow-direction-is thisPatch] of dowstreamPatch ]
+
+  report false
+
+end
+
+to set-flow-directions
+
+  ask patchesWithElevationData
+  [
+    ifelse (is-at-edge)
+    [
+      ifelse ( pxcor = min-pxcor )
+      [ set flow_direction 32 ] ; west
+      [
+        ifelse ( pxcor = max-pxcor )
+        [ set flow_direction 2 ] ; east
+        [
+          ifelse ( pycor = min-pycor )
+          [ set flow_direction 8 ] ; south
+          [ set flow_direction 128 ] ; north
+        ]
+      ]
+    ]
+    [
+      set-flow-direction
+    ]
+  ]
+
+end
+
+to set-flow-direction ; ego = patch
+
+  let thisPatch self
+
+  let downstreamPatch max-one-of neighbors with [elevation &gt; noElevationDataTag] [get-drop-from thisPatch]
+  set flow_direction get-flow-direction-encoding ([pxcor] of downstreamPatch - pxcor) ([pycor] of downstreamPatch - pycor)
+
+end
+
+to set-flow-accumulations
+
+  ; From Jenson, S. K., &amp; Domingue, J. O. (1988), p. 1594
+  ; "FLOW ACCUMULATION DATA SET
+  ; The third procedure of the conditioning phase makes use of the flow direction data set to create the flow accumulation data set,
+  ; where each cell is assigned a value equal to the number of cells that flow to it (O’Callaghan and Mark, 1984).
+  ; Cells having a flow accumulation value of zero (to which no other cells flow) generally correspond to the pattern of ridges.
+  ; Because all cells in a depressionless DEM have a path to the data set edge, the pattern formed by highlighting cells
+  ; with values higher than some threshold delineates a fully connected drainage network."
+
+  ; identify patches that receive flow and those that do not (this makes the next step much easier)
+  ask patchesWithElevationData
+  [
+    set flow_receive false
+    set flow_accumulationState "start"
+    ;set pcolor red
+  ]
+
+  ask patchesWithElevationData with [has-flow-direction-code]
+  [
+    let patchInFlowDirection get-patch-in-flow-direction flow_direction
+    if (patchInFlowDirection != nobody)
+    [
+      ask patchInFlowDirection
+      [
+        set flow_receive true
+        set flow_accumulationState "pending"
+        ;set pcolor yellow
+      ]
+    ]
+  ]
+
+  let maxIterations 100000 ; just as a safety measure, to avoid infinite loop
+  while [count patchesWithElevationData with [flow_accumulationState = "pending" and not flow-direction-is-loop] &gt; 0 and maxIterations &gt; 0 and count patchesWithElevationData with [flow_accumulationState = "start"] &gt; 0 ]
+  [
+    ask one-of patchesWithElevationData with [flow_accumulationState = "start"]
+    [
+      let downstreamPatch get-patch-in-flow-direction flow_direction
+      let nextFlow_accumulation flow_accumulation + 1
+
+      set flow_accumulationState "done"
+      ;set pcolor orange
+
+      if (downstreamPatch != nobody)
+      [
+        ask downstreamPatch
+        [
+          set flow_accumulation flow_accumulation + nextFlow_accumulation
+          if (count neighbors with [
+            elevation &gt; noElevationDataTag and
+            get-patch-in-flow-direction flow_direction = downstreamPatch and
+            (flow_accumulationState = "pending" or flow_accumulationState = "start")
+            ] = 0
+          )
+          [
+            set flow_accumulationState "start"
+            ;set pcolor red
+          ]
+        ]
+      ]
+    ]
+
+    set maxIterations maxIterations - 1
+  ]
+
+end
+
+;=======================================================================================================
+;;; END of algorithms based on:
+;;; Jenson, S. K., &amp; Domingue, J. O. (1988).
+;;; Extracting topographic structure from digital elevation data for geographic information system analysis.
+;;; Photogrammetric engineering and remote sensing, 54(11), 1593-1600.
+;;; ===BUT used in the algorithms based on:
+;;; Huang P C and Lee K T 2015
+;;; A simple depression-filling method for raster and irregular elevation datasets
+;;; J. Earth Syst. Sci. 124 1653–65
+;=======================================================================================================</code></pre>
+<p>Outside this enclosed section, we add the two main procedures <code>set-flow-directions</code> and <code>set-flow-accumulations</code> inside a higher level <code>setup-flows</code>:</p>
+<pre class="netlogo"><code>to setup-flows
+
+  fill-sinks
+  
+  set-flow-directions
+
+  set-flow-accumulations
+
+  ; set maximum flow accumulation as a reference
+  set maxFlowAccumulation max [flow_accumulation] of patchesWithElevationData
+
+end</code></pre>
+<p>We add a last step to get <code>maxFlowAccumulation</code>, which we will need for scaling purposes.</p>
+</section>
+<section id="visualisation" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">17.3</span> Visualisation</h2>
+<p>As usual, we need to implement some extra code to be able to visualise the outcome. In this case, however, we would like to observe simultaneously flow direction, flow accumulation <em>and</em> elevation. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.</p>
+<pre class="netlogo"><code>breed [ flowHolders flowHolder ]
+
+...
+
+to display-flows
+
+  if (not any? flowHolders)
+  [
+    ask patchesWithElevationData [ sprout-flowHolders 1 [ set hidden? true ] ]
+  ]
+
+  ifelse (show-flows)
+  [
+    ask patchesWithElevationData
+    [
+      let flow_directionHere flow_direction
+      let nextPatchInFlow get-patch-in-flow-direction flow_direction
+      if (not [((elevation &lt;= 0) or (elevation &gt;= 0))] of nextPatchInFlow) [ set nextPatchInFlow nobody ]
+      let flow_accumulationHere flow_accumulation
+
+      ask one-of flowHolders-here
+      [
+        ifelse (nextPatchInFlow != nobody)
+        [
+          if (link-with one-of [flowHolders-here] of nextPatchInFlow = nobody)
+          [ create-link-with one-of [flowHolders-here] of nextPatchInFlow ]
+
+          ask link-with one-of [flowHolders-here] of nextPatchInFlow
+          [
+            set hidden? false
+            let multiplier 1E100 ^ (1 - flow_accumulationHere / (max [flow_accumulation] of patchesWithElevationData)) / 1E100
+            set color 92 + (5 * multiplier)
+            set thickness 0.4 * ( 1 - ((color - 92) / 5))
+          ]
+        ]
+        [
+          set hidden? false
+          let multiplier 1E100 ^ (1 - flow_accumulationHere / (max [flow_accumulation] of patchesWithElevationData)) / 1E100
+          set color 92 + (5 * multiplier)
+          if (color &lt;= 97) [ set shape "line half" ]
+          if (color &lt; 95) [ set shape "line half 1" ]
+          if (color &lt; 93) [ set shape "line half 2" ]
+          set heading get-angle-in-flow-direction flow_direction
+        ]
+      ]
+    ]
+  ]
+  [
+    ask flowHolders
+    [
+      set hidden? true
+      ask my-links [ set hidden? true ]
+    ]
+  ]
+
+end
+
+to-report get-angle-in-flow-direction [ neighborEncoding ]
+
+  ; 64 128 1
+  ; 32  x  2
+  ; 16  8  4
+
+  if (neighborEncoding = 16) [ report 225 ]
+  if (neighborEncoding = 32) [ report 270 ]
+  if (neighborEncoding = 64) [ report 315 ]
+
+  if (neighborEncoding = 8) [ report 180 ]
+  if (neighborEncoding = 128) [ report 0 ]
+
+  if (neighborEncoding = 4) [ report 135 ]
+  if (neighborEncoding = 2) [ report 90 ]
+  if (neighborEncoding = 1) [ report 45 ]
+
+  report nobody
+
+end</code></pre>
+<p>Now, press “setup”. The calculation of variables is made relatively fast, but displaying all flowHolders will take some time.</p>
+<p><img src="assets/screenshots/BlockC_module2_flows.png" class="img-fluid" alt="View of flow direction and accumulation, calculated with ‘flows’ module"><br>
+<em>View of flow direction and accumulation, calculated with ‘flows’ module</em></p>
+</section>
+<section id="assessing-fit" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="assessing-fit"><span class="header-section-number">17.4</span> Assessing fit</h2>
+<p>To better visualise how much <code>flow_accumulation</code> actually gets accumulated, let us run the following “highlight” command directly in the console:</p>
+<pre class="netlogo"><code>ask patches with [flow_accumulation &gt; 10] [ set pcolor red ]</code></pre>
+<p><img src="assets/screenshots/BlockC_module2_flows-accumulation-more-than-10.png" class="img-fluid" alt="Highlight of patches with flow accumulation greater than 10"><br>
+<em>Highlight of patches with flow accumulation greater than 10</em></p>
+<p><em>Focus view on a sample of patches:</em><br>
+| | | | — | — | | patch 70 145 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"> | | patch 179 69 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-179-69.png" width="200"> | | patch 70 145 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"> | | patch 201 108 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-201-108.png" width="200"> | | patch 125 99 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-125-99.png" width="200"> | | patch 54 76 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-54-106.png" width="200"> |</p>
+<p>Our approximation of the region’s hydrological system is definitely not perfect. As a minimum, we want the main river, Lithaíos, to emerge, even if following an approximated path. The problem is most likely generated by our previous step: reducing the resolution of the original DEM. The height map we are using has many “sinks” in it (<em>i.e.</em>, patches not at the edge with the lowest elevation among its neighbours).</p>
+<p>Worse, it might be that the roughness of the terrain escapes even the lowest of the resolutions treatable at this scale, to a point where the pathways of rivers cannot be retraced using height maps. Let us work with the first hypothesis and address the sinks in our processed height map.</p>
+</section>
+<section id="improving-fit-with-fill-sink" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="improving-fit-with-fill-sink"><span class="header-section-number">17.5</span> Improving fit with <code>fill-sink</code></h2>
+<p>Our result could be improved by using the <code>fill-sink</code> procedure in the original Land model implementation (see code in the <a href="https://github.com/Andros-Spica/indus-village-model/tree/master/03-land-model">Indus Village repository</a>), which is based on Huang &amp; Lee (2015).</p>
+<p>This procedure fills up the elevation of “sink” patches so flow can continue moving, until it reaches the edge of the map.</p>
+<p>First, we can identify sink patches with the following procedure:</p>
+<pre class="netlogo"><code>to-report is-sink ; ego = patch
+
+  let thisPatch self
+
+  report (not is-at-edge) and (elevation &lt;= min [elevation] of neighbors with [((elevation &lt;= 0) or (elevation &gt;= 0))])
+
+end</code></pre>
+<p>We then used it together with our previous “highlight” command in the console:</p>
+<pre class="netlogo"><code>ask patches with [is-sink] [ set pcolor red ]</code></pre>
+<p><img src="assets/screenshots/BlockC_module2_flows-sinks.png" class="img-fluid" alt="Highlight of sink patches"><br>
+<em>Highlight of sink patches</em></p>
+<p>We then implement the <code>fill-sinks</code> algorithm:</p>
+<pre class="netlogo"><code>to fill-sinks
+
+  while [ count patchesWithElevationData with [is-sink] &gt; 0 ]
+  [
+    ask patchesWithElevationData with [is-sink]
+    [
+      set elevation [elevation] of min-one-of neighbors [elevation] + 1E-1
+    ]
+  ]
+
+end</code></pre>
+<p>After running <code>setup</code> again, we obtain a much better result. We can now clearly identify what should be the Lithaíos river and its path is not too far from our original river data.</p>
+<p><img src="assets/screenshots/BlockC_module2_flows_withFillSinks.png" class="img-fluid" alt="View of flow direction and accumulation, calculated with ‘flows’ module with the fill-sinks procedure"><br>
+<em>View of flow direction and accumulation, calculated with ‘flows’ module with the <code>fill-sinks</code> procedure</em></p>
+<p><img src="assets/screenshots/BlockC_module2_flows_withFillSinks_accumulation-more-than-10.png" class="img-fluid" alt="Highlight of patches with flow accumulation greater than 10"><br>
+<em>Highlight of patches with flow accumulation greater than 10, after we include the <code>fill-sinks</code> procedure</em></p>
+<p>We should remember that this algorithm modifies our original DEM heightmap and costs more computation resources/time.</p>
+</section>
+<section id="implementing-a-feature-to-export-and-import-world" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="implementing-a-feature-to-export-and-import-world"><span class="header-section-number">17.6</span> Implementing a feature to export and import <code>world</code></h2>
+<p>We do not want to repeat this every time we initialise a simulation run. Therefore, we will export the entire map configuration to a file for later use. We do this quickly with “File &gt; Export… &gt; Export World” and selecting the data folder. We could write procedures specific for exporting (and importing) a subset of data. Still, this option is much faster, given that this is the initial spatial data we want for all further versions.</p>
+<p>Still, if you need to do this several times and want to keep track of the directory and file you are using, you can add a button to the interface with the following code, which is equivalent to the built-in option in the menu:</p>
+<pre class="netlogo"><code>export-world "data/terrainWithFlows/BlockC_module2_flows world.csv"</code></pre>
+<p>The same can be done to import the same file. Inside a new button, add:</p>
+<pre class="netlogo"><code>clear-all
+import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"</code></pre>
+<p>Now, you should be able to export and import your map with flows.</p>
+<p>See the fully implemented version of this module: <code>BlockC_module2_flows.nlogo</code>.</p>
+<p>For the sake of this example, we will assume our approximation to be sufficient. Still, tackling this kind of problem exploring other solutions in your own time could be an excellent exercise for improving your skills.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./messara-gis.html" class="pagination-link" aria-label="Importing spatial data: elevation and site data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Importing spatial data: elevation and site data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./messara-weather.html" class="pagination-link" aria-label="Importing time series: weather data">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-water-flow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
