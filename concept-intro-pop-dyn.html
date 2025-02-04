@@ -511,7 +511,7 @@ window.Quarto = {
 derivative work: Blleininger, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-sa/3.0/>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Adoption_CLD.svg"><img width="400px" alt="Adoption CLD" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Adoption_CLD.svg/512px-Adoption_CLD.svg.png?20100626011908"></a></p>
 </div>
 <div class="g-col-6">
-<p><a title="The original uploader was Apdevries at English Wikipedia., CC BY-SA 3.0 <http://creativecommons.org/licenses/by-sa/3.0/>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Adoption_SFD.png"><img alt="Adoption SFD" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Adoption_SFD.png?20140810144917"></a></p>
+<p><a title="The original uploader was Apdevries at English Wikipedia., CC BY-SA 3.0 <http://creativecommons.org/licenses/by-sa/3.0/>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Adoption_SFD.png"><img width="400px" alt="Adoption SFD" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Adoption_SFD.png?20140810144917"></a></p>
 </div>
 <div class="g-col-6">
 <p><a href="https://en.wikipedia.org/wiki/Flowchart">Flowcharts</a>: useful for representing flows of logic governed by a predetermined structure, especially when conditionals are involved (e.g.&nbsp;decision-making). In agent-based models, we will use it to describe modular <em>processes</em> that be applied to an entire model or to its entities and repeated every step in time.</p>
@@ -584,7 +584,8 @@ population = <em>g</em>(initialPopulation, immigration, <strong>time</strong>)</
 <p>If settlement size and population change over time, would immigration change as well? If so, then we will also need to consider an additional term, the parameter that determines the rate of change in immigration:</p>
 <blockquote class="blockquote">
 <p>settlementSize = <em>f</em>(population, <strong>time</strong>)<br>
-population = <em>g</em>(initialPopulation, immigration, <strong>time</strong>) immigration = <em>h</em>(immigrationRate, <strong>time</strong>)</p>
+population = <em>g</em>(initialPopulation, immigration, <strong>time</strong>)<br>
+immigration = <em>h</em>(immigrationRate, <strong>time</strong>)</p>
 </blockquote>
 <p>Our causal graph will be at this point considerably different, even when we assume time as implicit to all variables:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -629,7 +630,8 @@ population = <em>g</em>(initialPopulation, immigration, <strong>time</strong>) i
 </div>
 <p>With this level of formalisation and complexity, our model will start to get quite close to a fully specified and implemented simulation model within the framework of <a href="https://en.wikipedia.org/wiki/System_dynamics">system dynamics</a>. If we were to stay in this framework, we could already write down a preliminary implementation as a set of two difference equations:</p>
 <blockquote class="blockquote">
-<p>population = naturalGrowthRate * population + immigrationRate - emmigrationRate * population settlementSize = areaPerInhabitant * population</p>
+<p>population = naturalGrowthRate * population + immigrationRate - emmigrationRate * population<br>
+settlementSize = areaPerInhabitant * population</p>
 </blockquote>
 <p>Through a look at the causal diagram and the equations, we can visualise what aspects are detailed or simplified in our model. In this example, the model is clearly focusing more on <strong>population dynamics</strong> as the motor of settlement change, rather than other process that could be mediating population and settlement size (e.g., procurement of materials, construction, labour organisation, cohabitation social norms). It is important to decide whether this is desirable or not before continuing adding new elements to the model.</p>
 </section>
