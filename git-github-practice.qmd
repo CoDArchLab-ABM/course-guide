@@ -21,5 +21,5 @@ Edit your README file and commit/push your changes.
 ## Publishing version 0.1
 
   * Set up the GitHub-Zenodo connection.  
-  * Publish your repository.  
+  * Publish your repository (under your username or a GitHub organisation that you own).   
   * Update README with the new Zenodo DOI (badge).
