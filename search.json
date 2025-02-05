@@ -1275,18 +1275,7 @@
     "href": "messara-pond-trade.html#extension-arid-as-a-factor-of-settlement-productivity",
     "title": "21  The MesaraTrade model",
     "section": "21.3 Extension: ARID as a factor of settlement productivity",
-    "text": "21.3 Extension: ARID as a factor of settlement productivity\nLast, we need to connect ARID to settlement productivity.\nWe first calculate the value of two new settlement variables, catchmentArea and ARIDinCatchmentArea. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on sizeLevel and two parameters, catchmentSlope and catchmentRadiusMaximum. This is a very preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Mesara Valley.\nsettlements-own\n[\n  ...\n  catchmentArea\n  ARIDinCatchmentArea\n]\n\n...\n\nto update-ARIDinCatchmentArea\n  \n  let patchesInCatchmentArea patches in-radius catchmentArea\n  \n  ifelse (count patchesInCatchmentArea = 1)\n  [ set ARIDinCatchmentArea [ARID] of patch-here ]\n  [ set ARIDinCatchmentArea mean [ARID] of patchesInCatchmentArea]\n  \nend\n\nto update-catchmentArea\n  \n  set catchmentArea get-value-in-gradient sizeLevel catchmentSlope catchmentRadiusMaximum\n  \nend\n\nto-report get-value-in-gradient [ input gradient maximum ]\n\n  report e ^ ( - input / ((gradient / 100) * maximum) )\n\nend\nAnd voilà! We can now run our boosted Pond Trade model within the context of our case study.\n\nView of MesaraTrade after set up",
-    "crumbs": [
-      "Messara Trade",
-      "<span class='chapter-number'>21</span>  <span class='chapter-title'>The MesaraTrade model</span>"
-    ]
-  },
-  {
-    "objectID": "messara-pond-trade.html#debugging",
-    "href": "messara-pond-trade.html#debugging",
-    "title": "21  The MesaraTrade model",
-    "section": "21.4 Debugging",
-    "text": "21.4 Debugging\nBut wait! You press the “go” button a few times and NetLogo accuse an error! Can you solve this problem? You will find the solution hidden as a couple of commented-out lines in BlockC_module6_MesaraTrade.nlogo.\n\nView of MesaraTrade interface",
+    "text": "21.3 Extension: ARID as a factor of settlement productivity\nLast, we need to connect ARID to settlement productivity.\nWe first calculate the value of two new settlement variables, catchmentArea and ARIDinCatchmentArea. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on sizeLevel and two parameters, catchmentSlope and catchmentRadiusMaximum. This is a very preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Mesara Valley.\nsettlements-own\n[\n  ...\n  catchmentArea\n  ARIDinCatchmentArea\n]\n\n...\n\nto update-ARIDinCatchmentArea\n  \n  let patchesInCatchmentArea patches in-radius catchmentArea\n  \n  ifelse (count patchesInCatchmentArea = 1)\n  [ set ARIDinCatchmentArea [ARID] of patch-here ]\n  [ set ARIDinCatchmentArea mean [ARID] of patchesInCatchmentArea]\n  \nend\n\nto update-catchmentArea\n  \n  set catchmentArea get-value-in-gradient sizeLevel catchmentSlope catchmentRadiusMaximum\n  \nend\n\nto-report get-value-in-gradient [ input gradient maximum ]\n\n  report e ^ ( - input / ((gradient / 100) * maximum) )\n\nend\nAnd voilà! We can now run our boosted Pond Trade model within the context of our case study.\n\nView of MesaraTrade after set up\n\nView of MesaraTrade interface",
     "crumbs": [
       "Messara Trade",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>The MesaraTrade model</span>"
@@ -1296,11 +1285,66 @@
     "objectID": "messara-pond-trade.html#margins-to-improve-and-explore",
     "href": "messara-pond-trade.html#margins-to-improve-and-explore",
     "title": "21  The MesaraTrade model",
-    "section": "21.5 Margins to improve and explore",
-    "text": "21.5 Margins to improve and explore\nThere are many other points to refactor, explore alternatives and expand. Just remember to first give it a think and then start writing code.\nFor example:\n- Can we visualise catchmentArea of settlements in the NetLogo View, instead of sizeLevel? - Could we find a way to calibrate the speed of traders to the same daily rhythm of the weather variables?\n- Could rivers also affect patchCost?",
+    "section": "21.4 Margins to improve and explore",
+    "text": "21.4 Margins to improve and explore\nThere are many other points to refactor, explore alternatives and expand. Just remember to first give it a think and then start writing code.\nFor example:\n- Can we visualise catchmentArea of settlements in the NetLogo View, instead of sizeLevel? - Could we find a way to calibrate the speed of traders to the same daily rhythm of the weather variables?\n- Could rivers also affect patchCost?",
     "crumbs": [
       "Messara Trade",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>The MesaraTrade model</span>"
+    ]
+  },
+  {
+    "objectID": "post-experiments.html",
+    "href": "post-experiments.html",
+    "title": "22  Experimental design in simulation",
+    "section": "",
+    "text": "22.1 Single simulation run",
+    "crumbs": [
+      "After the storm",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Experimental design in simulation</span>"
+    ]
+  },
+  {
+    "objectID": "post-experiments.html#simulation-batches",
+    "href": "post-experiments.html#simulation-batches",
+    "title": "22  Experimental design in simulation",
+    "section": "22.2 Simulation “batches”",
+    "text": "22.2 Simulation “batches”",
+    "crumbs": [
+      "After the storm",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Experimental design in simulation</span>"
+    ]
+  },
+  {
+    "objectID": "post-experiments.html#simulation-batches-under-the-same-parameter-configuration",
+    "href": "post-experiments.html#simulation-batches-under-the-same-parameter-configuration",
+    "title": "22  Experimental design in simulation",
+    "section": "22.3 Simulation batches under the same parameter configuration",
+    "text": "22.3 Simulation batches under the same parameter configuration",
+    "crumbs": [
+      "After the storm",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Experimental design in simulation</span>"
+    ]
+  },
+  {
+    "objectID": "post-experiments.html#simulation-batches-with-different-parameter-configurations",
+    "href": "post-experiments.html#simulation-batches-with-different-parameter-configurations",
+    "title": "22  Experimental design in simulation",
+    "section": "22.4 Simulation batches with different parameter configurations",
+    "text": "22.4 Simulation batches with different parameter configurations",
+    "crumbs": [
+      "After the storm",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Experimental design in simulation</span>"
+    ]
+  },
+  {
+    "objectID": "post-experiments.html#simulation-batches-with-alternative-designs",
+    "href": "post-experiments.html#simulation-batches-with-alternative-designs",
+    "title": "22  Experimental design in simulation",
+    "section": "22.5 Simulation batches with alternative designs",
+    "text": "22.5 Simulation batches with alternative designs",
+    "crumbs": [
+      "After the storm",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>Experimental design in simulation</span>"
     ]
   },
   {
@@ -1308,7 +1352,7 @@
     "href": "post-analysis.html",
     "title": "23  Analysis of simulation results",
     "section": "",
-    "text": "23.1 Single run visualisation and analysis",
+    "text": "23.1 Single run visualisation and analysis\n#source(\"assets/r-scripts/plotTrajectory.R\")\n# load simulation data\n# plot trajectory",
     "crumbs": [
       "After the storm",
       "<span class='chapter-number'>23</span>  <span class='chapter-title'>Analysis of simulation results</span>"
