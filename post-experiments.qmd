@@ -1,2 +1,17 @@
 # Experimental design in simulation {#post-experiments}
 
+## Single simulation run
+
+
+## Simulation "batches"
+
+
+## Simulation batches under the same parameter configuration
+
+
+## Simulation batches with different parameter configurations
+
+
+## Simulation batches with alternative designs
+
+
