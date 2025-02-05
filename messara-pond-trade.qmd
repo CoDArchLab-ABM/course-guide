@@ -236,10 +236,6 @@ And *voilà*! We can now run our boosted Pond Trade model within the context of 
 ![View of MesaraTrade after set up](assets/screenshots/BlockC_module6_MesaraTrade view.png)  
 *View of MesaraTrade after set up*
 
-## Debugging
-
-But wait! You press the "go" button a few times and NetLogo accuse an error! Can you solve this problem? You will find the solution hidden as a couple of commented-out lines in `BlockC_module6_MesaraTrade.nlogo`.
-
 ![View of MesaraTrade interface](assets/screenshots/BlockC_module6_MesaraTrade interface.png)  
 *View of MesaraTrade interface*
 
