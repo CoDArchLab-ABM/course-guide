@@ -1,17 +1,107 @@
 # Experimental design in simulation {#post-experiments}
 
+## Using NetLogo's BehaviorSpace
+
+
+
 ## Single simulation run
 
 
-## Simulation "batches"
+
+## Repetitions under the same parameter configuration
 
 
-## Simulation batches under the same parameter configuration
+
+## Different parameter configurations
 
 
-## Simulation batches with different parameter configurations
+
+## Alternative designs
 
 
-## Simulation batches with alternative designs
 
+## Stochastic exploration for sensitivity analysis
+
+To perform sensitivity analysis in a simulation model, we need to sample parameter values more efficiently than using regular intervals. There are three common sampling methods: **Random Sampling**, **Latin Hypercube Sampling (LHS)**, and **Sobol Sampling**. Below is an explanation of how to obtain parameter samples using each method in **R**.
+
+### Random Sampling
+Random sampling is the simplest method, where parameter values are drawn independently from a given probability distribution (e.g., uniform, normal). This method may not cover the parameter space as efficiently as structured sampling methods.
+
+**Implementation in R**
+```r
+set.seed(123)  # For reproducibility
+n <- 100  # Number of samples
+param1 <- runif(n, min = 0, max = 1)  # Uniform distribution
+param2 <- rnorm(n, mean = 0, sd = 1)  # Normal distribution
+
+# Combine into a data frame
+samples_random <- data.frame(param1, param2)
+head(samples_random)
+```
+📌 **Pros:** Simple and easy to implement  
+📌 **Cons:** Potential clustering of samples, leading to inefficient coverage of the parameter space.
+
+### Latin Hypercube Sampling (LHS)
+Latin Hypercube Sampling ensures that each parameter is sampled more uniformly across its range. It divides the range of each parameter into equal intervals and ensures that each interval is sampled exactly once [@chalom_parameter_2015].
+
+**Implementation in R**
+Using the **lhs** package:
+```r
+library(lhs)
+set.seed(123)
+n <- 100  # Number of samples
+k <- 2  # Number of parameters
+
+# Generate LHS sample in [0,1] range
+samples_lhs <- randomLHS(n, k)
+
+# Transform to specific distributions
+param1 <- qunif(samples_lhs[,1], min = 0, max = 1)  # Uniform
+param2 <- qnorm(samples_lhs[,2], mean = 0, sd = 1)  # Normal
+
+# Combine into a data frame
+samples_lhs <- data.frame(param1, param2)
+head(samples_lhs)
+```
+📌 **Pros:** More uniform coverage of the space than random sampling  
+📌 **Cons:** Does not account for interactions between parameters explicitly
+
+### Sobol Sampling
+Sobol sampling is a **quasi-random** low-discrepancy sequence designed for global sensitivity analysis. It provides better uniformity across the space than both random and LHS methods [@renardy_sobol_2021].
+
+**Implementation in R**
+Using the **randtoolbox** package:
+```r
+library(randtoolbox)
+set.seed(123)
+n <- 100  # Number of samples
+k <- 2  # Number of parameters
+
+# Generate Sobol sequence
+samples_sobol <- sobol(n, dim = k, scrambling = 3)
+
+# Transform to specific distributions
+param1 <- qunif(samples_sobol[,1], min = 0, max = 1)  # Uniform
+param2 <- qnorm(samples_sobol[,2], mean = 0, sd = 1)  # Normal
+
+# Combine into a data frame
+samples_sobol <- data.frame(param1, param2)
+head(samples_sobol)
+```
+📌 **Pros:** Highly efficient, low-discrepancy sequence for sensitivity analysis  
+📌 **Cons:** Requires specialized libraries, and might not be ideal for small sample sizes
+
+### Comparison of Methods
+
+| Sampling Method | Uniform Coverage | Computational Efficiency | Best Use Case |
+|----------------|------------------|-------------------------|---------------|
+| **Random** | Poor | Fast | Basic sensitivity analysis |
+| **Latin Hypercube (LHS)** | Good | Moderate | Optimized space-filling with no interaction control |
+| **Sobol** | Excellent | Moderate | Global sensitivity analysis |
+
+### Conclusion
+
+- **Use random sampling** when simplicity is preferred.  
+- **Use LHS** when uniform coverage of individual parameters is important.  
+- **Use Sobol sampling** for high-dimensional sensitivity analysis.  
 
