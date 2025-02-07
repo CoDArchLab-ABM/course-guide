@@ -1,5 +1,6 @@
 globals
 [
+  maxDistance
   maxPeopleAge
 ]
 
@@ -24,7 +25,6 @@ people-own
 
 undirected-link-breed [ migrationFlows migrationFlow ]
 
-
 to setup
 
   clear-all
@@ -32,6 +32,8 @@ to setup
 
   ; set the random seed so we can reproduce the same experiment
   random-seed seed
+
+  set maxDistance sqrt ((world-width ^ 2) + (world-height ^ 2))
 
   set maxPeopleAge 80
 
@@ -82,7 +84,12 @@ to setup
 
     ask other settlementsWithoutLinks
     [
-      create-migrationFlow-with thisSettlement
+      let shouldLink distance thisSettlement < maxMigrationDistance
+
+      if(shouldLink)
+      [
+        create-migrationFlow-with thisSettlement
+      ]
     ]
   ]
 
@@ -92,8 +99,63 @@ to go
 
   tick
 
+  check-survival
 
+  reproduce
 
+  ask people
+  [
+    let conditionA true
+
+    let conditionB true
+
+    if (conditionA)
+    [
+      if (conditionB)
+      [
+        emmigrate
+      ]
+    ]
+  ]
+
+end
+
+to check-survival
+
+  ask people
+  [
+    if (2 - random-float 2 > [prosperity] of mySettlement / minNecessaryProsperity)
+    [
+      die
+    ]
+  ]
+
+end
+
+to reproduce
+
+  ask people with [sex = "female" and age > 15 and age < 45]
+  [
+    if (random-float 1 > probReproducing)
+    [
+      hatch-people 1
+     [
+        let neighborsWithoutPeople neighbors with [count people-here = 0]
+        if (any? neighborsWithoutPeople)
+        [
+          move-to one-of neighborsWithoutPeople
+        ]
+     ]
+    ]
+  ]
+
+end
+
+to emmigrate ;;; ego = person
+
+  let settlementsConnectedToMine [migrationFlow-neighbors] of mySettlement
+
+  move-to one-of settlementsConnectedToMine
 
 end
 @#$#@#$#@
@@ -133,7 +195,7 @@ settlementNumber
 settlementNumber
 0
 100
-4.0
+28.0
 1
 1
 NIL
@@ -145,7 +207,7 @@ INPUTBOX
 192
 79
 seed
-5.0
+19.0
 1
 0
 Number
@@ -200,10 +262,10 @@ NIL
 HORIZONTAL
 
 SWITCH
-39
-406
-170
-439
+32
+454
+163
+487
 isPeopleVisible
 isPeopleVisible
 0
@@ -221,6 +283,51 @@ maxInitialSettlementPopulation
 100
 6.0
 1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+16
+317
+210
+350
+maxMigrationDistance
+maxMigrationDistance
+0
+sqrt ((world-width ^ 2) + (world-height ^ 2))
+11.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+17
+358
+191
+391
+minNecessaryProsperity
+minNecessaryProsperity
+0
+100
+9.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+26
+401
+198
+434
+probReproducing
+probReproducing
+0
+1
+0.1
+0.01
 1
 NIL
 HORIZONTAL
