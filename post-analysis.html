@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -387,10 +407,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#single-run-visualisation-and-analysis" id="toc-single-run-visualisation-and-analysis" class="nav-link active" data-scroll-target="#single-run-visualisation-and-analysis"><span class="header-section-number">23.1</span> Single run visualisation and analysis</a></li>
-  <li><a href="#parameter-exploration-visualisations" id="toc-parameter-exploration-visualisations" class="nav-link" data-scroll-target="#parameter-exploration-visualisations"><span class="header-section-number">23.2</span> Parameter exploration visualisations</a></li>
-  <li><a href="#statistical-inference-on-simulation-results" id="toc-statistical-inference-on-simulation-results" class="nav-link" data-scroll-target="#statistical-inference-on-simulation-results"><span class="header-section-number">23.3</span> Statistical inference on simulation results</a></li>
-  <li><a href="#use-of-machine-learning-for-sensitivity-analysis" id="toc-use-of-machine-learning-for-sensitivity-analysis" class="nav-link" data-scroll-target="#use-of-machine-learning-for-sensitivity-analysis"><span class="header-section-number">23.4</span> Use of machine learning for sensitivity analysis</a></li>
+  <li><a href="#single-run" id="toc-single-run" class="nav-link active" data-scroll-target="#single-run"><span class="header-section-number">23.1</span> Single run</a></li>
+  <li><a href="#multiple-runs-in-single-configuration" id="toc-multiple-runs-in-single-configuration" class="nav-link" data-scroll-target="#multiple-runs-in-single-configuration"><span class="header-section-number">23.2</span> Multiple runs in single configuration</a></li>
+  <li><a href="#parameter-exploration---regular-intervals" id="toc-parameter-exploration---regular-intervals" class="nav-link" data-scroll-target="#parameter-exploration---regular-intervals"><span class="header-section-number">23.3</span> Parameter exploration - regular intervals</a>
+  <ul class="collapse">
+  <li><a href="#one-parameter" id="toc-one-parameter" class="nav-link" data-scroll-target="#one-parameter"><span class="header-section-number">23.3.1</span> One parameter</a></li>
+  <li><a href="#two-parameter" id="toc-two-parameter" class="nav-link" data-scroll-target="#two-parameter"><span class="header-section-number">23.3.2</span> Two parameter</a></li>
+  </ul></li>
+  <li><a href="#use-of-machine-learning-for-sensitivity-analysis" id="toc-use-of-machine-learning-for-sensitivity-analysis" class="nav-link" data-scroll-target="#use-of-machine-learning-for-sensitivity-analysis"><span class="header-section-number">23.4</span> Use of machine learning for sensitivity analysis</a>
+  <ul class="collapse">
+  <li><a href="#step-by-step-guide-to-using-random-forest-for-parameter-importance" id="toc-step-by-step-guide-to-using-random-forest-for-parameter-importance" class="nav-link" data-scroll-target="#step-by-step-guide-to-using-random-forest-for-parameter-importance"><span class="header-section-number">23.4.1</span> Step-by-Step Guide to Using Random Forest for Parameter Importance</a></li>
+  </ul></li>
   <li><a href="#use-of-machine-learning-for-parameter-callibration" id="toc-use-of-machine-learning-for-parameter-callibration" class="nav-link" data-scroll-target="#use-of-machine-learning-for-parameter-callibration"><span class="header-section-number">23.5</span> Use of machine learning for parameter callibration</a></li>
   <li><a href="#use-of-machine-learning-for-model-selection" id="toc-use-of-machine-learning-for-model-selection" class="nav-link" data-scroll-target="#use-of-machine-learning-for-model-selection"><span class="header-section-number">23.6</span> Use of machine learning for model selection</a></li>
   </ul>
@@ -418,35 +445,322 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="single-run-visualisation-and-analysis" class="level2" data-number="23.1">
-<h2 data-number="23.1" class="anchored" data-anchor-id="single-run-visualisation-and-analysis"><span class="header-section-number">23.1</span> Single run visualisation and analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#source("assets/r-scripts/plotTrajectory.R")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load simulation data </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>experiments_path <span class="ot">&lt;-</span> <span class="st">"assets/netlogo/experiments/Artificial Anasazi_experiments "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot trajectory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>color_mapping <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"historical households"</span> <span class="ot">=</span> <span class="st">"blue"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"simulation households"</span> <span class="ot">=</span> <span class="st">"darkred"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="single-run" class="level2" data-number="23.1">
+<h2 data-number="23.1" class="anchored" data-anchor-id="single-run"><span class="header-section-number">23.1</span> Single run</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment single run"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results_single <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 552 Columns: 11
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): map-view
+dbl (9): [run number], fertility, death-age, harvest-variance, fertility-end...
+lgl (1): historic-view?
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Plot trajectories of metrics:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_single) <span class="sc">+</span>  </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">"historical data"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">"simulation households"</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">""</span>, <span class="at">values =</span> color_mapping) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment single run-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
-<section id="parameter-exploration-visualisations" class="level2" data-number="23.2">
-<h2 data-number="23.2" class="anchored" data-anchor-id="parameter-exploration-visualisations"><span class="header-section-number">23.2</span> Parameter exploration visualisations</h2>
+<section id="multiple-runs-in-single-configuration" class="level2" data-number="23.2">
+<h2 data-number="23.2" class="anchored" data-anchor-id="multiple-runs-in-single-configuration"><span class="header-section-number">23.2</span> Multiple runs in single configuration</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment multiple runs"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results_single <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 5520 Columns: 11
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): map-view
+dbl (9): [run number], fertility, death-age, harvest-variance, fertility-end...
+lgl (1): historic-view?
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Plot trajectories of metrics:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_single) <span class="sc">+</span>  </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"historical households"</span>],</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment multiple runs-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="statistical-inference-on-simulation-results" class="level2" data-number="23.3">
-<h2 data-number="23.3" class="anchored" data-anchor-id="statistical-inference-on-simulation-results"><span class="header-section-number">23.3</span> Statistical inference on simulation results</h2>
+<section id="parameter-exploration---regular-intervals" class="level2" data-number="23.3">
+<h2 data-number="23.3" class="anchored" data-anchor-id="parameter-exploration---regular-intervals"><span class="header-section-number">23.3</span> Parameter exploration - regular intervals</h2>
+<section id="one-parameter" class="level3" data-number="23.3.1">
+<h3 data-number="23.3.1" class="anchored" data-anchor-id="one-parameter"><span class="header-section-number">23.3.1</span> One parameter</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment harvest adjustment"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>results_harvest_adj <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 104880 Columns: 11
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): map-view
+dbl (9): [run number], fertility, death-age, harvest-variance, fertility-end...
+lgl (1): historic-view?
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Plot trajectories of metrics:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_harvest_adj) <span class="sc">+</span>  </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment harvest adjustment-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="two-parameter" class="level3" data-number="23.3.2">
+<h3 data-number="23.3.2" class="anchored" data-anchor-id="two-parameter"><span class="header-section-number">23.3.2</span> Two parameter</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment harvest adjustment variance"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>results_harvest_adj <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 441600 Columns: 11
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): map-view
+dbl (9): [run number], fertility, death-age, harvest-variance, fertility-end...
+lgl (1): historic-view?
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Plot trajectories of metrics:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_harvest_adj) <span class="sc">+</span>  </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"simulation households"</span>],</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"historical households"</span>],</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span> <span class="sc">~</span> <span class="st">`</span><span class="at">harvest-variance</span><span class="st">`</span>) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment harvest adjustment variance-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="use-of-machine-learning-for-sensitivity-analysis" class="level2" data-number="23.4">
 <h2 data-number="23.4" class="anchored" data-anchor-id="use-of-machine-learning-for-sensitivity-analysis"><span class="header-section-number">23.4</span> Use of machine learning for sensitivity analysis</h2>
+<p>To evaluate the importance of each parameter in a simulation model, <strong>Random Forest (RF)</strong> can be used as a feature importance estimator. This involves training an RF model on simulation results and then analyzing the impact of each input parameter on the output.</p>
+<section id="step-by-step-guide-to-using-random-forest-for-parameter-importance" class="level3" data-number="23.4.1">
+<h3 data-number="23.4.1" class="anchored" data-anchor-id="step-by-step-guide-to-using-random-forest-for-parameter-importance"><span class="header-section-number">23.4.1</span> Step-by-Step Guide to Using Random Forest for Parameter Importance</h3>
+<p><strong>1. Generate Simulation Data</strong> The first step is to generate simulation results by systematically sampling multiple parameters using methods like <strong>Random Sampling, Latin Hypercube Sampling (LHS), or Sobol Sampling</strong>.</p>
+<p><strong>Example: Generating Simulation Data in R</strong></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lhs)        <span class="co"># For Latin Hypercube Sampling</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randtoolbox) <span class="co"># For Sobol Sampling</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span>  <span class="co"># Number of samples</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span>    <span class="co"># Number of parameters</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Latin Hypercube sampled input parameters</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>param_samples <span class="ot">&lt;-</span> <span class="fu">randomLHS</span>(n, k)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(param_samples) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"param"</span>, <span class="dv">1</span><span class="sc">:</span>k)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume a simple simulation model (e.g., sum of squared params)</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>simulation_results <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(param_samples<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to data frame</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(param_samples, <span class="at">Output =</span> simulation_results)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sim_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>📌 <strong>Note:</strong> Replace <code>simulation_results</code> with the actual simulation output.</p>
+<p><strong>2. Train a Random Forest Model</strong></p>
+<p>Once the data is prepared, an RF model can be trained using <strong>randomForest</strong> in R.</p>
+<p><strong>Train the RF Model</strong></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Train Random Forest to predict simulation output</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Output <span class="sc">~</span> ., <span class="at">data =</span> sim_data, <span class="at">importance =</span> <span class="cn">TRUE</span>, <span class="at">ntree =</span> <span class="dv">500</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print model summary</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rf_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>📌 <strong>Explanation:</strong></p>
+<ul>
+<li><code>Output ~ .</code> means the RF model uses all parameters to predict the output.<br>
+</li>
+<li><code>importance = TRUE</code> ensures that feature importance is computed.<br>
+</li>
+<li><code>ntree = 500</code> sets the number of trees in the forest.</li>
+</ul>
+<p><strong>3. Extract Parameter Importance</strong></p>
+<p>After training, RF provides two types of <strong>feature importance</strong>: 1. <strong>Mean Decrease in Accuracy</strong> (MDA) – Measures how much accuracy drops when a parameter is randomly shuffled. 2. <strong>Mean Decrease in Gini</strong> (MDG) – Measures how much each variable contributes to reducing node impurity in the decision trees.</p>
+<p><strong>Plot Feature Importance</strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract importance values</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>importance_values <span class="ot">&lt;-</span> <span class="fu">importance</span>(rf_model)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to a data frame</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>importance_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Parameter =</span> <span class="fu">rownames</span>(importance_values),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">MDA =</span> importance_values[, <span class="dv">1</span>], </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">MDG =</span> importance_values[, <span class="dv">2</span>])</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print importance scores</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(importance_df)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot feature importance</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(importance_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Parameter, <span class="sc">-</span>MDA), <span class="at">y =</span> MDA)) <span class="sc">+</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Feature Importance (Mean Decrease in Accuracy)"</span>,</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Parameter"</span>, <span class="at">y =</span> <span class="st">"Importance"</span>) <span class="sc">+</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>📌 <strong>Interpretation:</strong> - <strong>Higher MDA values</strong> indicate more important parameters (greater accuracy drop when shuffled). - <strong>Higher MDG values</strong> mean stronger contributions to splitting decisions in trees.</p>
+<p><strong>4. Interpret the Results</strong></p>
+<p>After analyzing feature importance: - <strong>Key parameters</strong> can be identified for further refinement. - <strong>Unimportant parameters</strong> can be removed to simplify the model. - <strong>Interactions between parameters</strong> can be explored.</p>
+<hr>
+<p><strong>Summary</strong> | Step | Action | |——|——–| | <strong>1</strong> | Generate parameter samples using LHS, Sobol, or Random Sampling | | <strong>2</strong> | Run simulations to obtain output values | | <strong>3</strong> | Train a Random Forest model using <code>randomForest</code> | | <strong>4</strong> | Extract feature importance using <code>importance()</code> | | <strong>5</strong> | Interpret and visualize the results |</p>
+<p>🚀 <strong>Would you like further guidance on hyperparameter tuning or extending this to other ML models?</strong></p>
+<p>Example: <span class="citation" data-cites="angourakis_human-plant_2022">(<a href="references.html#ref-angourakis_human-plant_2022" role="doc-biblioref">Angourakis et al. 2022</a>)</span></p>
+</section>
 </section>
 <section id="use-of-machine-learning-for-parameter-callibration" class="level2" data-number="23.5">
 <h2 data-number="23.5" class="anchored" data-anchor-id="use-of-machine-learning-for-parameter-callibration"><span class="header-section-number">23.5</span> Use of machine learning for parameter callibration</h2>
+<p>(TO-DO)</p>
 </section>
 <section id="use-of-machine-learning-for-model-selection" class="level2" data-number="23.6">
 <h2 data-number="23.6" class="anchored" data-anchor-id="use-of-machine-learning-for-model-selection"><span class="header-section-number">23.6</span> Use of machine learning for model selection</h2>
-<p>Carrignon, S., Brughmans, T., &amp; Romanowska, I. (2020). Tableware trade in the Roman East: Exploring cultural and economic transmission with agent-based modelling and approximate Bayesian computation. PLOS ONE, 15(11), e0240414. <a href="https://doi.org/10.1371/journal.pone.0240414">10.1371/journal.pone.0240414</a></p>
+<p>Example: <span class="citation" data-cites="carrignon_tableware_2020">(<a href="references.html#ref-carrignon_tableware_2020" role="doc-biblioref">Carrignon, Brughmans, and Romanowska 2020</a>)</span></p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-angourakis_human-plant_2022" class="csl-entry" role="listitem">
+Angourakis, Andreas, Jonas Alcaina-Mateos, Marco Madella, and Debora Zurro. 2022. <span>“Human-<span>Plant</span> <span>Coevolution</span>: <span>A</span> Modelling Framework for Theory-Building on the Origins of Agriculture.”</span> <em>PLOS ONE</em> 17 (9): e0260904. <a href="https://doi.org/10.1371/journal.pone.0260904">https://doi.org/10.1371/journal.pone.0260904</a>.
+</div>
+<div id="ref-carrignon_tableware_2020" class="csl-entry" role="listitem">
+Carrignon, Simon, Tom Brughmans, and Iza Romanowska. 2020. <span>“Tableware Trade in the <span>Roman</span> <span>East</span>: <span>Exploring</span> Cultural and Economic Transmission with Agent-Based Modelling and Approximate <span>Bayesian</span> Computation.”</span> Edited by Sergi Lozano. <em>PLOS ONE</em> 15 (11): e0240414. <a href="https://doi.org/10.1371/journal.pone.0240414">https://doi.org/10.1371/journal.pone.0240414</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
