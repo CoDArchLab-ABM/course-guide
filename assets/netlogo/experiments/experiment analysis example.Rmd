@@ -1,0 +1,57 @@
+
+```{r}
+library(ggplot2)
+library(readr)
+```
+
+```{r}
+experiments_path <- "assets/netlogo/experiments/population-dynamics-migration "
+```
+
+```{r}
+expname <- "experiment probOpenness"
+```
+
+Read output:
+```{r}
+one_parameter_single <- readr::read_csv(paste0(experiments_path, expname, "-table.csv"), skip = 6)
+```
+
+Plot trajectories of metrics:
+```{r}
+plot_name <- paste0(experiments_path, expname, "-bifurcationPlot-totalPopulation.png")
+
+png(plot_name, width = 840, height = 540)
+
+ggplot(one_parameter_single) +  
+  geom_point(aes(x = `probOpenness`, y = `totalPopulation`, color = `seed`),
+            size = 3) +
+  geom_smooth(aes(x = `probOpenness`, y = `totalPopulation`)) +
+  labs(x = "probOpenness", y = "totalPopulation")
+
+dev.off()
+```
+
+```{r}
+knitr::include_graphics(plot_name)
+```
+
+
+Plot trajectories of metrics:
+```{r}
+plot_name <- paste0(experiments_path, expname, "-bifurcationPlot-migrationEvents.png")
+
+png(plot_name, width = 840, height = 540)
+
+ggplot(one_parameter_single) +  
+  geom_point(aes(x = `probOpenness`, y = `migrationEvents`, color = `seed`),
+            size = 3) +
+  geom_smooth(aes(x = `probOpenness`, y = `migrationEvents`)) +
+  labs(x = "probOpenness", y = "migrationEvents")
+
+dev.off()
+```
+
+```{r}
+knitr::include_graphics(plot_name)
+```

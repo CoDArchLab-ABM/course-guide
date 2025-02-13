@@ -2,6 +2,9 @@ globals
 [
   maxDistance
   maxPeopleAge
+
+  totalPopulation
+  migrationEvents
 ]
 
 breed [ settlements settlement ]
@@ -11,8 +14,6 @@ breed [ people person ]
 settlements-own
 [
   populationCount
-  isNeighbourhoodOpen ;;; Boolean
-  isOpen
   prosperity
 ]
 
@@ -24,6 +25,11 @@ people-own
 ]
 
 undirected-link-breed [ migrationFlows migrationFlow ]
+
+migrationFlows-own
+[
+  isOpen
+]
 
 to setup
 
@@ -42,8 +48,6 @@ to setup
     move-to one-of patches with [count settlements-here = 0]
 
     set populationCount minInitialSettlementPopulation + random maxInitialSettlementPopulation
-    set isNeighbourhoodOpen true
-    set isOpen true
     set prosperity random-float 100
 
     set shape "house"
@@ -58,8 +62,6 @@ to setup
       set mySettlement thisSettlement
       set age random maxPeopleAge
       set sex item (random 2) [ "female" "male" ]
-
-      move-to one-of neighbors
 
       set shape "person"
     ]
@@ -89,9 +91,23 @@ to setup
       if(shouldLink)
       [
         create-migrationFlow-with thisSettlement
+        [
+          set isOpen ifelse-value (random-float 1 < probOpenness) [true] [false]
+
+          set color ifelse-value (isOpen) [grey] [red]
+        ]
       ]
     ]
   ]
+
+  ask people
+  [
+    avoid-overlap
+  ]
+
+  set totalPopulation count people
+
+  set migrationEvents 0
 
 end
 
@@ -105,18 +121,20 @@ to go
 
   ask people
   [
-    let conditionA true
+    let areTimesBad (2 - random-float 2 > [prosperity] of mySettlement / minNecessaryProsperity)
 
-    let conditionB true
-
-    if (conditionA)
+    if (areTimesBad)
     [
-      if (conditionB)
-      [
-        emmigrate
-      ]
+      emigrate
     ]
   ]
+
+  ask people
+  [
+    avoid-overlap
+  ]
+
+  set totalPopulation count people
 
 end
 
@@ -140,22 +158,47 @@ to reproduce
     [
       hatch-people 1
      [
-        let neighborsWithoutPeople neighbors with [count people-here = 0]
-        if (any? neighborsWithoutPeople)
-        [
-          move-to one-of neighborsWithoutPeople
-        ]
+        set sex item (random 2) [ "female" "male" ]
+        set age 0
      ]
     ]
   ]
 
 end
 
-to emmigrate ;;; ego = person
+to emigrate ;;; ego = person
 
-  let settlementsConnectedToMine [migrationFlow-neighbors] of mySettlement
+  let myMigrationFlows [my-migrationFlows] of mySettlement
 
-  move-to one-of settlementsConnectedToMine
+  let myOpenMigrationFlows myMigrationFlows with [isOpen]
+
+  let openMigrationFlowSelected one-of myOpenMigrationFlows
+
+  if (openMigrationFlowSelected != nobody)
+  [
+    let openSettlementSelected [[other-end] of openMigrationFlowSelected] of mySettlement
+
+    move-to openSettlementSelected
+
+    set mySettlement openSettlementSelected
+
+    set migrationEvents migrationEvents + 1
+  ]
+
+end
+
+to avoid-overlap ;;; ego = people
+
+  let thisSettlement mySettlement
+
+  let patchesWithinDistance patches with [distance thisSettlement < 0.5 * maxMigrationDistance]
+
+  let nearPatchesWithoutPeople patchesWithinDistance with [count people-here = 0]
+
+  if (any? nearPatchesWithoutPeople)
+  [
+    move-to one-of nearPatchesWithoutPeople
+  ]
 
 end
 @#$#@#$#@
@@ -207,16 +250,16 @@ INPUTBOX
 192
 79
 seed
-19.0
+4000.0
 1
 0
 Number
 
 BUTTON
-34
-169
-97
-202
+12
+166
+75
+199
 NIL
 setup
 NIL
@@ -230,13 +273,13 @@ NIL
 1
 
 BUTTON
-111
-175
-174
-208
+143
+167
+206
+200
 NIL
 go
-NIL
+T
 1
 T
 OBSERVER
@@ -311,7 +354,7 @@ minNecessaryProsperity
 minNecessaryProsperity
 0
 100
-9.0
+48.0
 1
 1
 NIL
@@ -331,6 +374,74 @@ probReproducing
 1
 NIL
 HORIZONTAL
+
+SLIDER
+22
+497
+194
+530
+probOpenness
+probOpenness
+0
+1
+0.54
+0.01
+1
+NIL
+HORIZONTAL
+
+BUTTON
+76
+166
+139
+199
+NIL
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+PLOT
+660
+20
+1197
+234
+Population
+time
+number of people
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot totalPopulation"
+
+PLOT
+659
+240
+1197
+493
+Migration events
+time
+number of migration events
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot migrationEvents"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -678,6 +789,38 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment probOpenness" repetitions="1" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="250"/>
+    <metric>totalPopulation</metric>
+    <metric>migrationEvents</metric>
+    <enumeratedValueSet variable="probReproducing">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="isPeopleVisible">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="minInitialSettlementPopulation">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="minNecessaryProsperity">
+      <value value="48"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="seed" first="0" step="1" last="9"/>
+    <enumeratedValueSet variable="maxMigrationDistance">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="maxInitialSettlementPopulation">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="settlementNumber">
+      <value value="28"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="probOpenness" first="0.1" step="0.1" last="1"/>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
