@@ -254,7 +254,7 @@ After analyzing feature importance:
 
 Example: [@angourakis_human-plant_2022]
 
-## Use of machine learning for parameter callibration
+## Use of machine learning for parameter calibration
 
 (TO-DO)
 
