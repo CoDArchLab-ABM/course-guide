@@ -6,11 +6,11 @@ library(kableExtra)
 
 ```{r, echo=FALSE}
 dates <- as.Date(
-  c("2025.02.03", 
-    "2025.02.04", 
-    "2025.02.05", 
-    "2025.02.06", 
-    "2025.02.07"),
+  c("2025.10.20", 
+    "2025.10.04", 
+    "2025.11.05", 
+    "2025.11.06", 
+    "2025.11.07"),
   "%Y.%m.%d")
 
 dates_with_weekdays <- sort(rep(paste(dates, weekdays(dates), sep = " - "), 2))
