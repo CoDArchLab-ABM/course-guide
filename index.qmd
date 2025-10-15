@@ -56,7 +56,7 @@ session_data$Date <- factor(session_data$Date, unique(session_data$Date))
 
 **Course instructor**: Andreas Angourakis
 
-## **Course summary**
+## Course summary
 
 This course introduces the basic concepts and workflow of simulation and agent-based modelling (ABM), as used in archaeology.
 
@@ -66,7 +66,7 @@ This tutorial uses [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible 
 
 The course offers implementation examples of least path cost algorithms, hydrological and land productivity modelling, network dynamics, and cultural evolution. Additionally, we learn the basics of Git and GitHub for version control, which will help us organize, maintain, and share models and related materials.
 
-## **Course schedule**
+## Course schedule
 
 ```{r, echo=FALSE}
 schedule_table <- knitr::kable(session_data, row.names = TRUE, align = c("l", "l"))
@@ -74,7 +74,7 @@ schedule_table <- knitr::kable(session_data, row.names = TRUE, align = c("l", "l
 schedule_table
 ```
 
-## **Evaluation**
+## Evaluation
 
 Attendance and completion of small exercises, individually or as a group.
 
@@ -84,7 +84,7 @@ The conception of the course structure, as well as the short summaries, exercise
 
 The models and services used are:
 
-- [ChatGPT](https://chatgpt.com/) (GPT-4o) by OpenAI for brainstorming, text and code writing suggestions, collection and articulation of references.  
+- [ChatGPT](https://chatgpt.com/) (GPT-4o) by OpenAI for brainstorming, text and code drafting and writing suggestions, code refactoring and documentation, and collection and articulation of references.  
 - [Google NotebookLM](https://notebooklm.google/) for summary of references and text writing suggestions.
 - [WebChatGPT](https://tools.zmo.ai/webchatgpt), a free browser extension that enhances ChatGPT by providing Internet access directly within the chat interface, used to aid Internet search.
 - [Leonardo.ai](https://app.leonardo.ai/) (user tokens) for generating purely aesthetic visual assets.
