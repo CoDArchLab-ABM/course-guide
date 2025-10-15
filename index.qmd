@@ -7,43 +7,50 @@ library(kableExtra)
 ```{r, echo=FALSE}
 dates <- as.Date(
   c("2025.10.20", 
-    "2025.10.04", 
-    "2025.11.05", 
-    "2025.11.06", 
-    "2025.11.07"),
+    "2025.10.27", 
+    "2025.11.03", 
+    "2025.11.10", 
+    "2025.11.17",
+    "2025.11.24",
+    "2025.12.01",
+    "2025.12.08",
+    "2025.12.15",
+    "2026.01.05",
+    "2026.01.12",
+    "2026.01.19",
+    "2026.01.26",
+    "2026.02.02"),
   "%Y.%m.%d")
 
-dates_with_weekdays <- sort(rep(paste(dates, weekdays(dates), sep = " - "), 2))
+#dates_with_weekdays <- sort(paste(dates, weekdays(dates), sep = " - "))
 
-day_time_blocks <- rep(c("morning", "afternoon"), length(dates))
+#day_time_blocks <- rep(c("morning", "afternoon"), length(dates))
 
-dates_with_day_and_time <- paste(dates_with_weekdays, day_time_blocks)
+#dates_with_day_and_time <- paste(dates_with_weekdays, day_time_blocks)
 
 session_data <- cbind.data.frame(
-  Session = day_time_blocks,
-  Block = dates_with_weekdays,
+  Date = dates,
   Topic = c("Introduction",
-            "Conceptual modelling",
-            "Model repository with Git and GitHub",
-            "Knowing the software: NetLogo",
-            "Pond Trade",
+            "Learning to model processes",
+            "Preparing as a software developer",
+            "Programming for simulation modelling",
+            "Pond Trade (I): basics and cellular automata",
+            "Pond Trade (II): agents and mechanisms",
+            "Pond Trade (III): advanced mechanisms, output stats and 'submodelling'",
+            "Messara Trade (I): case, design and spatial input data",
+            "Messara Trade (II): time-series input data and plugging submodels",
+            "Messara Trade (III): verification, optimisation, refactoring and extension",
+            "Designing and running Simulation experiments",
+            "Analysis of simulation results",
             "free practice",
-            "Messara Trade",
-            "free practice",
-            "Experimentation and analysis",
             "free practice")
 )
-session_data$Block <- factor(session_data$Block, unique(session_data$Block))
+session_data$Date <- factor(session_data$Date, unique(session_data$Date))
 ```
 
 [Agent-based modelling for archaeologists. From concept to application and publication (14436.0398)](https://vvz.ruhr-uni-bochum.de/campus/all/event.asp?gguid=0xE2AAF8DAB10F4972B8854C6EDC49A4DD&from=&tabID=1&tguid=0x5980070F0C7A42899012ACFE7660AC4B&objgguid=NEW&lang=de)
 
-**Time slot**: Week 2-5 February, Monday to Friday
-
-Monday 3, c. 9:30 - 17h
-Tuesday 4 - Friday 7, c. 10:00 - 17h
-Every day we will have pauses and an hour for lunch (c.
-12h).
+**Time slot**: Monday, 10:00-11:30
 
 **Place**: Küpperstift, Kerpener Str., 30, 2nd floor (125/02) [CoDArchLab](https://archaeologie.phil-fak.uni-koeln.de/institut/fachgebiete/archaeoinformatik/codarchlab)
 
@@ -57,23 +64,19 @@ More specifically, we will cover the prototyping of a conceptual model into a wo
 
 This tutorial uses [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible well-established modelling platform known for its relatively low-level entry requirements in terms of programming experience. It has been particularly used in social sciences and ecology for research and educational purposes.
 
-The course offers implementation examples of path cost analysis, hydrological and land productivity modelling, network dynamics, and cultural evolution. Additionally, we learn the basics of Git and GitHub for version control, which will help us organize, maintain, and share models and related materials.
+The course offers implementation examples of least path cost algorithms, hydrological and land productivity modelling, network dynamics, and cultural evolution. Additionally, we learn the basics of Git and GitHub for version control, which will help us organize, maintain, and share models and related materials.
 
 ## **Course schedule**
 
 ```{r, echo=FALSE}
-schedule_table <- knitr::kable(session_data[,c("Session", "Topic")], row.names = TRUE)
-schedule_table <- kableExtra::pack_rows(schedule_table, index = table(session_data$Block), background = "#a9a9a9")
+schedule_table <- knitr::kable(session_data, row.names = TRUE, align = c("l", "l"))
+#schedule_table <- kableExtra::pack_rows(schedule_table, index = table(session_data$Date), background = "#a9a9a9")
 schedule_table
 ```
 
 ## **Evaluation**
 
-Attendance and completion of two milestones, individually or as a group:
-
-1. A conceptual model representing a system of interest, corresponding to an original case study or a selected published model;
-
-2. An implemented agent-based simulation model based on the conceptual model. 
+Attendance and completion of small exercises, individually or as a group.
 
 ## Acknowledgements
 

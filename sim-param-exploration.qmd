@@ -1,16 +1,4 @@
-# Experimental design in simulation {#post-experiments}
-
-## Using NetLogo's BehaviorSpace
-
-
-
-## Single simulation run
-
-
-
-## Repetitions under the same parameter configuration
-
-
+# Simulation experiments for parameter exploration {#sim-param-exploration}
 
 ## Different parameter configurations
 

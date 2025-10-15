@@ -1,4 +1,4 @@
-# Creating your model repository {#git-github-practice}
+# Creating your simulation model repository {#dev-git-github-practice}
 
 ## Join the course GitHub Organisation 
 

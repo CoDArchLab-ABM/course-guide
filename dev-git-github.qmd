@@ -1,4 +1,4 @@
-# Git and GitHub {#git-github-intro}
+# Git and GitHub {#dev-git-github}
 
 ## Version-control and Git
 

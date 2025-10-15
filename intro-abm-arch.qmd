@@ -4,7 +4,7 @@ ABM has conceptual roots and applications in other fields relatively early, hand
 
 ABM has been exceptionally well accepted by archaeologists, given its pre-adaptation towards distributed and stochastic processes. Most phenomena of interest for archaeology can be represented with ABM, to the satisfaction of archaeologists. Other modelling and simulation approaches (*e.g.*, Dynamic Systems) were and still are used but often encounter great resistance due to their higher abstraction and simplification.  
 
-## A transdisciplinar approach
+## A transdisciplinary approach
 
 ABM flexibility is also very much appreciated by researchers involved in archaeology, given that it is a discipline both historically and thematically positioned in-between other disciplines in the overlap of the so-called natural and artificial worlds. An ABM model can handle multiple layers of entities and relationships, allowing it to integrate entire models under the same hood.
 

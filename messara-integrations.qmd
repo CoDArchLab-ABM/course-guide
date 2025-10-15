@@ -1,4 +1,4 @@
-# The MesaraTrade model {#messara-pond-trade}
+# Integrating complex submodels {#messara-integrations}
 
 Finally, after much of the modelling equivalent of *blood and sweat*, we reach the point where we can combine the contribution of all our modules with the full implementation of the Pond Trade model (step 13).
 
@@ -238,12 +238,3 @@ And *voilà*! We can now run our boosted Pond Trade model within the context of 
 
 ![View of MesaraTrade interface](assets/screenshots/BlockC_module6_MesaraTrade interface.png)  
 *View of MesaraTrade interface*
-
-## Margins to improve and explore
-
-There are many other points to refactor, explore alternatives and expand. Just remember to first give it a think and then start writing code.
-
-For example:  
-- Can we visualise `catchmentArea` of settlements in the NetLogo View, instead of `sizeLevel`?
-- Could we find a way to calibrate the speed of traders to the same daily rhythm of the weather variables?  
-- Could rivers also affect `patchCost`?  

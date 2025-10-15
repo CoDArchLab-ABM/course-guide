@@ -1,4 +1,4 @@
-# Implementing mechanisms
+# Implementing mechanisms {#pond-trade-mechanims}
 
 We now reach the "spicy" part of the development of PondTrade. Until this point, settlements are completely static, and traders are only created in `setup`, then travel back and forth without any consequence to settlements.
 

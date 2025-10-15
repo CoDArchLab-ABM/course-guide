@@ -1,4 +1,4 @@
-# Getting started with NetLogo {#netlogo-practice}
+# Getting started with NetLogo {#pond-trade-terrain}
 
 ### Test-drive: creating a "pond" terrain 
 

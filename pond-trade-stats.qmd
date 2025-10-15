@@ -1,4 +1,4 @@
-# Implementing output statistics
+# Implementing output statistics {#pond-trade-stats}
 
 Apart from minor refactoring, the last implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are essentially aggregate measurements about the state of the simulation at a given time step.
 
