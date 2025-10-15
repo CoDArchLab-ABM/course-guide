@@ -1,0 +1,1868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model version="NetLogo 7.0.0-beta2" snapToGrid="false">
+  <code><![CDATA[;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; GNU GENERAL PUBLIC LICENSE ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;  Module for calculation of ARID using GIS and weather data
+;;  Based on modified parts of:
+;;  Soil Water Balance model (NetLogo implementation)
+;;  Land model
+;;  Copyright (C) 2019 Andreas Angourakis (andros.spica@gmail.com)
+;;  available at https://www.github.com/Andros-Spica/indus-village-model
+;;  implementing the Soil Water Balance model from Wallach et al. 2006 'Working with dynamic crop models' (p. 24-28 and p. 138-144).
+;;  This implementation uses parts of the Weather model to simulate input variables (i.e., temperature, solar radiation, precipitation, evapotranspiration)
+;;
+;;  This program is free software: you can redistribute it and/or modify
+;;  it under the terms of the GNU General Public License as published by
+;;  the Free Software Foundation, either version 3 of the License, or
+;;  (at your option) any later version.
+;;
+;;  This program is distributed in the hope that it will be useful,
+;;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;  GNU General Public License for more details.
+;;
+;;  You should have received a copy of the GNU General Public License
+;;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+extensions [ csv gis ]
+
+;;;;;;;;;;;;;;;;;
+;;;;; BREEDS ;;;;
+;;;;;;;;;;;;;;;;;
+
+breed [ sites site ]
+
+breed [ flowHolders flowHolder ]
+
+;;;;;;;;;;;;;;;;;
+;;; VARIABLES ;;;
+;;;;;;;;;;;;;;;;;
+
+globals
+[
+  patchesWithElevationData
+  noElevationDataTag
+  maxElevation
+
+  width
+  height
+
+  ;;; GIS data holders
+  sitesData_EMIII-MMIA
+  sitesData_MMIB
+  elevationData
+  riversData
+
+  ;;; weather input data
+  weatherInputData_firstYear
+  weatherInputData_lastYear
+  weatherInputData_YEARS
+  weatherInputData_yearLengthInDays
+  weatherInputData_DOY
+  weatherInputData_YEAR-DOY
+  weatherInputData_solarRadiation
+  weatherInputData_precipitation
+  weatherInputData_temperature
+  weatherInputData_maxTemperature
+  weatherInputData_minTemperature
+
+  ;;; default constants
+
+  MUF ; Water Uptake coefficient (mm^3.mm^-3)
+  WP ; Water content at wilting Point (cm^3.cm^-3)
+
+  ;;;; ETr
+  albedo_min
+  albedo_max
+
+  ;;;; Soil Water Balance model global parameters
+  WHC_min
+  WHC_max
+  DC_min
+  DC_max
+  z_min
+  z_max
+  CN_min
+  CN_max
+
+  ;;; variables
+  ;;;; time tracking
+  currentYear
+  currentDayOfYear
+
+  maxFlowAccumulation
+
+  ;;;; main (these follow a seasonal pattern and apply for all patches)
+
+  T ; average temperature of current day (ºC)
+  T_max ; maximum temperature of current day (ºC)
+  T_min ; minimum temperature of current day (ºC)
+
+  solarRadiation ; solar radiation of current day (MJ m-2)
+
+  RAIN ; precipitation of current day (mm)
+  precipitation_yearSeries
+  precipitation_cumYearSeries
+
+]
+
+sites-own
+[
+  name
+  siteType
+  period
+]
+
+patches-own
+[
+  elevation ; elevation above sea level [m]
+
+  flow_direction        ; the numeric code for the (main) direction of flow or
+                        ; drainage within the land unit.
+                        ; Following Jenson & Domingue (1988) convention:
+                        ; NW = 64,   N = 128,        NE = 1,
+                        ; W = 32,     <CENTRE>,   E = 2,
+                        ; SW = 16,     S = 8,          SE = 4
+
+  flow_receive          ; Boolean variable stating whether or not the land unit receives
+                        ; the flow of a neighbour.
+
+  flow_accumulation     ; the amount of flow units accumulated in the land unit.
+                        ; A Flow unit is the volume of runoff water flowing from one land unit
+                        ; to another (assumed constant and without losses).
+  flow_accumulationState ; the state of the land unit regarding the calculation of flow
+                        ; accumulation (auxiliary variable).
+
+  isRiver
+
+  ;;;; soil
+  DC ; Drainage coefficient (mm^3 mm^-3).
+  z ; root zone depth (mm).
+  CN ; Runoff curve number.
+  FC ; Water content at field capacity (cm^3.cm^-3)
+  WHC ; Water Holding Capacity of the soil (cm^3.cm^-3). Typical range from 0.05 to 0.25
+
+  ARID ; ARID index after Woli et al. 2012, ranging form 0 (no water shortage) to 1 (extreme water shortage)
+  WAT ; Water content in the soil profile for the rooting depth (mm)
+  WATp ; Volumetric Soil Water content (fraction : mm.mm-1). calculated as WAT/z
+
+  ;;;; cover
+  albedo ; canopy reflection or albedo
+  netSolarRadiation ; net solar radiation discount canopy reflection or albedo
+  ETr ; reference evapotranspiration
+
+  ARID_modifier ; modifier coefficient based on the relative value of flow_accumulation
+]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to setup
+
+  clear-all
+
+  ; --- loading/testing parameters -----------
+
+  import-map-with-flows ; import-world must be the first step
+
+  set-constants
+
+  set-parameters
+
+  setup-patches
+
+  ; --- core procedures ----------------------
+
+  set currentYear weatherInputData_firstYear
+  set currentDayOfYear 1
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT ]
+
+  ; --- display & output handling ------------------------
+
+  refresh-view
+
+  ; -- time -------------------------------------
+
+  reset-ticks
+
+end
+
+to set-constants
+
+  ; "constants" are variables that will not be explored as parameters
+  ; and may be used during a simulation.
+
+  ; MUF : Water Uptake coefficient (mm^3 mm^-3)
+  set MUF 0.096
+
+  ; WP : Water content at wilting Point (cm^3.cm^-3)
+  set WP 0.06
+
+end
+
+to set-parameters
+
+  ; set random seed
+  random-seed seed
+
+  ;;; load weather input data from file
+  load-weather-input-data-table
+
+  parameters-check
+
+  ;;; weather parameters are left with default values, but effectively ignored given that input weather is used.
+
+  set albedo_min 1E-6 + random-float 0.3
+  set albedo_max albedo_min + random-float 0.3
+
+  ;;; Soil Water Balance model
+  set WHC_min random-float 0.1
+  set WHC_max WHC_min + random-float 0.1
+  set DC_min 1E-6 + random-float 0.45
+  set DC_max DC_min + random-float 0.45
+  set z_min random-float 1000
+  set z_max z_min + random-float 1000
+  set CN_min random-float 40
+  set CN_max CN_min + random-float 50
+
+end
+
+to parameters-check
+
+  ;;; check if values were reset to 0 (NetLogo does that from time to time...!)
+  ;;; and set default values (assuming they are not 0)
+
+  if (par_albedo_min = 0)                                        [ set par_albedo_min                              0.1 ]
+  if (par_albedo_max = 0)                                        [ set par_albedo_max                              0.5 ]
+
+  if (water-holding-capacity_min = 0)                            [ set water-holding-capacity_min                    0.05 ]
+  if (water-holding-capacity_max = 0)                            [ set water-holding-capacity_max                    0.25 ]
+  if (drainage-coefficient_min = 0)                              [ set drainage-coefficient_min                      0.3 ]
+  if (drainage-coefficient_max = 0)                              [ set drainage-coefficient_max                      0.7 ]
+  if (root-zone-depth_min = 0)                                   [ set root-zone-depth_min                         200 ]
+  if (root-zone-depth_max = 0)                                   [ set root-zone-depth_max                        2000 ]
+  if (runoff-curve_min = 0)                                      [ set runoff-curve_min                             30 ]
+  if (runoff-curve_max = 0)                                      [ set runoff-curve_max                             80 ]
+
+end
+
+to parameters-to-default
+
+  ;;; set parameters to a default value
+  set par_albedo_min                                            0.1
+  set par_albedo_max                                            0.5
+
+  set water-holding-capacity_min                                0.05
+  set water-holding-capacity_max                                0.25
+  set drainage-coefficient_min                                  0.3
+  set drainage-coefficient_max                                  0.7
+  set root-zone-depth_min                                     200
+  set root-zone-depth_max                                    2000
+  set runoff-curve_min                                         30
+  set runoff-curve_max                                         80
+
+end
+
+to setup-patches
+
+  setup-soil-water-properties
+
+  setup-ARID-modifier
+
+end
+
+to import-map-with-flows
+
+  import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"
+
+  ;;; reduce patch size in pixels
+  ;set-patch-size 3
+
+end
+
+to setup-soil-water-properties
+
+  ask patchesWithElevationData
+  [
+    set albedo albedo_min + random-float (albedo_max - albedo_min)
+
+    ; Water Holding Capacity of the soil (cm^3 cm^-3).
+    set WHC WHC_min + random-float (WHC_max - WHC_min)
+    ; DC :  Drainage coefficient (mm^3 mm^-3)
+    set DC DC_min + random-float (DC_max - DC_min)
+    ; z : root zone depth (mm)
+    set z z_min + random (z_max - z_min)
+    ; CN : Runoff curve number
+    set CN CN_min + random (CN_max - CN_max)
+
+    ; FC : Water content at field capacity (cm^3.cm^-3)
+    set FC WP + WHC
+    ; WAT0 : Initial Water content (mm)
+    set WAT z * FC
+  ]
+
+end
+
+to setup-ARID-modifier
+
+  ask patchesWithElevationData
+  [
+    set ARID_modifier (1 - ARID-decrease-per-flow-accumulation * (flow_accumulation / maxFlowAccumulation))
+  ]
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; GO ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to go
+
+  ; --- core procedures -------------------------
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT modify-ARID ]
+
+  ; --- output handling ------------------------
+
+  refresh-view
+
+  ; -- time -------------------------------------
+
+  advance-time
+
+  tick
+
+  ; --- stop conditions -------------------------
+
+  if (currentYear = weatherInputData_lastYear and currentDayOfYear = last weatherInputData_yearLengthInDays) [stop]
+
+end
+
+;;; GLOBAL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to advance-time
+
+  set currentDayOfYear currentDayOfYear + 1
+  if (currentDayOfYear > item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays)
+  [
+    set currentYear currentYear + 1
+    set currentDayOfYear 1
+  ]
+
+end
+
+to set-day-weather-from-input-data [ dayOfYear year ]
+
+  ;;; find corresponding index to year-dayOfYear pair
+
+  let yearAndDoyIndex position (word year "-" dayOfYear) weatherInputData_YEAR-DOY
+
+  ;;; get values from weather input data
+
+  set solarRadiation item yearAndDoyIndex weatherInputData_solarRadiation
+
+  set T item yearAndDoyIndex weatherInputData_temperature
+
+  set T_min item yearAndDoyIndex weatherInputData_minTemperature
+
+  set T_max item yearAndDoyIndex weatherInputData_maxTemperature
+
+  set RAIN item yearAndDoyIndex weatherInputData_precipitation
+
+  if (dayOfYear = 1)
+  [
+    ;;; fill values of precipitation_yearSeries and precipitation_cumYearSeries, used here only for visualisation
+
+    let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+    let yearAndLastDoyIndex position (word year "-" yearLengthInDays) weatherInputData_YEAR-DOY
+
+    set precipitation_yearSeries sublist weatherInputData_precipitation yearAndDoyIndex (yearAndLastDoyIndex + 1)
+
+    let yearTotal sum precipitation_yearSeries
+    set precipitation_cumYearSeries (list)
+    let cumulativeSum 0
+    foreach precipitation_yearSeries
+    [
+      i ->
+      set cumulativeSum cumulativeSum + i
+      set precipitation_cumYearSeries lput cumulativeSum precipitation_cumYearSeries
+    ]
+    set precipitation_cumYearSeries map [i -> i / yearTotal] precipitation_cumYearSeries
+  ]
+
+  ask patchesWithElevationData
+  [
+    set netSolarRadiation (1 - albedo) * solarRadiation
+    set ETr get-ETr
+  ]
+
+end
+
+to-report get-ETr
+
+  ;;; useful references:
+  ;;; Suleiman A A and Hoogenboom G 2007
+  ;;; Comparison of Priestley-Taylor and FAO-56 Penman-Monteith for Daily Reference Evapotranspiration Estimation in Georgia
+  ;;; J. Irrig. Drain. Eng. 133 175–82 Online: http://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%282007%29133%3A2%28175%29
+  ;;; also: Jia et al. 2013 - doi:10.4172/2168-9768.1000112
+  ;;; Allen, R. G., Pereira, L. A., Raes, D., and Smith, M. 1998.
+  ;;; “Crop evapotranspiration.”FAO irrigation and  drainage paper 56, FAO, Rome.
+  ;;; also: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; constants found in: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; see also r package: Evapotranspiration (consult source code)
+
+  let windSpeed 2 ; as recommended by: http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+
+  ;;; estimation of saturated vapour pressure (e_s) and actual vapour pressure (e_a)
+  let e_s (get-vapour-pressure T_max + get-vapour-pressure T_min) / 2
+  let e_a get-vapour-pressure T_min
+  ; ... in absence of dew point temperature, as recommended by
+  ; http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+  ; however, possibly min temp > dew temp under arid conditions
+
+  ;;; slope of  the  vapor  pressure-temperature  curve (kPa ºC−1)
+  let DELTA 4098 * (get-vapour-pressure T) / (T + 237.3) ^ 2
+
+  ;;; latent heat of vaporisation = 2.45 MJ.kg^-1
+  let lambda 2.45
+
+  ;;; specific heat at constant pressure, 1.013 10-3 [MJ kg-1 °C-1]
+  let c_p 1.013 * 10 ^ -3
+  ;;; ratio molecular weight of water vapour/dry air
+  let epsilon 0.622
+  ;;; atmospheric pressure (kPa)
+  let P 101.3 * ((293 - 0.0065 * elevation) / 293) ^ 5.26
+  ;;; psychometric constant (kPa ºC−1)
+  let gamma c_p * P / (epsilon * lambda)
+
+  ;;; Penman-Monteith equation from: fao.org/3/X0490E/x0490e0 ; and from: weap21.org/WebHelp/Mabia_Alg ETRef.htm
+
+  ; 900 and 0.34 for the grass reference; 1600 and 0.38 for the alfalfa reference
+  let C_n 900
+  let C_d 0.34
+
+  let ETr_temp (0.408 * DELTA * netSolarRadiation + gamma * (C_n / (T + 273)) * windSpeed * (e_s - e_a)) / (DELTA + gamma * (1 + C_d * windSpeed))
+
+  report ETr_temp
+
+end
+
+to-report get-vapour-pressure [ temp ]
+
+  report (0.6108 * exp(17.27 * temp / (temp + 237.3)))
+
+end
+
+to update-WAT
+
+  ; Soil Water Balance model
+  ; Using the approach of:
+  ; 'Working with dynamic crop models: Methods, tools, and examples for agriculture and enviromnent'
+  ;  Daniel Wallach, David Makowski, James W. Jones, François Brun (2006, 2014, 2019)
+  ;  Model description in p. 24-28, R code example in p. 138-144.
+  ;  see also https://github.com/cran/ZeBook/blob/master/R/watbal.model.r
+  ; Some additional info about run off at: https://engineering.purdue.edu/mapserve/LTHIA7/documentation/scs.htm
+  ; and at: https://en.wikipedia.org/wiki/Runoff_curve_number
+
+  ; Maximum abstraction (mm; for run off)
+  let S 25400 / CN - 254
+  ; Initial Abstraction (mm; for run off)
+  let IA 0.2 * S
+  ; WATfc : Maximum Water content at field capacity (mm)
+  let WATfc FC * z
+  ; WATwp : Water content at wilting Point (mm)
+  let WATwp WP * z
+
+  ; Change in Water Before Drainage (Precipitation - Runoff)
+  let RO 0
+  if (RAIN > IA)
+  [ set RO ((RAIN - 0.2 * S) ^ 2) / (RAIN + 0.8 * S) ]
+  ; Calculating the amount of deep drainage
+  let DR 0
+  if (WAT + RAIN - RO > WATfc)
+  [ set DR DC * (WAT + RAIN - RO - WATfc) ]
+
+  ; Calculate rate of change of state variable WAT
+  ; Compute maximum water uptake by plant roots on a day, RWUM
+  let RWUM MUF * (WAT + RAIN - RO - DR - WATwp)
+  ; Calculate the amount of water lost through transpiration (TR)
+  let TR min (list RWUM ETr)
+
+  let dWAT RAIN - RO - DR - TR
+  set WAT WAT + dWAT
+
+  set WATp WAT / z
+
+  set ARID 0
+  if (TR < ETr)
+  [ set ARID 1 - TR / ETr ]
+
+end
+
+to modify-ARID
+
+  set ARID ARID * ARID_modifier
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; DISPLAY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to refresh-view
+
+  if (display-mode = "elevation")
+  [
+    ask patchesWithElevationData [ display-elevation ]
+  ]
+
+  if (display-mode = "albedo")
+  [
+    ask patchesWithElevationData [ display-albedo ]
+  ]
+
+  if (display-mode = "ETr")
+  [
+    let maxETr max [ETr] of patchesWithElevationData
+    ask patchesWithElevationData [ display-ETr maxETr ]
+  ]
+
+  if (display-mode = "drainage coefficient (DC)")
+  [
+    ask patchesWithElevationData [ display-DC ]
+  ]
+
+  if (display-mode = "root zone depth (z)")
+  [
+    let maxZ max [z] of patchesWithElevationData
+    ask patchesWithElevationData [ display-z maxZ ]
+  ]
+
+  if (display-mode = "runoff curve number (CN)")
+  [
+    let maxCN max [CN] of patchesWithElevationData
+    ask patchesWithElevationData [ display-CN maxCN ]
+  ]
+
+  if (display-mode = "water content at field capacity (FC)")
+  [
+    let maxFC max [FC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-FC maxFC ]
+  ]
+
+  if (display-mode = "water holding Capacity (WHC)")
+  [
+    let maxWHC max [WHC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WHC maxWHC ]
+  ]
+
+  if (display-mode = "soil water content (WATp)")
+  [
+    let maxWATp max [WATp] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WATp maxWATp ]
+  ]
+
+  if (display-mode = "ARID coefficient")
+  [
+    ask patchesWithElevationData [ display-arid ]
+  ]
+
+  display-flows
+
+end
+
+to display-elevation
+
+  let elevationGradient 100 + (155 * (elevation / maxElevation))
+  set pcolor rgb (elevationGradient - 100) elevationGradient 0
+
+end
+
+to display-albedo
+
+  set pcolor 1 + 9 * albedo
+
+end
+
+to display-ETr [ maxETr ]
+
+  ifelse (maxETr = 0)
+  [ set pcolor 25 ]
+  [ set pcolor 22 + 6 * (1 - ETr / maxETr) ]
+
+end
+
+to display-DC
+
+  set pcolor 112 + 6 * (1 - DC)
+
+end
+
+to display-z [ maxZ ]
+
+  set pcolor 42 + 8 * (1 - z / maxZ)
+
+end
+
+to display-CN [ maxCN ]
+
+  set pcolor 72 + 6 * (1 - CN / maxCN)
+
+end
+
+to display-FC [ maxFC ]
+
+  set pcolor 82 + 6 * (1 - FC / maxFC)
+
+end
+
+to display-WHC [ maxWHC ]
+
+  set pcolor 92 + 6 * (1 - WHC / maxWHC)
+
+end
+
+to display-WATp [ maxWATp ]
+
+  set pcolor 102 + 6 * (1 - WATp / maxWATp)
+
+end
+
+to display-ARID
+
+  set pcolor 12 + 6 * ARID
+
+end
+
+to display-flows
+
+  ask flowHolders
+  [
+    ask my-links
+    [
+      ifelse (show-flows) [ show-link ] [ hide-link ]
+    ]
+  ]
+
+end
+
+to plot-precipitation-table
+
+  clear-plot
+
+  let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+
+  set-plot-x-range 0 (yearLengthInDays + 1)
+
+  ;;; precipitation (mm/day) is summed by month
+  foreach n-values yearLengthInDays [j -> j]
+  [
+    dayOfYearIndex ->
+    plotxy (dayOfYearIndex + 1) (item dayOfYearIndex precipitation_yearSeries)
+  ]
+  plot-pen-up
+
+end
+
+to plot-cumPrecipitation-table
+
+  clear-plot
+
+  let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+
+  set-plot-y-range -0.1 1.1
+  set-plot-x-range 0 (yearLengthInDays + 1)
+
+  ;;; precipitation (mm/day) is summed by month
+  foreach n-values yearLengthInDays [j -> j]
+  [
+    dayOfYearIndex ->
+    plotxy (dayOfYearIndex + 1) (item dayOfYearIndex precipitation_cumYearSeries)
+  ]
+  plot-pen-up
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; LOAD DATA FROM TABLES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to load-weather-input-data-table
+
+  ;;; this procedure loads the values of the weather data input table
+  ;;; the table contains:
+  ;;;   1. 13 lines of metadata, to be ignored
+  ;;;   2. one line with the headers of the table
+  ;;;   3. remaining rows containing row name and values
+
+  let weatherTable csv:from-file "data/POWER_Point_Daily_19840101_20201231_035d0309N_024d8335E_LST.csv"
+
+  ;;;==================================================================================================================
+  ;;; mapping coordinates (row or columns) from headings (line 14 == index 13 -----------------------------------------
+  ;;; NOTE: always correct raw mapping coordinates (start at 1) into list indexes (start at 0)
+  let variableNames item (14 - 1) weatherTable
+
+  let yearColumn position "YEAR" variableNames
+
+  let solarRadiationColumn position "ALLSKY_SFC_SW_DWN" variableNames
+
+  let precipitationColumn position "PRECTOTCORR" variableNames
+
+  let temperatureColumn position "T2M" variableNames
+
+  let temperatureMaxColumn position "T2M_MAX" variableNames
+
+  let temperatureMinColumn position "T2M_MIN" variableNames
+
+  ;;;==================================================================================================================
+  ;;; extract data---------------------------------------------------------------------------------------
+
+  ;;; read variables per year and day (list of lists, matrix: year-day x variables)
+  let weatherData sublist weatherTable (15 - 1) (length weatherTable) ; select only those row corresponding to variable data, if there is anything else
+
+  ;;; extract year-day of year pairs from the third and fourth columns
+  set weatherInputData_YEARS map [row -> item yearColumn row ] weatherData
+
+  ;;; NASA-POWER data uses year, month, day of month, instead of day of year,
+  ;;; so we need to calculate day of year of each row ourselves
+  set weatherInputData_DOY []
+  set weatherInputData_yearLengthInDays []
+  foreach (remove-duplicates weatherInputData_YEARS)
+  [
+    aYear ->
+    let aDoy 1
+    let lengthOfThisYear length (filter [i -> i = aYear] weatherInputData_YEARS)
+    set weatherInputData_yearLengthInDays lput lengthOfThisYear weatherInputData_yearLengthInDays
+    repeat lengthOfThisYear
+    [
+      set weatherInputData_DOY lput aDoy weatherInputData_DOY
+      set aDoy aDoy + 1
+    ]
+  ]
+  set weatherInputData_YEAR-DOY (map [[i j] -> (word i "-" j)] weatherInputData_YEARS weatherInputData_DOY)
+
+  ;;; extract first and last year
+  set weatherInputData_firstYear first weatherInputData_YEARS
+
+  set weatherInputData_lastYear last weatherInputData_YEARS
+
+  ;;; extract parameter values from the given column
+  ;;; NOTE: read-from-string is required because the original file is formated in a way that NetLogo interprets values as strings.
+
+  set weatherInputData_solarRadiation map [row -> item solarRadiationColumn row ] weatherData
+
+  set weatherInputData_precipitation map [row -> item precipitationColumn row ] weatherData
+
+  set weatherInputData_temperature map [row -> item temperatureColumn row ] weatherData
+
+  set weatherInputData_maxTemperature map [row -> item temperatureMaxColumn row ] weatherData
+
+  set weatherInputData_minTemperature map [row -> item temperatureMinColumn row ] weatherData
+
+end]]></code>
+  <widgets>
+    <view x="403" wrappingAllowedX="true" y="10" frameRate="30.0" minPycor="0" height="465" showTickCounter="true" patchSize="3.0" fontSize="10" wrappingAllowedY="true" width="736" tickCounterLabel="ticks" maxPycor="154" updateMode="0" maxPxcor="245" minPxcor="0"></view>
+    <button x="37" actionKey="1" y="26" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">setup</button>
+    <button x="212" actionKey="4" y="25" height="40" disableUntilTicks="false" forever="true" kind="Observer" width="55">go</button>
+    <input x="35" multiline="false" y="81" height="60" variable="seed" type="number" width="100">0.0</input>
+    <button x="94" actionKey="2" y="26" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">go</button>
+    <monitor x="29" precision="0" y="165" height="60" fontSize="11" width="100">currentYear</monitor>
+    <monitor x="134" precision="0" y="165" height="60" fontSize="11" width="114">currentDayOfYear</monitor>
+    <chooser x="18" y="238" height="60" variable="display-mode" current="9" width="246" display="display-mode">
+      <choice type="string" value="elevation"></choice>
+      <choice type="string" value="albedo"></choice>
+      <choice type="string" value="ETr"></choice>
+      <choice type="string" value="drainage coefficient (DC)"></choice>
+      <choice type="string" value="root zone depth (z)"></choice>
+      <choice type="string" value="runoff curve number (CN)"></choice>
+      <choice type="string" value="water content at field capacity (FC)"></choice>
+      <choice type="string" value="water holding Capacity (WHC)"></choice>
+      <choice type="string" value="soil water content (WATp)"></choice>
+      <choice type="string" value="ARID coefficient"></choice>
+    </chooser>
+    <button x="151" actionKey="3" y="25" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="60" display="+ year">repeat 365 [ go ]</button>
+    <button x="170" y="97" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="154">parameters-to-default</button>
+    <switch x="259" y="175" height="40" on="true" variable="show-flows" width="118" display="show-flows"></switch>
+    <button x="273" y="250" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="98" display="refresh view">refresh-view</button>
+    <plot x="1154" autoPlotX="true" yMax="10.0" autoPlotY="true" y="11" xMin="0.0" height="191" legend="true" xMax="10.0" yMin="0.0" width="663" xAxis="days" display="Soil water content &amp; ARID">
+      <setup>set-plot-y-range -0.1 1.1</setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="mean ARID" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot mean [ARID] of patchesWithElevationData</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="mean WTp" color="-13345367" legend="true">
+        <setup></setup>
+        <update>plot mean [WATp] of patchesWithElevationData</update>
+      </pen>
+    </plot>
+    <plot x="1154" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="ppm" y="592" xMin="0.0" height="191" legend="true" xMax="10.0" yMin="0.0" width="663" xAxis="days" display="precipitation">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="1" display="RAIN" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot RAIN</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="mean ETr" color="-2674135" legend="true">
+        <setup></setup>
+        <update>plot mean[ETr] of patches</update>
+      </pen>
+    </plot>
+    <plot x="1432" autoPlotX="true" yMax="10.0" autoPlotY="true" y="783" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="257" display="cumulative year precipitation">
+      <setup>set-plot-y-range -0.1 1.1
+let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+set-plot-x-range 0 (yearLengthInDays + 1)</setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>if (currentDayOfYear = 1) [ plot-cumPrecipitation-table ]</update>
+      </pen>
+    </plot>
+    <monitor x="1689" precision="2" y="782" height="67" fontSize="11" width="100" display="year total">sum precipitation_yearSeries</monitor>
+    <plot x="1194" autoPlotX="true" yMax="10.0" autoPlotY="true" y="783" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="233" display="year preciptation">
+      <setup>let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+set-plot-x-range 0 (yearLengthInDays + 1)</setup>
+      <update></update>
+      <pen interval="1.0" mode="1" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>if (currentDayOfYear = 1) [ plot-precipitation-table ]</update>
+      </pen>
+    </plot>
+    <plot x="1154" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="MJ/m2" y="412" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="663" xAxis="days" display="Solar radiation">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot solarRadiation</update>
+      </pen>
+    </plot>
+    <plot x="1154" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="ºC" y="207" xMin="0.0" height="200" legend="true" xMax="10.0" yMin="0.0" width="663" xAxis="days" display="Temperature">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="mean" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot T</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="min" color="-13345367" legend="true">
+        <setup></setup>
+        <update>plot T_min</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="max" color="-2674135" legend="true">
+        <setup></setup>
+        <update>plot T_max</update>
+      </pen>
+    </plot>
+    <slider x="11" step="0.01" y="632" max="1" width="261" display="ARID-decrease-per-flow-accumulation" height="50" min="0" direction="Horizontal" default="0.5" variable="ARID-decrease-per-flow-accumulation"></slider>
+    <monitor x="527" precision="2" y="852" height="60" fontSize="9" width="113" display="z [min, max]">(list (precision z_min 2) (precision z_max 2))</monitor>
+    <monitor x="527" precision="2" y="908" height="60" fontSize="9" width="113" display="CN [min, max]">(list (precision CN_min 2) (precision CN_max 2))</monitor>
+    <monitor x="527" precision="2" y="792" height="60" fontSize="9" width="113" display="DC [min, max]">(list (precision DC_min 2) (precision DC_max 2))</monitor>
+    <monitor x="527" precision="2" y="737" height="60" fontSize="9" width="113" display="WHC [min, max]">(list (precision WHC_min 2) (precision WHC_max 2))</monitor>
+    <monitor x="527" precision="2" y="684" height="60" fontSize="9" width="113" display="albedo [min, max]">(list (precision albedo_min 2) (precision albedo_max 2))</monitor>
+    <slider x="269" step="0.01" y="689" max="1" width="258" display="par_albedo_max" height="50" min="par_albedo_min" direction="Horizontal" default="0.5" variable="par_albedo_max"></slider>
+    <slider x="269" step="1" y="854" max="2000" width="258" display="root-zone-depth_max" height="50" min="root-zone-depth_min" direction="Horizontal" default="2000.0" variable="root-zone-depth_max" units="mm"></slider>
+    <slider x="269" step="1" y="799" max="1" width="258" display="drainage-coefficient_max" height="50" min="drainage-coefficient_min" direction="Horizontal" default="36.0" variable="drainage-coefficient_max"></slider>
+    <slider x="269" step="1" y="744" max="0.2" width="258" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.25" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
+    <slider x="269" step="1" y="909" max="100" width="258" display="runoff-curve_max" height="50" min="runoff-curve_min" direction="Horizontal" default="80.0" variable="runoff-curve_max"></slider>
+    <slider x="8" step="0.01" y="744" max="water-holding-capacity_max" width="258" display="water-holding-capacity_min" height="50" min="0.01" direction="Horizontal" default="0.05" variable="water-holding-capacity_min" units="cm3/cm3"></slider>
+    <slider x="8" step="0.01" y="689" max="par_albedo_max" width="258" display="par_albedo_min" height="50" min="0" direction="Horizontal" default="0.2" variable="par_albedo_min"></slider>
+    <slider x="8" step="1" y="909" max="runoff-curve_max" width="258" display="runoff-curve_min" height="50" min="0" direction="Horizontal" default="25.0" variable="runoff-curve_min"></slider>
+    <slider x="8" step="1" y="854" max="root-zone-depth_max" width="258" display="root-zone-depth_min" height="50" min="0" direction="Horizontal" default="200.0" variable="root-zone-depth_min" units="mm"></slider>
+    <slider x="8" step="0.01" y="799" max="drainage-coefficient_max" width="258" display="drainage-coefficient_min" height="50" min="0" direction="Horizontal" default="0.2" variable="drainage-coefficient_min"></slider>
+  </widgets>
+  <info>## WHAT IS IT?
+
+(a general understanding of what the model is trying to show or explain)
+
+## HOW IT WORKS
+
+(what rules the agents use to create the overall behavior of the model)
+
+## HOW TO USE IT
+
+(how to use the model, including a description of each of the items in the Interface tab)
+
+## THINGS TO NOTICE
+
+(suggested things for the user to notice while running the model)
+
+## THINGS TO TRY
+
+(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+
+## EXTENDING THE MODEL
+
+(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+
+## NETLOGO FEATURES
+
+(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+
+## RELATED MODELS
+
+(models in the NetLogo Models Library and elsewhere which are of related interest)
+
+## CREDITS AND REFERENCES
+
+(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)</info>
+  <turtleShapes>
+    <shape name="default" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="5"></point>
+        <point x="40" y="250"></point>
+        <point x="150" y="205"></point>
+        <point x="260" y="250"></point>
+      </polygon>
+    </shape>
+    <shape name="airplane" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="0"></point>
+        <point x="135" y="15"></point>
+        <point x="120" y="60"></point>
+        <point x="120" y="105"></point>
+        <point x="15" y="165"></point>
+        <point x="15" y="195"></point>
+        <point x="120" y="180"></point>
+        <point x="135" y="240"></point>
+        <point x="105" y="270"></point>
+        <point x="120" y="285"></point>
+        <point x="150" y="270"></point>
+        <point x="180" y="285"></point>
+        <point x="210" y="270"></point>
+        <point x="165" y="240"></point>
+        <point x="180" y="180"></point>
+        <point x="285" y="195"></point>
+        <point x="285" y="165"></point>
+        <point x="180" y="105"></point>
+        <point x="180" y="60"></point>
+        <point x="165" y="15"></point>
+      </polygon>
+    </shape>
+    <shape name="arrow" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="0"></point>
+        <point x="0" y="150"></point>
+        <point x="105" y="150"></point>
+        <point x="105" y="293"></point>
+        <point x="195" y="293"></point>
+        <point x="195" y="150"></point>
+        <point x="300" y="150"></point>
+      </polygon>
+    </shape>
+    <shape name="box" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="285"></point>
+        <point x="285" y="225"></point>
+        <point x="285" y="75"></point>
+        <point x="150" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="135"></point>
+        <point x="15" y="75"></point>
+        <point x="150" y="15"></point>
+        <point x="285" y="75"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="15" y="75"></point>
+        <point x="15" y="225"></point>
+        <point x="150" y="285"></point>
+        <point x="150" y="135"></point>
+      </polygon>
+      <line endX="150" startY="285" marked="false" color="255" endY="135" startX="150"></line>
+      <line endX="15" startY="135" marked="false" color="255" endY="75" startX="150"></line>
+      <line endX="285" startY="135" marked="false" color="255" endY="75" startX="150"></line>
+    </shape>
+    <shape name="bug" rotatable="true" editableColorIndex="0">
+      <circle x="96" y="182" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="110" y="127" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <circle x="110" y="75" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <line endX="80" startY="100" marked="true" color="-1920102913" endY="30" startX="150"></line>
+      <line endX="220" startY="100" marked="true" color="-1920102913" endY="30" startX="150"></line>
+    </shape>
+    <shape name="butterfly" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="165"></point>
+        <point x="209" y="199"></point>
+        <point x="225" y="225"></point>
+        <point x="225" y="255"></point>
+        <point x="195" y="270"></point>
+        <point x="165" y="255"></point>
+        <point x="150" y="240"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="165"></point>
+        <point x="89" y="198"></point>
+        <point x="75" y="225"></point>
+        <point x="75" y="255"></point>
+        <point x="105" y="270"></point>
+        <point x="135" y="255"></point>
+        <point x="150" y="240"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="139" y="148"></point>
+        <point x="100" y="105"></point>
+        <point x="55" y="90"></point>
+        <point x="25" y="90"></point>
+        <point x="10" y="105"></point>
+        <point x="10" y="135"></point>
+        <point x="25" y="180"></point>
+        <point x="40" y="195"></point>
+        <point x="85" y="194"></point>
+        <point x="139" y="163"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="162" y="150"></point>
+        <point x="200" y="105"></point>
+        <point x="245" y="90"></point>
+        <point x="275" y="90"></point>
+        <point x="290" y="105"></point>
+        <point x="290" y="135"></point>
+        <point x="275" y="180"></point>
+        <point x="260" y="195"></point>
+        <point x="215" y="195"></point>
+        <point x="162" y="165"></point>
+      </polygon>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="255"></point>
+        <point x="135" y="225"></point>
+        <point x="120" y="150"></point>
+        <point x="135" y="120"></point>
+        <point x="150" y="105"></point>
+        <point x="165" y="120"></point>
+        <point x="180" y="150"></point>
+        <point x="165" y="225"></point>
+      </polygon>
+      <circle x="135" y="90" marked="false" color="255" diameter="30" filled="true"></circle>
+      <line endX="195" startY="105" marked="false" color="255" endY="60" startX="150"></line>
+      <line endX="105" startY="105" marked="false" color="255" endY="60" startX="150"></line>
+    </shape>
+    <shape name="car" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="300" y="180"></point>
+        <point x="279" y="164"></point>
+        <point x="261" y="144"></point>
+        <point x="240" y="135"></point>
+        <point x="226" y="132"></point>
+        <point x="213" y="106"></point>
+        <point x="203" y="84"></point>
+        <point x="185" y="63"></point>
+        <point x="159" y="50"></point>
+        <point x="135" y="50"></point>
+        <point x="75" y="60"></point>
+        <point x="0" y="150"></point>
+        <point x="0" y="165"></point>
+        <point x="0" y="225"></point>
+        <point x="300" y="225"></point>
+        <point x="300" y="180"></point>
+      </polygon>
+      <circle x="180" y="180" marked="false" color="255" diameter="90" filled="true"></circle>
+      <circle x="30" y="180" marked="false" color="255" diameter="90" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="162" y="80"></point>
+        <point x="132" y="78"></point>
+        <point x="134" y="135"></point>
+        <point x="209" y="135"></point>
+        <point x="194" y="105"></point>
+        <point x="189" y="96"></point>
+        <point x="180" y="89"></point>
+      </polygon>
+      <circle x="47" y="195" marked="true" color="-1920102913" diameter="58" filled="true"></circle>
+      <circle x="195" y="195" marked="true" color="-1920102913" diameter="58" filled="true"></circle>
+    </shape>
+    <shape name="circle" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+    </shape>
+    <shape name="circle 2" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+    </shape>
+    <shape name="cow" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="200" y="193"></point>
+        <point x="197" y="249"></point>
+        <point x="179" y="249"></point>
+        <point x="177" y="196"></point>
+        <point x="166" y="187"></point>
+        <point x="140" y="189"></point>
+        <point x="93" y="191"></point>
+        <point x="78" y="179"></point>
+        <point x="72" y="211"></point>
+        <point x="49" y="209"></point>
+        <point x="48" y="181"></point>
+        <point x="37" y="149"></point>
+        <point x="25" y="120"></point>
+        <point x="25" y="89"></point>
+        <point x="45" y="72"></point>
+        <point x="103" y="84"></point>
+        <point x="179" y="75"></point>
+        <point x="198" y="76"></point>
+        <point x="252" y="64"></point>
+        <point x="272" y="81"></point>
+        <point x="293" y="103"></point>
+        <point x="285" y="121"></point>
+        <point x="255" y="121"></point>
+        <point x="242" y="118"></point>
+        <point x="224" y="167"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="73" y="210"></point>
+        <point x="86" y="251"></point>
+        <point x="62" y="249"></point>
+        <point x="48" y="208"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="25" y="114"></point>
+        <point x="16" y="195"></point>
+        <point x="9" y="204"></point>
+        <point x="23" y="213"></point>
+        <point x="25" y="200"></point>
+        <point x="39" y="123"></point>
+      </polygon>
+    </shape>
+    <shape name="cylinder" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+    </shape>
+    <shape name="dot" rotatable="false" editableColorIndex="0">
+      <circle x="90" y="90" marked="true" color="-1920102913" diameter="120" filled="true"></circle>
+    </shape>
+    <shape name="face happy" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="8" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="255"></point>
+        <point x="90" y="239"></point>
+        <point x="62" y="213"></point>
+        <point x="47" y="191"></point>
+        <point x="67" y="179"></point>
+        <point x="90" y="203"></point>
+        <point x="109" y="218"></point>
+        <point x="150" y="225"></point>
+        <point x="192" y="218"></point>
+        <point x="210" y="203"></point>
+        <point x="227" y="181"></point>
+        <point x="251" y="194"></point>
+        <point x="236" y="217"></point>
+        <point x="212" y="240"></point>
+      </polygon>
+    </shape>
+    <shape name="face neutral" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="7" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <rectangle endX="240" startY="195" marked="false" color="255" endY="225" startX="60" filled="true"></rectangle>
+    </shape>
+    <shape name="face sad" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="8" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="168"></point>
+        <point x="90" y="184"></point>
+        <point x="62" y="210"></point>
+        <point x="47" y="232"></point>
+        <point x="67" y="244"></point>
+        <point x="90" y="220"></point>
+        <point x="109" y="205"></point>
+        <point x="150" y="198"></point>
+        <point x="192" y="205"></point>
+        <point x="210" y="220"></point>
+        <point x="227" y="242"></point>
+        <point x="251" y="229"></point>
+        <point x="236" y="206"></point>
+        <point x="212" y="183"></point>
+      </polygon>
+    </shape>
+    <shape name="fish" rotatable="false" editableColorIndex="0">
+      <polygon color="-1" filled="true" marked="false">
+        <point x="44" y="131"></point>
+        <point x="21" y="87"></point>
+        <point x="15" y="86"></point>
+        <point x="0" y="120"></point>
+        <point x="15" y="150"></point>
+        <point x="0" y="180"></point>
+        <point x="13" y="214"></point>
+        <point x="20" y="212"></point>
+        <point x="45" y="166"></point>
+      </polygon>
+      <polygon color="-1" filled="true" marked="false">
+        <point x="135" y="195"></point>
+        <point x="119" y="235"></point>
+        <point x="95" y="218"></point>
+        <point x="76" y="210"></point>
+        <point x="46" y="204"></point>
+        <point x="60" y="165"></point>
+      </polygon>
+      <polygon color="-1" filled="true" marked="false">
+        <point x="75" y="45"></point>
+        <point x="83" y="77"></point>
+        <point x="71" y="103"></point>
+        <point x="86" y="114"></point>
+        <point x="166" y="78"></point>
+        <point x="135" y="60"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="30" y="136"></point>
+        <point x="151" y="77"></point>
+        <point x="226" y="81"></point>
+        <point x="280" y="119"></point>
+        <point x="292" y="146"></point>
+        <point x="292" y="160"></point>
+        <point x="287" y="170"></point>
+        <point x="270" y="195"></point>
+        <point x="195" y="210"></point>
+        <point x="151" y="212"></point>
+        <point x="30" y="166"></point>
+      </polygon>
+      <circle x="215" y="106" marked="false" color="255" diameter="30" filled="true"></circle>
+    </shape>
+    <shape name="flag" rotatable="false" editableColorIndex="0">
+      <rectangle endX="75" startY="15" marked="true" color="-1920102913" endY="300" startX="60" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="90" y="150"></point>
+        <point x="270" y="90"></point>
+        <point x="90" y="30"></point>
+      </polygon>
+      <line endX="90" startY="135" marked="true" color="-1920102913" endY="135" startX="75"></line>
+      <line endX="90" startY="45" marked="true" color="-1920102913" endY="45" startX="75"></line>
+    </shape>
+    <shape name="flower" rotatable="false" editableColorIndex="0">
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="135" y="120"></point>
+        <point x="165" y="165"></point>
+        <point x="180" y="210"></point>
+        <point x="180" y="240"></point>
+        <point x="150" y="300"></point>
+        <point x="165" y="300"></point>
+        <point x="195" y="240"></point>
+        <point x="195" y="195"></point>
+        <point x="165" y="135"></point>
+      </polygon>
+      <circle x="85" y="132" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="130" y="147" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="192" y="85" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="85" y="40" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="177" y="40" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="177" y="132" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="70" y="85" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="130" y="25" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="96" y="51" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="113" y="68" marked="false" color="255" diameter="74" filled="true"></circle>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="189" y="233"></point>
+        <point x="219" y="188"></point>
+        <point x="249" y="173"></point>
+        <point x="279" y="188"></point>
+        <point x="234" y="218"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="180" y="255"></point>
+        <point x="150" y="210"></point>
+        <point x="105" y="210"></point>
+        <point x="75" y="240"></point>
+        <point x="135" y="240"></point>
+      </polygon>
+    </shape>
+    <shape name="house" rotatable="false" editableColorIndex="0">
+      <rectangle endX="255" startY="120" marked="true" color="-1920102913" endY="285" startX="45" filled="true"></rectangle>
+      <rectangle endX="180" startY="210" marked="false" color="255" endY="285" startX="120" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="15" y="120"></point>
+        <point x="150" y="15"></point>
+        <point x="285" y="120"></point>
+      </polygon>
+      <line endX="270" startY="120" marked="false" color="255" endY="120" startX="30"></line>
+    </shape>
+    <shape name="leaf" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="210"></point>
+        <point x="135" y="195"></point>
+        <point x="120" y="210"></point>
+        <point x="60" y="210"></point>
+        <point x="30" y="195"></point>
+        <point x="60" y="180"></point>
+        <point x="60" y="165"></point>
+        <point x="15" y="135"></point>
+        <point x="30" y="120"></point>
+        <point x="15" y="105"></point>
+        <point x="40" y="104"></point>
+        <point x="45" y="90"></point>
+        <point x="60" y="90"></point>
+        <point x="90" y="105"></point>
+        <point x="105" y="120"></point>
+        <point x="120" y="120"></point>
+        <point x="105" y="60"></point>
+        <point x="120" y="60"></point>
+        <point x="135" y="30"></point>
+        <point x="150" y="15"></point>
+        <point x="165" y="30"></point>
+        <point x="180" y="60"></point>
+        <point x="195" y="60"></point>
+        <point x="180" y="120"></point>
+        <point x="195" y="120"></point>
+        <point x="210" y="105"></point>
+        <point x="240" y="90"></point>
+        <point x="255" y="90"></point>
+        <point x="263" y="104"></point>
+        <point x="285" y="105"></point>
+        <point x="270" y="120"></point>
+        <point x="285" y="135"></point>
+        <point x="240" y="165"></point>
+        <point x="240" y="180"></point>
+        <point x="270" y="195"></point>
+        <point x="240" y="210"></point>
+        <point x="180" y="210"></point>
+        <point x="165" y="195"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="195"></point>
+        <point x="135" y="240"></point>
+        <point x="120" y="255"></point>
+        <point x="105" y="255"></point>
+        <point x="105" y="285"></point>
+        <point x="135" y="285"></point>
+        <point x="165" y="240"></point>
+        <point x="165" y="195"></point>
+      </polygon>
+    </shape>
+    <shape name="line" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+    </shape>
+    <shape name="line half" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="150" startX="150"></line>
+    </shape>
+    <shape name="line half 1" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+      <rectangle endX="165" startY="0" marked="true" color="-1920102913" endY="150" startX="135" filled="true"></rectangle>
+    </shape>
+    <shape name="line half 2" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+      <rectangle endX="180" startY="0" marked="true" color="-1920102913" endY="150" startX="120" filled="true"></rectangle>
+    </shape>
+    <shape name="pentagon" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="15"></point>
+        <point x="15" y="120"></point>
+        <point x="60" y="285"></point>
+        <point x="240" y="285"></point>
+        <point x="285" y="120"></point>
+      </polygon>
+    </shape>
+    <shape name="person" rotatable="false" editableColorIndex="0">
+      <circle x="110" y="5" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="105" y="90"></point>
+        <point x="120" y="195"></point>
+        <point x="90" y="285"></point>
+        <point x="105" y="300"></point>
+        <point x="135" y="300"></point>
+        <point x="150" y="225"></point>
+        <point x="165" y="300"></point>
+        <point x="195" y="300"></point>
+        <point x="210" y="285"></point>
+        <point x="180" y="195"></point>
+        <point x="195" y="90"></point>
+      </polygon>
+      <rectangle endX="172" startY="79" marked="true" color="-1920102913" endY="94" startX="127" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="195" y="90"></point>
+        <point x="240" y="150"></point>
+        <point x="225" y="180"></point>
+        <point x="165" y="105"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="105" y="90"></point>
+        <point x="60" y="150"></point>
+        <point x="75" y="180"></point>
+        <point x="135" y="105"></point>
+      </polygon>
+    </shape>
+    <shape name="plant" rotatable="false" editableColorIndex="0">
+      <rectangle endX="165" startY="90" marked="true" color="-1920102913" endY="300" startX="135" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="255"></point>
+        <point x="90" y="210"></point>
+        <point x="45" y="195"></point>
+        <point x="75" y="255"></point>
+        <point x="135" y="285"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="255"></point>
+        <point x="210" y="210"></point>
+        <point x="255" y="195"></point>
+        <point x="225" y="255"></point>
+        <point x="165" y="285"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="180"></point>
+        <point x="90" y="135"></point>
+        <point x="45" y="120"></point>
+        <point x="75" y="180"></point>
+        <point x="135" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="180"></point>
+        <point x="165" y="210"></point>
+        <point x="225" y="180"></point>
+        <point x="255" y="120"></point>
+        <point x="210" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="105"></point>
+        <point x="90" y="60"></point>
+        <point x="45" y="45"></point>
+        <point x="75" y="105"></point>
+        <point x="135" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="105"></point>
+        <point x="165" y="135"></point>
+        <point x="225" y="105"></point>
+        <point x="255" y="45"></point>
+        <point x="210" y="60"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="90"></point>
+        <point x="120" y="45"></point>
+        <point x="150" y="15"></point>
+        <point x="180" y="45"></point>
+        <point x="165" y="90"></point>
+      </polygon>
+    </shape>
+    <shape name="sheep" rotatable="false" editableColorIndex="15">
+      <circle x="203" y="65" marked="true" color="-1" diameter="88" filled="true"></circle>
+      <circle x="70" y="65" marked="true" color="-1" diameter="162" filled="true"></circle>
+      <circle x="150" y="105" marked="true" color="-1" diameter="120" filled="true"></circle>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="218" y="120"></point>
+        <point x="240" y="165"></point>
+        <point x="255" y="165"></point>
+        <point x="278" y="120"></point>
+      </polygon>
+      <circle x="214" y="72" marked="false" color="-1920102913" diameter="67" filled="true"></circle>
+      <rectangle endX="179" startY="223" marked="true" color="-1" endY="298" startX="164" filled="true"></rectangle>
+      <polygon color="-1" filled="true" marked="true">
+        <point x="45" y="285"></point>
+        <point x="30" y="285"></point>
+        <point x="30" y="240"></point>
+        <point x="15" y="195"></point>
+        <point x="45" y="210"></point>
+      </polygon>
+      <circle x="3" y="83" marked="true" color="-1" diameter="150" filled="true"></circle>
+      <rectangle endX="80" startY="221" marked="true" color="-1" endY="296" startX="65" filled="true"></rectangle>
+      <polygon color="-1" filled="true" marked="true">
+        <point x="195" y="285"></point>
+        <point x="210" y="285"></point>
+        <point x="210" y="240"></point>
+        <point x="240" y="210"></point>
+        <point x="195" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="276" y="85"></point>
+        <point x="285" y="105"></point>
+        <point x="302" y="99"></point>
+        <point x="294" y="83"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="219" y="85"></point>
+        <point x="210" y="105"></point>
+        <point x="193" y="99"></point>
+        <point x="201" y="83"></point>
+      </polygon>
+    </shape>
+    <shape name="square" rotatable="false" editableColorIndex="0">
+      <rectangle endX="270" startY="30" marked="true" color="-1920102913" endY="270" startX="30" filled="true"></rectangle>
+    </shape>
+    <shape name="square 2" rotatable="false" editableColorIndex="0">
+      <rectangle endX="270" startY="30" marked="true" color="-1920102913" endY="270" startX="30" filled="true"></rectangle>
+      <rectangle endX="240" startY="60" marked="false" color="255" endY="240" startX="60" filled="true"></rectangle>
+    </shape>
+    <shape name="star" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="151" y="1"></point>
+        <point x="185" y="108"></point>
+        <point x="298" y="108"></point>
+        <point x="207" y="175"></point>
+        <point x="242" y="282"></point>
+        <point x="151" y="216"></point>
+        <point x="59" y="282"></point>
+        <point x="94" y="175"></point>
+        <point x="3" y="108"></point>
+        <point x="116" y="108"></point>
+      </polygon>
+    </shape>
+    <shape name="target" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+      <circle x="60" y="60" marked="true" color="-1920102913" diameter="180" filled="true"></circle>
+      <circle x="90" y="90" marked="false" color="255" diameter="120" filled="true"></circle>
+      <circle x="120" y="120" marked="true" color="-1920102913" diameter="60" filled="true"></circle>
+    </shape>
+    <shape name="tree" rotatable="false" editableColorIndex="0">
+      <circle x="118" y="3" marked="true" color="-1920102913" diameter="94" filled="true"></circle>
+      <rectangle endX="180" startY="195" marked="false" color="-1653716737" endY="300" startX="120" filled="true"></rectangle>
+      <circle x="65" y="21" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="116" y="41" marked="true" color="-1920102913" diameter="127" filled="true"></circle>
+      <circle x="45" y="90" marked="true" color="-1920102913" diameter="120" filled="true"></circle>
+      <circle x="104" y="74" marked="true" color="-1920102913" diameter="152" filled="true"></circle>
+    </shape>
+    <shape name="triangle" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="30"></point>
+        <point x="15" y="255"></point>
+        <point x="285" y="255"></point>
+      </polygon>
+    </shape>
+    <shape name="triangle 2" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="30"></point>
+        <point x="15" y="255"></point>
+        <point x="285" y="255"></point>
+      </polygon>
+      <polygon color="255" filled="true" marked="false">
+        <point x="151" y="99"></point>
+        <point x="225" y="223"></point>
+        <point x="75" y="224"></point>
+      </polygon>
+    </shape>
+    <shape name="truck" rotatable="false" editableColorIndex="0">
+      <rectangle endX="195" startY="45" marked="true" color="-1920102913" endY="187" startX="4" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="296" y="193"></point>
+        <point x="296" y="150"></point>
+        <point x="259" y="134"></point>
+        <point x="244" y="104"></point>
+        <point x="208" y="104"></point>
+        <point x="207" y="194"></point>
+      </polygon>
+      <rectangle endX="195" startY="60" marked="false" color="-1" endY="105" startX="195" filled="true"></rectangle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="238" y="112"></point>
+        <point x="252" y="141"></point>
+        <point x="219" y="141"></point>
+        <point x="218" y="112"></point>
+      </polygon>
+      <circle x="234" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <rectangle endX="214" startY="185" marked="true" color="-1920102913" endY="194" startX="181" filled="true"></rectangle>
+      <circle x="144" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <circle x="24" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <circle x="24" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+      <circle x="144" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+      <circle x="234" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+    </shape>
+    <shape name="turtle" rotatable="true" editableColorIndex="0">
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="215" y="204"></point>
+        <point x="240" y="233"></point>
+        <point x="246" y="254"></point>
+        <point x="228" y="266"></point>
+        <point x="215" y="252"></point>
+        <point x="193" y="210"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="195" y="90"></point>
+        <point x="225" y="75"></point>
+        <point x="245" y="75"></point>
+        <point x="260" y="89"></point>
+        <point x="269" y="108"></point>
+        <point x="261" y="124"></point>
+        <point x="240" y="105"></point>
+        <point x="225" y="105"></point>
+        <point x="210" y="105"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="105" y="90"></point>
+        <point x="75" y="75"></point>
+        <point x="55" y="75"></point>
+        <point x="40" y="89"></point>
+        <point x="31" y="108"></point>
+        <point x="39" y="124"></point>
+        <point x="60" y="105"></point>
+        <point x="75" y="105"></point>
+        <point x="90" y="105"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="132" y="85"></point>
+        <point x="134" y="64"></point>
+        <point x="107" y="51"></point>
+        <point x="108" y="17"></point>
+        <point x="150" y="2"></point>
+        <point x="192" y="18"></point>
+        <point x="192" y="52"></point>
+        <point x="169" y="65"></point>
+        <point x="172" y="87"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="85" y="204"></point>
+        <point x="60" y="233"></point>
+        <point x="54" y="254"></point>
+        <point x="72" y="266"></point>
+        <point x="85" y="252"></point>
+        <point x="107" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="119" y="75"></point>
+        <point x="179" y="75"></point>
+        <point x="209" y="101"></point>
+        <point x="224" y="135"></point>
+        <point x="220" y="225"></point>
+        <point x="175" y="261"></point>
+        <point x="128" y="261"></point>
+        <point x="81" y="224"></point>
+        <point x="74" y="135"></point>
+        <point x="88" y="99"></point>
+      </polygon>
+    </shape>
+    <shape name="wheel" rotatable="false" editableColorIndex="0">
+      <circle x="3" y="3" marked="true" color="-1920102913" diameter="294" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+      <line endX="150" startY="285" marked="true" color="-1920102913" endY="15" startX="150"></line>
+      <line endX="285" startY="150" marked="true" color="-1920102913" endY="150" startX="15"></line>
+      <circle x="120" y="120" marked="true" color="-1920102913" diameter="60" filled="true"></circle>
+      <line endX="79" startY="40" marked="true" color="-1920102913" endY="269" startX="216"></line>
+      <line endX="269" startY="84" marked="true" color="-1920102913" endY="221" startX="40"></line>
+      <line endX="269" startY="216" marked="true" color="-1920102913" endY="79" startX="40"></line>
+      <line endX="221" startY="40" marked="true" color="-1920102913" endY="269" startX="84"></line>
+    </shape>
+    <shape name="wolf" rotatable="false" editableColorIndex="0">
+      <polygon color="255" filled="true" marked="false">
+        <point x="253" y="133"></point>
+        <point x="245" y="131"></point>
+        <point x="245" y="133"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="2" y="194"></point>
+        <point x="13" y="197"></point>
+        <point x="30" y="191"></point>
+        <point x="38" y="193"></point>
+        <point x="38" y="205"></point>
+        <point x="20" y="226"></point>
+        <point x="20" y="257"></point>
+        <point x="27" y="265"></point>
+        <point x="38" y="266"></point>
+        <point x="40" y="260"></point>
+        <point x="31" y="253"></point>
+        <point x="31" y="230"></point>
+        <point x="60" y="206"></point>
+        <point x="68" y="198"></point>
+        <point x="75" y="209"></point>
+        <point x="66" y="228"></point>
+        <point x="65" y="243"></point>
+        <point x="82" y="261"></point>
+        <point x="84" y="268"></point>
+        <point x="100" y="267"></point>
+        <point x="103" y="261"></point>
+        <point x="77" y="239"></point>
+        <point x="79" y="231"></point>
+        <point x="100" y="207"></point>
+        <point x="98" y="196"></point>
+        <point x="119" y="201"></point>
+        <point x="143" y="202"></point>
+        <point x="160" y="195"></point>
+        <point x="166" y="210"></point>
+        <point x="172" y="213"></point>
+        <point x="173" y="238"></point>
+        <point x="167" y="251"></point>
+        <point x="160" y="248"></point>
+        <point x="154" y="265"></point>
+        <point x="169" y="264"></point>
+        <point x="178" y="247"></point>
+        <point x="186" y="240"></point>
+        <point x="198" y="260"></point>
+        <point x="200" y="271"></point>
+        <point x="217" y="271"></point>
+        <point x="219" y="262"></point>
+        <point x="207" y="258"></point>
+        <point x="195" y="230"></point>
+        <point x="192" y="198"></point>
+        <point x="210" y="184"></point>
+        <point x="227" y="164"></point>
+        <point x="242" y="144"></point>
+        <point x="259" y="145"></point>
+        <point x="284" y="151"></point>
+        <point x="277" y="141"></point>
+        <point x="293" y="140"></point>
+        <point x="299" y="134"></point>
+        <point x="297" y="127"></point>
+        <point x="273" y="119"></point>
+        <point x="270" y="105"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="-1" y="195"></point>
+        <point x="14" y="180"></point>
+        <point x="36" y="166"></point>
+        <point x="40" y="153"></point>
+        <point x="53" y="140"></point>
+        <point x="82" y="131"></point>
+        <point x="134" y="133"></point>
+        <point x="159" y="126"></point>
+        <point x="188" y="115"></point>
+        <point x="227" y="108"></point>
+        <point x="236" y="102"></point>
+        <point x="238" y="98"></point>
+        <point x="268" y="86"></point>
+        <point x="269" y="92"></point>
+        <point x="281" y="87"></point>
+        <point x="269" y="103"></point>
+        <point x="269" y="113"></point>
+      </polygon>
+    </shape>
+    <shape name="x" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="270" y="75"></point>
+        <point x="225" y="30"></point>
+        <point x="30" y="225"></point>
+        <point x="75" y="270"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="30" y="75"></point>
+        <point x="75" y="30"></point>
+        <point x="270" y="225"></point>
+        <point x="225" y="270"></point>
+      </polygon>
+    </shape>
+  </turtleShapes>
+  <linkShapes>
+    <shape name="default" curviness="0.0">
+      <lines>
+        <line x="-0.2" visible="false">
+          <dash value="0.0"></dash>
+          <dash value="1.0"></dash>
+        </line>
+        <line x="0.0" visible="true">
+          <dash value="1.0"></dash>
+          <dash value="0.0"></dash>
+        </line>
+        <line x="0.2" visible="false">
+          <dash value="0.0"></dash>
+          <dash value="1.0"></dash>
+        </line>
+      </lines>
+      <indicator>
+        <shape name="link direction" rotatable="true" editableColorIndex="0">
+          <line endX="90" startY="150" marked="true" color="-1920102913" endY="180" startX="150"></line>
+          <line endX="210" startY="150" marked="true" color="-1920102913" endY="180" startX="150"></line>
+        </shape>
+      </indicator>
+    </shape>
+  </linkShapes>
+  <previewCommands>setup repeat 75 [ go ]</previewCommands>
+  <experiments>
+    <experiment name="experiment" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="true" timeLimit="2190">
+      <setup>setup</setup>
+      <go>go</go>
+      <metrics>
+        <metric>T</metric>
+        <metric>T_max</metric>
+        <metric>T_min</metric>
+        <metric>RAIN</metric>
+        <metric>solarRadiation</metric>
+        <metric>ETr</metric>
+        <metric>mean [WATp] of patches</metric>
+        <metric>mean [ARID] of patches</metric>
+        <metric>mean [biomass] of patches with [position crop typesOfCrops = 0]</metric>
+        <metric>mean [biomass] of patches with [position crop typesOfCrops = 1]</metric>
+        <metric>mean [yield] of patches with [position crop typesOfCrops = 0]</metric>
+        <metric>mean [yield] of patches with [position crop typesOfCrops = 1]</metric>
+      </metrics>
+      <constants>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate2_yearly-mean">
+          <value value="0.05"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="CO2-mean">
+          <value value="250"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="solar_annual-min">
+          <value value="3"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate2_yearly-sd">
+          <value value="0.01"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="CO2-daily-fluctuation">
+          <value value="1"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="seed">
+          <value value="0"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_yearly-sd">
+          <value value="130"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="solar_annual-max">
+          <value value="7"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_plateau-value_yearly-sd">
+          <value value="0.05"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_n-sample">
+          <value value="200"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection1_yearly-sd">
+          <value value="20"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="CO2-annual-deviation">
+          <value value="2"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_max-sample-size">
+          <value value="10"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection2_yearly-sd">
+          <value value="20"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection2_yearly-mean">
+          <value value="200"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_mean-daily-fluctuation">
+          <value value="5"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_annual-min-at-2m">
+          <value value="15"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="solar_mean-daily-fluctuation">
+          <value value="1"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_daily-lower-deviation">
+          <value value="5"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_annual-max-at-2m">
+          <value value="40"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_daily-upper-deviation">
+          <value value="5"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="end-simulation-in-tick">
+          <value value="0"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_yearly-mean">
+          <value value="400"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection1_yearly-mean">
+          <value value="40"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate1_yearly-mean">
+          <value value="0.15"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="display-mode">
+          <value value="&quot;crops&quot;"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_plateau-value_yearly-mean">
+          <value value="0.1"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate1_yearly-sd">
+          <value value="0.02"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="type-of-experiment">
+          <value value="&quot;user-defined&quot;"></value>
+        </enumeratedValueSet>
+      </constants>
+    </experiment>
+  </experiments>
+</model>
