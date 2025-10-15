@@ -1,0 +1,2813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model version="NetLogo 7.0.0-beta2" snapToGrid="false">
+  <code><![CDATA[;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; GNU GENERAL PUBLIC LICENSE ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;  MesaraTrade - model for the tutorial ABM in archaeology at the University of Koeln
+;;  Based on modified parts of:
+;;  PondTrade
+;;  available at https://github.com/Andros-Spica/PondTrade
+;;  and
+;;  Soil Water Balance model (NetLogo implementation)
+;;  Land model
+;;  Copyright (C) 2022 Andreas Angourakis (andros.spica@gmail.com)
+;;  available at https://www.github.com/Andros-Spica/indus-village-model
+;;  implementing the Soil Water Balance model from Wallach et al. 2006 'Working with dynamic crop models' (p. 24-28 and p. 138-144).
+;;  This implementation uses parts of the Weather model to simulate input variables (i.e., temperature, solar radiation, precipitation, evapotranspiration)
+;;
+;;  This program is free software: you can redistribute it and/or modify
+;;  it under the terms of the GNU General Public License as published by
+;;  the Free Software Foundation, either version 3 of the License, or
+;;  (at your option) any later version.
+;;
+;;  This program is distributed in the hope that it will be useful,
+;;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;  GNU General Public License for more details.
+;;
+;;  You should have received a copy of the GNU General Public License
+;;  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+extensions [ csv gis ]
+
+;;;;;;;;;;;;;;;;;
+;;;;; BREEDS ;;;;
+;;;;;;;;;;;;;;;;;
+
+breed [ flowHolders flowHolder ]
+breed [ sites site ]
+breed [ settlements settlement ]
+breed [ traders trader ]
+
+;;;;;;;;;;;;;;;;;
+;;; VARIABLES ;;;
+;;;;;;;;;;;;;;;;;
+
+globals
+[
+  patchesWithElevationData
+  noElevationDataTag
+  maxElevation
+
+  width
+  height
+
+  ;;; GIS data holders
+  sitesData_EMIII-MMIA
+  sitesData_MMIB
+  elevationData
+  riversData
+
+  ;;; weather input data
+  weatherInputData_firstYear
+  weatherInputData_lastYear
+  weatherInputData_YEARS
+  weatherInputData_yearLengthInDays
+  weatherInputData_DOY
+  weatherInputData_YEAR-DOY
+  weatherInputData_solarRadiation
+  weatherInputData_precipitation
+  weatherInputData_temperature
+  weatherInputData_maxTemperature
+  weatherInputData_minTemperature
+
+  ;;; default constants
+
+  MUF ; Water Uptake coefficient (mm^3.mm^-3)
+  WP ; Water content at wilting Point (cm^3.cm^-3)
+
+  ;;;; ETr
+  albedo_min
+  albedo_max
+
+  ;;;; Soil Water Balance model global parameters
+  WHC_min
+  WHC_max
+  DC_min
+  DC_max
+  z_min
+  z_max
+  CN_min
+  CN_max
+
+  ;;; variables
+  ;;;; time tracking
+  currentYear
+  currentDayOfYear
+
+  maxFlowAccumulation
+
+  routes
+
+  ;;;; main (these follow a seasonal pattern and apply for all patches)
+
+  T ; average temperature of current day (ºC)
+  T_max ; maximum temperature of current day (ºC)
+  T_min ; minimum temperature of current day (ºC)
+
+  solarRadiation ; solar radiation of current day (MJ m-2)
+
+  RAIN ; precipitation of current day (mm)
+  precipitation_yearSeries
+  precipitation_cumYearSeries
+
+  ;;; Output
+  patchesCount
+  coastalLandPatchesCount
+
+  traderCount
+
+  meanTraderCargoValue
+  minTraderCargoValue
+  maxTraderCargoValue
+
+  minSettlementSize
+  maxSettlementSize
+  mainHub
+
+  meanTotalPathCostOfActiveRoutes
+  minTotalPathCostOfActiveRoutes
+  maxTotalPathCostOfActiveRoutes
+
+  meanRedTrait stdDevRedTrait modesRedTrait
+  meanGreenTrait stdDevGreenTrait modesGreenTrait
+  meanBlueTrait stdDevBlueTrait modesBlueTrait
+
+  meanLandTechTrait stdDevLandTechTrait modesLandTechTrait
+  meanPortTechTrait stdDevPortTechTrait modesPortTechTrait
+
+  meanSizeDecayTrait stdDevSizeDecayTrait modesSizeDecayTrait
+  meanStockDecayTrait stdDevStockDecayTrait modesStockDecayTrait
+  meanProductionTrait stdDevProductionTrait modesProductionTrait
+
+  meanFreqOverQualTrait stdDevFreqOverQualTrait modesFreqOverQualTrait
+  meanTransmissionTrait stdDevTransmissionTrait modesTransmissionTrait
+  meanMutationTrait stdDevMutationTrait modesMutationTrait
+]
+
+sites-own
+[
+  name
+  siteType
+  period
+]
+
+settlements-own
+[
+  sizeLevel
+  currentNumberOfTraders potentialNumberOfTraders
+  stock
+  culturalVector
+  catchmentArea
+  ARIDinCatchmentArea
+]
+
+traders-own
+[
+  isActivated
+  base route destination direction lastPosition
+  cargoValue
+  culturalSample
+]
+
+patches-own
+[
+  elevation ; elevation above sea level [m]
+
+  flow_direction        ; the numeric code for the (main) direction of flow or
+                        ; drainage within the land unit.
+                        ; Following Jenson & Domingue (1988) convention:
+                        ; NW = 64,   N = 128,        NE = 1,
+                        ; W = 32,     <CENTRE>,   E = 2,
+                        ; SW = 16,     S = 8,          SE = 4
+
+  flow_receive          ; Boolean variable stating whether or not the land unit receives
+                        ; the flow of a neighbour.
+
+  flow_accumulation     ; the amount of flow units accumulated in the land unit.
+                        ; A Flow unit is the volume of runoff water flowing from one land unit
+                        ; to another (assumed constant and without losses).
+  flow_accumulationState ; the state of the land unit regarding the calculation of flow
+                        ; accumulation (auxiliary variable).
+
+  isRiver
+
+  pathCost
+
+  ;;;; soil
+  DC ; Drainage coefficient (mm^3 mm^-3).
+  z ; root zone depth (mm).
+  CN ; Runoff curve number.
+  FC ; Water content at field capacity (cm^3.cm^-3)
+  WHC ; Water Holding Capacity of the soil (cm^3.cm^-3). Typical range from 0.05 to 0.25
+
+  ARID ; ARID index after Woli et al. 2012, ranging form 0 (no water shortage) to 1 (extreme water shortage)
+  WAT ; Water content in the soil profile for the rooting depth (mm)
+  WATp ; Volumetric Soil Water content (fraction : mm.mm-1). calculated as WAT/z
+
+  ;;;; cover
+  albedo ; canopy reflection or albedo
+  netSolarRadiation ; net solar radiation discount canopy reflection or albedo
+  ETr ; reference evapotranspiration
+
+  ARID_modifier ; modifier coefficient based on the relative value of flow_accumulation
+]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to setup
+
+  clear-all
+
+  ; --- loading/testing parameters -----------
+
+  import-map-with-flows ; import-world must be the first step
+
+  set-constants
+
+  set-parameters
+
+  import-routes-from-file
+
+  ; --- core procedures ----------------------
+
+  setup-patches
+
+  setup-settlements
+
+  create-traders-per-settlement
+
+  set currentYear weatherInputData_firstYear
+  set currentDayOfYear 1
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT ]
+
+  ; --- display & output handling ------------------------
+
+  update-output
+
+  refresh-view
+
+  paint-routes
+
+  ; -- time -------------------------------------
+
+  reset-ticks
+
+end
+
+to set-constants
+
+  ; "constants" are variables that will not be explored as parameters
+  ; and may be used during a simulation.
+
+  ; MUF : Water Uptake coefficient (mm^3 mm^-3)
+  set MUF 0.096
+
+  ; WP : Water content at wilting Point (cm^3.cm^-3)
+  set WP 0.06
+
+end
+
+to set-parameters
+
+  ; set random seed
+  random-seed randomSeed
+
+  ;;; load weather input data from file
+  load-weather-input-data-table
+
+  parameters-check
+
+  ;;; weather parameters are left with default values, but effectively ignored given that input weather is used.
+
+  set albedo_min 1E-6 + random-float 0.3
+  set albedo_max albedo_min + random-float 0.3
+
+  ;;; Soil Water Balance model
+  set WHC_min random-float 0.1
+  set WHC_max WHC_min + random-float 0.1
+  set DC_min 1E-6 + random-float 0.45
+  set DC_max DC_min + random-float 0.45
+  set z_min random-float 1000
+  set z_max z_min + random-float 1000
+  set CN_min random-float 40
+  set CN_max CN_min + random-float 50
+
+end
+
+to parameters-check
+
+  ;;; check if values were reset to 0 (NetLogo does that from time to time...!)
+  ;;; and set default values (assuming they are not 0)
+
+  if (par_albedo_min = 0)                                        [ set par_albedo_min                              0.1 ]
+  if (par_albedo_max = 0)                                        [ set par_albedo_max                              0.5 ]
+
+  if (water-holding-capacity_min = 0)                            [ set water-holding-capacity_min                    0.05 ]
+  if (water-holding-capacity_max = 0)                            [ set water-holding-capacity_max                    0.25 ]
+  if (drainage-coefficient_min = 0)                              [ set drainage-coefficient_min                      0.3 ]
+  if (drainage-coefficient_max = 0)                              [ set drainage-coefficient_max                      0.7 ]
+  if (root-zone-depth_min = 0)                                   [ set root-zone-depth_min                         200 ]
+  if (root-zone-depth_max = 0)                                   [ set root-zone-depth_max                        2000 ]
+  if (runoff-curve_min = 0)                                      [ set runoff-curve_min                             30 ]
+  if (runoff-curve_max = 0)                                      [ set runoff-curve_max                             80 ]
+
+end
+
+to parameters-to-default
+
+  ;;; set parameters to a default value
+  set par_albedo_min                                            0.1
+  set par_albedo_max                                            0.5
+
+  set water-holding-capacity_min                                0.05
+  set water-holding-capacity_max                                0.25
+  set drainage-coefficient_min                                  0.3
+  set drainage-coefficient_max                                  0.7
+  set root-zone-depth_min                                     200
+  set root-zone-depth_max                                    2000
+  set runoff-curve_min                                         30
+  set runoff-curve_max                                         80
+
+end
+
+to setup-patches
+
+  setup-soil-water-properties
+
+  setup-ARID-modifier
+
+  assign-path-cost
+
+end
+
+to import-map-with-flows
+
+  import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"
+
+  ;;; reduce patch size in pixels
+  set-patch-size 3
+
+end
+
+to setup-soil-water-properties
+
+  ask patchesWithElevationData
+  [
+    set albedo albedo_min + random-float (albedo_max - albedo_min)
+
+    ; Water Holding Capacity of the soil (cm^3 cm^-3).
+    set WHC WHC_min + random-float (WHC_max - WHC_min)
+    ; DC :  Drainage coefficient (mm^3 mm^-3)
+    set DC DC_min + random-float (DC_max - DC_min)
+    ; z : root zone depth (mm)
+    set z z_min + random (z_max - z_min)
+    ; CN : Runoff curve number
+    set CN CN_min + random (CN_max - CN_max)
+
+    ; FC : Water content at field capacity (cm^3.cm^-3)
+    set FC WP + WHC
+    ; WAT0 : Initial Water content (mm)
+    set WAT z * FC
+  ]
+
+end
+
+to setup-ARID-modifier
+
+  ask patchesWithElevationData
+  [
+    set ARID_modifier (1 - ARID-decrease-per-flow-accumulation * (flow_accumulation / maxFlowAccumulation))
+  ]
+
+end
+
+to assign-path-cost
+
+  ask patches with [elevation = noElevationDataTag] [ set pathCost 9999 ] ;;; this makes routes crossing patches with no elevation data extremely unlikely
+
+  ask patchesWithElevationData
+  [
+    let myValidNeighborsAndI (patch-set self (neighbors with [elevation > noElevationDataTag]))
+
+    ifelse (count myValidNeighborsAndI > 1)
+    [
+      set pathCost standard-deviation [elevation] of myValidNeighborsAndI
+    ]
+    [
+      set pathCost 1
+    ]
+  ]
+
+end
+
+to setup-settlements
+
+  ask sites with [period = simulation-period]
+  [
+    set shape "dot"
+    set size 5
+
+    hatch-settlements 1
+    [
+      set sizeLevel 1
+      set stock 0
+
+      set culturalVector extract-rgb color ; 0#, 1# and 2#
+      ; We add seven continuos cultural traits to the neutral RGB traits,
+      ; representing their attitude and ability involving
+      ; aspects we previously fixed as parameters and one variable:
+      ; 3# relativePathCostInLand (normal distribution around global parameter)
+      set culturalVector lput (random-normal 0 landTechVariation) culturalVector
+      ; 4# relativePathCostInPort (normal distribution around global parameter)
+      set culturalVector lput (random-normal 0 portTechVariation) culturalVector
+      ; 5# settlementSizeDecayRate [0 - maxSettlementSizeDecayRate)
+      set culturalVector lput (random-float maxSettlementSizeDecayRate) culturalVector
+      ; 6# stockDecayRate [0 - maxStockDecayRate)
+      set culturalVector lput (random-float maxStockDecayRate) culturalVector
+      ; 7# produtionRate [0 - maxProductionRate)
+      set culturalVector lput (random-float maxProductionRate) culturalVector
+      ; 8# frequencyOverQuality [0 - 1)
+      set culturalVector lput (random-float 1) culturalVector
+      ; 9# traitTransmissionRate [0 - maxTraitTransmissionRate) *** now, it means specifically the 'openess' of a settlement towards other variants of a trait
+      set culturalVector lput (random-float maxTraitTransmissionRate) culturalVector
+      ; 10# mutationVariation [0 - maxMutationVariation)
+      set culturalVector lput (random-float maxMutationVariation) culturalVector
+
+      ; replace the land path cost with the port pathCost
+      ask patch-here [ set pathCost relativePathCostInPort ]
+
+      ;;; move the settlement to the exact center of the patch
+      set xcor [pxcor] of patch-here
+      set ycor [pycor] of patch-here
+
+      set shape "circle 2"
+      set size 5
+    ]
+  ]
+
+end
+
+to create-traders-per-settlement
+
+  ask settlements
+  [
+    let thisSettlement self ; to avoid the confusion of nested agent queries
+
+    set potentialNumberOfTraders get-potential-number-of-traders
+
+    hatch-traders potentialNumberOfTraders ; use the sizeLevel variable as the number of traders based in the settlement
+    [
+      setup-trader thisSettlement
+    ]
+
+    set currentNumberOfTraders get-current-number-of-traders
+  ]
+
+end
+
+to setup-trader [ baseSettlement ]
+
+  set base baseSettlement
+  set isActivated true
+
+  ; give meaningful display related to base
+  set shape "person"
+  set color [color] of base
+  set size 3
+
+  choose-destination
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; GO ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to go
+
+  ; --- core procedures -------------------------
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT modify-ARID ]
+
+  update-traders
+
+  update-settlements
+
+  ; --- output handling ------------------------
+
+  update-output
+
+  refresh-view
+
+  ; -- time -------------------------------------
+
+  advance-time
+
+  tick
+
+  ; --- stop conditions -------------------------
+
+  if (currentYear = weatherInputData_lastYear and currentDayOfYear = last weatherInputData_yearLengthInDays) [stop]
+
+end
+
+;;; GLOBAL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to advance-time
+
+  set currentDayOfYear currentDayOfYear + 1
+  if (currentDayOfYear > item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays)
+  [
+    set currentYear currentYear + 1
+    set currentDayOfYear 1
+  ]
+
+end
+
+;;; traders and settlements ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to update-traders
+
+  let activeTraders traders with [isActivated]
+  let tradersInBase activeTraders with [is-in-base]
+  let tradersInDestination activeTraders with [is-in-destination]
+
+  ; UPDATE LAST POSITION
+  ask activeTraders
+  [
+    ; update lastPosition if in a patch centre
+    if ((xcor = [pxcor] of patch-here) and (ycor = [pycor] of patch-here))
+    [
+      set lastPosition patch-here
+    ]
+  ]
+
+  ; UNLOAD
+  ask (turtle-set tradersInBase tradersInDestination) with [cargoValue > 0]
+  [
+    ; unload cargo (changes sizeLevel)
+    unload-cargo
+  ]
+
+  ; CHECK if the trader can be sustained when in the base
+  ask tradersInBase
+  [
+    if ([potentialNumberOfTraders < currentNumberOfTraders] of base)
+    [
+      ; the current number of traders cannot be sustained
+      set isActivated false
+      ; update currentNumberOfTraders of base
+      ask base [ set currentNumberOfTraders get-current-number-of-traders ]
+    ]
+  ]
+
+  set activeTraders traders with [isActivated] ; update active traders
+  set tradersInBase tradersInBase with [isActivated] ; update traders in base
+
+  ; LOAD
+  ask (turtle-set tradersInBase tradersInDestination)
+  [
+    ; load cargo (changes stock)
+    load-cargo
+  ]
+
+  ; CHOOSE DESTINATION
+  ask tradersInBase with [cargoValue > 0]
+  [
+    ; update the destination whenever in the base settlement and there is cargo to transport
+    choose-destination
+  ]
+
+  ; FIND DIRECTION in route
+  ask (turtle-set tradersInBase tradersInDestination)
+  [
+    find-direction
+  ]
+
+  ; MOVE towards the next position in the route
+  ask activeTraders with [cargoValue > 0]
+  [
+    ; move following the route when there is cargo to transport
+    move-to-destination
+  ]
+
+end
+
+to choose-destination ; ego = trader
+
+  let thisTrader self
+
+  ; get routes connecting the base settlement
+  let routesFromBase get-routes-to-settlement [base] of thisTrader
+
+  ; order these routes by benefit/cost ratio
+  set routesFromBase sort-by [ [?1 ?2] -> benefit-cost-of-route ?1 thisTrader > benefit-cost-of-route ?2 thisTrader ] routesFromBase
+
+  ; print the options available
+;  foreach routesFromBase
+;  [
+;    print "==============================================================="
+;    print "route between:"
+;    print [who] of get-origin-and-destination ?
+;    print "has the benefit-cost ratio of:"
+;    print benefit-cost-of-route ?
+;  ]
+;  print "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x"
+
+  ; select the one with higher benefit/cost ratio
+  set route first routesFromBase
+
+  ; get the settlement of destination
+  set destination one-of (get-origin-and-destination route) with [who != [who] of ([base] of thisTrader)]
+
+end
+
+to find-direction ; ego = trader
+
+  ; find where in the route list is the trader
+  let currentPosition position lastPosition route
+
+  ; set direction if in a settlement
+  ifelse (currentPosition = 0) ; in the first extreme of the route list
+  [
+    ; move in the route list towards larger index numbers
+    set direction 1
+  ]
+  [
+    if (currentPosition = (length route - 1)) ; in the last extreme of the route list
+    [
+      ; move in the route list towards smaller index numbers
+      set direction -1
+    ]
+  ]
+  ; else the trader is in route to either the base or the destination
+
+end
+
+to move-to-destination ; ego = trader
+
+  ; find where in the route list is the trader
+  let currentPosition position lastPosition route
+
+  ; move through the route following direction
+  let targetPatch item (currentPosition + direction) route
+  ;move-to targetPatch ; constant travel time (1 patch per tick)
+  facexy ([pxcor] of targetPatch) ([pycor] of targetPatch)
+
+  forward min (
+    list
+    (1 / get-path-cost patch-here self) ; the maximum distance in a tick in the current patch
+    (distancexy ([pxcor] of targetPatch) ([pycor] of targetPatch)) ; the distance to the target patch
+    )
+
+end
+
+to-report is-in-base ; ego = trader
+
+  report (xcor = [xcor] of base) and (ycor = [ycor] of base) ; if the trader arrived at the centre of the base patch
+
+end
+
+to-report is-in-destination ; ego = trader
+
+  report (xcor = [xcor] of destination) and (ycor = [ycor] of destination) ; if the trader arrived at the centre of the destination patch
+
+end
+
+to unload-cargo ; ego = trader
+
+  let thisTrader self
+  let settlementHere one-of settlements-here
+
+  ; unload cargo
+  ask settlementHere [ add-trade-effect thisTrader ]
+
+end
+
+to load-cargo ; ego = trader
+
+  let settlementHere one-of settlements-here
+
+  ; load cargo
+  set cargoValue [stock] of settlementHere
+  ask settlementHere [ set stock 0 ] ; empty the settlement stock
+
+  set culturalSample [culturalVector] of settlementHere
+
+end
+
+to update-settlements
+
+  ask settlements
+  [
+    let thisSettlement self
+
+    ; the sizeLevel of settlements decays with a constant rate, up to 1 (minimum)
+    set sizeLevel max (list 1 (sizeLevel * (1 - ((item 5 culturalVector) / 100)) ) )
+    ; production in stock also decays with a constant rate
+    set stock stock * (1 - ((item 6 culturalVector) / 100))
+    ; prodution is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
+    update-ARIDinCatchmentArea
+    update-catchmentArea
+    set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * ARIDinCatchmentArea
+
+    ; determine the current and potential number of traders
+    set currentNumberOfTraders get-current-number-of-traders
+    set potentialNumberOfTraders get-potential-number-of-traders
+
+    ; conditions favors the creation of new traders
+    if (random-float 1 > currentNumberOfTraders / potentialNumberOfTraders )
+    [
+      ; create a new trader or activate an old one
+      repeat 1
+      [
+        ifelse (any? traders with [not isActivated])
+        [
+          ask one-of traders with [not isActivated]
+          [
+            setup-trader thisSettlement
+            move-to thisSettlement
+          ]
+        ]
+        [
+          hatch-traders 1
+          [
+            setup-trader thisSettlement
+          ]
+        ]
+      ]
+      set currentNumberOfTraders get-current-number-of-traders ; update currentNumberOfTraders
+    ]
+
+    ; add variation to the settlement traits (mutation)
+    mutate-traits
+  ]
+
+end
+
+to add-trade-effect [ aTrader ] ; ego = settlement
+
+  ; cultural transmission trader to port
+  let newCulturalVector []
+  foreach culturalVector
+  [ ?1 ->
+    let otherSettlementTrait item (length newCulturalVector) [culturalSample] of aTrader
+    let traitChange (otherSettlementTrait - ?1) * ((item 9 culturalVector) / 100)
+    set newCulturalVector lput (?1 + traitChange) newCulturalVector
+  ]
+;  print (word "========== " self " ============")
+;  print (word "old vector: " culturalVector ", new vector: " newCulturalVector)
+  set culturalVector newCulturalVector
+
+  set sizeLevel sizeLevel + [cargoValue] of aTrader
+
+end
+
+to mutate-traits
+
+  let mutationVariationToApply (item 10 culturalVector) / 100
+  ;print "========================================"
+  ;print culturalVector
+  ; #1, #2 and #3
+  set culturalVector replace-item 0 culturalVector mutate-trait (item 0 culturalVector) 0 255 mutationVariationToApply
+  set culturalVector replace-item 1 culturalVector mutate-trait (item 1 culturalVector) 0 255 mutationVariationToApply
+  set culturalVector replace-item 2 culturalVector mutate-trait (item 2 culturalVector) 0 255 mutationVariationToApply
+
+  ; #3 and #4 (relativePathCostInLand, relativePathCostInPort)
+  set culturalVector replace-item 3 culturalVector mutate-trait (item 3 culturalVector) 0 100 mutationVariationToApply ; arbitrary maximum
+  set culturalVector replace-item 4 culturalVector mutate-trait (item 4 culturalVector) 0 100 mutationVariationToApply ; arbitrary maximum
+
+  ; #5, #6 and #6 (settlementSizeDecayRate, stockDecayRate, produtionRate)
+  set culturalVector replace-item 5 culturalVector mutate-trait (item 5 culturalVector) 0 maxSettlementSizeDecayRate mutationVariationToApply
+  set culturalVector replace-item 6 culturalVector mutate-trait (item 6 culturalVector) 0 maxStockDecayRate mutationVariationToApply
+  set culturalVector replace-item 7 culturalVector mutate-trait (item 7 culturalVector) 0 maxProductionRate mutationVariationToApply
+
+  ; #8, #9 and #10 (frequencyOverQuality, traitTransmissionRate, mutationVariation)
+  set culturalVector replace-item 8 culturalVector mutate-trait (item 8 culturalVector) 0 1 mutationVariationToApply
+  set culturalVector replace-item 9 culturalVector mutate-trait (item 9 culturalVector) 0 maxTraitTransmissionRate mutationVariationToApply
+  set culturalVector replace-item 10 culturalVector mutate-trait (item 10 culturalVector) 0 maxMutationVariation mutationVariationToApply
+
+  ;print culturalVector
+
+end
+
+to-report mutate-trait [ traitValue minValue maxValue mutationVar ]
+
+  report (max (list minValue min (list maxValue (traitValue + (random-normal 0 mutationVar) * (maxValue - minValue)))))
+
+end
+
+
+to-report get-potential-number-of-traders ; ego = settlement
+
+  report (
+    1 +
+    (sizeLevel - 1) * (item 8 culturalVector)
+    )
+
+end
+
+to-report get-current-number-of-traders ; ego = settlement
+
+  let thisSettlement self
+  report count traders with [isActivated and base = thisSettlement ]
+
+end
+
+;;; weather variables and ARID ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to set-day-weather-from-input-data [ dayOfYear year ]
+
+  ;;; find corresponding index to year-dayOfYear pair
+
+  let yearAndDoyIndex position (word year "-" dayOfYear) weatherInputData_YEAR-DOY
+
+  ;;; get values from weather input data
+
+  set solarRadiation item yearAndDoyIndex weatherInputData_solarRadiation
+
+  set T item yearAndDoyIndex weatherInputData_temperature
+
+  set T_min item yearAndDoyIndex weatherInputData_minTemperature
+
+  set T_max item yearAndDoyIndex weatherInputData_maxTemperature
+
+  set RAIN item yearAndDoyIndex weatherInputData_precipitation
+
+  if (dayOfYear = 1)
+  [
+    ;;; fill values of precipitation_yearSeries and precipitation_cumYearSeries, used here only for visualisation
+
+    let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+    let yearAndLastDoyIndex position (word year "-" yearLengthInDays) weatherInputData_YEAR-DOY
+
+    set precipitation_yearSeries sublist weatherInputData_precipitation yearAndDoyIndex (yearAndLastDoyIndex + 1)
+
+    let yearTotal sum precipitation_yearSeries
+    set precipitation_cumYearSeries (list)
+    let cumulativeSum 0
+    foreach precipitation_yearSeries
+    [
+      i ->
+      set cumulativeSum cumulativeSum + i
+      set precipitation_cumYearSeries lput cumulativeSum precipitation_cumYearSeries
+    ]
+    set precipitation_cumYearSeries map [i -> i / yearTotal] precipitation_cumYearSeries
+  ]
+
+  ask patchesWithElevationData
+  [
+    set netSolarRadiation (1 - albedo) * solarRadiation
+    set ETr get-ETr
+  ]
+
+end
+
+to-report get-ETr
+
+  ;;; useful references:
+  ;;; Suleiman A A and Hoogenboom G 2007
+  ;;; Comparison of Priestley-Taylor and FAO-56 Penman-Monteith for Daily Reference Evapotranspiration Estimation in Georgia
+  ;;; J. Irrig. Drain. Eng. 133 175–82 Online: http://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%282007%29133%3A2%28175%29
+  ;;; also: Jia et al. 2013 - doi:10.4172/2168-9768.1000112
+  ;;; Allen, R. G., Pereira, L. A., Raes, D., and Smith, M. 1998.
+  ;;; “Crop evapotranspiration.”FAO irrigation and  drainage paper 56, FAO, Rome.
+  ;;; also: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; constants found in: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; see also r package: Evapotranspiration (consult source code)
+
+  let windSpeed 2 ; as recommended by: http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+
+  ;;; estimation of saturated vapour pressure (e_s) and actual vapour pressure (e_a)
+  let e_s (get-vapour-pressure T_max + get-vapour-pressure T_min) / 2
+  let e_a get-vapour-pressure T_min
+  ; ... in absence of dew point temperature, as recommended by
+  ; http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+  ; however, possibly min temp > dew temp under arid conditions
+
+  ;;; slope of  the  vapor  pressure-temperature  curve (kPa ºC−1)
+  let DELTA 4098 * (get-vapour-pressure T) / (T + 237.3) ^ 2
+
+  ;;; latent heat of vaporisation = 2.45 MJ.kg^-1
+  let lambda 2.45
+
+  ;;; specific heat at constant pressure, 1.013 10-3 [MJ kg-1 °C-1]
+  let c_p 1.013 * 10 ^ -3
+  ;;; ratio molecular weight of water vapour/dry air
+  let epsilon 0.622
+  ;;; atmospheric pressure (kPa)
+  let P 101.3 * ((293 - 0.0065 * elevation) / 293) ^ 5.26
+  ;;; psychometric constant (kPa ºC−1)
+  let gamma c_p * P / (epsilon * lambda)
+
+  ;;; Penman-Monteith equation from: fao.org/3/X0490E/x0490e0 ; and from: weap21.org/WebHelp/Mabia_Alg ETRef.htm
+
+  ; 900 and 0.34 for the grass reference; 1600 and 0.38 for the alfalfa reference
+  let C_n 900
+  let C_d 0.34
+
+  let ETr_temp (0.408 * DELTA * netSolarRadiation + gamma * (C_n / (T + 273)) * windSpeed * (e_s - e_a)) / (DELTA + gamma * (1 + C_d * windSpeed))
+
+  report ETr_temp
+
+end
+
+to-report get-vapour-pressure [ temp ]
+
+  report (0.6108 * exp(17.27 * temp / (temp + 237.3)))
+
+end
+
+to update-WAT
+
+  ; Soil Water Balance model
+  ; Using the approach of:
+  ; 'Working with dynamic crop models: Methods, tools, and examples for agriculture and enviromnent'
+  ;  Daniel Wallach, David Makowski, James W. Jones, François Brun (2006, 2014, 2019)
+  ;  Model description in p. 24-28, R code example in p. 138-144.
+  ;  see also https://github.com/cran/ZeBook/blob/master/R/watbal.model.r
+  ; Some additional info about run off at: https://engineering.purdue.edu/mapserve/LTHIA7/documentation/scs.htm
+  ; and at: https://en.wikipedia.org/wiki/Runoff_curve_number
+
+  ; Maximum abstraction (mm; for run off)
+  let S 25400 / CN - 254
+  ; Initial Abstraction (mm; for run off)
+  let IA 0.2 * S
+  ; WATfc : Maximum Water content at field capacity (mm)
+  let WATfc FC * z
+  ; WATwp : Water content at wilting Point (mm)
+  let WATwp WP * z
+
+  ; Change in Water Before Drainage (Precipitation - Runoff)
+  let RO 0
+  if (RAIN > IA)
+  [ set RO ((RAIN - 0.2 * S) ^ 2) / (RAIN + 0.8 * S) ]
+  ; Calculating the amount of deep drainage
+  let DR 0
+  if (WAT + RAIN - RO > WATfc)
+  [ set DR DC * (WAT + RAIN - RO - WATfc) ]
+
+  ; Calculate rate of change of state variable WAT
+  ; Compute maximum water uptake by plant roots on a day, RWUM
+  let RWUM MUF * (WAT + RAIN - RO - DR - WATwp)
+  ; Calculate the amount of water lost through transpiration (TR)
+  let TR min (list RWUM ETr)
+
+  let dWAT RAIN - RO - DR - TR
+  set WAT WAT + dWAT
+
+  set WATp WAT / z
+
+  set ARID 0
+  if (TR < ETr)
+  [ set ARID 1 - TR / ETr ]
+
+end
+
+to modify-ARID
+
+  set ARID ARID * ARID_modifier
+
+end
+
+to update-ARIDinCatchmentArea
+
+  let patchesInCatchmentArea patches in-radius catchmentArea
+
+  ifelse (count patchesInCatchmentArea = 1)
+  [ set ARIDinCatchmentArea [ARID] of patch-here ]
+  [ set ARIDinCatchmentArea mean [ARID] of patchesInCatchmentArea]
+
+end
+
+to update-catchmentArea
+
+  set catchmentArea get-value-in-gradient sizeLevel catchmentSlope catchmentRadiusMaximum
+
+end
+
+to-report get-value-in-gradient [ input gradient maximum ]
+
+  report e ^ ( - input / ((gradient / 100) * maximum) )
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; OUTPUT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to update-output
+
+  let activatedTraders traders with [isActivated]
+
+  set traderCount count activatedTraders
+
+  set meanTraderCargoValue mean [cargoValue] of activatedTraders
+  set minTraderCargoValue min [cargoValue] of activatedTraders
+  set maxTraderCargoValue max [cargoValue] of activatedTraders
+
+  set minSettlementSize min [sizeLevel] of settlements
+  set maxSettlementSize max [sizeLevel] of settlements
+  set mainHub max-one-of settlements [sizeLevel]
+
+  set meanTotalPathCostOfActiveRoutes mean [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of activatedTraders
+  set minTotalPathCostOfActiveRoutes min [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of activatedTraders
+  set maxTotalPathCostOfActiveRoutes max [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of activatedTraders
+
+  set meanRedTrait mean [item 0 culturalVector] of settlements
+  set stdDevRedTrait standard-deviation [item 0 culturalVector] of settlements
+  set modesRedTrait modes [ round (item 0 culturalVector) ] of settlements
+  set meanGreenTrait mean [item 1 culturalVector] of settlements
+  set stdDevGreenTrait standard-deviation [item 1 culturalVector] of settlements
+  set modesGreenTrait modes [ round (item 1 culturalVector) ] of settlements
+  set meanBlueTrait mean [item 2 culturalVector] of settlements
+  set stdDevBlueTrait standard-deviation [item 2 culturalVector] of settlements
+  set modesBlueTrait modes [ round (item 2 culturalVector) ] of settlements
+
+  set meanLandTechTrait mean [item 3 culturalVector] of settlements
+  set stdDevLandTechTrait standard-deviation [item 3 culturalVector] of settlements
+  set modesLandTechTrait modes [ round (item 3 culturalVector) ] of settlements
+  set meanPortTechTrait mean [item 4 culturalVector] of settlements
+  set stdDevPortTechTrait standard-deviation [item 4 culturalVector] of settlements
+  set modesPortTechTrait modes [ round (item 4 culturalVector) ] of settlements
+
+  set meanSizeDecayTrait mean [item 5 culturalVector] of settlements
+  set stdDevSizeDecayTrait standard-deviation [item 5 culturalVector] of settlements
+  set modesSizeDecayTrait modes [ round (item 5 culturalVector) ] of settlements
+  set meanStockDecayTrait mean [item 6 culturalVector] of settlements
+  set stdDevStockDecayTrait standard-deviation [item 6 culturalVector] of settlements
+  set modesStockDecayTrait modes [ round (item 6 culturalVector) ] of settlements
+  set meanProductionTrait mean [item 7 culturalVector] of settlements
+  set stdDevProductionTrait standard-deviation [item 7 culturalVector] of settlements
+  set modesProductionTrait modes [ round (item 7 culturalVector) ] of settlements
+
+  set meanFreqOverQualTrait mean [item 8 culturalVector] of settlements
+  set stdDevFreqOverQualTrait standard-deviation [item 8 culturalVector] of settlements
+  set modesFreqOverQualTrait modes [ round (item 8 culturalVector) ] of settlements
+  set meanTransmissionTrait mean [item 9 culturalVector] of settlements
+  set stdDevTransmissionTrait standard-deviation [item 9 culturalVector] of settlements
+  set modesTransmissionTrait modes [ round (item 9 culturalVector) ] of settlements
+  set meanMutationTrait mean [item 10 culturalVector] of settlements
+  set stdDevMutationTrait standard-deviation [item 10 culturalVector] of settlements
+  set modesMutationTrait modes [ round (item 10 culturalVector) ] of settlements
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; DISPLAY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to refresh-view
+
+  if (display-mode = "elevation")
+  [
+    ask patchesWithElevationData [ display-elevation ]
+  ]
+
+  if (display-mode = "albedo")
+  [
+    ask patchesWithElevationData [ display-albedo ]
+  ]
+
+  if (display-mode = "ETr")
+  [
+    let maxETr max [ETr] of patchesWithElevationData
+    ask patchesWithElevationData [ display-ETr maxETr ]
+  ]
+
+  if (display-mode = "drainage coefficient (DC)")
+  [
+    ask patchesWithElevationData [ display-DC ]
+  ]
+
+  if (display-mode = "root zone depth (z)")
+  [
+    let maxZ max [z] of patchesWithElevationData
+    ask patchesWithElevationData [ display-z maxZ ]
+  ]
+
+  if (display-mode = "runoff curve number (CN)")
+  [
+    let maxCN max [CN] of patchesWithElevationData
+    ask patchesWithElevationData [ display-CN maxCN ]
+  ]
+
+  if (display-mode = "water content at field capacity (FC)")
+  [
+    let maxFC max [FC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-FC maxFC ]
+  ]
+
+  if (display-mode = "water holding Capacity (WHC)")
+  [
+    let maxWHC max [WHC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WHC maxWHC ]
+  ]
+
+  if (display-mode = "soil water content (WATp)")
+  [
+    let maxWATp max [WATp] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WATp maxWATp ]
+  ]
+
+  if (display-mode = "ARID coefficient")
+  [
+    ask patchesWithElevationData [ display-arid ]
+  ]
+
+  display-flows
+
+  paint-routes
+  paint-active-routes
+
+  ask settlements
+  [
+    set hidden? not showSettlements
+    ; scale the size of settlements according to their dynamic free-scaled sizeLevel
+    set size 1 + (sizeLevel / maxSettlementSize) * 9
+    set color rgb (item 0 culturalVector) (item 1 culturalVector) (item 2 culturalVector)
+  ]
+
+  ask traders
+  [
+    ifelse (showTraders)
+    [
+      ifelse (isActivated)
+      [ set hidden? false ]
+      [ set hidden? true ]
+    ]
+    [ set hidden? true ]
+  ]
+
+end
+
+to paint-routes
+
+  ;;; define list of shades of red in NetLogo
+  let redShades (list 11 12 13 14 15 16 17 18 19)
+  ;;; NOTE: this is needed because rgb colors based on elevation are a list
+  ;;; while NetLogo color are numbers
+
+  ; resets route patches to the terrain color
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1 [ display-elevation ]
+    ]
+  ]
+
+  ; paint route patches in shades of red depending on route frequency
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1
+      [
+        if (showRoutes)
+        [
+          ifelse (not member? pcolor redShades) ; if its the first route crossing the patch
+          [
+            set pcolor 11
+          ]
+          [
+            set pcolor min (list (pcolor + 1) (19)) ; sets a maximum at 19 (the brightest)
+          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to paint-active-routes
+
+  ask traders
+  [
+    foreach route
+    [ ?1 ->
+      ask ?1
+      [
+        ifelse (showActiveRoutes)
+        [
+          set pcolor yellow
+        ]
+        [
+          if (not showRoutes) ; if not displaying all routes
+          [
+            ; resets to the patch terrain color
+            display-elevation
+          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to display-elevation
+
+  let elevationGradient 100 + (155 * (elevation / maxElevation))
+  set pcolor rgb (elevationGradient - 100) elevationGradient 0
+
+end
+
+to display-albedo
+
+  set pcolor 1 + 9 * albedo
+
+end
+
+to display-ETr [ maxETr ]
+
+  ifelse (maxETr = 0)
+  [ set pcolor 25 ]
+  [ set pcolor 22 + 6 * (1 - ETr / maxETr) ]
+
+end
+
+to display-DC
+
+  set pcolor 112 + 6 * (1 - DC)
+
+end
+
+to display-z [ maxZ ]
+
+  set pcolor 42 + 8 * (1 - z / maxZ)
+
+end
+
+to display-CN [ maxCN ]
+
+  set pcolor 72 + 6 * (1 - CN / maxCN)
+
+end
+
+to display-FC [ maxFC ]
+
+  set pcolor 82 + 6 * (1 - FC / maxFC)
+
+end
+
+to display-WHC [ maxWHC ]
+
+  set pcolor 92 + 6 * (1 - WHC / maxWHC)
+
+end
+
+to display-WATp [ maxWATp ]
+
+  set pcolor 102 + 6 * (1 - WATp / maxWATp)
+
+end
+
+to display-ARID
+
+  set pcolor 12 + 6 * ARID
+
+end
+
+to display-flows
+
+  ask flowHolders
+  [
+    ask my-links
+    [
+      ifelse (show-flows) [ show-link ] [ hide-link ]
+    ]
+  ]
+
+end
+
+to plot-precipitation-table
+
+  clear-plot
+
+  let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+
+  set-plot-x-range 0 (yearLengthInDays + 1)
+
+  ;;; precipitation (mm/day) is summed by month
+  foreach n-values yearLengthInDays [j -> j]
+  [
+    dayOfYearIndex ->
+    plotxy (dayOfYearIndex + 1) (item dayOfYearIndex precipitation_yearSeries)
+  ]
+  plot-pen-up
+
+end
+
+to plot-cumPrecipitation-table
+
+  clear-plot
+
+  let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+
+  set-plot-y-range -0.1 1.1
+  set-plot-x-range 0 (yearLengthInDays + 1)
+
+  ;;; precipitation (mm/day) is summed by month
+  foreach n-values yearLengthInDays [j -> j]
+  [
+    dayOfYearIndex ->
+    plotxy (dayOfYearIndex + 1) (item dayOfYearIndex precipitation_cumYearSeries)
+  ]
+  plot-pen-up
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; LOAD DATA FROM TABLES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to load-weather-input-data-table
+
+  ;;; this procedure loads the values of the weather data input table
+  ;;; the table contains:
+  ;;;   1. 13 lines of metadata, to be ignored
+  ;;;   2. one line with the headers of the table
+  ;;;   3. remaining rows containing row name and values
+
+  let weatherTable csv:from-file "data/POWER_Point_Daily_19840101_20201231_035d0309N_024d8335E_LST.csv"
+
+  ;;;==================================================================================================================
+  ;;; mapping coordinates (row or columns) from headings (line 14 == index 13 -----------------------------------------
+  ;;; NOTE: always correct raw mapping coordinates (start at 1) into list indexes (start at 0)
+  let variableNames item (14 - 1) weatherTable
+
+  let yearColumn position "YEAR" variableNames
+
+  let solarRadiationColumn position "ALLSKY_SFC_SW_DWN" variableNames
+
+  let precipitationColumn position "PRECTOTCORR" variableNames
+
+  let temperatureColumn position "T2M" variableNames
+
+  let temperatureMaxColumn position "T2M_MAX" variableNames
+
+  let temperatureMinColumn position "T2M_MIN" variableNames
+
+  ;;;==================================================================================================================
+  ;;; extract data---------------------------------------------------------------------------------------
+
+  ;;; read variables per year and day (list of lists, matrix: year-day x variables)
+  let weatherData sublist weatherTable (15 - 1) (length weatherTable) ; select only those row corresponding to variable data, if there is anything else
+
+  ;;; extract year-day of year pairs from the third and fourth columns
+  set weatherInputData_YEARS map [row -> item yearColumn row ] weatherData
+
+  ;;; NASA-POWER data uses year, month, day of month, instead of day of year,
+  ;;; so we need to calculate day of year of each row ourselves
+  set weatherInputData_DOY []
+  set weatherInputData_yearLengthInDays []
+  foreach (remove-duplicates weatherInputData_YEARS)
+  [
+    aYear ->
+    let aDoy 1
+    let lengthOfThisYear length (filter [i -> i = aYear] weatherInputData_YEARS)
+    set weatherInputData_yearLengthInDays lput lengthOfThisYear weatherInputData_yearLengthInDays
+    repeat lengthOfThisYear
+    [
+      set weatherInputData_DOY lput aDoy weatherInputData_DOY
+      set aDoy aDoy + 1
+    ]
+  ]
+  set weatherInputData_YEAR-DOY (map [[i j] -> (word i "-" j)] weatherInputData_YEARS weatherInputData_DOY)
+
+  ;;; extract first and last year
+  set weatherInputData_firstYear first weatherInputData_YEARS
+
+  set weatherInputData_lastYear last weatherInputData_YEARS
+
+  ;;; extract parameter values from the given column
+  ;;; NOTE: read-from-string is required because the original file is formated in a way that NetLogo interprets values as strings.
+
+  set weatherInputData_solarRadiation map [row -> item solarRadiationColumn row ] weatherData
+
+  set weatherInputData_precipitation map [row -> item precipitationColumn row ] weatherData
+
+  set weatherInputData_temperature map [row -> item temperatureColumn row ] weatherData
+
+  set weatherInputData_maxTemperature map [row -> item temperatureMaxColumn row ] weatherData
+
+  set weatherInputData_minTemperature map [row -> item temperatureMinColumn row ] weatherData
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Get and set routes (helper 'to-report' procedures) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to-report get-route [ settlement1 settlement2 ] ; accepts two settlements and returns a route
+
+  ; get routes connecting settlement1
+  let routesFromSettlement1 filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = settlement1) or
+    ([one-of settlements-here] of last ?1 = settlement1)
+  ] routes
+
+  ; get the route connecting settlement2 from the previous list
+  let routeFromSettlement1ToSettlement2 filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = settlement2) or
+    ([one-of settlements-here] of last ?1 = settlement2)
+  ] routesFromSettlement1
+
+  report first routeFromSettlement1ToSettlement2
+
+end
+
+to-report get-routes-to-settlement [ aSettlement ] ; accepts a settlement and return a list of routes
+
+  report filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = aSettlement) or
+    ([one-of settlements-here] of last ?1 = aSettlement)
+  ] routes
+
+end
+
+to-report get-origin-and-destination [ aRoute ] ; accepts a route and returns a turtle-set with two settlements
+
+  report (turtle-set ([ one-of settlements-here ] of first aRoute) ([one-of settlements-here ] of last aRoute))
+
+end
+
+to-report benefit-cost-of-route [ aRoute aTrader ] ; accepts a route andpan returns a number (the benefit/cost ratio of the route)
+
+  let cost 0
+
+  foreach aRoute ; for every patch in the given route
+  [ ?1 ->
+    set cost cost + get-path-cost ?1 aTrader
+  ]
+
+  let originAndDestination get-origin-and-destination aRoute
+  let benefit 0
+  ask originAndDestination [ set benefit benefit + sizeLevel ] ; the benefit is the sum of the sizeLevel of the two settlements
+
+  report benefit / cost
+
+end
+
+to-report get-path-cost [ aPatch aTrader ]
+
+  let pathCostOfPatch [pathCost] of aPatch
+  ifelse ([any? settlements-here] of aPatch)
+  [
+    ; path cost in port apply
+    set pathCostOfPatch pathCostOfPatch + [(item 4 culturalVector)] of [base] of aTrader
+  ]
+  [
+    ; path cost in land apply
+    set pathCostOfPatch pathCostOfPatch + [(item 3 culturalVector)] of [base] of aTrader
+  ]
+  report pathCostOfPatch
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;; LOAD ROUTES DATA ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to import-routes-from-file
+
+  ;;; get unique file name corresponding to the current setting
+  let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=" randomSeed ".txt")
+
+  ifelse (not file-exists? filePath)
+  [ print (word "WARNING: could not find '" filePath "'") stop ] ;;; unfortunately the stop command doesn't stop the setup procedure
+  [
+    file-open filePath
+
+    set routes []
+
+    while [not file-at-end?]
+    [
+      let lineString file-read-line
+      set lineString remove-item 0 lineString
+      set lineString remove-item (length lineString - 1) lineString
+      set lineString (word "(list " lineString " )")
+
+      set routes lput (run-result lineString) routes
+    ]
+  ]
+
+  file-close
+
+end]]></code>
+  <widgets>
+    <view x="409" wrappingAllowedX="true" y="10" frameRate="30.0" minPycor="0" height="465" showTickCounter="true" patchSize="3.0" fontSize="10" wrappingAllowedY="true" width="738" tickCounterLabel="ticks" maxPycor="154" updateMode="0" maxPxcor="245" minPxcor="0"></view>
+    <button x="14" actionKey="1" y="11" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">setup</button>
+    <button x="189" actionKey="4" y="10" height="40" disableUntilTicks="false" forever="true" kind="Observer" width="55">go</button>
+    <input x="5" multiline="false" y="68" height="60" variable="randomSeed" type="number" width="100">0.0</input>
+    <button x="71" actionKey="2" y="11" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">go</button>
+    <chooser x="14" y="248" height="60" variable="display-mode" current="0" width="246" display="display-mode">
+      <choice type="string" value="elevation"></choice>
+      <choice type="string" value="albedo"></choice>
+      <choice type="string" value="ETr"></choice>
+      <choice type="string" value="drainage coefficient (DC)"></choice>
+      <choice type="string" value="root zone depth (z)"></choice>
+      <choice type="string" value="runoff curve number (CN)"></choice>
+      <choice type="string" value="water content at field capacity (FC)"></choice>
+      <choice type="string" value="water holding Capacity (WHC)"></choice>
+      <choice type="string" value="soil water content (WATp)"></choice>
+      <choice type="string" value="ARID coefficient"></choice>
+    </chooser>
+    <button x="269" y="256" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="85" display="refresh view">refresh-view</button>
+    <button x="128" actionKey="3" y="10" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="60" display="+ year">repeat 365 [ go ]</button>
+    <switch x="7" y="141" height="40" on="true" variable="show-flows" width="106" display="show-flows"></switch>
+    <chooser x="116" y="68" height="60" variable="simulation-period" current="0" width="138" display="simulation-period">
+      <choice type="string" value="EMIII-MMIA"></choice>
+      <choice type="string" value="MMIB"></choice>
+    </chooser>
+    <switch x="115" y="141" height="40" on="false" variable="showRoutes" width="109" display="showRoutes"></switch>
+    <switch x="226" y="141" height="40" on="true" variable="showActiveRoutes" width="140" display="showActiveRoutes"></switch>
+    <switch x="34" y="190" height="40" on="true" variable="showSettlements" width="150" display="showSettlements"></switch>
+    <switch x="208" y="190" height="40" on="true" variable="showTraders" width="127" display="showTraders"></switch>
+    <slider x="319" step="0.01" y="604" max="5" width="280" display="maxMutationVariation" height="50" min="0" direction="Horizontal" default="1.0" variable="maxMutationVariation" units="% of trait range"></slider>
+    <slider x="40" step="0.01" y="439" max="20" width="150" display="landTechVariation" height="50" min="0" direction="Horizontal" default="5.0" variable="landTechVariation"></slider>
+    <slider x="195" step="0.01" y="439" max="20" width="150" display="portTechVariation" height="50" min="0" direction="Horizontal" default="5.0" variable="portTechVariation"></slider>
+    <slider x="40" step="0.01" y="381" max="100" width="306" display="relativePathCostInPort" height="50" min="1" direction="Horizontal" default="10.0" variable="relativePathCostInPort" units="X path cost in water"></slider>
+    <slider x="40" step="0.01" y="495" max="25" width="305" display="maxSettlementSizeDecayRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxSettlementSizeDecayRate" units="% of sizeLevel"></slider>
+    <slider x="40" step="0.01" y="550" max="25" width="275" display="maxStockDecayRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxStockDecayRate" units="% of stock"></slider>
+    <slider x="40" step="0.01" y="605" max="25" width="275" display="maxProductionRate" height="50" min="0" direction="Horizontal" default="15.0" variable="maxProductionRate" units="% of sizeLevel"></slider>
+    <slider x="319" step="0.01" y="549" max="25" width="280" display="maxTraitTransmissionRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxTraitTransmissionRate" units="% of trait difference"></slider>
+    <plot x="1489" autoPlotX="true" yMax="10.0" autoPlotY="true" y="1372" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="233" display="year preciptation">
+      <setup>let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+set-plot-x-range 0 (yearLengthInDays + 1)</setup>
+      <update></update>
+      <pen interval="1.0" mode="1" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>if (currentDayOfYear = 1) [ plot-precipitation-table ]</update>
+      </pen>
+    </plot>
+    <plot x="1723" autoPlotX="true" yMax="10.0" autoPlotY="true" y="1371" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="235" display="cumulative year precipitation">
+      <setup>set-plot-y-range -0.1 1.1
+let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+set-plot-x-range 0 (yearLengthInDays + 1)</setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>if (currentDayOfYear = 1) [ plot-cumPrecipitation-table ]</update>
+      </pen>
+    </plot>
+    <monitor x="1963" precision="2" y="1425" height="60" fontSize="11" width="100" display="year total">sum precipitation_yearSeries</monitor>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="ppm" y="1191" xMin="0.0" height="170" legend="true" xMax="10.0" yMin="0.0" width="618" xAxis="days" display="precipitation">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="1" display="RAIN" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot RAIN</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="mean ETr" color="-2674135" legend="true">
+        <setup></setup>
+        <update>plot mean[ETr] of patches</update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="MJ/m2" y="1043" xMin="0.0" height="151" legend="false" xMax="10.0" yMin="0.0" width="618" xAxis="days" display="Solar radiation">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot solarRadiation</update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="ºC" y="869" xMin="0.0" height="175" legend="true" xMax="10.0" yMin="0.0" width="618" xAxis="days" display="Temperature">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="mean" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot T</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="min" color="-13345367" legend="true">
+        <setup></setup>
+        <update>plot T_min</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="max" color="-2674135" legend="true">
+        <setup></setup>
+        <update>plot T_max</update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" y="705" xMin="0.0" height="165" legend="true" xMax="10.0" yMin="0.0" width="618" xAxis="days" display="Soil water content &amp; ARID">
+      <setup>set-plot-y-range -0.1 1.1</setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="mean ARID" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot mean [ARID] of patchesWithElevationData</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="mean WTp" color="-13345367" legend="true">
+        <setup></setup>
+        <update>plot mean [WATp] of patchesWithElevationData</update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="pathCost" y="531" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="618" xAxis="ticks" display="Total path cost of active routes (mean)">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update><![CDATA[carefully [ plot mean [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of traders with [isActivated]] [ ]]]></update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="value" y="356" xMin="0.0" height="176" legend="true" xMax="10.0" yMin="0.0" width="618" xAxis="ticks" display="Cargo value">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="mean" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot meanTraderCargoValue</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="min" color="-13791810" legend="true">
+        <setup></setup>
+        <update>plot minTraderCargoValue</update>
+      </pen>
+      <pen interval="1.0" mode="0" display="max" color="-2674135" legend="true">
+        <setup></setup>
+        <update>plot maxTraderCargoValue</update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="count" y="174" xMin="0.0" height="183" legend="false" xMax="10.0" yMin="0.0" width="618" xAxis="ticks" display="Traders">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>plot traderCount</update>
+      </pen>
+    </plot>
+    <plot x="1483" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="settlement" y="0" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="618" xAxis="ticks" display="Main hub settlement">
+      <setup>set-plot-y-range (min [who] of settlements) (max [who] of settlements)</setup>
+      <update></update>
+      <pen interval="1.0" mode="2" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update>carefully [ set-plot-pen-color approximate-rgb (item 0 ([color] of mainHub)) (item 1 ([color] of mainHub)) (item 2 ([color] of mainHub))] []
+carefully [ plot [who] of mainHub] [ plot 0 ]</update>
+      </pen>
+    </plot>
+    <monitor x="1185" precision="2" y="5" height="60" fontSize="9" width="285" display="hub settlements (&gt;80% of max. sizeLevel)"><![CDATA[(word (count settlements with [sizeLevel > 0.8 * max [sizeLevel] of settlements]) " " (sort [who] of settlements with [sizeLevel > 0.8 * [sizeLevel] of mainHub]))]]></monitor>
+    <monitor x="1224" precision="2" y="235" height="60" fontSize="9" width="100" display="min. (sizeLevel)">minSettlementSize</monitor>
+    <monitor x="1354" precision="2" y="234" height="60" fontSize="9" width="100" display="max. (sizeLevel)">maxSettlementSize</monitor>
+    <monitor x="1232" precision="2" y="470" height="60" fontSize="9" width="216" display="mean total path cost of active routes">meanTotalPathCostOfActiveRoutes</monitor>
+    <plot x="1185" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="68" xMin="0.0" height="164" legend="false" xMax="10.0" yMin="0.0" width="285" xAxis="size" display="Settlement size distribution">
+      <setup>carefully [set-plot-x-range -0.1 ((max [sizeLevel] of settlements) + 0.1)] [ set-plot-x-range 0 1 ]
+set-histogram-num-bars 20</setup>
+      <update>carefully [set-plot-x-range -0.1 ((max [sizeLevel] of settlements) + 0.1)] [ set-plot-x-range 0 1 ]
+set-histogram-num-bars 20</update>
+      <pen interval="1.0" mode="1" display="default" color="-16777216" legend="true">
+        <setup>histogram [sizeLevel] of settlements</setup>
+        <update>histogram [sizeLevel] of settlements</update>
+      </pen>
+    </plot>
+    <plot x="1185" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="295" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="285" xAxis="total path cost" display="Total path cost of active routes (distribution)">
+      <setup><![CDATA[carefully [set-plot-x-range -0.1 ((max [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of traders with [isActivated]) + 0.1)] [ set-plot-x-range 0 1 ]
+set-histogram-num-bars 30]]></setup>
+      <update><![CDATA[carefully [set-plot-x-range -0.1 ((max [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of traders with [isActivated]) + 0.1)] [ set-plot-x-range 0 1 ]
+set-histogram-num-bars 30]]></update>
+      <pen interval="1.0" mode="1" display="default" color="-16777216" legend="true">
+        <setup></setup>
+        <update><![CDATA[histogram [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of traders with [isActivated]]]></update>
+      </pen>
+    </plot>
+    <plot x="1163" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="536" xMin="0.0" height="217" legend="true" xMax="10.0" yMin="0.0" width="268" xAxis="variant" display="Attitude traits">
+      <setup>set-plot-x-range -0.1 1.1</setup>
+      <update>set-plot-x-range -0.1 1.1</update>
+      <pen interval="1.0" mode="1" display="freq./qual." color="-13840069" legend="true">
+        <setup>set-histogram-num-bars 33</setup>
+        <update>histogram [item 8 culturalVector] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="transmission" color="-7858858" legend="true">
+        <setup>set-histogram-num-bars 25</setup>
+        <update>set-histogram-num-bars 25
+histogram [(item 9 culturalVector) / maxTraitTransmissionRate] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="mutation" color="-13791810" legend="true">
+        <setup>set-histogram-num-bars 20</setup>
+        <update>set-histogram-num-bars 20
+histogram [(item 10 culturalVector) / maxMutationVariation] of settlements</update>
+      </pen>
+    </plot>
+    <plot x="777" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="538" xMin="0.0" height="217" legend="true" xMax="10.0" yMin="0.0" width="268" xAxis="variant" display="Settlement economy traits">
+      <setup>set-plot-x-range -0.1 1.1</setup>
+      <update>set-plot-x-range -0.1 1.1</update>
+      <pen interval="1.0" mode="1" display="size decay" color="-4079321" legend="true">
+        <setup>set-histogram-num-bars 33</setup>
+        <update>histogram [(item 5 culturalVector) / maxSettlementSizeDecayRate] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="stock decay" color="-15302303" legend="true">
+        <setup>set-histogram-num-bars 25</setup>
+        <update>histogram [(item 6 culturalVector) / maxStockDecayRate] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="production" color="-5825686" legend="true">
+        <setup>set-histogram-num-bars 20</setup>
+        <update>histogram [(item 7 culturalVector) / maxProductionRate] of settlements</update>
+      </pen>
+    </plot>
+    <note x="718" y="778" backgroundDark="0" fontSize="9" width="51" markdown="false" height="19" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">size decay</note>
+    <monitor x="977" precision="2" y="764" height="60" fontSize="9" width="104" display="modes">(word (length modesSizeDecayTrait) " " modesSizeDecayTrait)</monitor>
+    <monitor x="872" precision="2" y="764" height="60" fontSize="9" width="100" display="std. dev">stdDevSizeDecayTrait</monitor>
+    <monitor x="767" precision="2" y="764" height="60" fontSize="9" width="100" display="mean">meanSizeDecayTrait</monitor>
+    <monitor x="976" precision="2" y="827" height="60" fontSize="9" width="104" display="modes">(word (length modesStockDecayTrait) " " modesStockDecayTrait)</monitor>
+    <monitor x="766" precision="2" y="827" height="60" fontSize="9" width="100" display="mean">meanStockDecayTrait</monitor>
+    <monitor x="871" precision="2" y="827" height="60" fontSize="9" width="100" display="std. dev.">stdDevStockDecayTrait</monitor>
+    <note x="709" y="846" backgroundDark="0" fontSize="9" width="55" markdown="false" height="22" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">stock decay</note>
+    <monitor x="978" precision="2" y="891" height="60" fontSize="9" width="104" display="modes">(word (length modesProductionTrait) " " modesProductionTrait)</monitor>
+    <monitor x="873" precision="2" y="891" height="60" fontSize="9" width="100" display="std. dev.">stdDevProductionTrait</monitor>
+    <monitor x="768" precision="2" y="891" height="60" fontSize="9" width="100" display="mean">meanProductionTrait</monitor>
+    <note x="731" y="910" backgroundDark="0" fontSize="9" width="33" markdown="false" height="20" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">prod.</note>
+    <monitor x="723" precision="17" y="953" height="60" fontSize="9" width="120" display="interval (size decay)">(word "[ 0 - " maxSettlementSizeDecayRate " ]")</monitor>
+    <monitor x="848" precision="17" y="953" height="60" fontSize="9" width="130" display="interval (stock decay)">(word "[ 0 - " maxStockDecayRate " ]")</monitor>
+    <monitor x="982" precision="17" y="953" height="60" fontSize="9" width="136" display="interval (production)">(word "[ 0 - " maxProductionRate " ]")</monitor>
+    <monitor x="1144" precision="2" y="764" height="60" fontSize="9" width="100" display="mean">meanFreqOverQualTrait</monitor>
+    <monitor x="1249" precision="2" y="764" height="60" fontSize="9" width="100" display="st. dev">stdDevFreqOverQualTrait</monitor>
+    <monitor x="1354" precision="2" y="764" height="60" fontSize="9" width="115" display="modes">(word (length modesFreqOverQualTrait) " " modesFreqOverQualTrait)</monitor>
+    <note x="1088" y="785" backgroundDark="0" fontSize="9" width="56" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">freq./ qual.</note>
+    <monitor x="1354" precision="2" y="827" height="60" fontSize="9" width="115" display="modes">(word (length modesTransmissionTrait) " " modesTransmissionTrait)</monitor>
+    <monitor x="1249" precision="2" y="827" height="60" fontSize="9" width="100" display="st. dev.">stdDevTransmissionTrait</monitor>
+    <monitor x="1144" precision="2" y="827" height="60" fontSize="9" width="100" display="mean">meanTransmissionTrait</monitor>
+    <note x="1109" y="838" backgroundDark="0" fontSize="9" width="30" markdown="false" height="20" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">trans.</note>
+    <monitor x="1354" precision="2" y="892" height="60" fontSize="9" width="115" display="modes">(word (length modesMutationTrait) " " modesMutationTrait)</monitor>
+    <monitor x="1249" precision="2" y="892" height="60" fontSize="9" width="100" display="st. dev.">stdDevMutationTrait</monitor>
+    <monitor x="1144" precision="2" y="892" height="60" fontSize="9" width="100" display="mean">meanMutationTrait</monitor>
+    <note x="1109" y="909" backgroundDark="0" fontSize="9" width="30" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">mut.</note>
+    <monitor x="1298" precision="17" y="956" height="60" fontSize="9" width="100" display="interval (mut.)">(word "[ 0 - " maxMutationVariation " ]")</monitor>
+    <monitor x="1188" precision="17" y="956" height="60" fontSize="9" width="100" display="interval (trans.)">(word "[ 0 - " maxTraitTransmissionRate " ]")</monitor>
+    <plot x="784" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="1029" xMin="0.0" height="191" legend="true" xMax="10.0" yMin="0.0" width="268" xAxis="variants" display="Neutral traits">
+      <setup>set-plot-x-range -1 256</setup>
+      <update>set-plot-x-range -1 256</update>
+      <pen interval="1.0" mode="1" display="trait 1#" color="-2674135" legend="true">
+        <setup>set-histogram-num-bars 33
+histogram [item 0 culturalVector] of settlements</setup>
+        <update>histogram [item 0 culturalVector] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="trait 2#" color="-10899396" legend="true">
+        <setup>set-histogram-num-bars 25
+histogram [item 1 culturalVector] of settlements</setup>
+        <update>histogram [item 1 culturalVector] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="trait 3#" color="-13345367" legend="true">
+        <setup>set-histogram-num-bars 20
+histogram [item 1 culturalVector] of settlements</setup>
+        <update>histogram [item 2 culturalVector] of settlements</update>
+      </pen>
+    </plot>
+    <monitor x="760" precision="2" y="1226" height="60" fontSize="9" width="100" display="mean">meanRedTrait</monitor>
+    <monitor x="865" precision="2" y="1226" height="60" fontSize="9" width="100" display="std. dev">stdDevRedTrait</monitor>
+    <monitor x="970" precision="2" y="1226" height="60" fontSize="9" width="104" display="modes">(word (length modesRedTrait) " " modesRedTrait)</monitor>
+    <monitor x="760" precision="2" y="1291" height="60" fontSize="9" width="100" display="mean">meanGreenTrait</monitor>
+    <monitor x="865" precision="2" y="1291" height="60" fontSize="9" width="100" display="std. dev.">stdDevGreenTrait</monitor>
+    <monitor x="970" precision="2" y="1291" height="60" fontSize="9" width="104" display="modes">(word (length modesGreenTrait) " " modesGreenTrait)</monitor>
+    <monitor x="760" precision="2" y="1356" height="60" fontSize="9" width="100" display="mean">meanBlueTrait</monitor>
+    <monitor x="865" precision="2" y="1356" height="60" fontSize="9" width="100" display="std. dev.">stdDevBlueTrait</monitor>
+    <monitor x="970" precision="2" y="1356" height="60" fontSize="9" width="104" display="modes">(word (length modesBlueTrait) " " modesBlueTrait)</monitor>
+    <monitor x="866" precision="17" y="1422" height="60" fontSize="9" width="100" display="interval">"[ 0 - 255 )"</monitor>
+    <note x="735" y="1248" backgroundDark="0" fontSize="12" width="23" markdown="false" height="20" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#1</note>
+    <note x="733" y="1311" backgroundDark="0" fontSize="12" width="25" markdown="false" height="23" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#2</note>
+    <note x="735" y="1371" backgroundDark="0" fontSize="12" width="23" markdown="false" height="25" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#3</note>
+    <plot x="1160" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="1025" xMin="0.0" height="191" legend="true" xMax="10.0" yMin="0.0" width="268" xAxis="variant" display="Trader technology (movement cost)">
+      <setup></setup>
+      <update>carefully [ set-plot-x-range floor min [min (list (item 3 culturalVector) (item 4 culturalVector))] of settlements - 1  ceiling max [max (list (item 3 culturalVector) (item 4 culturalVector))] of settlements + 1 ] []</update>
+      <pen interval="1.0" mode="1" display="land" color="-955883" legend="true">
+        <setup>set-histogram-num-bars 25</setup>
+        <update>set-histogram-num-bars 25
+histogram [item 3 culturalVector] of settlements</update>
+      </pen>
+      <pen interval="1.0" mode="1" display="port" color="-13403783" legend="true">
+        <setup>set-histogram-num-bars 20</setup>
+        <update>set-histogram-num-bars 20
+histogram [relativePathCostInPort + item 4 culturalVector] of settlements</update>
+      </pen>
+    </plot>
+    <monitor x="1187" precision="17" y="1349" height="60" fontSize="9" width="100" display="interval (land)">(word "[ " (floor min [item 3 culturalVector] of settlements) " - " (ceiling max [item 3 culturalVector] of settlements) " ]")</monitor>
+    <monitor x="1292" precision="17" y="1349" height="60" fontSize="9" width="100" display="interval (port)">(word "[ " floor (relativePathCostInPort + min [item 4 culturalVector] of settlements) " - " ceiling (relativePathCostInPort + max [item 4 culturalVector] of settlements) " ]")</monitor>
+    <monitor x="1246" precision="2" y="1285" height="60" fontSize="9" width="100" display="std. dev.">stdDevPortTechTrait</monitor>
+    <monitor x="1141" precision="2" y="1285" height="60" fontSize="9" width="100" display="mean">relativePathCostInPort + meanPortTechTrait</monitor>
+    <monitor x="1351" precision="2" y="1285" height="60" fontSize="9" width="104" display="modes">(word (length modesPortTechTrait) " " modesPortTechTrait)</monitor>
+    <monitor x="1140" precision="2" y="1222" height="60" fontSize="9" width="100" display="mean">meanLandTechTrait</monitor>
+    <monitor x="1245" precision="2" y="1222" height="60" fontSize="9" width="100" display="std. dev">stdDevLandTechTrait</monitor>
+    <monitor x="1350" precision="2" y="1222" height="60" fontSize="9" width="104" display="modes">(word (length modesLandTechTrait) " " modesLandTechTrait)</monitor>
+    <note x="1110" y="1308" backgroundDark="0" fontSize="10" width="28" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Port</note>
+    <note x="1107" y="1244" backgroundDark="0" fontSize="10" width="30" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Land</note>
+    <slider x="33" step="0.01" y="849" max="par_albedo_max" width="261" display="par_albedo_min" height="50" min="0" direction="Horizontal" default="0.2" variable="par_albedo_min"></slider>
+    <slider x="33" step="0.01" y="961" max="drainage-coefficient_max" width="261" display="drainage-coefficient_min" height="50" min="0" direction="Horizontal" default="0.2" variable="drainage-coefficient_min"></slider>
+    <slider x="33" step="1" y="1017" max="root-zone-depth_max" width="261" display="root-zone-depth_min" height="50" min="0" direction="Horizontal" default="200.0" variable="root-zone-depth_min" units="mm"></slider>
+    <slider x="33" step="1" y="1073" max="runoff-curve_max" width="261" display="runoff-curve_min" height="50" min="0" direction="Horizontal" default="5.0" variable="runoff-curve_min"></slider>
+    <slider x="33" step="0.01" y="905" max="water-holding-capacity_max" width="261" display="water-holding-capacity_min" height="50" min="0.01" direction="Horizontal" default="0.05" variable="water-holding-capacity_min" units="cm3/cm3"></slider>
+    <monitor x="558" precision="2" y="954" height="60" fontSize="9" width="100" display="DC [min, max]">(list (precision DC_min 2) (precision DC_max 2))</monitor>
+    <monitor x="558" precision="2" y="1010" height="60" fontSize="9" width="100" display="z [min, max]">(list (precision z_min 2) (precision z_max 2))</monitor>
+    <slider x="300" step="1" y="1068" max="100" width="257" display="runoff-curve_max" height="50" min="runoff-curve_min" direction="Horizontal" default="80.0" variable="runoff-curve_max"></slider>
+    <slider x="300" step="0.01" y="848" max="1" width="257" display="par_albedo_max" height="50" min="par_albedo_min" direction="Horizontal" default="0.5" variable="par_albedo_max"></slider>
+    <slider x="300" step="1" y="903" max="0.2" width="257" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.5" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
+    <slider x="300" step="1" y="958" max="1" width="257" display="drainage-coefficient_max" height="50" min="drainage-coefficient_min" direction="Horizontal" default="2000.0" variable="drainage-coefficient_max"></slider>
+    <slider x="300" step="1" y="1013" max="2000" width="257" display="root-zone-depth_max" height="50" min="root-zone-depth_min" direction="Horizontal" default="2000.0" variable="root-zone-depth_max" units="mm"></slider>
+    <monitor x="558" precision="2" y="842" height="60" fontSize="9" width="100" display="albedo [min, max]">(list (precision albedo_min 2) (precision albedo_max 2))</monitor>
+    <monitor x="558" precision="2" y="898" height="60" fontSize="9" width="100" display="WHC [min, max]">(list (precision WHC_min 2) (precision WHC_max 2))</monitor>
+    <monitor x="558" precision="2" y="1064" height="60" fontSize="9" width="100" display="CN [min, max]">(list (precision CN_min 2) (precision CN_max 2))</monitor>
+    <slider x="219" step="1" y="765" max="20" width="272" display="catchmentRadiusMaximum" height="50" min="0" direction="Horizontal" default="10.0" variable="catchmentRadiusMaximum" units="patches away"></slider>
+    <slider x="84" step="0.01" y="711" max="1" width="261" display="ARID-decrease-per-flow-accumulation" height="50" min="0" direction="Horizontal" default="0.5" variable="ARID-decrease-per-flow-accumulation"></slider>
+    <slider x="351" step="1" y="711" max="100" width="150" display="catchmentSlope" height="50" min="0" direction="Horizontal" default="10.0" variable="catchmentSlope"></slider>
+    <monitor x="301" precision="0" y="9" height="60" fontSize="11" width="100">currentYear</monitor>
+    <monitor x="289" precision="0" y="71" height="60" fontSize="11" width="114">currentDayOfYear</monitor>
+    <button x="141" y="321" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="154">parameters-to-default</button>
+  </widgets>
+  <info>## WHAT IS IT?
+
+(a general understanding of what the model is trying to show or explain)
+
+## HOW IT WORKS
+
+(what rules the agents use to create the overall behavior of the model)
+
+## HOW TO USE IT
+
+(how to use the model, including a description of each of the items in the Interface tab)
+
+## THINGS TO NOTICE
+
+(suggested things for the user to notice while running the model)
+
+## THINGS TO TRY
+
+(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+
+## EXTENDING THE MODEL
+
+(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+
+## NETLOGO FEATURES
+
+(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+
+## RELATED MODELS
+
+(models in the NetLogo Models Library and elsewhere which are of related interest)
+
+## CREDITS AND REFERENCES
+
+(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)</info>
+  <turtleShapes>
+    <shape name="default" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="5"></point>
+        <point x="40" y="250"></point>
+        <point x="150" y="205"></point>
+        <point x="260" y="250"></point>
+      </polygon>
+    </shape>
+    <shape name="airplane" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="0"></point>
+        <point x="135" y="15"></point>
+        <point x="120" y="60"></point>
+        <point x="120" y="105"></point>
+        <point x="15" y="165"></point>
+        <point x="15" y="195"></point>
+        <point x="120" y="180"></point>
+        <point x="135" y="240"></point>
+        <point x="105" y="270"></point>
+        <point x="120" y="285"></point>
+        <point x="150" y="270"></point>
+        <point x="180" y="285"></point>
+        <point x="210" y="270"></point>
+        <point x="165" y="240"></point>
+        <point x="180" y="180"></point>
+        <point x="285" y="195"></point>
+        <point x="285" y="165"></point>
+        <point x="180" y="105"></point>
+        <point x="180" y="60"></point>
+        <point x="165" y="15"></point>
+      </polygon>
+    </shape>
+    <shape name="arrow" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="0"></point>
+        <point x="0" y="150"></point>
+        <point x="105" y="150"></point>
+        <point x="105" y="293"></point>
+        <point x="195" y="293"></point>
+        <point x="195" y="150"></point>
+        <point x="300" y="150"></point>
+      </polygon>
+    </shape>
+    <shape name="box" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="285"></point>
+        <point x="285" y="225"></point>
+        <point x="285" y="75"></point>
+        <point x="150" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="135"></point>
+        <point x="15" y="75"></point>
+        <point x="150" y="15"></point>
+        <point x="285" y="75"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="15" y="75"></point>
+        <point x="15" y="225"></point>
+        <point x="150" y="285"></point>
+        <point x="150" y="135"></point>
+      </polygon>
+      <line endX="150" startY="285" marked="false" color="255" endY="135" startX="150"></line>
+      <line endX="15" startY="135" marked="false" color="255" endY="75" startX="150"></line>
+      <line endX="285" startY="135" marked="false" color="255" endY="75" startX="150"></line>
+    </shape>
+    <shape name="bug" rotatable="true" editableColorIndex="0">
+      <circle x="96" y="182" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="110" y="127" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <circle x="110" y="75" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <line endX="80" startY="100" marked="true" color="-1920102913" endY="30" startX="150"></line>
+      <line endX="220" startY="100" marked="true" color="-1920102913" endY="30" startX="150"></line>
+    </shape>
+    <shape name="butterfly" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="165"></point>
+        <point x="209" y="199"></point>
+        <point x="225" y="225"></point>
+        <point x="225" y="255"></point>
+        <point x="195" y="270"></point>
+        <point x="165" y="255"></point>
+        <point x="150" y="240"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="165"></point>
+        <point x="89" y="198"></point>
+        <point x="75" y="225"></point>
+        <point x="75" y="255"></point>
+        <point x="105" y="270"></point>
+        <point x="135" y="255"></point>
+        <point x="150" y="240"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="139" y="148"></point>
+        <point x="100" y="105"></point>
+        <point x="55" y="90"></point>
+        <point x="25" y="90"></point>
+        <point x="10" y="105"></point>
+        <point x="10" y="135"></point>
+        <point x="25" y="180"></point>
+        <point x="40" y="195"></point>
+        <point x="85" y="194"></point>
+        <point x="139" y="163"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="162" y="150"></point>
+        <point x="200" y="105"></point>
+        <point x="245" y="90"></point>
+        <point x="275" y="90"></point>
+        <point x="290" y="105"></point>
+        <point x="290" y="135"></point>
+        <point x="275" y="180"></point>
+        <point x="260" y="195"></point>
+        <point x="215" y="195"></point>
+        <point x="162" y="165"></point>
+      </polygon>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="255"></point>
+        <point x="135" y="225"></point>
+        <point x="120" y="150"></point>
+        <point x="135" y="120"></point>
+        <point x="150" y="105"></point>
+        <point x="165" y="120"></point>
+        <point x="180" y="150"></point>
+        <point x="165" y="225"></point>
+      </polygon>
+      <circle x="135" y="90" marked="false" color="255" diameter="30" filled="true"></circle>
+      <line endX="195" startY="105" marked="false" color="255" endY="60" startX="150"></line>
+      <line endX="105" startY="105" marked="false" color="255" endY="60" startX="150"></line>
+    </shape>
+    <shape name="car" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="300" y="180"></point>
+        <point x="279" y="164"></point>
+        <point x="261" y="144"></point>
+        <point x="240" y="135"></point>
+        <point x="226" y="132"></point>
+        <point x="213" y="106"></point>
+        <point x="203" y="84"></point>
+        <point x="185" y="63"></point>
+        <point x="159" y="50"></point>
+        <point x="135" y="50"></point>
+        <point x="75" y="60"></point>
+        <point x="0" y="150"></point>
+        <point x="0" y="165"></point>
+        <point x="0" y="225"></point>
+        <point x="300" y="225"></point>
+        <point x="300" y="180"></point>
+      </polygon>
+      <circle x="180" y="180" marked="false" color="255" diameter="90" filled="true"></circle>
+      <circle x="30" y="180" marked="false" color="255" diameter="90" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="162" y="80"></point>
+        <point x="132" y="78"></point>
+        <point x="134" y="135"></point>
+        <point x="209" y="135"></point>
+        <point x="194" y="105"></point>
+        <point x="189" y="96"></point>
+        <point x="180" y="89"></point>
+      </polygon>
+      <circle x="47" y="195" marked="true" color="-1920102913" diameter="58" filled="true"></circle>
+      <circle x="195" y="195" marked="true" color="-1920102913" diameter="58" filled="true"></circle>
+    </shape>
+    <shape name="circle" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+    </shape>
+    <shape name="circle 2" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+    </shape>
+    <shape name="cow" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="200" y="193"></point>
+        <point x="197" y="249"></point>
+        <point x="179" y="249"></point>
+        <point x="177" y="196"></point>
+        <point x="166" y="187"></point>
+        <point x="140" y="189"></point>
+        <point x="93" y="191"></point>
+        <point x="78" y="179"></point>
+        <point x="72" y="211"></point>
+        <point x="49" y="209"></point>
+        <point x="48" y="181"></point>
+        <point x="37" y="149"></point>
+        <point x="25" y="120"></point>
+        <point x="25" y="89"></point>
+        <point x="45" y="72"></point>
+        <point x="103" y="84"></point>
+        <point x="179" y="75"></point>
+        <point x="198" y="76"></point>
+        <point x="252" y="64"></point>
+        <point x="272" y="81"></point>
+        <point x="293" y="103"></point>
+        <point x="285" y="121"></point>
+        <point x="255" y="121"></point>
+        <point x="242" y="118"></point>
+        <point x="224" y="167"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="73" y="210"></point>
+        <point x="86" y="251"></point>
+        <point x="62" y="249"></point>
+        <point x="48" y="208"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="25" y="114"></point>
+        <point x="16" y="195"></point>
+        <point x="9" y="204"></point>
+        <point x="23" y="213"></point>
+        <point x="25" y="200"></point>
+        <point x="39" y="123"></point>
+      </polygon>
+    </shape>
+    <shape name="cylinder" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+    </shape>
+    <shape name="dot" rotatable="false" editableColorIndex="0">
+      <circle x="90" y="90" marked="true" color="-1920102913" diameter="120" filled="true"></circle>
+    </shape>
+    <shape name="face happy" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="8" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="255"></point>
+        <point x="90" y="239"></point>
+        <point x="62" y="213"></point>
+        <point x="47" y="191"></point>
+        <point x="67" y="179"></point>
+        <point x="90" y="203"></point>
+        <point x="109" y="218"></point>
+        <point x="150" y="225"></point>
+        <point x="192" y="218"></point>
+        <point x="210" y="203"></point>
+        <point x="227" y="181"></point>
+        <point x="251" y="194"></point>
+        <point x="236" y="217"></point>
+        <point x="212" y="240"></point>
+      </polygon>
+    </shape>
+    <shape name="face neutral" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="7" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <rectangle endX="240" startY="195" marked="false" color="255" endY="225" startX="60" filled="true"></rectangle>
+    </shape>
+    <shape name="face sad" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="8" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="168"></point>
+        <point x="90" y="184"></point>
+        <point x="62" y="210"></point>
+        <point x="47" y="232"></point>
+        <point x="67" y="244"></point>
+        <point x="90" y="220"></point>
+        <point x="109" y="205"></point>
+        <point x="150" y="198"></point>
+        <point x="192" y="205"></point>
+        <point x="210" y="220"></point>
+        <point x="227" y="242"></point>
+        <point x="251" y="229"></point>
+        <point x="236" y="206"></point>
+        <point x="212" y="183"></point>
+      </polygon>
+    </shape>
+    <shape name="fish" rotatable="false" editableColorIndex="0">
+      <polygon color="-1" filled="true" marked="false">
+        <point x="44" y="131"></point>
+        <point x="21" y="87"></point>
+        <point x="15" y="86"></point>
+        <point x="0" y="120"></point>
+        <point x="15" y="150"></point>
+        <point x="0" y="180"></point>
+        <point x="13" y="214"></point>
+        <point x="20" y="212"></point>
+        <point x="45" y="166"></point>
+      </polygon>
+      <polygon color="-1" filled="true" marked="false">
+        <point x="135" y="195"></point>
+        <point x="119" y="235"></point>
+        <point x="95" y="218"></point>
+        <point x="76" y="210"></point>
+        <point x="46" y="204"></point>
+        <point x="60" y="165"></point>
+      </polygon>
+      <polygon color="-1" filled="true" marked="false">
+        <point x="75" y="45"></point>
+        <point x="83" y="77"></point>
+        <point x="71" y="103"></point>
+        <point x="86" y="114"></point>
+        <point x="166" y="78"></point>
+        <point x="135" y="60"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="30" y="136"></point>
+        <point x="151" y="77"></point>
+        <point x="226" y="81"></point>
+        <point x="280" y="119"></point>
+        <point x="292" y="146"></point>
+        <point x="292" y="160"></point>
+        <point x="287" y="170"></point>
+        <point x="270" y="195"></point>
+        <point x="195" y="210"></point>
+        <point x="151" y="212"></point>
+        <point x="30" y="166"></point>
+      </polygon>
+      <circle x="215" y="106" marked="false" color="255" diameter="30" filled="true"></circle>
+    </shape>
+    <shape name="flag" rotatable="false" editableColorIndex="0">
+      <rectangle endX="75" startY="15" marked="true" color="-1920102913" endY="300" startX="60" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="90" y="150"></point>
+        <point x="270" y="90"></point>
+        <point x="90" y="30"></point>
+      </polygon>
+      <line endX="90" startY="135" marked="true" color="-1920102913" endY="135" startX="75"></line>
+      <line endX="90" startY="45" marked="true" color="-1920102913" endY="45" startX="75"></line>
+    </shape>
+    <shape name="flower" rotatable="false" editableColorIndex="0">
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="135" y="120"></point>
+        <point x="165" y="165"></point>
+        <point x="180" y="210"></point>
+        <point x="180" y="240"></point>
+        <point x="150" y="300"></point>
+        <point x="165" y="300"></point>
+        <point x="195" y="240"></point>
+        <point x="195" y="195"></point>
+        <point x="165" y="135"></point>
+      </polygon>
+      <circle x="85" y="132" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="130" y="147" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="192" y="85" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="85" y="40" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="177" y="40" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="177" y="132" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="70" y="85" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="130" y="25" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="96" y="51" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="113" y="68" marked="false" color="255" diameter="74" filled="true"></circle>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="189" y="233"></point>
+        <point x="219" y="188"></point>
+        <point x="249" y="173"></point>
+        <point x="279" y="188"></point>
+        <point x="234" y="218"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="180" y="255"></point>
+        <point x="150" y="210"></point>
+        <point x="105" y="210"></point>
+        <point x="75" y="240"></point>
+        <point x="135" y="240"></point>
+      </polygon>
+    </shape>
+    <shape name="house" rotatable="false" editableColorIndex="0">
+      <rectangle endX="255" startY="120" marked="true" color="-1920102913" endY="285" startX="45" filled="true"></rectangle>
+      <rectangle endX="180" startY="210" marked="false" color="255" endY="285" startX="120" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="15" y="120"></point>
+        <point x="150" y="15"></point>
+        <point x="285" y="120"></point>
+      </polygon>
+      <line endX="270" startY="120" marked="false" color="255" endY="120" startX="30"></line>
+    </shape>
+    <shape name="leaf" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="210"></point>
+        <point x="135" y="195"></point>
+        <point x="120" y="210"></point>
+        <point x="60" y="210"></point>
+        <point x="30" y="195"></point>
+        <point x="60" y="180"></point>
+        <point x="60" y="165"></point>
+        <point x="15" y="135"></point>
+        <point x="30" y="120"></point>
+        <point x="15" y="105"></point>
+        <point x="40" y="104"></point>
+        <point x="45" y="90"></point>
+        <point x="60" y="90"></point>
+        <point x="90" y="105"></point>
+        <point x="105" y="120"></point>
+        <point x="120" y="120"></point>
+        <point x="105" y="60"></point>
+        <point x="120" y="60"></point>
+        <point x="135" y="30"></point>
+        <point x="150" y="15"></point>
+        <point x="165" y="30"></point>
+        <point x="180" y="60"></point>
+        <point x="195" y="60"></point>
+        <point x="180" y="120"></point>
+        <point x="195" y="120"></point>
+        <point x="210" y="105"></point>
+        <point x="240" y="90"></point>
+        <point x="255" y="90"></point>
+        <point x="263" y="104"></point>
+        <point x="285" y="105"></point>
+        <point x="270" y="120"></point>
+        <point x="285" y="135"></point>
+        <point x="240" y="165"></point>
+        <point x="240" y="180"></point>
+        <point x="270" y="195"></point>
+        <point x="240" y="210"></point>
+        <point x="180" y="210"></point>
+        <point x="165" y="195"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="195"></point>
+        <point x="135" y="240"></point>
+        <point x="120" y="255"></point>
+        <point x="105" y="255"></point>
+        <point x="105" y="285"></point>
+        <point x="135" y="285"></point>
+        <point x="165" y="240"></point>
+        <point x="165" y="195"></point>
+      </polygon>
+    </shape>
+    <shape name="line" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+    </shape>
+    <shape name="line half" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="150" startX="150"></line>
+    </shape>
+    <shape name="line half 1" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+      <rectangle endX="165" startY="0" marked="true" color="-1920102913" endY="150" startX="135" filled="true"></rectangle>
+    </shape>
+    <shape name="line half 2" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+      <rectangle endX="180" startY="0" marked="true" color="-1920102913" endY="150" startX="120" filled="true"></rectangle>
+    </shape>
+    <shape name="pentagon" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="15"></point>
+        <point x="15" y="120"></point>
+        <point x="60" y="285"></point>
+        <point x="240" y="285"></point>
+        <point x="285" y="120"></point>
+      </polygon>
+    </shape>
+    <shape name="person" rotatable="false" editableColorIndex="0">
+      <circle x="110" y="5" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="105" y="90"></point>
+        <point x="120" y="195"></point>
+        <point x="90" y="285"></point>
+        <point x="105" y="300"></point>
+        <point x="135" y="300"></point>
+        <point x="150" y="225"></point>
+        <point x="165" y="300"></point>
+        <point x="195" y="300"></point>
+        <point x="210" y="285"></point>
+        <point x="180" y="195"></point>
+        <point x="195" y="90"></point>
+      </polygon>
+      <rectangle endX="172" startY="79" marked="true" color="-1920102913" endY="94" startX="127" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="195" y="90"></point>
+        <point x="240" y="150"></point>
+        <point x="225" y="180"></point>
+        <point x="165" y="105"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="105" y="90"></point>
+        <point x="60" y="150"></point>
+        <point x="75" y="180"></point>
+        <point x="135" y="105"></point>
+      </polygon>
+    </shape>
+    <shape name="plant" rotatable="false" editableColorIndex="0">
+      <rectangle endX="165" startY="90" marked="true" color="-1920102913" endY="300" startX="135" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="255"></point>
+        <point x="90" y="210"></point>
+        <point x="45" y="195"></point>
+        <point x="75" y="255"></point>
+        <point x="135" y="285"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="255"></point>
+        <point x="210" y="210"></point>
+        <point x="255" y="195"></point>
+        <point x="225" y="255"></point>
+        <point x="165" y="285"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="180"></point>
+        <point x="90" y="135"></point>
+        <point x="45" y="120"></point>
+        <point x="75" y="180"></point>
+        <point x="135" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="180"></point>
+        <point x="165" y="210"></point>
+        <point x="225" y="180"></point>
+        <point x="255" y="120"></point>
+        <point x="210" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="105"></point>
+        <point x="90" y="60"></point>
+        <point x="45" y="45"></point>
+        <point x="75" y="105"></point>
+        <point x="135" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="105"></point>
+        <point x="165" y="135"></point>
+        <point x="225" y="105"></point>
+        <point x="255" y="45"></point>
+        <point x="210" y="60"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="90"></point>
+        <point x="120" y="45"></point>
+        <point x="150" y="15"></point>
+        <point x="180" y="45"></point>
+        <point x="165" y="90"></point>
+      </polygon>
+    </shape>
+    <shape name="sheep" rotatable="false" editableColorIndex="15">
+      <circle x="203" y="65" marked="true" color="-1" diameter="88" filled="true"></circle>
+      <circle x="70" y="65" marked="true" color="-1" diameter="162" filled="true"></circle>
+      <circle x="150" y="105" marked="true" color="-1" diameter="120" filled="true"></circle>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="218" y="120"></point>
+        <point x="240" y="165"></point>
+        <point x="255" y="165"></point>
+        <point x="278" y="120"></point>
+      </polygon>
+      <circle x="214" y="72" marked="false" color="-1920102913" diameter="67" filled="true"></circle>
+      <rectangle endX="179" startY="223" marked="true" color="-1" endY="298" startX="164" filled="true"></rectangle>
+      <polygon color="-1" filled="true" marked="true">
+        <point x="45" y="285"></point>
+        <point x="30" y="285"></point>
+        <point x="30" y="240"></point>
+        <point x="15" y="195"></point>
+        <point x="45" y="210"></point>
+      </polygon>
+      <circle x="3" y="83" marked="true" color="-1" diameter="150" filled="true"></circle>
+      <rectangle endX="80" startY="221" marked="true" color="-1" endY="296" startX="65" filled="true"></rectangle>
+      <polygon color="-1" filled="true" marked="true">
+        <point x="195" y="285"></point>
+        <point x="210" y="285"></point>
+        <point x="210" y="240"></point>
+        <point x="240" y="210"></point>
+        <point x="195" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="276" y="85"></point>
+        <point x="285" y="105"></point>
+        <point x="302" y="99"></point>
+        <point x="294" y="83"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="219" y="85"></point>
+        <point x="210" y="105"></point>
+        <point x="193" y="99"></point>
+        <point x="201" y="83"></point>
+      </polygon>
+    </shape>
+    <shape name="square" rotatable="false" editableColorIndex="0">
+      <rectangle endX="270" startY="30" marked="true" color="-1920102913" endY="270" startX="30" filled="true"></rectangle>
+    </shape>
+    <shape name="square 2" rotatable="false" editableColorIndex="0">
+      <rectangle endX="270" startY="30" marked="true" color="-1920102913" endY="270" startX="30" filled="true"></rectangle>
+      <rectangle endX="240" startY="60" marked="false" color="255" endY="240" startX="60" filled="true"></rectangle>
+    </shape>
+    <shape name="star" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="151" y="1"></point>
+        <point x="185" y="108"></point>
+        <point x="298" y="108"></point>
+        <point x="207" y="175"></point>
+        <point x="242" y="282"></point>
+        <point x="151" y="216"></point>
+        <point x="59" y="282"></point>
+        <point x="94" y="175"></point>
+        <point x="3" y="108"></point>
+        <point x="116" y="108"></point>
+      </polygon>
+    </shape>
+    <shape name="target" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+      <circle x="60" y="60" marked="true" color="-1920102913" diameter="180" filled="true"></circle>
+      <circle x="90" y="90" marked="false" color="255" diameter="120" filled="true"></circle>
+      <circle x="120" y="120" marked="true" color="-1920102913" diameter="60" filled="true"></circle>
+    </shape>
+    <shape name="tree" rotatable="false" editableColorIndex="0">
+      <circle x="118" y="3" marked="true" color="-1920102913" diameter="94" filled="true"></circle>
+      <rectangle endX="180" startY="195" marked="false" color="-1653716737" endY="300" startX="120" filled="true"></rectangle>
+      <circle x="65" y="21" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="116" y="41" marked="true" color="-1920102913" diameter="127" filled="true"></circle>
+      <circle x="45" y="90" marked="true" color="-1920102913" diameter="120" filled="true"></circle>
+      <circle x="104" y="74" marked="true" color="-1920102913" diameter="152" filled="true"></circle>
+    </shape>
+    <shape name="triangle" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="30"></point>
+        <point x="15" y="255"></point>
+        <point x="285" y="255"></point>
+      </polygon>
+    </shape>
+    <shape name="triangle 2" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="30"></point>
+        <point x="15" y="255"></point>
+        <point x="285" y="255"></point>
+      </polygon>
+      <polygon color="255" filled="true" marked="false">
+        <point x="151" y="99"></point>
+        <point x="225" y="223"></point>
+        <point x="75" y="224"></point>
+      </polygon>
+    </shape>
+    <shape name="truck" rotatable="false" editableColorIndex="0">
+      <rectangle endX="195" startY="45" marked="true" color="-1920102913" endY="187" startX="4" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="296" y="193"></point>
+        <point x="296" y="150"></point>
+        <point x="259" y="134"></point>
+        <point x="244" y="104"></point>
+        <point x="208" y="104"></point>
+        <point x="207" y="194"></point>
+      </polygon>
+      <rectangle endX="195" startY="60" marked="false" color="-1" endY="105" startX="195" filled="true"></rectangle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="238" y="112"></point>
+        <point x="252" y="141"></point>
+        <point x="219" y="141"></point>
+        <point x="218" y="112"></point>
+      </polygon>
+      <circle x="234" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <rectangle endX="214" startY="185" marked="true" color="-1920102913" endY="194" startX="181" filled="true"></rectangle>
+      <circle x="144" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <circle x="24" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <circle x="24" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+      <circle x="144" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+      <circle x="234" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+    </shape>
+    <shape name="turtle" rotatable="true" editableColorIndex="0">
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="215" y="204"></point>
+        <point x="240" y="233"></point>
+        <point x="246" y="254"></point>
+        <point x="228" y="266"></point>
+        <point x="215" y="252"></point>
+        <point x="193" y="210"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="195" y="90"></point>
+        <point x="225" y="75"></point>
+        <point x="245" y="75"></point>
+        <point x="260" y="89"></point>
+        <point x="269" y="108"></point>
+        <point x="261" y="124"></point>
+        <point x="240" y="105"></point>
+        <point x="225" y="105"></point>
+        <point x="210" y="105"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="105" y="90"></point>
+        <point x="75" y="75"></point>
+        <point x="55" y="75"></point>
+        <point x="40" y="89"></point>
+        <point x="31" y="108"></point>
+        <point x="39" y="124"></point>
+        <point x="60" y="105"></point>
+        <point x="75" y="105"></point>
+        <point x="90" y="105"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="132" y="85"></point>
+        <point x="134" y="64"></point>
+        <point x="107" y="51"></point>
+        <point x="108" y="17"></point>
+        <point x="150" y="2"></point>
+        <point x="192" y="18"></point>
+        <point x="192" y="52"></point>
+        <point x="169" y="65"></point>
+        <point x="172" y="87"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="85" y="204"></point>
+        <point x="60" y="233"></point>
+        <point x="54" y="254"></point>
+        <point x="72" y="266"></point>
+        <point x="85" y="252"></point>
+        <point x="107" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="119" y="75"></point>
+        <point x="179" y="75"></point>
+        <point x="209" y="101"></point>
+        <point x="224" y="135"></point>
+        <point x="220" y="225"></point>
+        <point x="175" y="261"></point>
+        <point x="128" y="261"></point>
+        <point x="81" y="224"></point>
+        <point x="74" y="135"></point>
+        <point x="88" y="99"></point>
+      </polygon>
+    </shape>
+    <shape name="wheel" rotatable="false" editableColorIndex="0">
+      <circle x="3" y="3" marked="true" color="-1920102913" diameter="294" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+      <line endX="150" startY="285" marked="true" color="-1920102913" endY="15" startX="150"></line>
+      <line endX="285" startY="150" marked="true" color="-1920102913" endY="150" startX="15"></line>
+      <circle x="120" y="120" marked="true" color="-1920102913" diameter="60" filled="true"></circle>
+      <line endX="79" startY="40" marked="true" color="-1920102913" endY="269" startX="216"></line>
+      <line endX="269" startY="84" marked="true" color="-1920102913" endY="221" startX="40"></line>
+      <line endX="269" startY="216" marked="true" color="-1920102913" endY="79" startX="40"></line>
+      <line endX="221" startY="40" marked="true" color="-1920102913" endY="269" startX="84"></line>
+    </shape>
+    <shape name="wolf" rotatable="false" editableColorIndex="0">
+      <polygon color="255" filled="true" marked="false">
+        <point x="253" y="133"></point>
+        <point x="245" y="131"></point>
+        <point x="245" y="133"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="2" y="194"></point>
+        <point x="13" y="197"></point>
+        <point x="30" y="191"></point>
+        <point x="38" y="193"></point>
+        <point x="38" y="205"></point>
+        <point x="20" y="226"></point>
+        <point x="20" y="257"></point>
+        <point x="27" y="265"></point>
+        <point x="38" y="266"></point>
+        <point x="40" y="260"></point>
+        <point x="31" y="253"></point>
+        <point x="31" y="230"></point>
+        <point x="60" y="206"></point>
+        <point x="68" y="198"></point>
+        <point x="75" y="209"></point>
+        <point x="66" y="228"></point>
+        <point x="65" y="243"></point>
+        <point x="82" y="261"></point>
+        <point x="84" y="268"></point>
+        <point x="100" y="267"></point>
+        <point x="103" y="261"></point>
+        <point x="77" y="239"></point>
+        <point x="79" y="231"></point>
+        <point x="100" y="207"></point>
+        <point x="98" y="196"></point>
+        <point x="119" y="201"></point>
+        <point x="143" y="202"></point>
+        <point x="160" y="195"></point>
+        <point x="166" y="210"></point>
+        <point x="172" y="213"></point>
+        <point x="173" y="238"></point>
+        <point x="167" y="251"></point>
+        <point x="160" y="248"></point>
+        <point x="154" y="265"></point>
+        <point x="169" y="264"></point>
+        <point x="178" y="247"></point>
+        <point x="186" y="240"></point>
+        <point x="198" y="260"></point>
+        <point x="200" y="271"></point>
+        <point x="217" y="271"></point>
+        <point x="219" y="262"></point>
+        <point x="207" y="258"></point>
+        <point x="195" y="230"></point>
+        <point x="192" y="198"></point>
+        <point x="210" y="184"></point>
+        <point x="227" y="164"></point>
+        <point x="242" y="144"></point>
+        <point x="259" y="145"></point>
+        <point x="284" y="151"></point>
+        <point x="277" y="141"></point>
+        <point x="293" y="140"></point>
+        <point x="299" y="134"></point>
+        <point x="297" y="127"></point>
+        <point x="273" y="119"></point>
+        <point x="270" y="105"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="-1" y="195"></point>
+        <point x="14" y="180"></point>
+        <point x="36" y="166"></point>
+        <point x="40" y="153"></point>
+        <point x="53" y="140"></point>
+        <point x="82" y="131"></point>
+        <point x="134" y="133"></point>
+        <point x="159" y="126"></point>
+        <point x="188" y="115"></point>
+        <point x="227" y="108"></point>
+        <point x="236" y="102"></point>
+        <point x="238" y="98"></point>
+        <point x="268" y="86"></point>
+        <point x="269" y="92"></point>
+        <point x="281" y="87"></point>
+        <point x="269" y="103"></point>
+        <point x="269" y="113"></point>
+      </polygon>
+    </shape>
+    <shape name="x" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="270" y="75"></point>
+        <point x="225" y="30"></point>
+        <point x="30" y="225"></point>
+        <point x="75" y="270"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="30" y="75"></point>
+        <point x="75" y="30"></point>
+        <point x="270" y="225"></point>
+        <point x="225" y="270"></point>
+      </polygon>
+    </shape>
+  </turtleShapes>
+  <linkShapes>
+    <shape name="default" curviness="0.0">
+      <lines>
+        <line x="-0.2" visible="false">
+          <dash value="0.0"></dash>
+          <dash value="1.0"></dash>
+        </line>
+        <line x="0.0" visible="true">
+          <dash value="1.0"></dash>
+          <dash value="0.0"></dash>
+        </line>
+        <line x="0.2" visible="false">
+          <dash value="0.0"></dash>
+          <dash value="1.0"></dash>
+        </line>
+      </lines>
+      <indicator>
+        <shape name="link direction" rotatable="true" editableColorIndex="0">
+          <line endX="90" startY="150" marked="true" color="-1920102913" endY="180" startX="150"></line>
+          <line endX="210" startY="150" marked="true" color="-1920102913" endY="180" startX="150"></line>
+        </shape>
+      </indicator>
+    </shape>
+  </linkShapes>
+  <previewCommands>setup repeat 75 [ go ]</previewCommands>
+  <experiments>
+    <experiment name="experiment" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="true" timeLimit="2190">
+      <setup>setup</setup>
+      <go>go</go>
+      <metrics>
+        <metric>T</metric>
+        <metric>T_max</metric>
+        <metric>T_min</metric>
+        <metric>RAIN</metric>
+        <metric>solarRadiation</metric>
+        <metric>ETr</metric>
+        <metric>mean [WATp] of patches</metric>
+        <metric>mean [ARID] of patches</metric>
+        <metric>mean [biomass] of patches with [position crop typesOfCrops = 0]</metric>
+        <metric>mean [biomass] of patches with [position crop typesOfCrops = 1]</metric>
+        <metric>mean [yield] of patches with [position crop typesOfCrops = 0]</metric>
+        <metric>mean [yield] of patches with [position crop typesOfCrops = 1]</metric>
+      </metrics>
+      <constants>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate2_yearly-mean">
+          <value value="0.05"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="CO2-mean">
+          <value value="250"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="solar_annual-min">
+          <value value="3"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate2_yearly-sd">
+          <value value="0.01"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="CO2-daily-fluctuation">
+          <value value="1"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="seed">
+          <value value="0"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_yearly-sd">
+          <value value="130"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="solar_annual-max">
+          <value value="7"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_plateau-value_yearly-sd">
+          <value value="0.05"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_n-sample">
+          <value value="200"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection1_yearly-sd">
+          <value value="20"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="CO2-annual-deviation">
+          <value value="2"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_max-sample-size">
+          <value value="10"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection2_yearly-sd">
+          <value value="20"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection2_yearly-mean">
+          <value value="200"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_mean-daily-fluctuation">
+          <value value="5"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_annual-min-at-2m">
+          <value value="15"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="solar_mean-daily-fluctuation">
+          <value value="1"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_daily-lower-deviation">
+          <value value="5"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_annual-max-at-2m">
+          <value value="40"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="temperature_daily-upper-deviation">
+          <value value="5"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="end-simulation-in-tick">
+          <value value="0"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_yearly-mean">
+          <value value="400"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_inflection1_yearly-mean">
+          <value value="40"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate1_yearly-mean">
+          <value value="0.15"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="display-mode">
+          <value value="&quot;crops&quot;"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_plateau-value_yearly-mean">
+          <value value="0.1"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="precipitation_daily-cum_rate1_yearly-sd">
+          <value value="0.02"></value>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="type-of-experiment">
+          <value value="&quot;user-defined&quot;"></value>
+        </enumeratedValueSet>
+      </constants>
+    </experiment>
+  </experiments>
+</model>
