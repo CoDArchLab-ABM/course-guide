@@ -1,3 +1,222 @@
 # Identifying and formatting submodels {#pond-trade-submodelling}
 
 
+## 🧩 Structuring NetLogo Models with `__includes`: From Monolith to Modular Design
+
+In the early stages of model development, it is common to work within a **single `.nlogo` file**. This approach keeps all code—setup, agent logic, data collection, and plotting—in one place, which is convenient for learning and experimentation. However, as models grow in complexity, maintaining a long monolithic file becomes difficult.
+To make large projects easier to navigate, debug, and extend, **NetLogo allows modularisation** through the `__includes` directive.
+
+---
+
+### 🔹 Why Modularise?
+
+Breaking a model into smaller source files improves:
+
+* **Readability:** Each file focuses on a specific function (e.g., setup, environment, agent behaviour, data collection).
+* **Reusability:** Procedures can be shared across projects.
+* **Maintenance:** Updating or replacing a subsystem (e.g., weather generation) doesn’t require scrolling through hundreds of lines.
+* **Collaboration:** Multiple researchers can work on separate components concurrently.
+
+---
+
+### 🔹 The `__includes` Directive
+
+NetLogo allows a model to load additional source files (`.nls`, for *NetLogo Source*) at runtime.
+The syntax, placed at the top of your main `.nlogo` file, is:
+
+```netlogo
+__includes [
+  "modules/setup.nls"
+  "modules/agents.nls"
+  "modules/environment.nls"
+  "modules/data_collection.nls"
+]
+```
+
+Each included file may contain any NetLogo code (procedures, reporters, variable declarations). When the model loads, all included files are **merged into a single shared namespace**, so procedures defined in one file are visible to all others.
+
+---
+
+### 🔹 Example: Breaking Down a Monolithic Model
+
+Suppose the class has built a simple **pond trade** model within one `.nlogo` file.
+We can refactor it into modules stored in a structured directory, for example:
+
+```
+PondTrade/
+├── PondTrade.nlogo              ; main file (interface + globals + includes)
+└── modules/
+    ├── setup.nls                ; world creation, initialisation
+    ├── turtles.nls              ; turtle behaviour (movement, interaction)
+    ├── patches.nls              ; patch logic (environment updates)
+    ├── trade.nls                ; trade algorithm
+    ├── data.nls                 ; data recording, plots, exports
+    └── utils.nls                ; helper functions
+```
+
+Inside the main model:
+
+```netlogo
+__includes [
+  "modules/setup.nls"
+  "modules/turtles.nls"
+  "modules/patches.nls"
+  "modules/trade.nls"
+  "modules/data.nls"
+  "modules/utils.nls"
+]
+```
+
+Each `.nls` file then contains only related code—for example, `setup.nls` might define `setup` and `create-turtles`, while `trade.nls` handles the trading routines.
+
+This structure makes it easier for archaeologists to focus on specific model components (e.g., environmental dynamics vs. agent decision-making) without being overwhelmed by the entire codebase.
+
+---
+
+### 🔹 Shared Utilities
+
+All included files share the same namespace.
+Therefore, **utility functions**—such as `clamp01` or `random-between`—can be stored in a shared file (e.g., `root/utils/clamp.nls`) and referenced in the main `__includes` list:
+
+```netlogo
+__includes [
+  "../utils/clamp.nls"
+  "modules/setup.nls"
+  "modules/trade.nls"
+  "modules/data.nls"
+]
+```
+
+These utilities will then be available to all modules, even though `.nls` files cannot themselves include other `.nls` files.
+
+---
+
+### 🔹 Alternative Organisation Options
+
+While `__includes` is the standard and simplest way to modularise code *within* NetLogo, larger or data-intensive projects can also benefit from:
+
+* **Extensions:** Custom primitives written in Java or Scala for reusable functionality across models.
+* **External scripting:** Coordinating model runs from R (via *RNetLogo*) or Python (via *pyNetLogo*), keeping analysis and simulation control outside NetLogo.
+* **Versioned templates:** Using Git and folders (e.g., `/modules/`, `/data/`, `/docs/`) for collaborative development and reproducibility.
+
+---
+
+### 🏺 In Practice
+
+For archaeologists, modularisation supports **transparent and replicable research**.
+Instead of one opaque model file, a modular structure makes explicit where environmental data, agent rules, or calibration routines are defined—facilitating peer review, teaching, and long-term model reuse.
+
+---
+
+## 🧠 Activity: Refactor the *PondTrade* Model Using `__includes`
+
+### 🎯 **Learning Objective**
+
+By the end of this exercise, students will:
+
+* Understand how to break a NetLogo model into functional modules.
+* Learn how to organise model code for clarity, maintenance, and reuse.
+* Recognise how modularisation supports reproducible archaeological modelling.
+
+---
+
+### 🪣 **Background**
+
+You have been working with the **PondTrade** model as a single `.nlogo` file containing setup, agent behaviour, environment rules, and data collection.
+In this activity, you will restructure it into a modular design using NetLogo’s `__includes` feature.
+
+---
+
+### 🧩 **Step 1 — Create the Folder Structure**
+
+1. Make a new directory called `PondTrade_Modular/`.
+2. Inside it, create the following subfolders:
+
+   ```
+   PondTrade_Modular/
+   ├── PondTrade.nlogo
+   └── modules/
+       ├── setup.nls
+       ├── turtles.nls
+       ├── environment.nls
+       ├── trade.nls
+       ├── data.nls
+       └── utils.nls
+   ```
+3. Copy your original model interface (sliders, plots, switches) into `PondTrade.nlogo`.
+
+---
+
+### ⚙️ **Step 2 — Add the `__includes` Statement**
+
+At the very top of `PondTrade.nlogo`, add:
+
+```netlogo
+__includes [
+  "modules/setup.nls"
+  "modules/turtles.nls"
+  "modules/environment.nls"
+  "modules/trade.nls"
+  "modules/data.nls"
+  "modules/utils.nls"
+]
+```
+
+This tells NetLogo to merge all these modules into one program when the model is loaded.
+
+---
+
+### ✂️ **Step 3 — Split the Code**
+
+Now open your original single-file model and **move procedures** into the appropriate module files.
+
+| Type of Procedure                     | Move it to file   | Example                                                   |
+| ------------------------------------- | ----------------- | --------------------------------------------------------- |
+| World setup and initialization        | `setup.nls`       | `to setup`, `to create-turtles`                           |
+| Agent behaviour (movement, decisions) | `turtles.nls`     | `to go`, `to forage`, `to trade`                          |
+| Environment updates                   | `environment.nls` | `to update-water`, `to grow-resources`                    |
+| Trade and interaction logic           | `trade.nls`       | `to exchange-goods`, `to evaluate-partner`                |
+| Data collection and plotting          | `data.nls`        | `to record-stats`, `to export-csv`                        |
+| Helper and math functions             | `utils.nls`       | `to-report clamp01 [x]`, `to-report random-between [a b]` |
+
+Remember — **you do not need to re-declare globals** or interface variables in every file.
+All modules share the same namespace once included.
+
+---
+
+### 🧪 **Step 4 — Test the Modular Model**
+
+1. Open `PondTrade.nlogo` in NetLogo.
+2. Check that it runs exactly like the original version.
+3. If an error appears such as *“Nothing named CLAMP01”*, ensure that the file containing that procedure (`utils.nls`) is listed in the `__includes`.
+
+---
+
+### 💬 **Step 5 — Reflect and Discuss**
+
+Consider these questions:
+
+* How does splitting the model help you identify its components conceptually (e.g. agents, environment, data)?
+* Which part of the model would you expect to change most often during an archaeological experiment?
+* How does modular organisation support collaboration between researchers (e.g. environmental scientist, archaeologist, and programmer)?
+* How might this approach make the model easier to archive, cite, or share for reproducibility?
+
+---
+
+### 📚 **Optional Extension**
+
+Explore alternative code organisation options:
+
+* Create a reusable `utils` folder shared by multiple models.
+* Call NetLogo models externally from R or Python using **RNetLogo** or **pyNetLogo** for automated experiments.
+* Package frequently used model components as **NetLogo extensions** (Java/Scala).
+
+---
+
+### 🏺 **Summary**
+
+By modularising your model, you have:
+
+* Improved **readability** and **traceability** of the code.
+* Created a structure that supports **collaboration** and **replication**.
+* Taken an important step toward **professional-level model documentation** in computational archaeology.
