@@ -11,6 +11,7 @@ to setup
 
   ; set the random seed so we can reproduce the same experiment
   random-seed seed
+  
   set patchesCount count patches
 
   create-map

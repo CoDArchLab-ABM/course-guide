@@ -4,6 +4,53 @@
 ;;; Auto-generated documentation header.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+to create-coastal-settlements
+
+  ; consider only coastal patches
+  let coastalPatches patches with [(isLand = true) and (any? neighbors with [isLand = false])]
+
+  repeat numberOfSettlements
+  [
+    ; ask a random coastal patch without a settlement already
+    ask one-of coastalPatches with [not any? settlements-here]
+    [
+      sprout-settlements 1 ; creates one "turtle" of breed settlements
+      [
+        set sizeLevel 1 ; the size level is initiated at minimum (i.e., 1)
+        set stock 0
+
+        set culturalVector extract-rgb color ; 0#, 1# and 2#
+        ; We add seven continuos cultural traits to the neutral RGB traits,
+        ; representing their attitude and ability involving
+        ; aspects we previously fixed as parameters and one variable:
+        ; 3# relativePathCostInLand (normal distribution around global parameter)
+        set culturalVector lput (random-normal 0 landTechVariation) culturalVector
+        ; 4# relativePathCostInPort (normal distribution around global parameter)
+        set culturalVector lput (random-normal 0 portTechVariation) culturalVector
+        ; 5# settlementSizeDecayRate [0 - maxSettlementSizeDecayRate)
+        set culturalVector lput (random-float maxSettlementSizeDecayRate) culturalVector
+        ; 6# stockDecayRate [0 - maxStockDecayRate)
+        set culturalVector lput (random-float maxStockDecayRate) culturalVector
+        ; 7# produtionRate [0 - maxProductionRate)
+        set culturalVector lput (random-float maxProductionRate) culturalVector
+        ; 8# frequencyOverQuality [0 - 1)
+        set culturalVector lput (random-float 1) culturalVector
+        ; 9# traitTransmissionRate [0 - maxTraitTransmissionRate) *** now, it means specifically the 'openess' of a settlement towards other variants of a trait
+        set culturalVector lput (random-float maxTraitTransmissionRate) culturalVector
+        ; 10# mutationVariation [0 - maxMutationVariation)
+        set culturalVector lput (random-float maxMutationVariation) culturalVector
+
+        set shape "circle 2"
+      ]
+      ; replace the land path cost with the port pathCost
+      set pathCost relativePathCostInPort
+      ; exclude this patch from the pool of coastal patches
+      set coastalPatches other coastalPatches
+    ]
+  ]
+
+end
+
 to create-traders-per-settlement
 
   ask settlements

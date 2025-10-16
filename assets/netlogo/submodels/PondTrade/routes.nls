@@ -46,6 +46,36 @@ to-report get-route [ settlement1 settlement2 ] ; accepts two settlements and re
 
 end
 
+to assign-path-cost
+
+  ask patches
+  [
+    ifelse (isLand = false)
+    [ set pathCost 1 ] ; arbitrary unit for now
+    [ set pathCost relativePathCostInLand ] ; defined by parameter in relation to the cost of path in water (i.e., 1)
+  ]
+
+end
+
+to-report get-path-cost [ aPatch aTrader ]
+
+  let pathCostOfPatch [pathCost] of aPatch
+  if ([isLand] of aPatch)
+  [
+    ifelse ([any? settlements-here] of aPatch)
+    [
+      ; path cost in port apply
+      set pathCostOfPatch pathCostOfPatch + [(item 4 culturalVector)] of [base] of aTrader
+    ]
+    [
+      ; path cost in land apply
+      set pathCostOfPatch pathCostOfPatch + [(item 3 culturalVector)] of [base] of aTrader
+    ]
+  ]
+  report pathCostOfPatch
+
+end
+
 to-report get-origin-and-destination [ aRoute ] ; accepts a route and returns a turtle-set with two settlements
 
   report (turtle-set ([ one-of settlements-here ] of first aRoute) ([one-of settlements-here ] of last aRoute))
@@ -187,4 +217,67 @@ to-report find-a-path [ source-patch destination-patch]
 
   ; report the search path
   report search-path
+end
+
+to paint-routes
+
+  ; resets route patches to the terrain color
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1 [ paint-terrain ]
+    ]
+  ]
+
+  ; paint route patches in shades of red depending on route frequency
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1
+      [
+        if (showRoutes)
+        [
+          ifelse (pcolor < 11 or pcolor > 19) ; if its the first route crossing the patch
+          [
+            set pcolor 11
+          ]
+          [
+            set pcolor min (list (pcolor + 1) (19)) ; sets a maximum at 19 (the brightest)
+          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to paint-active-routes
+
+  ask traders
+  [
+    foreach route
+    [ ?1 ->
+      ask ?1
+      [
+        ifelse (showActiveRoutes)
+        [
+          set pcolor yellow
+        ]
+        [
+          if (not showRoutes) ; if not displaying all routes
+          [
+            ; resets to the patch terrain color
+            paint-terrain
+          ]
+        ]
+      ]
+    ]
+  ]
+
 end

@@ -63,6 +63,14 @@ to update-output
 
 end
 
+to paint-terrain ; ego = patch
+
+  ifelse (isLand = false)
+  [ set pcolor 106 ] ; blue for water
+  [ set pcolor 54 ] ; green for land
+
+end
+
 to update-display
 
   paint-routes
