@@ -1,0 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; UTILS.NLS
+;;; Purpose: Utility functions for MessaraTrade model
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to advance-time
+
+  set currentDayOfYear currentDayOfYear + 1
+  if (currentDayOfYear > item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays)
+  [
+    set currentYear currentYear + 1
+    set currentDayOfYear 1
+  ]
+
+end
+
+to-report get-value-in-gradient [ input gradient maximum ]
+
+  report e ^ ( - input / ((gradient / 100) * maximum) )
+
+end

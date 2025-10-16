@@ -1,4 +1,8 @@
-;;; header
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; MAIN.NLS
+;;; Purpose: Main control procedures (setup, go) for MesaraTrade. Keeps top-level run logic; use with other modules.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to setup
 
@@ -16,7 +20,11 @@ to setup
 
   ; --- core procedures ----------------------
 
-  setup-patches
+  setup-soil-water-properties
+
+  setup-ARID-modifier
+
+  assign-path-cost
 
   setup-settlements
 

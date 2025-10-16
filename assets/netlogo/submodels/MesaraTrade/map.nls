@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; MAP.NLS
+;;; Purpose: Loading spatial (GIS) data with pre-calculated water flows. 
+;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to display-flows
+
+  ask flowHolders
+  [
+    ask my-links
+    [
+      ifelse (show-flows) [ show-link ] [ hide-link ]
+    ]
+  ]
+
+end
+
+to import-map-with-flows
+
+  import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"
+
+  ;;; reduce patch size in pixels
+  set-patch-size 3
+
+end

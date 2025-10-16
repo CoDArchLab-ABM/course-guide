@@ -1,0 +1,209 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; OUTPUT.NLS
+;;; Purpose: Output, display and plotting procedures (reused/extended from PondTrade).
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to update-output
+
+  let activatedTraders traders with [isActivated]
+
+  set traderCount count activatedTraders
+
+  set meanTraderCargoValue mean [cargoValue] of activatedTraders
+  set minTraderCargoValue min [cargoValue] of activatedTraders
+  set maxTraderCargoValue max [cargoValue] of activatedTraders
+
+  set minSettlementSize min [sizeLevel] of settlements
+  set maxSettlementSize max [sizeLevel] of settlements
+  set mainHub max-one-of settlements [sizeLevel]
+
+  set meanTotalPathCostOfActiveRoutes mean [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of activatedTraders
+  set minTotalPathCostOfActiveRoutes min [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of activatedTraders
+  set maxTotalPathCostOfActiveRoutes max [sum (map [ ?1 -> [pathCost] of ?1 ] route)] of activatedTraders
+
+  set meanRedTrait mean [item 0 culturalVector] of settlements
+  set stdDevRedTrait standard-deviation [item 0 culturalVector] of settlements
+  set modesRedTrait modes [ round (item 0 culturalVector) ] of settlements
+  set meanGreenTrait mean [item 1 culturalVector] of settlements
+  set stdDevGreenTrait standard-deviation [item 1 culturalVector] of settlements
+  set modesGreenTrait modes [ round (item 1 culturalVector) ] of settlements
+  set meanBlueTrait mean [item 2 culturalVector] of settlements
+  set stdDevBlueTrait standard-deviation [item 2 culturalVector] of settlements
+  set modesBlueTrait modes [ round (item 2 culturalVector) ] of settlements
+
+  set meanLandTechTrait mean [item 3 culturalVector] of settlements
+  set stdDevLandTechTrait standard-deviation [item 3 culturalVector] of settlements
+  set modesLandTechTrait modes [ round (item 3 culturalVector) ] of settlements
+  set meanPortTechTrait mean [item 4 culturalVector] of settlements
+  set stdDevPortTechTrait standard-deviation [item 4 culturalVector] of settlements
+  set modesPortTechTrait modes [ round (item 4 culturalVector) ] of settlements
+
+  set meanSizeDecayTrait mean [item 5 culturalVector] of settlements
+  set stdDevSizeDecayTrait standard-deviation [item 5 culturalVector] of settlements
+  set modesSizeDecayTrait modes [ round (item 5 culturalVector) ] of settlements
+  set meanStockDecayTrait mean [item 6 culturalVector] of settlements
+  set stdDevStockDecayTrait standard-deviation [item 6 culturalVector] of settlements
+  set modesStockDecayTrait modes [ round (item 6 culturalVector) ] of settlements
+  set meanProductionTrait mean [item 7 culturalVector] of settlements
+  set stdDevProductionTrait standard-deviation [item 7 culturalVector] of settlements
+  set modesProductionTrait modes [ round (item 7 culturalVector) ] of settlements
+
+  set meanFreqOverQualTrait mean [item 8 culturalVector] of settlements
+  set stdDevFreqOverQualTrait standard-deviation [item 8 culturalVector] of settlements
+  set modesFreqOverQualTrait modes [ round (item 8 culturalVector) ] of settlements
+  set meanTransmissionTrait mean [item 9 culturalVector] of settlements
+  set stdDevTransmissionTrait standard-deviation [item 9 culturalVector] of settlements
+  set modesTransmissionTrait modes [ round (item 9 culturalVector) ] of settlements
+  set meanMutationTrait mean [item 10 culturalVector] of settlements
+  set stdDevMutationTrait standard-deviation [item 10 culturalVector] of settlements
+  set modesMutationTrait modes [ round (item 10 culturalVector) ] of settlements
+
+end
+
+to refresh-view
+
+  if (display-mode = "elevation")
+  [
+    ask patchesWithElevationData [ display-elevation ]
+  ]
+
+  if (display-mode = "albedo")
+  [
+    ask patchesWithElevationData [ display-albedo ]
+  ]
+
+  if (display-mode = "ETr")
+  [
+    let maxETr max [ETr] of patchesWithElevationData
+    ask patchesWithElevationData [ display-ETr maxETr ]
+  ]
+
+  if (display-mode = "drainage coefficient (DC)")
+  [
+    ask patchesWithElevationData [ display-DC ]
+  ]
+
+  if (display-mode = "root zone depth (z)")
+  [
+    let maxZ max [z] of patchesWithElevationData
+    ask patchesWithElevationData [ display-z maxZ ]
+  ]
+
+  if (display-mode = "runoff curve number (CN)")
+  [
+    let maxCN max [CN] of patchesWithElevationData
+    ask patchesWithElevationData [ display-CN maxCN ]
+  ]
+
+  if (display-mode = "water content at field capacity (FC)")
+  [
+    let maxFC max [FC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-FC maxFC ]
+  ]
+
+  if (display-mode = "water holding Capacity (WHC)")
+  [
+    let maxWHC max [WHC] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WHC maxWHC ]
+  ]
+
+  if (display-mode = "soil water content (WATp)")
+  [
+    let maxWATp max [WATp] of patchesWithElevationData
+    ask patchesWithElevationData [ display-WATp maxWATp ]
+  ]
+
+  if (display-mode = "ARID coefficient")
+  [
+    ask patchesWithElevationData [ display-arid ]
+  ]
+
+  display-flows
+
+  paint-routes
+  paint-active-routes
+
+  ask settlements
+  [
+    set hidden? not showSettlements
+    ; scale the size of settlements according to their dynamic free-scaled sizeLevel
+    set size 1 + (sizeLevel / maxSettlementSize) * 9
+    set color rgb (item 0 culturalVector) (item 1 culturalVector) (item 2 culturalVector)
+  ]
+
+  ask traders
+  [
+    ifelse (showTraders)
+    [
+      ifelse (isActivated)
+      [ set hidden? false ]
+      [ set hidden? true ]
+    ]
+    [ set hidden? true ]
+  ]
+
+end
+
+to display-elevation
+
+  let elevationGradient 100 + (155 * (elevation / maxElevation))
+  set pcolor rgb (elevationGradient - 100) elevationGradient 0
+
+end
+
+to display-albedo
+
+  set pcolor 1 + 9 * albedo
+
+end
+
+to display-ETr [ maxETr ]
+
+  ifelse (maxETr = 0)
+  [ set pcolor 25 ]
+  [ set pcolor 22 + 6 * (1 - ETr / maxETr) ]
+
+end
+
+to display-DC
+
+  set pcolor 112 + 6 * (1 - DC)
+
+end
+
+to display-z [ maxZ ]
+
+  set pcolor 42 + 8 * (1 - z / maxZ)
+
+end
+
+to display-CN [ maxCN ]
+
+  set pcolor 72 + 6 * (1 - CN / maxCN)
+
+end
+
+to display-FC [ maxFC ]
+
+  set pcolor 82 + 6 * (1 - FC / maxFC)
+
+end
+
+to display-WHC [ maxWHC ]
+
+  set pcolor 92 + 6 * (1 - WHC / maxWHC)
+
+end
+
+to display-WATp [ maxWATp ]
+
+  set pcolor 102 + 6 * (1 - WATp / maxWATp)
+
+end
+
+to display-ARID
+
+  set pcolor 12 + 6 * ARID
+
+end

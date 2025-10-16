@@ -1,0 +1,80 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; PARAMS.NLS
+;;; Purpose: Parameter setting for the model
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to set-constants
+
+  ; "constants" are variables that will not be explored as parameters
+  ; and may be used during a simulation.
+
+  ; MUF : Water Uptake coefficient (mm^3 mm^-3)
+  set MUF 0.096
+
+  ; WP : Water content at wilting Point (cm^3.cm^-3)
+  set WP 0.06
+
+end
+
+to set-parameters
+
+  ; set random seed
+  random-seed randomSeed
+
+  ;;; load weather input data from file
+  load-weather-input-data-table
+
+  parameters-check
+
+  ;;; weather parameters are left with default values, but effectively ignored given that input weather is used.
+
+  set albedo_min 1E-6 + random-float 0.3
+  set albedo_max albedo_min + random-float 0.3
+
+  ;;; Soil Water Balance model
+  set WHC_min random-float 0.1
+  set WHC_max WHC_min + random-float 0.1
+  set DC_min 1E-6 + random-float 0.45
+  set DC_max DC_min + random-float 0.45
+  set z_min random-float 1000
+  set z_max z_min + random-float 1000
+  set CN_min random-float 40
+  set CN_max CN_min + random-float 50
+
+end
+
+to parameters-check
+
+  ;;; check if values were reset to 0 (NetLogo does that from time to time...!)
+  ;;; and set default values (assuming they are not 0)
+
+  if (par_albedo_min = 0)                                        [ set par_albedo_min                              0.1 ]
+  if (par_albedo_max = 0)                                        [ set par_albedo_max                              0.5 ]
+
+  if (water-holding-capacity_min = 0)                            [ set water-holding-capacity_min                    0.05 ]
+  if (water-holding-capacity_max = 0)                            [ set water-holding-capacity_max                    0.25 ]
+  if (drainage-coefficient_min = 0)                              [ set drainage-coefficient_min                      0.3 ]
+  if (drainage-coefficient_max = 0)                              [ set drainage-coefficient_max                      0.7 ]
+  if (root-zone-depth_min = 0)                                   [ set root-zone-depth_min                         200 ]
+  if (root-zone-depth_max = 0)                                   [ set root-zone-depth_max                        2000 ]
+  if (runoff-curve_min = 0)                                      [ set runoff-curve_min                             30 ]
+  if (runoff-curve_max = 0)                                      [ set runoff-curve_max                             80 ]
+
+end
+
+to parameters-to-default
+
+  ;;; set parameters to a default value
+  set par_albedo_min                                            0.1
+  set par_albedo_max                                            0.5
+
+  set water-holding-capacity_min                                0.05
+  set water-holding-capacity_max                                0.25
+  set drainage-coefficient_min                                  0.3
+  set drainage-coefficient_max                                  0.7
+  set root-zone-depth_min                                     200
+  set root-zone-depth_max                                    2000
+  set runoff-curve_min                                         30
+  set runoff-curve_max                                         80
+
+end

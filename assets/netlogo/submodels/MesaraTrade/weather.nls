@@ -1,0 +1,219 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; TIMESERIES.NLS
+;;; Purpose: Loading and using time-series weather data and evapotranspiration calculation.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to set-day-weather-from-input-data [ dayOfYear year ]
+
+  ;;; find corresponding index to year-dayOfYear pair
+
+  let yearAndDoyIndex position (word year "-" dayOfYear) weatherInputData_YEAR-DOY
+
+  ;;; get values from weather input data
+
+  set solarRadiation item yearAndDoyIndex weatherInputData_solarRadiation
+
+  set T item yearAndDoyIndex weatherInputData_temperature
+
+  set T_min item yearAndDoyIndex weatherInputData_minTemperature
+
+  set T_max item yearAndDoyIndex weatherInputData_maxTemperature
+
+  set RAIN item yearAndDoyIndex weatherInputData_precipitation
+
+  if (dayOfYear = 1)
+  [
+    ;;; fill values of precipitation_yearSeries and precipitation_cumYearSeries, used here only for visualisation
+
+    let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+    let yearAndLastDoyIndex position (word year "-" yearLengthInDays) weatherInputData_YEAR-DOY
+
+    set precipitation_yearSeries sublist weatherInputData_precipitation yearAndDoyIndex (yearAndLastDoyIndex + 1)
+
+    let yearTotal sum precipitation_yearSeries
+    set precipitation_cumYearSeries (list)
+    let cumulativeSum 0
+    foreach precipitation_yearSeries
+    [
+      i ->
+      set cumulativeSum cumulativeSum + i
+      set precipitation_cumYearSeries lput cumulativeSum precipitation_cumYearSeries
+    ]
+    set precipitation_cumYearSeries map [i -> i / yearTotal] precipitation_cumYearSeries
+  ]
+
+  ask patchesWithElevationData
+  [
+    set netSolarRadiation (1 - albedo) * solarRadiation
+    set ETr get-ETr
+  ]
+
+end
+
+to-report get-ETr
+
+  ;;; useful references:
+  ;;; Suleiman A A and Hoogenboom G 2007
+  ;;; Comparison of Priestley-Taylor and FAO-56 Penman-Monteith for Daily Reference Evapotranspiration Estimation in Georgia
+  ;;; J. Irrig. Drain. Eng. 133 175–82 Online: http://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%282007%29133%3A2%28175%29
+  ;;; also: Jia et al. 2013 - doi:10.4172/2168-9768.1000112
+  ;;; Allen, R. G., Pereira, L. A., Raes, D., and Smith, M. 1998.
+  ;;; “Crop evapotranspiration.”FAO irrigation and  drainage paper 56, FAO, Rome.
+  ;;; also: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; constants found in: http://www.fao.org/3/X0490E/x0490e07.htm
+  ;;; see also r package: Evapotranspiration (consult source code)
+
+  let windSpeed 2 ; as recommended by: http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+
+  ;;; estimation of saturated vapour pressure (e_s) and actual vapour pressure (e_a)
+  let e_s (get-vapour-pressure T_max + get-vapour-pressure T_min) / 2
+  let e_a get-vapour-pressure T_min
+  ; ... in absence of dew point temperature, as recommended by
+  ; http://www.fao.org/3/X0490E/x0490e07.htm#estimating%20missing%20climatic%20data
+  ; however, possibly min temp > dew temp under arid conditions
+
+  ;;; slope of  the  vapor  pressure-temperature  curve (kPa ºC−1)
+  let DELTA 4098 * (get-vapour-pressure T) / (T + 237.3) ^ 2
+
+  ;;; latent heat of vaporisation = 2.45 MJ.kg^-1
+  let lambda 2.45
+
+  ;;; specific heat at constant pressure, 1.013 10-3 [MJ kg-1 °C-1]
+  let c_p 1.013 * 10 ^ -3
+  ;;; ratio molecular weight of water vapour/dry air
+  let epsilon 0.622
+  ;;; atmospheric pressure (kPa)
+  let P 101.3 * ((293 - 0.0065 * elevation) / 293) ^ 5.26
+  ;;; psychometric constant (kPa ºC−1)
+  let gamma c_p * P / (epsilon * lambda)
+
+  ;;; Penman-Monteith equation from: fao.org/3/X0490E/x0490e0 ; and from: weap21.org/WebHelp/Mabia_Alg ETRef.htm
+
+  ; 900 and 0.34 for the grass reference; 1600 and 0.38 for the alfalfa reference
+  let C_n 900
+  let C_d 0.34
+
+  let ETr_temp (0.408 * DELTA * netSolarRadiation + gamma * (C_n / (T + 273)) * windSpeed * (e_s - e_a)) / (DELTA + gamma * (1 + C_d * windSpeed))
+
+  report ETr_temp
+
+end
+
+to-report get-vapour-pressure [ temp ]
+
+  report (0.6108 * exp(17.27 * temp / (temp + 237.3)))
+
+end
+
+to load-weather-input-data-table
+
+  ;;; this procedure loads the values of the weather data input table
+  ;;; the table contains:
+  ;;;   1. 13 lines of metadata, to be ignored
+  ;;;   2. one line with the headers of the table
+  ;;;   3. remaining rows containing row name and values
+
+  let weatherTable csv:from-file "data/POWER_Point_Daily_19840101_20201231_035d0309N_024d8335E_LST.csv"
+
+  ;;;==================================================================================================================
+  ;;; mapping coordinates (row or columns) from headings (line 14 == index 13 -----------------------------------------
+  ;;; NOTE: always correct raw mapping coordinates (start at 1) into list indexes (start at 0)
+  let variableNames item (14 - 1) weatherTable
+
+  let yearColumn position "YEAR" variableNames
+
+  let solarRadiationColumn position "ALLSKY_SFC_SW_DWN" variableNames
+
+  let precipitationColumn position "PRECTOTCORR" variableNames
+
+  let temperatureColumn position "T2M" variableNames
+
+  let temperatureMaxColumn position "T2M_MAX" variableNames
+
+  let temperatureMinColumn position "T2M_MIN" variableNames
+
+  ;;;==================================================================================================================
+  ;;; extract data---------------------------------------------------------------------------------------
+
+  ;;; read variables per year and day (list of lists, matrix: year-day x variables)
+  let weatherData sublist weatherTable (15 - 1) (length weatherTable) ; select only those row corresponding to variable data, if there is anything else
+
+  ;;; extract year-day of year pairs from the third and fourth columns
+  set weatherInputData_YEARS map [row -> item yearColumn row ] weatherData
+
+  ;;; NASA-POWER data uses year, month, day of month, instead of day of year,
+  ;;; so we need to calculate day of year of each row ourselves
+  set weatherInputData_DOY []
+  set weatherInputData_yearLengthInDays []
+  foreach (remove-duplicates weatherInputData_YEARS)
+  [
+    aYear ->
+    let aDoy 1
+    let lengthOfThisYear length (filter [i -> i = aYear] weatherInputData_YEARS)
+    set weatherInputData_yearLengthInDays lput lengthOfThisYear weatherInputData_yearLengthInDays
+    repeat lengthOfThisYear
+    [
+      set weatherInputData_DOY lput aDoy weatherInputData_DOY
+      set aDoy aDoy + 1
+    ]
+  ]
+  set weatherInputData_YEAR-DOY (map [[i j] -> (word i "-" j)] weatherInputData_YEARS weatherInputData_DOY)
+
+  ;;; extract first and last year
+  set weatherInputData_firstYear first weatherInputData_YEARS
+
+  set weatherInputData_lastYear last weatherInputData_YEARS
+
+  ;;; extract parameter values from the given column
+  ;;; NOTE: read-from-string is required because the original file is formated in a way that NetLogo interprets values as strings.
+
+  set weatherInputData_solarRadiation map [row -> item solarRadiationColumn row ] weatherData
+
+  set weatherInputData_precipitation map [row -> item precipitationColumn row ] weatherData
+
+  set weatherInputData_temperature map [row -> item temperatureColumn row ] weatherData
+
+  set weatherInputData_maxTemperature map [row -> item temperatureMaxColumn row ] weatherData
+
+  set weatherInputData_minTemperature map [row -> item temperatureMinColumn row ] weatherData
+
+end
+
+
+to plot-precipitation-table
+
+  clear-plot
+
+  let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+
+  set-plot-x-range 0 (yearLengthInDays + 1)
+
+  ;;; precipitation (mm/day) is summed by month
+  foreach n-values yearLengthInDays [j -> j]
+  [
+    dayOfYearIndex ->
+    plotxy (dayOfYearIndex + 1) (item dayOfYearIndex precipitation_yearSeries)
+  ]
+  plot-pen-up
+
+end
+
+to plot-cumPrecipitation-table
+
+  clear-plot
+
+  let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+
+  set-plot-y-range -0.1 1.1
+  set-plot-x-range 0 (yearLengthInDays + 1)
+
+  ;;; precipitation (mm/day) is summed by month
+  foreach n-values yearLengthInDays [j -> j]
+  [
+    dayOfYearIndex ->
+    plotxy (dayOfYearIndex + 1) (item dayOfYearIndex precipitation_cumYearSeries)
+  ]
+  plot-pen-up
+
+end
