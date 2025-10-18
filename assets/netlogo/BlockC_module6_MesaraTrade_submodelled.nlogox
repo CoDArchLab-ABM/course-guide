@@ -38,16 +38,16 @@
 extensions [ csv gis ]
 
 __includes [
-  "submodels/MesaraTrade/main.nls" ;;; setup go
-  "submodels/MesaraTrade/params.nls"
-  "submodels/MesaraTrade/map.nls"
-  "submodels/MesaraTrade/weather.nls"
-  "submodels/MesaraTrade/arid.nls"
-  "submodels/MesaraTrade/settlements.nls"
-  "submodels/MesaraTrade/routes.nls"
-  "submodels/MesaraTrade/traders.nls"
-  "submodels/MesaraTrade/output.nls"
-  "submodels/MesaraTrade/utils.nls"
+  "modules/MesaraTrade/main.nls" ;;; setup go
+  "modules/MesaraTrade/params.nls"
+  "modules/MesaraTrade/map.nls"
+  "modules/MesaraTrade/weather.nls"
+  "modules/MesaraTrade/arid.nls"
+  "modules/MesaraTrade/settlements.nls"
+  "modules/MesaraTrade/routes.nls"
+  "modules/MesaraTrade/traders.nls"
+  "modules/MesaraTrade/output.nls"
+  "modules/MesaraTrade/utils.nls"
 ]
 
 ;;;;;;;;;;;;;;;;;

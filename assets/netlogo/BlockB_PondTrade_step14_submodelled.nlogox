@@ -27,12 +27,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 __includes [
-  "submodels/PondTrade/main.nls" ;;; setup go
-  "submodels/PondTrade/map.nls"
-  "submodels/PondTrade/settlements.nls"
-  "submodels/PondTrade/routes.nls"
-  "submodels/PondTrade/traders.nls"
-  "submodels/PondTrade/output.nls"
+  "modules/PondTrade/main.nls" ;;; setup go
+  "modules/PondTrade/map.nls"
+  "modules/PondTrade/settlements.nls"
+  "modules/PondTrade/routes.nls"
+  "modules/PondTrade/traders.nls"
+  "modules/PondTrade/output.nls"
 ]
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

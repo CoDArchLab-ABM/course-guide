@@ -45,8 +45,6 @@ to create-map
 
   smooth-coast-line
 
-  assign-path-cost
-
   ask patches [ paint-terrain ]
 
 end

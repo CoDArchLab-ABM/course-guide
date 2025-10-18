@@ -62,17 +62,17 @@ book:
         - pond-trade-agent-definition.qmd
         - pond-trade-agent-ai.qmd
         - pond-trade-mechanism.qmd
-    - part: "Pond Trade (III): advanced mechanisms, output stats and 'submodelling'"
+    - part: "Pond Trade (III): advanced mechanisms, output stats and modularity"
       chapters:
         - pond-trade-cultural-vectors.qmd
         - pond-trade-stats.qmd
-        - pond-trade-submodelling.qmd
+        - pond-trade-modularity.qmd
     - part: "Messara Trade (I): case, design and spatial input data"
       chapters:
         - messara-concept.qmd
         - messara-gis.qmd
         - messara-water-flow.qmd
-    - part: "Messara Trade (II): time-series input data and plugging submodels"
+    - part: "Messara Trade (II): time-series input data and plugging modules"
       chapters:
         - messara-weather.qmd
         - messara-soil-water.qmd
