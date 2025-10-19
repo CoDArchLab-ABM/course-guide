@@ -1,17 +1,17 @@
 # Conceptual modelling {#concept-intro}
 
-The objective of this session is to introduce the first and most important stage in the application of simulation, **system definition** and **model design**, to archeology topics.
+The objective of this session is to introduce the first and most important stage in the application of simulation, **system definition** and **model design**, to archaeology topics.
 
-Given a general topic of interest associated with a certain type of archaeological evidence, we must produce a conceptual model that contains a definition of the minimum features of a phenomenon or system (*representation*), with a view to its mathematical formalization (*mechanism*). so that it contributes to the answer to one or more research questions or to refute or reformulate a working hypothesis (*validation*).
+Given a general topic of interest associated with a specific type of archaeological evidence, we must develop a conceptual model that includes a definition of the minimum features of a phenomenon or system (*representation*), with the aim of its mathematical formalization (*mechanism*). So that it contributes to the answer to one or more research questions or to refute or reformulate a working hypothesis (*validation*).
 
 <figure>
 <img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/representation-and-validation/representation-and-validation.png?raw=true" alt="representation and validation in explanatory models in archaeology" class="fragment" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"/><br>
-<fig-caption>representation and validation in explanatory models in archaeology</fig-caption>
+<fig-caption> Representation and validation in explanatory models in archaeology</fig-caption>
 </figure>
 
-Conceptual modelling reflects the exploratory nature of explanatory modelling. In this context, we should consider the maximum number of potential explanations and subsequently prioritise those that are arguably or demonstrably more likely, all given the limits of our knowledge. In building a model, we should include additional elements parsimoniously and keep in mind that this conceptual definition should help us in creating a computational model (*implementation*) that is intelligible and computable in a reasonable period of time.
+Conceptual modelling reflects the exploratory nature of explanatory modelling. In this context, we should consider the maximum number of potential explanations and subsequently prioritise those that are arguably or demonstrably more likely, all given the limits of our knowledge. When building a model, we should include additional elements parsimoniously and keep in mind that this conceptual definition should help us create a computational model (*implementation*) that is both intelligible and computable within a reasonable timeframe.
 
-When creating your first conceptual model, I recommend starting from scratch with the first intuition that comes to mind. After later scrutiny, its logic structure may be oversimplified, incomplete, or faulty. However, it would most likely represent the main elements of an informal model that you and other researchers share. Relying on an informed guess to start model development is the best remedy for the "blank page panic". It will also help you avoid overthinking and overworking what should be a mere preliminary sketch of the model.
+When creating your first conceptual model, I recommend starting from scratch with the first intuition that comes to mind. After later scrutiny, its logical structure may be oversimplified, incomplete, or faulty. However, it would most likely represent the main elements of an informal model that you and other researchers share. Relying on an informed guess to start model development is the best remedy for the "blank page panic". It will also help you avoid overthinking and overworking what should be a mere preliminary sketch of the model.
 
 Said this, we might still suffer when trying to jump-start the modelling process. Even if (or maybe especially when) a sizeable interdisciplinary team is involved, such is often the case in ABM-related projects.
 
@@ -25,9 +25,9 @@ explanation_examples_table <- rbind.data.frame(
     "[logistic function](https://es.wikipedia.org/wiki/Funci%C3%B3n_log%C3%ADstica), areas of influence and catchment, competition between settlements"
   ),
   c(
-    "funerary context (number and style of artifacts, determination of age and sex, morphological and genetic proximity between individuals, etc.)",
+    "funerary context (number and style of artefacts, determination of age and sex, morphological and genetic proximity between individuals, etc.)",
     "ritual burial of certain individuals (beliefs, population composition, asymmetries and inequalities, etc.), mortality (frequency, contexts), decision making and logistics regarding funerary practice",
-    "institutionalization of prestige and authority status, effects of taboo on logistical stages of burial, inequality between kinship groups"
+    "institutionalisation of prestige and authority status, effects of taboo on logistical stages of burial, inequality between kinship groups"
   ),
   c(
     "detection of organic residues on the surface of ceramic vessels",
@@ -35,8 +35,8 @@ explanation_examples_table <- rbind.data.frame(
     "residue signal (quantified) as a function of type of use"
   ),
   c(
-    "distribution and diversity of varieties of a very common type of artifact (lithic instruments, ceramics, etc.)",
-    "movements of people and artifacts, cultural transmission of ways of producing and/or using said artifacts",
+    "distribution and diversity of varieties of a very common type of artefacts (lithic instruments, ceramics, etc.)",
+    "movements of people and artefactss, cultural transmission of ways of producing and/or using said artefactss",
     "cultural transmission (drift), prestige and functional selection"
   ),
   c(
@@ -51,7 +51,7 @@ explanation_examples_table <- rbind.data.frame(
   ),
   c(
     "volume of a mineral extracted in a deposit with mining, duration of occupation and activity",
-    "subsistence and liberation of labor, decision making on mining intensity, use and exchange of minerals",
+    "subsistence and liberation of labour, decision making on mining intensity, use and exchange of minerals",
     "economy of scale and diminishing returns"
   )
 )
@@ -65,7 +65,7 @@ names(explanation_examples_table) <- c(
 
 Archaeological evidence can be interpreted to understand past phenomena, and these interpretations often involve proposing underlying mechanisms. The relationship between evidence, phenomenon, and mechanism can be understood as follows:
 
-* **Evidence**: This refers to the physical remains or data that archaeologists uncover. This can include artifacts, structures, or environmental data. Pieces of evidence vary in level of description, from pottery styles to the position of fortifications and the abundance of animal species. They also vary in the methods used to define them, like visual analysis, geometric analysis, 3D scanning, and GPS.
+* **Evidence**: This refers to the physical remains or data that archaeologists uncover. This can include artefactss, structures, or environmental data. Pieces of evidence vary in level of description, from pottery styles to the position of fortifications and the abundance of animal species. They also vary in the methods used to define them, like visual analysis, geometric analysis, 3D scanning, and GPS.
 
 * **Phenomenon**: The phenomenon is the pattern or process inferred from the evidence. It is the "what" that happened, based on the interpretation of the evidence, but also the benchmark definition of reality, based in a much longer list of experiences and confirmed knowledge. For instance, variations in pottery style can represent exchange, the position of fortifications can represent strategic decision-making, and a decrease in a wild animal population can represent human hunting.
 
@@ -79,22 +79,22 @@ knitr::kable(explanation_examples_table)
 
 There are at least three ways to begin this stage:
 
-- **From evidence to mechanism** (from left to right in the table): You may prefer to first think about a set of types of archaeological evidence, perhaps a type that one is most familiar with or that can be found in a specific site or dataset. Once the evidence is delimited, you can then identify what is the most likely and/or stronger explanation, first in terms of phenomenon and then as a generative process (left to right in the table). With enough effort and time, the worse case scenario when taking this path is to obtain a weak explanatory model, one that does not offer a realistic representation of a phenomenon, but might as well give further insight on patterns of evidence (i.e., a descriptive model).  
-- **From phenomenon to evidence to mechanism** (middle to left and right in the table): Also, look for or formulate a mechanism that satisfactorily represents the phenomenon, as previously defined (middle to left and right in the table). it is equally valid to start by considering a phenomenon that has been abundantly documented, studied and defined in other disciplines (e.g., trade, from an understanding in economics and anthropology). In choosing a phenomenon, you must be able to assume it existed in a certain context in the past and that there are domains of evidence that could support or undermine such explanation. The worse case scenario here would be to have a "toy model", one that represents the current knowledge of a phenomenon and can be used to investigate it, but cannot be easily assumed for the past nor is directly validated with archaeological evidence.  
-- **From mechanism to phenomenon and evidence** (right to left in the table): The last and more opportunistic option is to focus first on a mechanism that has already been described and/or formalised, consider a phenomenon it can represent and search for a type of evidence where signals of this mechanism can be detected. Taking this path demands a certain knowledge of modelling and models, preferably in multiple fields and disciplines, but it is actually a relatively safe path: the worse case is to end up concluding that the selected mechanism, alone at least, does not explain the patterns observed in the selected evidence -- a small, but steady contribution.
+- **From evidence to mechanism** (from left to right in the table): You may prefer to first think about a set of types of archaeological evidence, perhaps a type that one is most familiar with or that can be found in a specific site or dataset. Once the evidence is delimited, you can then identify what is the most likely and/or strongest explanation, first in terms of the phenomenon and then as a generative process (left to right in the table). With sufficient effort and time, the worst-case scenario when taking this path is to obtain a weak explanatory model, one that does not offer a realistic representation of the phenomenon, but may provide further insight into patterns of evidence (i.e., a descriptive model).  
+- **From phenomenon to evidence to mechanism** (middle to left and right in the table): Also, look for or formulate a mechanism that satisfactorily represents the phenomenon, as previously defined (middle to left and right in the table). It is equally valid to start by considering a phenomenon that has been extensively documented, studied, and defined in other disciplines (e.g., trade, from an economic and anthropological perspective). In choosing a phenomenon, you must be able to assume it existed in a particular context in the past and that there are domains of evidence that could support or undermine such an explanation. The worst-case scenario here would be to have a "toy model", one that represents the current knowledge of a phenomenon and can be used to investigate it, but cannot be readily assumed for the past, nor is it directly validated with archaeological evidence.  
+- **From mechanism to phenomenon and evidence** (right to left in the table): The last and more opportunistic option is to focus first on a mechanism that has already been described and/or formalised, consider a phenomenon it can represent and search for a type of evidence where signals of this mechanism can be detected. Taking this path demands a specific knowledge of modelling and models, preferably in multiple fields and disciplines, but it is a relatively safe path: the worse case is to end up concluding that the selected mechanism, alone at least, does not explain the patterns observed in the selected evidence -- a small, but steady contribution.
 
 In all routes, there are **no shortcuts**: the robustness of the explanation will depend on the depth and width of the prior knowledge about both evidence and phenomena.
 
 ## Diagraming for simulation modelling
 
-A conceptual model can be expressed in various ways; for example as lists of elements and relationships, schemes, diagrams, etc. Text or visual expression are valid as long as they help us approach the designing of a computational simulation model, facilitating the next stage (*implementation*).
+A conceptual model can be expressed in various ways, such as lists of elements and relationships, schemes, and diagrams. Text or visual expressions are valid as long as they help us approach the design of a computational simulation model, facilitating the next stage (*implementation*).
 
-Here, we will not force the use of conventions such as [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language), although these can be useful. Examples of UML diagrams can also offer inspiration, even if you don't learn their rules. Other more specific conventions can also be very useful and relatively easy to learn:
+Here, we will not force the use of conventions such as [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language), although these can be useful. Examples of UML diagrams can also offer inspiration, even if you don't learn their rules. Other, more specific conventions can also be very useful and relatively easy to learn:
 
 ::: {.grid}
 
 ::: {.g-col-6}
-[Causal diagrams and "stocks and flows" or Forrester diagrams](https://en.wikipedia.org/wiki/System_dynamics): useful for relating the change of aggregate variables (stocks) to parameters and other variables (flows).  
+[Causal diagrams and "stocks and flows" or Forrester diagrams](https://en.wikipedia.org/wiki/System_dynamics): helpful in relating the change of aggregate variables (stocks) to parameters and other variables (flows).  
 
 <a title="Adoption_CLD.gif:Apdevries at en.wikipedia
 derivative work: Blleininger, CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Adoption_CLD.svg"><img width="400px" alt="Adoption CLD" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Adoption_CLD.svg/512px-Adoption_CLD.svg.png?20100626011908"></a>
@@ -104,7 +104,7 @@ derivative work: Blleininger, CC BY-SA 3.0 &lt;http://creativecommons.org/licens
 :::
 
 ::: {.g-col-6}
-[Flowcharts](https://en.wikipedia.org/wiki/Flowchart): useful for representing flows of logic governed by a predetermined structure, especially when conditionals are involved (e.g. decision-making). In agent-based models, we will use it to describe modular *processes* that be applied to an entire model or to its entities and repeated every step in time.
+[Flowcharts](https://en.wikipedia.org/wiki/Flowchart): useful for representing flows of logic governed by a predetermined structure, especially when conditionals are involved (e.g. decision-making). In agent-based models, we will use it to describe modular *processes* that are applied to an entire model or to its entities and repeated every step in time.
 :::
 ::: {.g-col-6}
 <a title="svg by Booyabazookaoriginal png by Wapcaplet, CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:LampFlowchart.svg"><img alt="A simple flowchart for troubleshooting a broken lamp." src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/LampFlowchart.svg/256px-LampFlowchart.svg.png?20220918192641"></a>
@@ -114,8 +114,8 @@ derivative work: Blleininger, CC BY-SA 3.0 &lt;http://creativecommons.org/licens
 
 ## Designing an explanatory mechanism
 
-The selected explanation is never final, nor it is a declaration of subject belief (*my* interpretation). It should be the spark and direction of an open-ended process where we order our background knowledge and beliefs in search of logical consistency (formalisation), contrast them with further evidence (validation), and revisit or extend them. 
+The selected explanation is never final, nor is it a declaration of subjective belief (*my* interpretation). It should be the spark and direction of an open-ended process where we order our background knowledge and beliefs in search of logical consistency (formalisation), contrast them with further evidence (validation), and revisit or extend them. 
 
 The formalisation of an explanation is in fact the most challenging task in simulation modelling, especially in domains as complex as archaeology. It involves, first of all, a way of thinking that goes beyond any technical skill, training in mathematics or computing, or knowledge of jargon specific to one or another discipline. Therefore, it should be *practised* continuously rather than learned once.
 
-If the chosen explanation is already present in formal models developed by others, we could probably skip this stage. However, using, adapting or combining formal models for your own research will require a deep understanding of the formalisation done and how it relates to the terms of your own evidence, question, etc. In this sense, we will have to be especially careful in selecting formalized mechanisms and applying them to domains very different from our topic. For example, a model describing resource exploitation by ant populations might be useful for depicting resource exploitation by human populations, but the adoption and adaptation of the model must be done with an awareness of the differences between these phenomena.
+If the chosen explanation is already present in formal models developed by others, we could probably skip this stage. However, using, adapting or combining formal models for your own research will require a deep understanding of the formalisation done and how it relates to the terms of your own evidence, question, etc. In this sense, we will have to be especially careful in selecting formalised mechanisms and applying them to domains very different from our topic. For example, a model describing resource exploitation by ant populations might be useful for depicting resource exploitation by human populations, but the adoption and adaptation of the model must be done with an awareness of the differences between these phenomena.

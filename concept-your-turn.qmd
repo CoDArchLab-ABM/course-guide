@@ -4,8 +4,8 @@ To have your own experience in conceptual modelling for simulation, you will nee
 
 - Pen and paper or your preferred sketching digital platform (tablet, laptop).
 
-- A subject of interest in archaeology, preferably one that you know or have thought about in terms of explanations. Alternatively, you can select a model that has been explained verbally, but never formalised; for example, a written description of an explanation in a paper or book chapter. Remember, explanation means here that evidence is associated to a phenomenon, a process, and a mechanism (causal relationships).
+- A subject of interest in archaeology, preferably one that you know or have thought about in terms of explanations. Alternatively, you can select a model that has been explained verbally, but never formalised; for example, a written description of an explanation in a paper or book chapter. Remember, explanation here means that evidence is associated with a phenomenon, a process, and a mechanism (i.e., causal relationships).
 
-You may work in groups, as long as everyone is actually interested on the chosen topic.
+You may work in groups, as long as everyone is actually interested in the chosen topic.
 
-Choose well, and you may continue developing it in the implementation step! 
+Choose wisely, and you can continue to develop it in the implementation step. 
