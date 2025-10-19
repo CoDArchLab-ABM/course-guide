@@ -1,4 +1,4 @@
-# Defining and initialising agents
+# Defining and initialising agents {#pond-trade-agent-definition}
 
 In Block B, we will finally build a version of PondTrade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.
 

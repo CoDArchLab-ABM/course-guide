@@ -35,39 +35,63 @@ book:
       chapters: 
         - intro-abm.qmd
         - intro-abm-arch.qmd
+        - intro-readings.qmd
+    - part: "Learning to model processes"
+      chapters:
         - intro-abm-method.qmd
-    - part: "Conceptual modelling"
+        - concept-intro.qmd
+        - concept-pop-dyn.qmd
+        - concept-your-turn.qmd
+    - part: "Preparing as a software developer"
       chapters:
-        - concept-intro-pop-dyn.qmd
-        - concept-pond-trade.qmd
-    - part: "Model repository with Git and GitHub"
+        - dev-workflow.qmd
+        - dev-git-github.qmd
+        - dev-git-github-practice.qmd
+        - dev-netlogo-intro.qmd
+    - part: "Programming for simulation modelling"
       chapters:
-        - git-github-intro.qmd
-        - git-github-practice.qmd
-    - part: "Knowing the software: NetLogo"
+        - program-netlogo-language-basics.qmd
+        - program-other-languages.qmd
+        - program-netlogo-tutorials.qmd
+    - part: "Pond Trade (I): basics and cellular automata"
       chapters:
-        - netlogo-intro.qmd
-        - netlogo-language-basics.qmd
-        - netlogo-practice.qmd
-    - part: "Pond Trade"
+        - pond-trade-concept.qmd
+        - pond-trade-terrain.qmd
+    - part: "Pond Trade (II): agents and mechanisms"
       chapters:
         - pond-trade-agent-definition.qmd
         - pond-trade-agent-ai.qmd
-        - pond-trade-mechanims.qmd
+        - pond-trade-mechanism.qmd
+    - part: "Pond Trade (III): advanced mechanisms, output stats and modularity"
+      chapters:
         - pond-trade-cultural-vectors.qmd
         - pond-trade-stats.qmd
-    - part: "Messara Trade"
+        - pond-trade-modularity.qmd
+    - part: "Messara Trade (I): case, design and spatial input data"
       chapters:
+        - messara-concept.qmd
         - messara-gis.qmd
         - messara-water-flow.qmd
+    - part: "Messara Trade (II): time-series input data and plugging modules"
+      chapters:
         - messara-weather.qmd
         - messara-soil-water.qmd
-        - messara-routes.qmd
-        - messara-pond-trade.qmd
-    - part: "After the storm"
+    - part: "Messara Trade (III): integrating complex parts"
       chapters:
-        - post-experiments.qmd
-        - post-analysis.qmd
+        - messara-routes.qmd
+        - messara-integrations.qmd
+        - messara-verification-and-improvement.qmd
+    - part: "Designing and running Simulation experiments"
+      chapters:
+        - sim-behavior-space.qmd
+        - sim-param-exploration.qmd
+        - sim-hypothesis-test.qmd
+    - part: "Analysis of simulation results"
+      chapters:
+        - analysis-preprocessing.qmd
+        - analysis-visualisation.qmd
+        - analysis-sensitivity-analysis.qmd
+    - conclusion.qmd
     - references.qmd
 
 bibliography: references.bib

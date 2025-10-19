@@ -1,12 +1,5 @@
 # Importing spatial data: elevation and site data {#messara-gis}
 
-To build the Messara Trade model, we will take several advanced steps. Through a sequence of module development, we will reach a final version that extends the Pond Trade model to a 'grounded' production process and contextual data that refers specifically to our case study.
-
-We advance with a minor revision to our previous conceptual model:
-
-![Pond Trade conceptual model at step 14 (second tier)](assets/images/0_conceptAtStep14_secondTier.png)  
-*Pond Trade conceptual model at step 14 (second tier)*
-
 ## The `gis`extension
 
 The NetLogo default installation includes an extension to support GIS that can be used by adding the following to the first section of your script:

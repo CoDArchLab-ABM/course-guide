@@ -16,7 +16,11 @@ To better contextualise ABM, we start by positioning this modelling approach in 
 
 ## ABM as a tool for complexity
 
-Agent-based modeling (ABM) is a tool that can be used to explore phenomena through the lens of complexity science, that is as manifestations of complex systems. [Complex systems](https://en.wikipedia.org/wiki/Complex_system) are characterized by a high number and diversity of causal relationships, non-linearity, self-organization, and self-similarity. ABM is a methodological framework that allows researchers to simulate the dynamics of complex systems. The approach involves:
+Agent-based modelling (ABM) is a tool that can be used to explore phenomena through the lens of complexity science, that is as manifestations of complex systems. [Complex systems](https://en.wikipedia.org/wiki/Complex_system) are characterized by a high number and diversity of causal relationships, non-linearity (feedback loops), self-organization, self-similarity, and path dependence. [Complex adaptive systems](https://en.wikipedia.org/wiki/Complex_adaptive_system) are a special case of complex systems, one that is considered able to adapt to (and learn from) its environment. Such systems are better understood through its smaller parts and their interaction.
+
+<a title="Acadac, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Complex-adaptive-system.jpg"><img width="512" alt="Complex-adaptive-system" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Complex-adaptive-system.jpg/512px-Complex-adaptive-system.jpg?20050529073219"></a>
+
+ABM is a methodological framework that allows researchers to simulate the dynamics of complex systems. The approach involves:
 
 *   **Formalizing definitions** of elements within the system.
 *   Defining **rules as algorithms** to govern interactions between elements.
@@ -27,18 +31,18 @@ Agent-based modeling (ABM) is a tool that can be used to explore phenomena throu
 <a title="derivative work: George (talk)
 Conways_game_of_life_breeder.png: Hyperdeath, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Conways_game_of_life_breeder_animation.gif">Game of Life - breeder<br><img alt="Conways game of life breeder animation" src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Conways_game_of_life_breeder_animation.gif?20140304220345"></a>
 
-<a href="https://link.medium.com/1uqbZW0M2T" target="_blank"><img src="https://cdn-images-1.medium.com/max/1600/1*yrVzKSeqaA1O3G3HF-AHlw.gif">
+<a href="https://link.medium.com/1uqbZW0M2T" target="_blank"><img src="https://cdn-images-1.medium.com/max/1600/1*yrVzKSeqaA1O3G3HF-AHlw.gif" width="512px">
 <br>Flocking behaviour in 'Behavioral systems' by Danil Nagy in 'Generative Design', medium.com</a>
 
 ABM is a type of simulation that is particularly useful for modelling social systems because it allows for the representation of human agency and interaction. In ABM, a phenomenon is modelled through populations of autonomous agents and their interactions. This approach contrasts with other modelling techniques that represent causal components as aggregated variables and parameters. The use of distributed computation allows for the generation of complex dynamics that are not reducible to analytical solutions. ABM is also useful for exploring the emergence of social patterns and structures from the bottom up.
 
-ABM is a modular approach that can integrate parts from other modelling approaches, allowing for a more comprehensive representation of complex systems. For example, ABM can integrate environmental and spatial aspects, the agency of individuals and institutions, group formation, cooperation and competition, cognitive processes, and communication. In archaeology and other disciplines such as geography and environmental sciences, this multiparadigm approach has been favoured. The approach aligns well with the study of socio-ecological systems (SES) which acknowledges the interrelationships between natural and artificial worlds.
+ABM is a modular approach that can integrate parts from other modelling approaches, allowing for a more comprehensive representation of complex systems. For example, ABM can integrate environmental and spatial aspects, the agency of individuals and institutions, group formation, cooperation and competition, cognitive processes, and communication. In archaeology and other disciplines such as geography and environmental sciences, this multi-paradigm approach has been favoured. The approach aligns well with the study of socio-ecological systems (SES) which acknowledges the interrelationships between natural and artificial worlds.
 
 ## ABM as mathematical models
 
 Agent-based models, like all simulation models, are a type of mathematical model. As the term is used in science, we can define models as **representations** of a system or a phenomenon through its essential characteristics, often involving elements, relationships, and underlying assumptions. Mathematical models are simply more advanced in their logical definition through the process of **formalisation**. The *informal* or *less formal* models are those that are defined only through natural language speech (*e.g.*, in a live discussion), text (*e.g.*, in an article or book), or through certain graphical pieces (*e.g.*, infographics, diagrams).
 
-Despite this distinction, there is no genuine opposition between models with different levels of formalisation. Mathematical formalisation is mainly used to implement and test the logic models stated less formally. Among the advantages of mathematical formalisation, the most important are univocity (i.e., things have a single definition) and commensurability (i.e. things can be measured or counted). These properties set formal models apart from models formulated purely with natural languages, among other things, allowing for a significant improvement in the robustness of our reasoning. Keep in mind, though: formalisation can also harm the intelligibility of our models, *because* they move away from natural languages.
+Despite this distinction, there is no genuine opposition between models with different levels of formalisation. Mathematical formalisation is mainly used to implement and test the logic models stated less formally. Among the advantages of mathematical formalisation, the most important are **univocity** (i.e., things have a single definition) and **commensurability** (i.e. things can be measured or counted). These properties set formal models apart from models formulated purely with natural languages, among other things, allowing for a significant improvement in the robustness of our reasoning. Keep in mind, though: formalisation can also harm the intelligibility of our models, *because* they move away from natural languages.
 
 Within the large family of mathematical models, ABM models lie typically within a category that can be characterised as *explicative* or *mechanistic*. Explicative models are focused on an explanation, expressing processes through realistic causal relationships between variables, often including assumptions. Non-explicative or *descriptive* mathematical models are used more strictly to describe, reproduce or extrapolate the relationship between variables (i.e., most statistical models). The latter models are about *patterns* or *trends* in data, while the former are about the *mechanisms* underlying data, at least as we can define them based on our current understanding of the phenomena's domain. Unlike descriptive models, explanatory models seek to explain *why* a phenomenon occurs by formalizing mechanisms through causal relationships.
 
@@ -47,7 +51,11 @@ Within the large family of mathematical models, ABM models lie typically within 
 
 The line between these categories is blurred and confounded by many models and model users. Notice, for example, that the very term "explanation" is widely used in non-mechanistic ways (*e.g.*, when it is said that the educational level of a person *explains* that person's income). However, the bulk of models on each side is considerable, and ABM models, in particular, have traits that are undeniably linked to the formulation of *mechanisms*.
 
-To help understand this distinction, we can think about one of the most simple and popular descriptive models used today: the linear regression model. Every regression model is a generalised equation based on a geometric pattern, a straight line in the case of the linear regression:
+To help understand this distinction, we can think about one of the most simple and popular descriptive models used today: the linear regression model. 
+
+<a title="Krishnavedala, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Linear_least_squares_example2.svg"><img width="256" alt="Linear least squares example2" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Linear_least_squares_example2.svg/256px-Linear_least_squares_example2.svg.png?20110610033522"></a>
+
+We use this regression models to summarise the relationship between two variables in a dataset by finding a line that best fit the point distribution. In the case of the simple linear regression, we define a parametric equation that corresponds to a straight line in an Cartesian two-dimensional space:
 
 >y = a + b·x
 
@@ -55,6 +63,11 @@ To help understand this distinction, we can think about one of the most simple a
 *Geometric representation of a linear regression model*
 
 A linear regression model has two variables, x and y, which define two orthogonal dimensions, and two parameters, a and b, which determine the value of y when x = 0 and the tangent of the angle formed by the line with the x dimension. These are "meaningless" (semantically empty) in the model design, even if we deliberately choose x as the "independent" variable, despite how they are interpreted at a higher level of analysis.
+
+The semantic emptiness of descriptive models might seem irrelevant at first. A linear regression does help us to understand data and can make effective predictions. However, the meaning of these understandings and predictions comes from our explanatory models, which are only loosely connected to the equation we use. Assuming descriptive model and interpretation are directly connected can lead to misrepresenting data, or, worse, lead to faulty reasoning about the underlying  phenomenon.
+
+<a title="Anscombe.svg: Schutz
+(label using subscripts): Avenue, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Anscombe%27s_quartet_3.svg"><img width="512" alt="Anscombe&#039;s quartet 3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Anscombe%27s_quartet_3.svg/512px-Anscombe%27s_quartet_3.svg.png?20100326171813"></a>
 
 To put an archaeological example, imagine we have two variables measured in a collection of sites, the estimated maximum area and the count of potsherds on the surface. Imagine that we can define a regression model that states a positive correlation exists between them. Assuming our dataset is large enough and not radically biased, we could probably interpret that built area *influences* (i.e., causes, in a weak sense) the abundance of potsherds on the surface. It would not be necessarily illogical to conclude this. Yet, the relationship described in the model is ultimately a correlation (no archaeologist would think that one is directly causing the other).
 
@@ -96,12 +109,14 @@ Explanatory model:
 <img width="256" alt="Picture maze solving - explanatory model" 
 src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Picture_maze_solving.gif" style="border: none; box-shadow: none; margin-bottom: -2%;"></a>
 
-A model that return the output given the input **and the definition of a mechanism**
+A model that returns the output given the input **and the definition of a mechanism**
 :::
 
 :::
 
 :::
+
+<img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/from-model-to-simulation-models/from-model-to-simulation-models_p2.png?raw=true" alt="types of math models" class="fragment" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"/>
 
 The trend expressed by the linear model is but a "hint" of the mechanisms that are or could be postulated to explain it. Any hypotheses about the reason behind the correlation must be formulated outside the model, before or after its creation, for instance, by combining it with a natural language model. Thus, a descriptive model is inherently incomplete as an analytic tool and remains trivial unless it is associated with an external explicative model, formal or informal.
 
@@ -113,10 +128,10 @@ Still, descriptive mathematical models have been proven to be very useful and ar
 
 >"**a**: the imitative representation of the functioning of one system or process by means of the functioning of another a computer simulation of an industrial process  
 >**b**: examination of a problem often not subject to direct experimentation by means of a simulating device"
->(*simulation*, [Merrian-Webster](https://www.merriam-webster.com/dictionary/simulation)
+>*simulation*, [Merrian-Webster](https://www.merriam-webster.com/dictionary/simulation)
 
 >"A simulation is an **imitative representation of a process or system** that could exist in the real world. In this broad sense, simulation can often be used interchangeably with model. Sometimes a clear distinction between the two terms is made, in which simulations require the use of models; the model represents the **key characteristics or behaviors** of the selected system or process, whereas the simulation represents the **evolution of the model over time**. Another way to distinguish between the terms is to define simulation as experimentation with the help of a model."
->(*Simulation*, [Wikipedia](https://en.wikipedia.org/wiki/Simulation)
+>*Simulation*, [Wikipedia](https://en.wikipedia.org/wiki/Simulation)
 
 ### Algorithmic process
 
@@ -158,17 +173,15 @@ Simulation is a numerical approach to solve mathematical models. Simulation mode
 
 Social simulation models, specifically, apply these methods to social science topics, emphasizing the role of human agency and distributed computation. Agent-based modelling (ABM) is a common technique in social simulation, representing a phenomenon through populations of autonomous agents and their interactions.
 
-<a href="http://jasss.soc.surrey.ac.uk/14/3/7.html" target="_blank"><img src="http://jasss.soc.surrey.ac.uk/14/3/7/rebaudo_et_al_figure1_600px.png" alt="Rebaudo et al. 2011" style="width: 450px; border: none; box-shadow: none"><br>Rebaudo et al. 2011</a>
+<a href="http://jasss.soc.surrey.ac.uk/12/1/1.html" target="_blank"><img src="http://jasss.soc.surrey.ac.uk/12/1/1/fig1.jpg" alt="Galan et al. 2009" style="width: 450px; border: none; box-shadow: none"><br>Galan et al. 2009</a>
 
 <a href="https://www.gisagents.org/2016/10/agent-based-modeling-in-geographical.html" target="_blank"><img src="https://3.bp.blogspot.com/-8dBibQOLxv4/V4-Kd1QmFGI/AAAAAAAAJxU/XyvLVDVfzMEDLyRDdh1Sc3z_Nq7z2xPDQCLcB/s640/Figure1.png" alt="Heppenstall and Crooks 2016" style="width: 450px; border: none; box-shadow: none"><br>Heppenstall and Crooks 2016</a>
 
-<a href="http://jasss.soc.surrey.ac.uk/12/1/1.html" target="_blank"><img src="http://jasss.soc.surrey.ac.uk/12/1/1/fig1.jpg" alt="Galan et al. 2009" style="width: 450px; border: none; box-shadow: none"><br>Galan et al. 2009</a>
+<a href="http://jasss.soc.surrey.ac.uk/14/3/7.html" target="_blank"><img src="http://jasss.soc.surrey.ac.uk/14/3/7/rebaudo_et_al_figure1_600px.png" alt="Rebaudo et al. 2011" style="width: 450px; border: none; box-shadow: none"><br>Rebaudo et al. 2011</a>
 
 In contrast with other mechanistic and dynamic mathematical modelling approaches, ABM seeks to represent a phenomenon by explicitly modelling its parts. Therefore, ABM involves the expectation that the phenomenon at the macro-level *emerges* (can be deduced) from the dynamics at the micro-level. Moreover, ABM implies that the parts, the agents, constitute 'populations', *i.e.*, they share common properties and behavioural rules. The 'agency' behind the term 'agent' also implies that these parts have certain autonomy with respect to each other and the environment, which justifies simulating their behaviour at an individual level.
 
 In practice, 'autonomy' often translates as the agents' ability to take action, move, decide, or even think and remember. Decision-making is a central aspect of agents and most agent designs can be sufficiently expressed as flowcharts. Nevertheless, agent-based models also include entities that are *technically* agents (on the terms of [multi-agent systems](https://en.wikipedia.org/wiki/Multi-agent_system)), but lack many of such abilities or are not considered real/material discrete entities. The most common case is to represent space sectors as agents fixed to unique positions in a grid to facilitate the implementation of distributed spatial processes (*e.g.*, the growth of vegetation dependent on local factors). This type of agent is more commonly named as "cellular automaton" (*cellular automata*, in plural), In NetLogo, these entities are predefined as `patches` and are extensively used in combination with mobile agents in models in ecology and geography.
-
-<img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/from-model-to-simulation-models/from-model-to-simulation-models_p2.png?raw=true" alt="types of math models" class="fragment" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"/>
 
 ### Stochasticity
 
@@ -180,7 +193,7 @@ For those with no previous experience with computer science: note that "random" 
 
 This technique is also helpful in creating variation within a population of agents or between the global conditions of simulation runs. Such a thing is accomplished by drawing the values of variables from probability distributions, defined through *hyperparameters* (*e.g.*, drawing the age of individuals in a classroom from a normal distribution defined by two parameters, `age_mean` and `age_standardDeviation`). Unfortunately, a typical bad practice is not exposing such hyperparameters, having these 'hard-coded' as if their value were an intrinsic part of the model and thus the mechanisms it represents. This bad coding element, often called "magic numbers", can and should be addressed during model implementation.
 
-### Point of comparison
+### A point of comparison: Lotka-VolterraPredator-prey model
 
 Compared to other modelling and simulation approaches, ABM is more intuitive but also more complex.
 
@@ -192,7 +205,6 @@ $$
 $$
 \frac{dy}{dt}=\gamma y+\delta xy
 $$
-
 
 where $x$ and $y$ are the population density of prey and predator, respectively. $\alpha$ and $\gamma$ are the maximum intrinsic growth rate of each population and $\beta$ and $\delta$ are the effect of the presence of predators on prey and of prey on predators. Note that the first effect is negative and the second is positive.
 

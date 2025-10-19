@@ -1,0 +1,3 @@
+# Reading an ABM paper {#intro-readings}
+
+As a complement to this brief introduction, select one of the references mentioned in the previous session, containing details about a agent-based model in archaeology. Preferably, chose one that deals with topics that are familiar to you, so that the challenge resides on understanding the model description and its results and/or discussion.

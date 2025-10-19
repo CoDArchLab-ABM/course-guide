@@ -1,0 +1,84 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; MAIN.NLS
+;;; Purpose: Main control procedures (setup, go) for MesaraTrade. Keeps top-level run logic; use with other modules.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to setup
+
+  clear-all
+
+  ; --- loading/testing parameters -----------
+
+  import-map-with-flows ; import-world must be the first step
+
+  set-constants
+
+  set-parameters
+
+  import-routes-from-file
+
+  ; --- core procedures ----------------------
+
+  setup-soil-water-properties
+
+  setup-ARID-modifier
+
+  assign-path-cost
+
+  setup-settlements
+
+  create-traders-per-settlement
+
+  set currentYear weatherInputData_firstYear
+  set currentDayOfYear 1
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT ]
+
+  ; --- display & output handling ------------------------
+
+  update-output
+
+  refresh-view
+
+  paint-routes
+
+  ; -- time -------------------------------------
+
+  reset-ticks
+
+end
+
+to go
+
+  ; --- core procedures -------------------------
+
+  ;;; values are taken from input data
+  set-day-weather-from-input-data currentDayOfYear currentYear
+
+  ask patchesWithElevationData [ update-WAT modify-ARID ]
+
+  update-traders
+
+  update-settlements
+
+  ; --- output handling ------------------------
+
+  update-output
+
+  refresh-view
+
+  ; -- time -------------------------------------
+
+  advance-time
+
+  tick
+
+  ; --- stop conditions -------------------------
+
+  if (currentYear = weatherInputData_lastYear and currentDayOfYear = last weatherInputData_yearLengthInDays) [stop]
+
+end

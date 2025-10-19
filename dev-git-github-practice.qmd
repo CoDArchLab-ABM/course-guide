@@ -1,0 +1,25 @@
+# Creating your simulation model repository {#dev-git-github-practice}
+
+## Join the course GitHub Organisation 
+
+https://github.com/CoDArchLab-ABM
+
+## Initialising the repository
+
+Create a GitHub repository under your user. Named it `project2025_` followed by your model name (no special characters). Initialise with the following properties:
+    a. Public
+    b. With a README file
+    c. with .gitignore (template for R)
+    d. With a license of your choice.
+
+## Populating the repository
+
+Add all other conventional files mentioned above, even if they remain empty for now. 
+  
+Edit your README file and commit/push your changes.   
+
+## Publishing version 0.1
+
+  * Set up the GitHub-Zenodo connection.  
+  * Publish your repository (under your username or a GitHub organisation that you own).   
+  * Update README with the new Zenodo DOI (badge).

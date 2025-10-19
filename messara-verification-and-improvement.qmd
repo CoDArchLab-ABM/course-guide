@@ -1,0 +1,11 @@
+# Verifying and improving {#messara-verification-and-improvement}
+
+
+## Margins to improve and explore
+
+There are many other points to refactor, explore alternatives and expand. Just remember to first give it a think and then start writing code.
+
+For example:  
+- Can we visualise `catchmentArea` of settlements in the NetLogo View, instead of `sizeLevel`?
+- Could we find a way to calibrate the speed of traders to the same daily rhythm of the weather variables?  
+- Could rivers also affect `patchCost`?  
