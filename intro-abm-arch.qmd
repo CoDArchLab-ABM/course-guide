@@ -43,7 +43,7 @@ Here is a non-exhaustive list of examples of simulation and ABM in archaeology o
 
 The Artificial Anasazi model was developed to explore population dynamics in Long House Valley, Arizona. The model represents a population of households, with a simplified food economy based on maize cultivation. By simulating this system, researchers were able to test the hypothesis that climate change was the main cause of the abandonment of the valley.
 
-<a href="https://jasss.soc.surrey.ac.uk/12/4/13.html" target="_blank>
+<a href="https://jasss.soc.surrey.ac.uk/12/4/13.html" target="_blank">
 <img src="https://jasss.soc.surrey.ac.uk/12/4/13/figure4.jpg" alt="Artificial Anasazi" style="width: 500px; border: none; box-shadow: none; vertical-align:super">
 </a>
 
