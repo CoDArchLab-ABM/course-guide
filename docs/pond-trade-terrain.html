@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>16&nbsp; Getting started with NetLogo – Agent-based modelling for archaeologists. From concept to application and publication</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./pond-trade-agent-definition.html" rel="next">
+<link href="./pond-trade-concept.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a26c67caf6de3d1b0db4c204379513fa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pond-trade-concept.html">Pond Trade (I): basics and cellular automata</a></li><li class="breadcrumb-item"><a href="./pond-trade-terrain.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Agent-based modelling for archaeologists. From concept to application and publication</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CoDArchLab-ABM/course-guide/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to ABM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ABM in archaeology</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-readings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading an ABM paper</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Learning to model processes</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro-abm-method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">How to do ABM</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-pop-dyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Example: Settlement size, population and migration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./concept-your-turn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Your turn!</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Preparing as a software developer</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dev-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">A simulation modeller as a software: a workflow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dev-git-github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dev-git-github-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Creating your simulation model repository</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dev-netlogo-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to NetLogo</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Programming for simulation modelling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./program-netlogo-language-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">NetLogo language basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./program-other-languages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Sneak-peak at other languages</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./program-netlogo-tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">NetLogo tutorials</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Pond Trade (I): basics and cellular automata</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-concept.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Conceptual design or modeling: the Pond Trade model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-terrain.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Pond Trade (II): agents and mechanisms</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-definition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Defining and initialising agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-agent-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Programming agent AI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-mechanism.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Implementing mechanisms</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Pond Trade (III): advanced mechanisms, output stats and modularity</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-cultural-vectors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Implementing complex agents</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Implementing output statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-modularity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Identifying and formatting submodels</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Messara Trade (I): case, design and spatial input data</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-concept.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Case study and conceptual model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-gis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Importing spatial data: elevation and site data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-water-flow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Calculating water flow accumulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Messara Trade (II): time-series input data and plugging modules</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-weather.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-soil-water.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">Messara Trade (III): integrating complex parts</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-routes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Scaling up route calculation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-integrations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Integrating complex submodels</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./messara-verification-and-improvement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Verifying and improving</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Designing and running Simulation experiments</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sim-behavior-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behavior Space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sim-param-exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Simulation experiments for parameter exploration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sim-hypothesis-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Simulation experiments for hypothesis testing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis of simulation results</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis-preprocessing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Loading and preparing simulation results</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis-visualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis-sensitivity-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sensitivity analysis of simulation models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Conclusion and free practice</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#test-drive-creating-a-pond-terrain" id="toc-test-drive-creating-a-pond-terrain" class="nav-link active" data-scroll-target="#test-drive-creating-a-pond-terrain"><span class="header-section-number">16.0.1</span> Test-drive: creating a “pond” terrain</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-terrain.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pond-trade-concept.html">Pond Trade (I): basics and cellular automata</a></li><li class="breadcrumb-item"><a href="./pond-trade-terrain.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="pond-trade-terrain" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="test-drive-creating-a-pond-terrain" class="level3" data-number="16.0.1">
+<h3 data-number="16.0.1" class="anchored" data-anchor-id="test-drive-creating-a-pond-terrain"><span class="header-section-number">16.0.1</span> Test-drive: creating a “pond” terrain</h3>
+<p>Now, let us make a minimum working example of all elements explained above while advancing towards the Pond Trade model prototype. Let us start with implementing a minimum base for the PondTrade model: the pond-like terrain.</p>
+<p>For this section, I recommend starting your own NetLogo file (placed at the root directory of this repository) and writing the following steps progressively. Feel free to copy and paste whenever the code fragments become too long. If you run into any problems at the end of each step, you may check the corresponding complete script at the repository’s root.</p>
+<section id="step-0-drawing-a-blue-circle" class="level4" data-number="16.0.1.1">
+<h4 data-number="16.0.1.1" class="anchored" data-anchor-id="step-0-drawing-a-blue-circle"><span class="header-section-number">16.0.1.1</span> <strong>Step 0: Drawing a blue circle</strong></h4>
+<p>Inside a single procedure, called <code>create-map</code>, we order (<code>ask</code>) all <code>patches</code> to do something using the structure:</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches
+  [ 
+    &lt;DO_SOMETHING&gt;
+  ]
+
+end</code></pre>
+<p>Next, we use the syntax for setting variables (<code>set &lt;VARIABLE&gt; &lt;VALUE&gt;</code>) inside the procedure to change <code>patches</code> color to blue:</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches
+  [ 
+    set pcolor blue
+  ]
+
+end</code></pre>
+<p>Notice that both <code>pcolor</code> and <code>blue</code> are ‘primitives’, so they are automatically understood by NetLogo. Remember to consult NetLogo’s Dictionary, if in doubt about such primitives. Color primitives such as <code>blue</code> or their numeric equivalent are shown in ‘Color Swatches’ inside the Tools menu tab.</p>
+<p>Since we don’t want all patches to have the same color, we need to build some structure that give different colors to patches depending on their position, so that a blue circle is draw.</p>
+<p>Considering how to draw a circle, we need two bits of information: a <em>center</em> and a <em>radius</em> (respectively, O and R in the figure).</p>
+<p><a title="Jokes Free4Me, CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Circle-withsegments.svg"><img width="256" alt="Circle-withsegments" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Circle-withsegments.svg/512px-Circle-withsegments.svg.png"></a></p>
+<p>First, we must define a center. Because we won’t use this information for anything else, we can declare and set a local variable (i.e., accessable only from its own context), using the syntax <code>let &lt;VARIABLE&gt; &lt;VALUE&gt;</code>. We define the center patch coordinates as (0,0):</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches
+  [ 
+    let centralPatch patch 0 0
+
+    set pcolor blue
+  ]
+
+end</code></pre>
+<p>We can set a radius for our circle using a single numeric value, <em>e.g.</em> 5, expressed in patch widths:</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches
+  [ 
+    let centralPatch patch 0 0
+
+    let minDistOfLandToCenter 5
+
+    set pcolor blue
+  ]
+
+end</code></pre>
+<p>However, if we are passing a single absolute numeric value to be compared to a distance, the result will be sensitive to how large is our world grid. This is not wise, given that we might want to use this procedure in grids of different dimensions. Imagine that you are interested in changing the dimensions of the grid but want the circle to cover a similar proportion of it (<em>e.g.</em>, adjusting the resolution of our map).</p>
+<p>We can easily circunvent this code fragility by stepping-up its complexity. One alternative solution is to work with proportions of one of the grid dimensions, <em>e.g.</em> width (<code>world-width</code>). For the time being, we will set it to be half of half (a quater) of the width, since we have the circle positioned in the middle of the grid.</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches
+  [ 
+    let centralPatch patch 0 0
+
+    let minDistOfLandToCenter round (0.5 * (world-width / 2))
+
+    set pcolor blue
+  ]
+
+end</code></pre>
+<p>Running this code will still not produce a blue circle. Rather, we are asking for all patches to paint themselve blue, no matter what the values of <code>centralPatch</code> or <code>minDistOfLandToCenter</code>.</p>
+<p>To differenciate patches to be painted blue, we now use <code>minDistOfLandToCenter</code> for evaluating a criterium for a <code>ifelse</code> structure, finding out if a patch is inside or outside our circle. With this, we are ordering patches to paint themselves green or blue depending on if their distance to the center is less than a given value, i.e.&nbsp;<code>minDistOfLandToCenter</code>.</p>
+<pre class="netlogo"><code>ifelse (distance centralPatch &lt; minDistOfLandToCenter)
+[
+  set pcolor blue ; water
+]
+[
+  set pcolor green ; land
+]</code></pre>
+<p>Now, the entire code for the <code>create-map</code> procedure is finally doing what we expected, drawing a blue circle over a green background:</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches [
+
+    ; set central patch
+    let centralPatch patch 0 0
+
+    ; set minimum distance to center depending on world width
+    let minDistOfLandToCenter round (0.5 * (world-width / 2))
+
+    ifelse (distance centralPatch &lt; minDistOfLandToCenter)
+    [
+      set pcolor blue ; water
+    ]
+    [
+      set pcolor green ; land
+    ]
+
+  ]
+
+end</code></pre>
+<p><img src="assets/screenshots/BlockA_PondTrade_step00_blue-circle-interface.png" class="img-fluid" alt="Pond Trade step 0"><br>
+<em>Pond Trade step 0</em></p>
+</section>
+<section id="step-1a-de-composing-magic-numbers" class="level4" data-number="16.0.1.2">
+<h4 data-number="16.0.1.2" class="anchored" data-anchor-id="step-1a-de-composing-magic-numbers"><span class="header-section-number">16.0.1.2</span> <strong>Step 1a: De-composing “magic numbers”</strong></h4>
+<p>The code we just created has several fixed arbitrary values (the coordinates of the <code>centralPatch</code>, the values used to calculate <code>minDistOfLandToCenter</code>). It is good enough for us to draw a <em>particular</em> blue circle, but it is insufficient to draw other <em>types of blue circle</em>. Of course, the code will never be able to draw <em>anything</em>, if we are not programming it to do it. For instance, the colors <code>blue</code> and <code>green</code> are also magic numbers, but we are hardly interest in having them as parameters. We must generalize but also compromise, accepting that there will be possibilities that are not covered by our model.</p>
+<p>First, is there any case where the <code>patch 0 0</code> is not the one at the center of the grid? Imagine that you don’t like to have negative coordinates in your model. Go to “Settings” and modify the “location of origin” to be at the corner. Now, test the <code>create-map</code> procedure:</p>
+<p><img src="assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-adapt-center_0.png" class="img-fluid"></p>
+<p>Not at all what we are looking for! To correct this behavior, we must calculate the center coordinates, depending on the ranges or sizes of the grid width and height, whatever its configuration. Therefore, we must replace <code>0</code> with the calculation <code>minimum + range / 2</code> for both x and y coordinates:</p>
+<pre class="netlogo"><code>let centralPatch patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))</code></pre>
+<p>We use the <code>floor</code> function to obtain the round lower grid position when the range is an odd number. Because this calculation uses only NetLogo primitives, you can test this by printing it in the console in any NetLogo model. It will return the central patch given your grid settings:</p>
+<pre class="netlogo"><code>observer&gt; show patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))
+observer: (patch 16 16)</code></pre>
+<p>Now, regarding <code>minDistOfLandToCenter</code>, we could simply bring it as a parameter to be set in the interface instead of hard-coded (<em>e.g.</em> as a slider). This would be a better design, but we still would have a potential problem. Maybe you do not want the grid to be squared (<em>e.g.</em>, 33x33), but rectangular (<em>e.g.</em>, 100x20) instead. This is what you would get:</p>
+<p><img src="assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-adapt-center_1.png" class="img-fluid"></p>
+<p>Again, not what we are looking for. No matter how strange our map is shaped, we want our pond to be always fully within the grid. To do this, we must modify our calculation of <code>minDistOfLandToCenter</code> to account for both width and height. One way of doing it is to calculate the radius for both dimensions and then choose the lowest value.</p>
+<pre class="netlogo"><code>let minXDistOfLandToCenter round (0.5 * world-width / 2) ; minimum distance in X
+
+let minYDistOfLandToCenter round (0.5 * world-height / 2) ; minimum distance in Y
+
+let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)</code></pre>
+<p>To test our solution, we can run the procedure with different extreme grid settings:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>100x20</th>
+<th>20x100</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-adapt-center_2.png" width="500"></td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-adapt-center_3.png" width="100"></td>
+</tr>
+</tbody>
+</table>
+<p>Success!</p>
+</section>
+<section id="step-1b-parameterizing" class="level4" data-number="16.0.1.3">
+<h4 data-number="16.0.1.3" class="anchored" data-anchor-id="step-1b-parameterizing"><span class="header-section-number">16.0.1.3</span> <strong>Step 1b: Parameterizing</strong></h4>
+<p>Once you defined a procedure in raw terms and tested that it does what you expect, you probably want to generalize it further. As the aim of modeling is to represent <em>a type of</em> phenomenon, it is a good practice to program all non-dynamic conditions as parameters. In NetLogo, parameters are often those variables that can be set through user input in the interface tab (<em>e.g.</em>, slides, selectors, numeric fields).</p>
+<p>After the later changes, we still have two magic numbers in our code. Regarding the calculation of <code>centralPatch</code> and <code>minDistOfLandToCenter</code>, we used <code>2</code> to divide <code>world-width</code> and <code>world-height</code>, so that the circle is always draw in the center of the grid. Although it is possible, we will not replace this value with a parameter. As an exercise aside, you can test the outcome of having different numbers instead of <code>2</code>.</p>
+<p>The other “magic number” is <code>0.5</code>, used to represent the relative size of the pond radius, i.e., the <em>half</em> of the <em>half of the smaller dimension</em>. Here we have a good candidate for a parameter. It is reasonable to believe that the size of the pond will be relevant to our model’s results. Mainly, we expect that larger ponds will make trade slower, assuming a fixed number of settlements, evenly distributed around the pond.</p>
+<p>In NetLogo, we create a parameter by adding an input element to the interface tab (<em>e.g.</em>, slider) and naming it. In this case, we create a parameter called <code>pondSize</code> that represents the pond radius as the percentage of the smallest dimension, i.e.&nbsp;varing between 0 and 100. We can use it in the code to replace the two instances of <code>0.5</code> with <code>(pondSize / 100)</code>:</p>
+<pre class="netlogo"><code>let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
+
+let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minimum distance in Y
+
+let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)</code></pre>
+<p>Note that we use percentage, instead of a proportion (from 0 to 1), for no other reason than because it can improve the inteligibility of our model. I recommend using percentages to format this kind of parameters because they are more intuitive for humans and will be more easily understood by colleagues and the general public with no background in computer science or mathematics.</p>
+<p>Once you close a version of any piece of code, it is good practice to increase the spacing between the lines or even break down single lines that are particularly complicated. NetLogo language allows much flexibility in this sense: you can add spaces, tabs, line breaks, and commentary between most elements of your code. Also, enclosing parenthesis are not required but may improve readability.</p>
+<pre class="netlogo"><code>to create-map
+
+  ask patches [
+
+    ; find central patch, depending on the size of dimensions
+    
+    let centralPatch
+      patch
+      ; position in X
+      (
+        min-pxcor +
+        floor (world-width / 2)
+      )
+      ; position in Y
+      (
+        min-pycor +
+        floor (world-height / 2)
+      )
+
+    print(centralPatch) ; print central patch
+
+    ; find minimun distance of land pathes to the central patch, depending on the size of dimensions
+    
+    let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
+    
+    let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minimum distance in Y
+    
+    let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)
+
+    ifelse (distance centralPatch &lt; minDistOfLandToCenter)
+    [
+      set pcolor blue ; water
+    ]
+    [
+      set pcolor green ; land
+    ]
+
+  ]
+
+end</code></pre>
+</section>
+<section id="step-1c-optimasing" class="level4" data-number="16.0.1.4">
+<h4 data-number="16.0.1.4" class="anchored" data-anchor-id="step-1c-optimasing"><span class="header-section-number">16.0.1.4</span> <strong>Step 1c: Optimasing</strong></h4>
+<p>We increased significantly the <code>create-map</code> procedure, but we now have a process that is both flexible and controllable by user input. Yet, we still have a pending issue to solve.</p>
+<p>The fact that the <code>centralPatch</code> and <code>minDistOfLandToCenter</code> are local variables (<code>let</code>) and placed inside <code>ask patches [ &lt;ACTIONS&gt; ]</code> means that we are creating and destroying a different variable once for every patch. We cannot use these variables (plural intended) outside their enclosing brackets and patches hold no memory of their values before or after this particular action. Does anything feel wrong about this?</p>
+<p>Besides taking unnecessary computational resources, this design does not generete any errors and, for now, is quite inofensive. However, while it can be easily solved in a short piece of code, it might become harder to find and have odd repercussions over other parts of our model later on.</p>
+<p>The solution is to extract the declaration of the local variables, <code>centralPatch</code> and <code>minDistOfLandToCenter</code>, from the patches commands. They are now calculated only once at the start of the procedure and then used by every patch:</p>
+<pre class="netlogo"><code>to create-map
+
+  ; find central patch, depending on the size of dimensions
+  let centralPatch
+    patch
+    ; position in X
+    (
+      min-pxcor +
+      floor (world-width / 2)
+    )
+    ; position in Y
+    (
+      min-pycor +
+      floor (world-height / 2)
+    )
+  print(centralPatch) ; print central patch
+
+  ; find minimun distance of land pathes to the central patch, depending on the size of dimensions
+  let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
+  let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minimum distance in Y
+  let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)
+
+  ask patches [
+
+    ifelse (distance centralPatch &lt; minDistOfLandToCenter)
+    [
+      set pcolor blue ; water
+    ]
+    [
+      set pcolor green ; land
+    ]
+
+  ]
+
+end</code></pre>
+<p><img src="assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-interface.png" class="img-fluid" alt="Step 1 interface in NetLogo"><br>
+<em>Pond Trade step 1</em></p>
+</section>
+<section id="step-2a-pacing-comments-and-line-breaks" class="level4" data-number="16.0.1.5">
+<h4 data-number="16.0.1.5" class="anchored" data-anchor-id="step-2a-pacing-comments-and-line-breaks"><span class="header-section-number">16.0.1.5</span> <strong>Step 2a: Pacing comments and line breaks</strong></h4>
+<p>Since our code for now is rather simple, we can downgrade the extensive commentary and line-breaking on the calculation of <code>centralPatch</code>.</p>
+<p>Commenting and spacing your code is generally a good practice, but do not get carried away! You must assume that your reader has to know <em>something</em> about the programming language and the context of the model. Sometimes comments and line breaks might be just too many and end up defeating the purpuse of improving the code readabiity.</p>
+<pre class="netlogo"><code>to create-map
+
+  let centralPatch patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))
+
+  ; find minimun distance to center
+  let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
+  let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minimum distance in Y
+  let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)
+
+  ask patches [
+
+    ifelse (distance centralPatch &lt; minDistOfLandToCenter)
+    [
+      set pcolor blue ; water
+    ]
+    [
+      set pcolor green ; land
+    ]
+
+  ]
+
+end</code></pre>
+<p>At every step in this tutorial, we will be downgrading most commentaries added in the previous step.</p>
+</section>
+<section id="step-2b-exploring-alternative-designs" class="level4" data-number="16.0.1.6">
+<h4 data-number="16.0.1.6" class="anchored" data-anchor-id="step-2b-exploring-alternative-designs"><span class="header-section-number">16.0.1.6</span> <strong>Step 2b: Exploring alternative designs</strong></h4>
+<p>During refactoring, we should always keep in mind that there are always alternative designs that could generate the outcome we seek, some of which might be more readable or optimal.</p>
+<p>In this case, we can simplify the calculation of <code>minDistOfLandToCenter</code>. This new version initializes a local variable <code>halfSmallerDimension</code> assuming the smaller dimension is the width. Then, it checks that this is the case, and re-write this value if height is actually smaller. Finally, we calculate <code>minDistOfLandToCenter</code> as a proportion of <code>halfSmallerDimension</code>.</p>
+<pre class="netlogo"><code>let halfSmallerDimension (world-width / 2)
+if (world-width &gt; world-height) [ set halfSmallerDimension (world-height / 2) ]
+
+let minDistOfLandToCenter round ((pondSize / 100) * halfSmallerDimension)</code></pre>
+<p>This version is less redundant, uses two instead of three local variables, and expresses more clearly that the condition is the comparison between the grid width and height.</p>
+</section>
+<section id="step-2c-colors-and-shades" class="level4" data-number="16.0.1.7">
+<h4 data-number="16.0.1.7" class="anchored" data-anchor-id="step-2c-colors-and-shades"><span class="header-section-number">16.0.1.7</span> <strong>Step 2c: Colors and shades</strong></h4>
+<p>Last, we replace the text reference for colors with NetLogo’s numerical codes. Using this numeric system allow us to use many shades of any given color. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the color codes in “Tools” &gt; “Color Swatches” or in http://ccl.northwestern.edu/netlogo/docs/programming.html#colors:</p>
+<p><img src="http://ccl.northwestern.edu/netlogo/docs/images/colors.jpg" class="img-fluid"></p>
+<p><img src="assets/screenshots/BlockA_PondTrade_step02_refactoring-interface.png" class="img-fluid" alt="Step 2 interface in NetLogo"><br>
+<em>Pond Trade step 2</em></p>
+<p>Great, now we can draw a blue circle with a bulletproof piece of NetLogo code. Now let us go a few steps faster and aim at a more interesting outcome.</p>
+</section>
+<section id="step-3-adding-noise-stochasticity" class="level4" data-number="16.0.1.8">
+<h4 data-number="16.0.1.8" class="anchored" data-anchor-id="step-3-adding-noise-stochasticity"><span class="header-section-number">16.0.1.8</span> <strong>Step 3: Adding noise</strong> (<em>stochasticity</em>)</h4>
+<p>Stochasticity is intrinsic in NetLogo. We were already dealing with random processes since step 0, when asking patches to paint themselves. You probably did not realize, but the command <code>ask patches</code> demands that patches are ordered somehow. Think as if you were told to ask all your friends to have a look at your new model. Well, but who exactly are you going to ask first? NetLogo solves this dilemma automaticaly by randomizing the order of “asking”. As an exercise, you can reduce the velocity of simulation (top of the interface tab), and execute the <code>create-map</code> procedure. You will observe each patch changing color, one at a time. This is also a nice example of using stochasticity to assure that an aggregated outcome (<em>i.e.</em> blue circle) is not a mere artefact of any particular schedulle of processes (<em>i.e.</em> the order in which patches change colors). Remember, sequences will be different every time we run our simulation, unless we preset the RNG using a specific ‘seed’ (see http://ccl.northwestern.edu/netlogo/docs/dict/random-seed.html).</p>
+<p>But is it so important to have a random order? In our script so far, it is completely irrelevant. Our goal was to draw a blue circle; it does not matter which patch assumes the role of land or water first. However, this will became increasingly relevant as we advance in creating a proper agent-based model, because <em>agents’ states DO normally depend on other agents’ states</em>. Following the scenario where you want to show your model to your friends, imagine that your friends would talk to each other after one of them have seen your model and that some of them are more talkative and some more respected. Can you assume that the order in which you present your model would have no effect on the level of publicity and prestige of your model? <em>‘I don’t think so’</em>, <em>‘Who knows?!’</em>, <em>‘I don’t really care about it’</em>? If these thoughts cross your mind while addressing a process in your model, you are probably better off using stochasticity.</p>
+<p>A perfect blue circle is great but it is a poor representation of a real water body. Once we implement the dynamics of the model, it will be quite difficult to explore the effect of geography solely by varying the size of the pond. The first step to creating more interesting set-ups is to add noise to the condition used to determine whether a patch is land or water. NetLogo has a family of primitive functions, <code>random</code> and alike, that can be used to generate random discrete (integer) and continuos (float) values, following different probability distributions (<em>e.g.</em>, uniform, normal, exponential).</p>
+<p>For each patch, we sample a random continuous number, add it to the <code>minDistOfLandToCenter</code>, and use as the threshold distance from the center:</p>
+<pre class="netlogo"><code>let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
+
+ifelse (distance centralPatch &lt; coastThreshold)
+[
+  set pcolor 106 ; blue for water
+]
+[
+  set pcolor 54 ; green for land
+]</code></pre>
+<p>The function <code>random-float &lt;number&gt;</code> returns a random “float” number greater or equal to 0.0 and lower than <code>&lt;number&gt;</code>. To strech your learning skills, we are jumping a few minor steps in refactoring by defining a noise that is a portion of <code>halfSmallerDimension</code> and controlable through the parameter <code>coastalNoiseLevel</code>, exposed in the interface.</p>
+<pre class="netlogo"><code>to create-map
+
+ let centralPatch patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))
+
+ let halfSmallerDimension (world-width / 2)
+ if (world-width &gt; world-height) [ set halfSmallerDimension (world-height / 2) ]
+
+ let minDistOfLandToCenter round ((pondSize / 100) * halfSmallerDimension)
+
+ ask patches
+ [
+
+   ; add noise to coast line
+   let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
+
+   ifelse (distance centralPatch &lt; coastThreshold)
+   [
+     set pcolor 106 ; blue for water
+   ]
+   [
+     set pcolor 54 ; green for land
+   ]
+
+ ]
+
+end</code></pre>
+<p>We now can generate strange “spray ponds”. More importantly, we made the generation process controllable through two parameters that are easily understandable. Play with the parameters and meditate on their effects on the shape of the pond.</p>
+<p><img src="assets/screenshots/BlockA_PondTrade_step03_adding-noise-interface.png" class="img-fluid" alt="Pond Trade step 3"><br>
+<em>Pond Trade step 3</em></p>
+</section>
+<section id="step-4b-design-alternatives" class="level4" data-number="16.0.1.9">
+<h4 data-number="16.0.1.9" class="anchored" data-anchor-id="step-4b-design-alternatives"><span class="header-section-number">16.0.1.9</span> <strong>Step 4b: design alternatives</strong></h4>
+<p>Because a “spray pond” is not exactly what we want, let us implement another alternative to add stochasticity. NetLogo offers the <code>random-normal</code> primitive, which samples a random “float-point number” given the mean and standard deviation of a normal distribution, using the structure <code>random-normal &lt;MEAN&gt; &lt;STD.DEV&gt;</code> (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#random-reporters). In this context, we can re-use the paramater <code>coastalNoiseLevel</code> for the latter and consider <code>minDistOfLandToCenter</code> as the mean.</p>
+<p>Comment-out the line with <code>random-float</code> and add the following:</p>
+<pre class="netlogo"><code>; let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
+let coastThreshold random-normal minDistOfLandToCenter (halfSmallerDimension * coastalNoiseLevel / 100)</code></pre>
+<p>We can now experiment running <code>create-map</code> in three different ways: without noise, with uniform-distributed noise, and with normal-distributed noise. We can run each by commenting-out the line corresponding to the other two. For example, to come back to the no noise option:</p>
+<pre class="netlogo"><code>; no noise
+let coastThreshold minDistOfLandToCenter
+; uniform-distributed noise
+; let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
+; normal-distributed noise
+let coastThreshold random-normal minDistOfLandToCenter (halfSmallerDimension * coastalNoiseLevel / 100)</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>no noise</td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_noNoise.png" width="200"></td>
+</tr>
+<tr class="even">
+<td>uniform</td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_uniform.png" width="200"></td>
+</tr>
+<tr class="odd">
+<td>normal</td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_normal.png" width="200"></td>
+</tr>
+</tbody>
+</table>
+<p>But at this point, can we decide which option we want going forward?</p>
+</section>
+<section id="step-4c-keeping-design-alternatives" class="level4" data-number="16.0.1.10">
+<h4 data-number="16.0.1.10" class="anchored" data-anchor-id="step-4c-keeping-design-alternatives"><span class="header-section-number">16.0.1.10</span> <strong>Step 4c: <em>keeping</em> design alternatives</strong></h4>
+<p>As mentioned, stochasticity may be the only honest way of defining values that are unknown or undefined in our conceptual model, but still need specification in the model implementation. Another useful, still honest approach is to consolidate alternative solutions and expose the criterium for deciding among them as a special type of parameter. Often, these will be Booleans (<code>true</code> or <code>false</code>), which can be set with “switchers” in NetLogo interface, or String (declarative text, <em>e.g.</em> <code>"option A"</code>, <code>"option B"</code>, <code>"option C"</code>), which can be selected through “choosers” or dropdown menus.</p>
+<p>Create a chooser by clicking at “Add” and then “chooser” in the NetLogo Interface tab. Give it the name <code>noiseType</code> and write down a name for each alternative as String values:</p>
+<p><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_chooser.png" class="img-fluid" alt="The configuration of a “chooser” for noiseType"><br>
+<em>The configuration of a “chooser” for <code>noiseType</code></em></p>
+<p>Then, we use this new parameter in <code>if</code> structures containing the code specific for each alternative:</p>
+<pre class="netlogo"><code>; no noise stands as the default alternative
+let noiseRange (halfSmallerDimension * coastalNoiseLevel / 100)
+
+ask patches
+[
+  if (noiseType = "uniform")
+  [
+    ; adds a random amount from a uniform distribution with mean minDistOfLandToCenter
+    set noiseRange (random-float noiseRange) - (noiseRange / 2)
+    set coastThreshold minDistOfLandToCenter + noiseRange
+  ]
+  if (noiseType = "normal")
+  [
+    ; adds a random amount from a normal distribution with mean minDistOfLandToCenter
+    set coastThreshold random-normal minDistOfLandToCenter noiseRange
+  ]
+
+  ...
+]</code></pre>
+<p>With this, we can now run <code>create-map</code> with any of the alternative designs without having to comment-out/in the code every time.</p>
+</section>
+<section id="step-4d-patch-neighborhood" class="level4" data-number="16.0.1.11">
+<h4 data-number="16.0.1.11" class="anchored" data-anchor-id="step-4d-patch-neighborhood"><span class="header-section-number">16.0.1.11</span> <strong>Step 4d: patch neighborhood</strong></h4>
+<p>Despite having all the alternative modes of stochasticity, our ponds are still not quite what we need. This kind of terrain might be valid to represent something like a swamp, but not a distinctive water body. There is no coastline, which makes PondTrade more interesting.</p>
+<p>One generic, but very useful technique in distributed computation is “smoothing”. More precisily, smoothing refers to the approximation of each point in a variable to the average of a sample of points, often taken from within the neighbourhood of the point.</p>
+<p>In a two-dimensional grid such as in NetLogo, we can use the values in the immediate patch neighbourhood of each patch to adjust its value. In our present case, we want to switch the color of a patch, depending on the color of the adjacent patches. We can antecipate, however, that we will need to expose another paramater, one that can express how many neighbors (out of eight) of a type are enough to activate the change. We will call it <code>coastLineSmoothThreshold</code>. Notice that this step moves data in the opposite direction of our last steps, reducing stochasticity. Yet, it does not bringing us back to the original circle. Therefore, we want to smooth <em>after</em> adding noise.</p>
+<p>Remembering our mandate of modularity, we want to avoid adding the code for this operation directly in <code>create-map</code>. Rather, we can implement it in a cleaner way by enclosing it in a new procedure:</p>
+<pre class="netlogo"><code>to smooth-coast-line
+
+  ask patches
+  [
+    ifelse (pcolor = 106)
+    [
+      ; water patch
+      if (count neighbors with [pcolor = 54] &gt;= coastLineSmoothThreshold)
+      [
+        ; water patch has a certain number of land neighbors
+        set pcolor 54 ; converted to land
+      ]
+    ]
+    [
+      ; land patch
+      if (count neighbors with [pcolor = 106] &gt;= coastLineSmoothThreshold)
+      [
+        ; land patch has a certain number of water neighbors
+        set pcolor 106 ; converted to water
+      ]
+    ]
+  ]
+
+end</code></pre>
+<p>We can then used it by calling <code>smooth-coast-line</code> after <code>create-map</code>, either through the console or, better, by adding a button in the interface. Testing it for each <code>noiseType</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>no noise</td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_noNoise.png" width="200"></td>
+</tr>
+<tr class="even">
+<td>uniform</td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_uniformAndSmooth.png" width="200"></td>
+</tr>
+<tr class="odd">
+<td>normal</td>
+<td><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_normalAndSmooth.png" width="200"></td>
+</tr>
+</tbody>
+</table>
+<p>Notice that there is no effect visible on the no noise option, but we significantly modify the outcome of the others.</p>
+</section>
+<section id="step-4e-iterative-structures" class="level4" data-number="16.0.1.12">
+<h4 data-number="16.0.1.12" class="anchored" data-anchor-id="step-4e-iterative-structures"><span class="header-section-number">16.0.1.12</span> <strong>Step 4e: iterative structures</strong></h4>
+<p>Try pressing the new <code>smooth-coast-line</code> button more than once after <code>create-map</code>. The coastline will become smoother and smoother, until it becomes stable. This behaviour indicates that we have a good opportunity for implementing and iterative structure. NetLogo has a easy option for this using the follow structure: <code>repeat &lt;NUMBER OF ITERATIONS&gt; [ &lt;COMMANDS&gt; ]</code>, requiring that we expose another parameter specifying the number of iterations, which we will call <code>smoothIterations</code>.</p>
+<pre class="netlogo"><code>to smooth-coast-line
+
+  ; smooth coast line
+  repeat smoothIterations
+  [
+    ask patches
+    [
+      ifelse (pcolor = 106)
+      [
+        ; water patch
+        if (count neighbors with [pcolor = 54] &gt;= coastLineSmoothThreshold)
+        [
+          ; water patch has a certain number of land neighbors
+          set pcolor 54 ; converted to land
+        ]
+      ]
+      [
+        ; land patch
+        if (count neighbors with [pcolor = 106] &gt;= coastLineSmoothThreshold)
+        [
+          ; land patch has a certain number of water neighbors
+          set pcolor 106 ; converted to water
+        ]
+      ]
+    ]
+  ]
+
+end</code></pre>
+</section>
+<section id="step-4f-printing-event-messages" class="level4" data-number="16.0.1.13">
+<h4 data-number="16.0.1.13" class="anchored" data-anchor-id="step-4f-printing-event-messages"><span class="header-section-number">16.0.1.13</span> <strong>Step 4f: printing event messages</strong></h4>
+<p>Since we are expanding considerably the complexity of our code, this is a good moment to consider printing messages for us to know what is happening in the background after pressing the buttons in the interface. This will be valuable specially when the code is encountering an error or outputing an unexpected result (i.e.&nbsp;<em>debugging</em>).</p>
+<pre class="netlogo"><code>to create-map
+
+  print "Creating map..."
+
+  ; erase previous data
+  clear-all
+
+  let centralPatch patch (min-pxcor + (floor world-width / 2)) (min-pycor + (floor world-height / 2))
+
+  let halfSmallerDimension (world-width / 2)
+  if (world-width &gt; world-height) [ set halfSmallerDimension (world-height / 2) ]
+
+  let minDistOfLandToCenter round ((pondSize / 100) * halfSmallerDimension)
+
+  let coastThreshold minDistOfLandToCenter ; defaults to the basic value
+
+  ;; add noise to coast line
+  ; set general noise range depending on UI's coastalNoiseLevel and the size of world
+  let noiseRange (halfSmallerDimension * coastalNoiseLevel / 100)
+
+  print "Assigning initial patch types..."
+
+  ask patches
+  [
+    ; noiseType is specified with the chooser in the UI
+    if (noiseType = "uniform")
+    [
+      ; adds a random amount from a uniform distribution with mean minDistOfLandToCenter
+      set noiseRange (random-float noiseRange) - (noiseRange / 2)
+      set coastThreshold minDistOfLandToCenter + noiseRange
+    ]
+    if (noiseType = "normal")
+    [
+      ; adds a random amount from a normal distribution with mean minDistOfLandToCenter
+      set coastThreshold random-normal minDistOfLandToCenter noiseRange
+    ]
+
+    ifelse (distance centralPatch &lt; coastThreshold)
+    [
+      set pcolor 106 ; blue for water
+    ]
+    [
+      set pcolor 54 ; green for land
+    ]
+
+  ]
+
+  print "done."
+
+end
+
+to smooth-coast-line
+
+  print "Smoothing..."
+
+  ; smooth coast line
+  repeat smoothIterations
+  [
+    ask patches
+    [
+      ifelse (pcolor = 106)
+      [
+        ; water patch
+        if (count neighbors with [pcolor = 54] &gt;= coastLineSmoothThreshold)
+        [
+          ; water patch has a certain number of land neighbors
+          set pcolor 54 ; converted to land
+        ]
+      ]
+      [
+        ; land patch
+        if (count neighbors with [pcolor = 106] &gt;= coastLineSmoothThreshold)
+        [
+          ; land patch has a certain number of water neighbors
+          set pcolor 106 ; converted to water
+        ]
+      ]
+    ]
+  ]
+  print "done."
+
+end</code></pre>
+<p>We just consolidated a version of our script that is able to create interesting (and more realistic) waterbody shapes with stochasticity, while being able to vary the output with a set of five parameters clearly displayed and no grave magic number unexposed.</p>
+<p><img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing-interface.png" class="img-fluid" alt="Pond Trade step 4"><br>
+<em>Pond Trade step 4</em></p>
+</section>
+<section id="step-5-refactoring-again" class="level4" data-number="16.0.1.14">
+<h4 data-number="16.0.1.14" class="anchored" data-anchor-id="step-5-refactoring-again"><span class="header-section-number">16.0.1.14</span> <strong>Step 5: refactoring (again)</strong></h4>
+<p>We reached our initial objective, to have a realistic procedurally-generated terrain upon which we can build PondTrade. As before, we should now stop ourselves and think about refactoring, again.</p>
+<p>Here is a summary of the improvements we can make:</p>
+<ul>
+<li>Control the RNG seed and expose it in the interface</li>
+<li>Move the initialisation of <code>coastThreshold</code> and <code>noiseRange</code> before <code>ask patches</code></li>
+<li>Declare a new patch Boolean variable called <code>isLand</code> and use it to replace color in the procedures for creating terrains</li>
+<li>Define a new procedure <code>paint-patches</code> dedicated only to set patch colors based on <code>isLand</code></li>
+<li>Call <code>smooth-coast-line</code> and <code>paint-patches</code> at the end of <code>create-map</code></li>
+<li>In the evaluation of <code>coastLineSmoothThreshold</code> used in <code>smooth-coast-line</code>, consider it in relation to the actual number of neighbors instead of as an absolute number (to avoid having isolated water bodies adjacent to the world edges, where there are less than 8 neighbors)</li>
+<li>Rearrange the interface elements to set apart the parameters we will be using for terrain generation</li>
+</ul>
+<pre class="netlogo"><code>patches-own [ isLand ]
+
+to setup
+
+  clear-all
+
+  ; set the random seed so we can reproduce the same experiment
+  random-seed seed
+
+  create-map
+
+end
+
+to create-map
+
+  let centralPatch patch (min-pxcor + (floor world-width / 2)) (min-pycor + (floor world-height / 2))
+
+  let halfSmallerDimension (world-width / 2)
+  if (world-width &gt; world-height) [ set halfSmallerDimension (world-height / 2) ]
+
+  let minDistOfLandToCenter round ((pondSize / 100) * halfSmallerDimension)
+
+  let coastThreshold minDistOfLandToCenter ; defaults to the basic value
+
+  ;; add noise to coast line
+  ; set general noise range depending on UI's coastalNoiseLevel and the size of world
+  let noiseRange (halfSmallerDimension * coastalNoiseLevel / 100)
+
+  ask patches
+  [
+    ; noiseType is specified with the chooser in the UI
+    if (noiseType = "uniform")
+    [
+      ; adds a random amount from a uniform distribution with mean minDistOfLandToCenter
+      set noiseRange (random-float noiseRange) - (noiseRange / 2)
+      set coastThreshold minDistOfLandToCenter + noiseRange
+    ]
+    if (noiseType = "normal")
+    [
+      ; adds a random amount from a normal distribution with mean minDistOfLandToCenter
+      set coastThreshold random-normal minDistOfLandToCenter (halfSmallerDimension * coastalNoiseLevel / 100)
+    ]
+
+    ifelse (distance centralPatch &lt; coastThreshold)
+    [
+      set isLand false
+    ]
+    [
+      set isLand true
+    ]
+
+  ]
+
+  smooth-coast-line
+
+  paint-patches
+
+end
+
+to smooth-coast-line
+
+  ; smooth coast line
+  repeat smoothIterations
+  [
+    ask patches
+    [
+      ifelse (isLand = false)
+      [
+        ; water patch
+        ; consider ratios instead of absolute numbers to avoid having isolated water bodies adjacent to the world limits (less than 8 neighbors)
+        if (count neighbors with [isLand = true] / count neighbors &gt;= coastLineSmoothThreshold / 8)
+        [
+          ; water patch has a certain number of land neighbors
+          set isLand true ; converted to land
+        ]
+      ]
+      [
+        ; land patch
+        if (count neighbors with [isLand = false] / count neighbors &gt;= coastLineSmoothThreshold / 8)
+        [
+          ; land patch has a certain number of water neighbors
+          set isLand false ; converted to water
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to paint-patches
+
+  ask patches
+  [
+    ifelse (isLand = false)
+    [ set pcolor 106 ] ; blue for water
+    [ set pcolor 54 ] ; green for land
+  ]
+
+end
+</code></pre>
+<p><img src="assets/screenshots/BlockA_PondTrade_step05_refactoring-and-organizing-code-interface.png" class="img-fluid" alt="Pond Trade step 5"><br>
+<em>Pond Trade step 5</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/codarchlab-abm\.github\.io\/course-guide\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./pond-trade-concept.html" class="pagination-link" aria-label="Conceptual design or modeling: the Pond Trade model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Conceptual design or modeling: the Pond Trade model</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./pond-trade-agent-definition.html" class="pagination-link" aria-label="Defining and initialising agents">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Defining and initialising agents</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-terrain.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
