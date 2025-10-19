@@ -193,7 +193,7 @@ For those with no previous experience with computer science: note that "random" 
 
 This technique is also helpful in creating variation within a population of agents or between the global conditions of simulation runs. Such a thing is accomplished by drawing the values of variables from probability distributions, defined through *hyperparameters* (*e.g.*, drawing the age of individuals in a classroom from a normal distribution defined by two parameters, `age_mean` and `age_standardDeviation`). Unfortunately, a typical bad practice is not exposing such hyperparameters, having these 'hard-coded' as if their value were an intrinsic part of the model and thus the mechanisms it represents. This bad coding element, often called "magic numbers", can and should be addressed during model implementation.
 
-### Point of comparison: Lotka-VolterraPredator-prey model
+### A point of comparison: Lotka-VolterraPredator-prey model
 
 Compared to other modelling and simulation approaches, ABM is more intuitive but also more complex.
 
@@ -205,7 +205,6 @@ $$
 $$
 \frac{dy}{dt}=\gamma y+\delta xy
 $$
-
 
 where $x$ and $y$ are the population density of prey and predator, respectively. $\alpha$ and $\gamma$ are the maximum intrinsic growth rate of each population and $\beta$ and $\delta$ are the effect of the presence of predators on prey and of prey on predators. Note that the first effect is negative and the second is positive.
 
