@@ -2,102 +2,158 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/index.html</loc>
-    <lastmod>2025-02-03T01:42:17.925Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/intro-abm.html</loc>
-    <lastmod>2025-02-03T01:42:17.926Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/intro-abm-arch.html</loc>
-    <lastmod>2025-02-03T01:42:17.925Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/intro-readings.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/intro-abm-method.html</loc>
-    <lastmod>2025-02-03T01:42:17.926Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/concept-intro-pop-dyn.html</loc>
-    <lastmod>2025-02-03T13:58:12.269Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/concept-intro.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/concept-pond-trade.html</loc>
-    <lastmod>2025-02-03T01:42:17.922Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/concept-pop-dyn.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/git-github-intro.html</loc>
-    <lastmod>2025-02-03T01:42:17.924Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/concept-your-turn.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/git-github-practice.html</loc>
-    <lastmod>2025-02-04T11:52:28.116Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/dev-workflow.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/netlogo-intro.html</loc>
-    <lastmod>2025-02-04T11:52:28.117Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/dev-git-github.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/netlogo-language-basics.html</loc>
-    <lastmod>2025-02-03T01:42:17.931Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/dev-git-github-practice.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/netlogo-practice.html</loc>
-    <lastmod>2025-02-03T01:42:17.931Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/dev-netlogo-intro.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/program-netlogo-language-basics.html</loc>
+    <lastmod>2025-10-20T13:16:45.887Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/program-other-languages.html</loc>
+    <lastmod>2025-10-20T13:16:45.887Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/program-netlogo-tutorials.html</loc>
+    <lastmod>2025-10-20T13:16:45.887Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-concept.html</loc>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-terrain.html</loc>
+    <lastmod>2025-10-20T13:16:45.887Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-agent-definition.html</loc>
-    <lastmod>2025-02-03T01:42:17.933Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-agent-ai.html</loc>
-    <lastmod>2025-02-03T01:42:17.932Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-mechanims.html</loc>
-    <lastmod>2025-02-03T01:42:17.934Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-mechanism.html</loc>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-cultural-vectors.html</loc>
-    <lastmod>2025-02-03T01:42:17.933Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-stats.html</loc>
-    <lastmod>2025-02-03T01:42:17.935Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/pond-trade-modularity.html</loc>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/messara-concept.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/messara-gis.html</loc>
-    <lastmod>2025-02-03T01:42:17.927Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/messara-water-flow.html</loc>
-    <lastmod>2025-02-03T01:42:17.929Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/messara-weather.html</loc>
-    <lastmod>2025-02-03T01:42:17.930Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/messara-soil-water.html</loc>
-    <lastmod>2025-02-03T01:42:17.928Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/messara-routes.html</loc>
-    <lastmod>2025-02-03T01:42:17.928Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/messara-pond-trade.html</loc>
-    <lastmod>2025-02-05T23:22:55.772Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/messara-integrations.html</loc>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/post-experiments.html</loc>
-    <lastmod>2025-02-07T00:00:53.034Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/messara-verification-and-improvement.html</loc>
+    <lastmod>2025-10-20T13:16:45.886Z</lastmod>
   </url>
   <url>
-    <loc>https://codarchlab-abm.github.io/course-guide/post-analysis.html</loc>
-    <lastmod>2025-02-07T00:05:32.288Z</lastmod>
+    <loc>https://codarchlab-abm.github.io/course-guide/sim-behavior-space.html</loc>
+    <lastmod>2025-10-20T13:16:45.889Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/sim-param-exploration.html</loc>
+    <lastmod>2025-10-20T13:16:45.889Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/sim-hypothesis-test.html</loc>
+    <lastmod>2025-10-20T13:16:45.889Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/analysis-preprocessing.html</loc>
+    <lastmod>2025-10-20T13:16:45.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/analysis-visualisation.html</loc>
+    <lastmod>2025-10-20T13:16:45.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/analysis-sensitivity-analysis.html</loc>
+    <lastmod>2025-10-20T13:16:45.582Z</lastmod>
+  </url>
+  <url>
+    <loc>https://codarchlab-abm.github.io/course-guide/conclusion.html</loc>
+    <lastmod>2025-10-20T13:16:45.885Z</lastmod>
   </url>
   <url>
     <loc>https://codarchlab-abm.github.io/course-guide/references.html</loc>
-    <lastmod>2025-02-03T01:42:17.942Z</lastmod>
+    <lastmod>2025-10-20T13:16:45.889Z</lastmod>
   </url>
 </urlset>
