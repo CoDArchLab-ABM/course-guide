@@ -1,6 +1,6 @@
-# Conceptual modelling {#concept-intro}
+# Conceptual modelling of processes {#concept-intro}
 
-The objective of this session is to introduce the first and most important stage in the application of simulation, **system definition** and **model design**, to archaeology topics.
+Let us have a taste of the first and most important stages in the application of simulation, **system definition** and **model design**, to archaeology topics.
 
 Given a general topic of interest associated with a specific type of archaeological evidence, we must develop a conceptual model that includes a definition of the minimum features of a phenomenon or system (*representation*), with the aim of its mathematical formalization (*mechanism*). So that it contributes to the answer to one or more research questions or to refute or reformulate a working hypothesis (*validation*).
 
@@ -9,7 +9,7 @@ Given a general topic of interest associated with a specific type of archaeologi
 <fig-caption> Representation and validation in explanatory models in archaeology</fig-caption>
 </figure>
 
-Conceptual modelling reflects the exploratory nature of explanatory modelling. In this context, we should consider the maximum number of potential explanations and subsequently prioritise those that are arguably or demonstrably more likely, all given the limits of our knowledge. When building a model, we should include additional elements parsimoniously and keep in mind that this conceptual definition should help us create a computational model (*implementation*) that is both intelligible and computable within a reasonable timeframe.
+Conceptual modelling reflects the exploratory nature of explanatory modelling. In this context, we should consider the maximum number of potential explanations and subsequently prioritise those that are arguably or demonstrably more likely, all given the limits of our knowledge. When building a model, we should include additional elements parsimoniously and keep in mind that this conceptual definition should help us create a computational model (*implementation*) that is both intelligible and computable within a reasonable time frame.
 
 When creating your first conceptual model, I recommend starting from scratch with the first intuition that comes to mind. After later scrutiny, its logical structure may be oversimplified, incomplete, or faulty. However, it would most likely represent the main elements of an informal model that you and other researchers share. Relying on an informed guess to start model development is the best remedy for the "blank page panic". It will also help you avoid overthinking and overworking what should be a mere preliminary sketch of the model.
 
@@ -65,7 +65,7 @@ names(explanation_examples_table) <- c(
 
 Archaeological evidence can be interpreted to understand past phenomena, and these interpretations often involve proposing underlying mechanisms. The relationship between evidence, phenomenon, and mechanism can be understood as follows:
 
-* **Evidence**: This refers to the physical remains or data that archaeologists uncover. This can include artefactss, structures, or environmental data. Pieces of evidence vary in level of description, from pottery styles to the position of fortifications and the abundance of animal species. They also vary in the methods used to define them, like visual analysis, geometric analysis, 3D scanning, and GPS.
+* **Evidence**: This refers to the physical remains or data that archaeologists uncover. This can include artefacts, structures, or environmental data. Pieces of evidence vary in level of description, from pottery styles to the position of fortifications and the abundance of animal species. They also vary in the methods used to define them, like visual analysis, geometric analysis, 3D scanning, and GPS.
 
 * **Phenomenon**: The phenomenon is the pattern or process inferred from the evidence. It is the "what" that happened, based on the interpretation of the evidence, but also the benchmark definition of reality, based in a much longer list of experiences and confirmed knowledge. For instance, variations in pottery style can represent exchange, the position of fortifications can represent strategic decision-making, and a decrease in a wild animal population can represent human hunting.
 
@@ -80,7 +80,7 @@ knitr::kable(explanation_examples_table)
 There are at least three ways to begin this stage:
 
 - **From evidence to mechanism** (from left to right in the table): You may prefer to first think about a set of types of archaeological evidence, perhaps a type that one is most familiar with or that can be found in a specific site or dataset. Once the evidence is delimited, you can then identify what is the most likely and/or strongest explanation, first in terms of the phenomenon and then as a generative process (left to right in the table). With sufficient effort and time, the worst-case scenario when taking this path is to obtain a weak explanatory model, one that does not offer a realistic representation of the phenomenon, but may provide further insight into patterns of evidence (i.e., a descriptive model).  
-- **From phenomenon to evidence to mechanism** (middle to left and right in the table): Also, look for or formulate a mechanism that satisfactorily represents the phenomenon, as previously defined (middle to left and right in the table). It is equally valid to start by considering a phenomenon that has been extensively documented, studied, and defined in other disciplines (e.g., trade, from an economic and anthropological perspective). In choosing a phenomenon, you must be able to assume it existed in a particular context in the past and that there are domains of evidence that could support or undermine such an explanation. The worst-case scenario here would be to have a "toy model", one that represents the current knowledge of a phenomenon and can be used to investigate it, but cannot be readily assumed for the past, nor is it directly validated with archaeological evidence.  
+- **From phenomenon to evidence and mechanism** (middle to left and right in the table): It is equally valid to start by considering a phenomenon that has been extensively documented, studied, and defined in other disciplines (e.g., trade, from an economic and anthropological perspective). In choosing a phenomenon, you must be able to assume it existed in a particular context in the past and that there are domains of evidence that could support or undermine such an explanation. The worst-case scenario here would be to have a "toy model", one that represents the current knowledge of a phenomenon and can be used to investigate it, but cannot be readily assumed for the past, nor is it directly validated with archaeological evidence.  
 - **From mechanism to phenomenon and evidence** (right to left in the table): The last and more opportunistic option is to focus first on a mechanism that has already been described and/or formalised, consider a phenomenon it can represent and search for a type of evidence where signals of this mechanism can be detected. Taking this path demands a specific knowledge of modelling and models, preferably in multiple fields and disciplines, but it is a relatively safe path: the worse case is to end up concluding that the selected mechanism, alone at least, does not explain the patterns observed in the selected evidence -- a small, but steady contribution.
 
 In all routes, there are **no shortcuts**: the robustness of the explanation will depend on the depth and width of the prior knowledge about both evidence and phenomena.
@@ -88,6 +88,13 @@ In all routes, there are **no shortcuts**: the robustness of the explanation wil
 ## Diagraming for simulation modelling
 
 A conceptual model can be expressed in various ways, such as lists of elements and relationships, schemes, and diagrams. Text or visual expressions are valid as long as they help us approach the design of a computational simulation model, facilitating the next stage (*implementation*).
+
+Graphs are a powerful tool for representing complex systems. They can be used to represent:
+
+- the structure of a system, the flow of information, or the flow of resources  
+- the dynamics of a system, the interactions between agents, or the evolution of a system over time  
+- the spatial structure of a system, the location of agents, or the movement of agents  
+- the temporal structure of a system, the timing of events, or the duration of events  
 
 Here, we will not force the use of conventions such as [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language), although these can be useful. Examples of UML diagrams can also offer inspiration, even if you don't learn their rules. Other, more specific conventions can also be very useful and relatively easy to learn:
 

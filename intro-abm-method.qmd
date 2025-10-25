@@ -10,7 +10,7 @@ The steps are:
 
 >**Definition of the research question and phenomenon**. To define a research question and the phenomena involved, we must think in terms of systems, identifying and defining a set of elements we deem relevant and their interrelationships. In this initial step, the key is to delimitate the target system, within which external, undefined factors do not overly determine the interaction of elements. Here, we must decide on what is relevant *for us* and set aside the rest. Ideally, we should move to the next step only once we have a hypothetical mechanism to focus on, formulated roughly but in detail enough so we can formalise it later. We will call this our **_conceptual model_**.
 
->**Design**. Designing a model is essentially to find a formal definition able to represent the phenomena, as we have defined in the previous step. In this step, we go from a vague text description of the *natural* system we observe and its expected dynamics to a mathematical or algorithmic representation of the *artificial* system we want to build. At this stage, it is critical to define our model's main variables, including any inputs and outputs. The latter will be particularly important to how simulation results can be compared to empirical data to validate the model. During model design, our conceptual model is formalised progressively, ideally up to the point where implementation is made immediate. 
+>**Design or conceptualisation**. Designing a model is essentially to find a formal definition able to represent the phenomena, as we have defined in the previous step. In this step, we go from a vague text description of the *natural* system we observe and its expected dynamics to a mathematical or algorithmic representation of the *artificial* system we want to build. At this stage, it is critical to define our model's main variables, including any inputs and outputs. The latter will be particularly important to how simulation results can be compared to empirical data to validate the model. During model design, our conceptual model is formalised progressively, ideally up to the point where implementation is made immediate. 
 
 >**Implementation**. To implement the model is to effectively write down our model design as a piece of software (*i.e.*, through programming). While other mathematical models could remain unimplemented, ABM models are hardly useful if not able to be solved through computer simulation. However, a model implementation carries much extra baggage, and many possible implementations exist for the same model. Therefore, modellers and their audience must differentiate between the model and its implementation.
 
@@ -24,7 +24,7 @@ Furthermore, a few authors, myself included, also like to highlight two addition
 
 >**Understanding**. The modeller must understand the model, know the variety of dynamics it can generate, and be aware of its limitations regarding the representation of the target system.
 
->**Documenting**. The understanding obtained by the modeller at one point is of little use to others and, eventually, her or himself in the long-term future. To ensure that such an understanding is passed through, we must invest significant time in documenting the model's conceptual design and source code. Note that this is not equivalent to an academic publication, especially because most scientific journals push for a greater emphasis on the results rather than the bits and pieces of simulation models.
+>**Communicating or Documenting**. The understanding obtained by the modeller at one point is of little use to others and, eventually, her or himself in the long-term future. To ensure that such an understanding is passed through, we must invest significant time in documenting the model's conceptual design and source code. Note that this is not equivalent to an academic publication, especially because most scientific journals push for a greater emphasis on the results rather than the bits and pieces of simulation models.
 
 ![Overview of modelling steps](assets/images/Activities2.PNG)
 
@@ -40,11 +40,15 @@ These complications can be considered problems and opportunities, depending on i
 
 ## Best practices
 
-Before jumping into practice, let us go over three general strategies that can offer a way out to at least some of the problems mentioned here. These strategies are: *refactoring regularly*, *enforcing modularity* and *being explorative*.
+Before jumping into practice, let us go over three general strategies that can offer a way out to at least some of the problems mentioned here. These strategies are: *version control*, *refactoring regularly*, *enforcing modularity* and *being explorative*.
+
+### Version control
+
+Since modelling an ABM model eventually involves creating a piece of software (implementation), it is important to use version control to keep track of changes and to be able to revert to previous versions if necessary. This is especially important when working in a team, but also when working alone. Version control is also useful for keeping track of changes in the documentation and for keeping track of changes in the data used for the model. This kind of technology is an essential part of the software development process and we will dedicate a whole day to it, later in the course.
 
 ### Refactoring regularly
 
-By definition, [refactoring](https://en.wikipedia.org/wiki/Code_refactoring) means that your code change but remains capable of producing the same result. Refactoring encompasses all tasks aiming to generalize the code, make it extendable, and also make it cleaner (more readable) and faster.
+By definition, [refactoring](https://en.wikipedia.org/wiki/Code_refactoring) means that your code change but remains capable of producing the same result. Refactoring encompasses all tasks aiming to generalize the code, make it extendible, and also make it cleaner (more readable) and faster.
 
 However, there is a trade-off between these three goals. For example, replacing default values with calculations or indirect values will probably increase processing time. In practice, this trade-off is irrelevant until your model is very complex, populated (many entities), or must be simulated for many different conditions. I recommend always being attentive to the readability, commentary, and documentation of your code. Assuming you are interested in creating models for academic discussion (i.e., science rather than engineering), the priority is to communicate your models to others.
 
@@ -77,7 +81,7 @@ More recently, a growing group of researchers involved in ABM in archaeology, in
 
 ### Being explorative
 
-The last general recommendation to be made about doing ABM is: to be explorative. As mentioned, some have critisised ABM for being too speculative and arbitrary. Yes, ABM models often require many specifications to work, some of which escape the modeller's expertise entirely. In front of this, we can either avoid ABM altogether or accept it, going the proverbial extra mile in making most "free decisions" based on a deeper study of possible design alternatives.
+The last general recommendation to be made about doing ABM is: to be explorative. As mentioned, some have criticised ABM for being too speculative and arbitrary. Yes, ABM models often require many specifications to work, some of which escape the modeller's expertise entirely. In front of this, we can either avoid ABM altogether or accept it, going the proverbial extra mile in making most "free decisions" based on a deeper study of possible design alternatives.
 
 Similar to how we can use stochasticity, creating and exploring design alternatives is always a good idea to better understand our conceptual model's weak points. Observing the differences in dynamics generated by those alternatives will help us decide how to define those uncertain areas further while reducing the risk of unconsciously running over important modelling decisions. In the tutorial, we will illustrate a few strategies for implementing and handling design alternatives.
 
@@ -85,9 +89,25 @@ Similar to how we can use stochasticity, creating and exploring design alternati
 
 A short disclaimer before we start: the approach used here for conceptual modelling and model documentation is **not** considered a standard in the ABM community.
 
-In the bibliography, you will find many other recommendations and examples, particularly those converging into the practices closer to Computer Science and Ecology. For example, many consider a necessary standard to be the [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language). The Overview-Design-Details (ODD) protocol is also quite strongly advocated by ABM practitioners [@Grimm2006; @Grimm2010; @Muller2013].
+In the bibliography, you will find many other recommendations and examples, particularly those converging into the practices closer to Computer Science and Ecology. For example, many consider a necessary standard to be the [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language), which includes many types of diagrams.
 
-After years of creating and reviewing ABM models, I would argue that these are not as useful or applicable as claimed, and the time spent in learning these could be better used to improve one's programming skills. However, I believe that any student of ABM should know about these proposed standards and then judge and decide for themselves. I only use simple text and free-styled graphs for this tutorial while trying to enforce the most clarity in the code possible.
+<a title="Derfel73; Pmerson, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:UML_diagrams_overview.svg"><img width="512" alt="UML diagrams overview" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/512px-UML_diagrams_overview.svg.png?20161201151843"></a>
+<br>
+<span style="font-size:small; text-align: right;">Derfel73; Pmerson, Public domain, via Wikimedia Commons</span>
+
+<a title="Jvlivs, Copyrighted free use, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Restaurant-UML-UC.png"><img width="256" alt="Restaurant-UML-UC" src="https://upload.wikimedia.org/wikipedia/commons/4/48/Restaurant-UML-UC.png?20061214232237"></a>
+<br>
+<span style="font-size:small; text-align: right;">Use case diagram. Jvlivs, Copyrighted free use, via Wikimedia Commons</span>
+
+The Overview-Design-Details (ODD) protocol is also quite strongly advocated by ABM practitioners and constantly revisited and updated [@Grimm2006; @Grimm2010; @grimm_odd_2020; @Muller2013].
+
+<a title="Source: Grimm et al. (2020)" href="https://www.jasss.org/23/2/7.html" target="_blank">
+  <img src="https://www.jasss.org/23/2/7/Figure3.png" alt="Example of visualisation of ODDs" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"/>
+</a>
+<br>
+<span style="font-size:small; text-align: right;">Grimm et al. (2020)</span>
+
+After years of creating and reviewing ABM models, I would argue that these are not as useful or applicable as hoped, especially when the intended audience is greatly oblivious to simulation modelling and, of course, such standards. Consider that in other disciplines, a minimal knowledge of mathematical modelling, including simulation modelling, and programming is a common curricular requirement at the undergraduate level. For those of us pursuing this approach in archaeology and history, having ourselves an academic track in the Humanities, the time spent in learning documentation standards could be better used to improve one's programming skills, for example. However, any student of ABM should be aware of these proposed standards and judge for themselves. Being informed about them, and effectively using them, will always get you into a better place as a modeller. I use simple text and generic graphs for this course, on the other hand emphasising the importance of maximum clarity in the code.
 
 ## Learning resources
 

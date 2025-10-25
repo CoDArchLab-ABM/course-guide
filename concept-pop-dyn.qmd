@@ -26,6 +26,18 @@ or
 
 where *f* and *g* are functions, yet to be defined.
 
+::: {.callout-note}
+
+::: {.grid}
+
+::: {.g-col-6}
+
+**what is a function?**
+
+>a function is a relation between a set of inputs and a set of permissible outputs with the property that each input is related to exactly one output.
+
+:::
+
 Such expressions rephrase the original explanation in a way that is more amenable to formalisation. They read as:
 
 >Settlement size (variable) is a function (depends on) population (variable).  
