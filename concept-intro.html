@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Conceptual modelling – Agent-based modelling for archaeologists. From concept to application and publication</title>
+<title>5&nbsp; Conceptual modelling of processes – Agent-based modelling for archaeologists. From concept to application and publication</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5807135711e47b2a96301ef985137793.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-46385b24d3fde8766d5335a75c40e237.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-abm-method.html">Learning to model processes</a></li><li class="breadcrumb-item"><a href="./concept-intro.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-abm-method.html">Learning to model processes</a></li><li class="breadcrumb-item"><a href="./concept-intro.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling of processes</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -173,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./concept-intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling of processes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -477,7 +477,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Conclusion and free practice</span></span></a>
+ <span class="menu-text">Conclusion and free practice {#conclusion}</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -505,9 +505,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-abm-method.html">Learning to model processes</a></li><li class="breadcrumb-item"><a href="./concept-intro.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro-abm-method.html">Learning to model processes</a></li><li class="breadcrumb-item"><a href="./concept-intro.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling of processes</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="concept-intro" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></span></h1>
+<h1 class="title"><span id="concept-intro" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling of processes</span></span></h1>
 </div>
 
 
@@ -524,19 +524,19 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The objective of this session is to introduce the first and most important stage in the application of simulation, <strong>system definition</strong> and <strong>model design</strong>, to archaeology topics.</p>
+<p>Let us have a taste of the first and most important stages in the application of simulation, <strong>system definition</strong> and <strong>model design</strong>, to archaeology topics.</p>
 <p>Given a general topic of interest associated with a specific type of archaeological evidence, we must develop a conceptual model that includes a definition of the minimum features of a phenomenon or system (<em>representation</em>), with the aim of its mathematical formalization (<em>mechanism</em>). So that it contributes to the answer to one or more research questions or to refute or reformulate a working hypothesis (<em>validation</em>).</p>
 <figure class="figure">
 <img src="https://github.com/Andros-Spica/modelling-simulation-graphs/blob/main/representation-and-validation/representation-and-validation.png?raw=true" alt="representation and validation in explanatory models in archaeology" class="fragment figure-img" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"><br> <fig-caption> Representation and validation in explanatory models in archaeology</fig-caption>
 </figure>
-<p>Conceptual modelling reflects the exploratory nature of explanatory modelling. In this context, we should consider the maximum number of potential explanations and subsequently prioritise those that are arguably or demonstrably more likely, all given the limits of our knowledge. When building a model, we should include additional elements parsimoniously and keep in mind that this conceptual definition should help us create a computational model (<em>implementation</em>) that is both intelligible and computable within a reasonable timeframe.</p>
+<p>Conceptual modelling reflects the exploratory nature of explanatory modelling. In this context, we should consider the maximum number of potential explanations and subsequently prioritise those that are arguably or demonstrably more likely, all given the limits of our knowledge. When building a model, we should include additional elements parsimoniously and keep in mind that this conceptual definition should help us create a computational model (<em>implementation</em>) that is both intelligible and computable within a reasonable time frame.</p>
 <p>When creating your first conceptual model, I recommend starting from scratch with the first intuition that comes to mind. After later scrutiny, its logical structure may be oversimplified, incomplete, or faulty. However, it would most likely represent the main elements of an informal model that you and other researchers share. Relying on an informed guess to start model development is the best remedy for the “blank page panic”. It will also help you avoid overthinking and overworking what should be a mere preliminary sketch of the model.</p>
 <p>Said this, we might still suffer when trying to jump-start the modelling process. Even if (or maybe especially when) a sizeable interdisciplinary team is involved, such is often the case in ABM-related projects.</p>
 <section id="considering-archaeological-evidence-and-its-interpretations-explanations" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="considering-archaeological-evidence-and-its-interpretations-explanations"><span class="header-section-number">5.1</span> Considering archaeological evidence and its interpretations (<em>explanations</em>)</h2>
 <p>Archaeological evidence can be interpreted to understand past phenomena, and these interpretations often involve proposing underlying mechanisms. The relationship between evidence, phenomenon, and mechanism can be understood as follows:</p>
 <ul>
-<li><p><strong>Evidence</strong>: This refers to the physical remains or data that archaeologists uncover. This can include artefactss, structures, or environmental data. Pieces of evidence vary in level of description, from pottery styles to the position of fortifications and the abundance of animal species. They also vary in the methods used to define them, like visual analysis, geometric analysis, 3D scanning, and GPS.</p></li>
+<li><p><strong>Evidence</strong>: This refers to the physical remains or data that archaeologists uncover. This can include artefacts, structures, or environmental data. Pieces of evidence vary in level of description, from pottery styles to the position of fortifications and the abundance of animal species. They also vary in the methods used to define them, like visual analysis, geometric analysis, 3D scanning, and GPS.</p></li>
 <li><p><strong>Phenomenon</strong>: The phenomenon is the pattern or process inferred from the evidence. It is the “what” that happened, based on the interpretation of the evidence, but also the benchmark definition of reality, based in a much longer list of experiences and confirmed knowledge. For instance, variations in pottery style can represent exchange, the position of fortifications can represent strategic decision-making, and a decrease in a wild animal population can represent human hunting.</p></li>
 <li><p><strong>Mechanism</strong>: The mechanism is the causal explanation of why the phenomenon occurred. It involves identifying the processes or interactions that led to the observed pattern. This is the “why” behind the phenomenon. Mechanisms are expressed through causal relationships between variables, often including underlying assumptions. For example, variations in pottery styles can be explained by increased trade with another region, the positioning of fortifications can be explained by differential visibility, and a decrease in animal population can be explained by overhunting.</p></li>
 </ul>
@@ -595,7 +595,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>From evidence to mechanism</strong> (from left to right in the table): You may prefer to first think about a set of types of archaeological evidence, perhaps a type that one is most familiar with or that can be found in a specific site or dataset. Once the evidence is delimited, you can then identify what is the most likely and/or strongest explanation, first in terms of the phenomenon and then as a generative process (left to right in the table). With sufficient effort and time, the worst-case scenario when taking this path is to obtain a weak explanatory model, one that does not offer a realistic representation of the phenomenon, but may provide further insight into patterns of evidence (i.e., a descriptive model).<br>
 </li>
-<li><strong>From phenomenon to evidence to mechanism</strong> (middle to left and right in the table): Also, look for or formulate a mechanism that satisfactorily represents the phenomenon, as previously defined (middle to left and right in the table). It is equally valid to start by considering a phenomenon that has been extensively documented, studied, and defined in other disciplines (e.g., trade, from an economic and anthropological perspective). In choosing a phenomenon, you must be able to assume it existed in a particular context in the past and that there are domains of evidence that could support or undermine such an explanation. The worst-case scenario here would be to have a “toy model”, one that represents the current knowledge of a phenomenon and can be used to investigate it, but cannot be readily assumed for the past, nor is it directly validated with archaeological evidence.<br>
+<li><strong>From phenomenon to evidence and mechanism</strong> (middle to left and right in the table): It is equally valid to start by considering a phenomenon that has been extensively documented, studied, and defined in other disciplines (e.g., trade, from an economic and anthropological perspective). In choosing a phenomenon, you must be able to assume it existed in a particular context in the past and that there are domains of evidence that could support or undermine such an explanation. The worst-case scenario here would be to have a “toy model”, one that represents the current knowledge of a phenomenon and can be used to investigate it, but cannot be readily assumed for the past, nor is it directly validated with archaeological evidence.<br>
 </li>
 <li><strong>From mechanism to phenomenon and evidence</strong> (right to left in the table): The last and more opportunistic option is to focus first on a mechanism that has already been described and/or formalised, consider a phenomenon it can represent and search for a type of evidence where signals of this mechanism can be detected. Taking this path demands a specific knowledge of modelling and models, preferably in multiple fields and disciplines, but it is a relatively safe path: the worse case is to end up concluding that the selected mechanism, alone at least, does not explain the patterns observed in the selected evidence – a small, but steady contribution.</li>
 </ul>
@@ -604,6 +604,16 @@ ul.task-list li input[type="checkbox"] {
 <section id="diagraming-for-simulation-modelling" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="diagraming-for-simulation-modelling"><span class="header-section-number">5.2</span> Diagraming for simulation modelling</h2>
 <p>A conceptual model can be expressed in various ways, such as lists of elements and relationships, schemes, and diagrams. Text or visual expressions are valid as long as they help us approach the design of a computational simulation model, facilitating the next stage (<em>implementation</em>).</p>
+<p>Graphs are a powerful tool for representing complex systems. They can be used to represent:</p>
+<ul>
+<li>the structure of a system, the flow of information, or the flow of resources<br>
+</li>
+<li>the dynamics of a system, the interactions between agents, or the evolution of a system over time<br>
+</li>
+<li>the spatial structure of a system, the location of agents, or the movement of agents<br>
+</li>
+<li>the temporal structure of a system, the timing of events, or the duration of events</li>
+</ul>
 <p>Here, we will not force the use of conventions such as <a href="https://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>, although these can be useful. Examples of UML diagrams can also offer inspiration, even if you don’t learn their rules. Other, more specific conventions can also be very useful and relatively easy to learn:</p>
 <div class="grid">
 <div class="g-col-6">

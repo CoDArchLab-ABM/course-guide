@@ -62,7 +62,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5807135711e47b2a96301ef985137793.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-46385b24d3fde8766d5335a75c40e237.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -193,7 +193,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./concept-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling of processes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -497,7 +497,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Conclusion and free practice</span></span></a>
+ <span class="menu-text">Conclusion and free practice {#conclusion}</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -520,10 +520,11 @@ div.csl-indent {
   <li><a href="#modelling-missteps" id="toc-modelling-missteps" class="nav-link" data-scroll-target="#modelling-missteps"><span class="header-section-number">4.2</span> Modelling “(mis)steps”</a></li>
   <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices"><span class="header-section-number">4.3</span> Best practices</a>
   <ul class="collapse">
-  <li><a href="#refactoring-regularly" id="toc-refactoring-regularly" class="nav-link" data-scroll-target="#refactoring-regularly"><span class="header-section-number">4.3.1</span> Refactoring regularly</a></li>
-  <li><a href="#enforcing-modularity" id="toc-enforcing-modularity" class="nav-link" data-scroll-target="#enforcing-modularity"><span class="header-section-number">4.3.2</span> Enforcing modularity</a></li>
-  <li><a href="#being-explorative" id="toc-being-explorative" class="nav-link" data-scroll-target="#being-explorative"><span class="header-section-number">4.3.3</span> Being explorative</a></li>
-  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation"><span class="header-section-number">4.3.4</span> Documentation</a></li>
+  <li><a href="#version-control" id="toc-version-control" class="nav-link" data-scroll-target="#version-control"><span class="header-section-number">4.3.1</span> Version control</a></li>
+  <li><a href="#refactoring-regularly" id="toc-refactoring-regularly" class="nav-link" data-scroll-target="#refactoring-regularly"><span class="header-section-number">4.3.2</span> Refactoring regularly</a></li>
+  <li><a href="#enforcing-modularity" id="toc-enforcing-modularity" class="nav-link" data-scroll-target="#enforcing-modularity"><span class="header-section-number">4.3.3</span> Enforcing modularity</a></li>
+  <li><a href="#being-explorative" id="toc-being-explorative" class="nav-link" data-scroll-target="#being-explorative"><span class="header-section-number">4.3.4</span> Being explorative</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation"><span class="header-section-number">4.3.5</span> Documentation</a></li>
   </ul></li>
   <li><a href="#learning-resources" id="toc-learning-resources" class="nav-link" data-scroll-target="#learning-resources"><span class="header-section-number">4.4</span> Learning resources</a></li>
   </ul>
@@ -560,7 +561,7 @@ div.csl-indent {
 <p><strong>Definition of the research question and phenomenon</strong>. To define a research question and the phenomena involved, we must think in terms of systems, identifying and defining a set of elements we deem relevant and their interrelationships. In this initial step, the key is to delimitate the target system, within which external, undefined factors do not overly determine the interaction of elements. Here, we must decide on what is relevant <em>for us</em> and set aside the rest. Ideally, we should move to the next step only once we have a hypothetical mechanism to focus on, formulated roughly but in detail enough so we can formalise it later. We will call this our <strong><em>conceptual model</em></strong>.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p><strong>Design</strong>. Designing a model is essentially to find a formal definition able to represent the phenomena, as we have defined in the previous step. In this step, we go from a vague text description of the <em>natural</em> system we observe and its expected dynamics to a mathematical or algorithmic representation of the <em>artificial</em> system we want to build. At this stage, it is critical to define our model’s main variables, including any inputs and outputs. The latter will be particularly important to how simulation results can be compared to empirical data to validate the model. During model design, our conceptual model is formalised progressively, ideally up to the point where implementation is made immediate.</p>
+<p><strong>Design or conceptualisation</strong>. Designing a model is essentially to find a formal definition able to represent the phenomena, as we have defined in the previous step. In this step, we go from a vague text description of the <em>natural</em> system we observe and its expected dynamics to a mathematical or algorithmic representation of the <em>artificial</em> system we want to build. At this stage, it is critical to define our model’s main variables, including any inputs and outputs. The latter will be particularly important to how simulation results can be compared to empirical data to validate the model. During model design, our conceptual model is formalised progressively, ideally up to the point where implementation is made immediate.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Implementation</strong>. To implement the model is to effectively write down our model design as a piece of software (<em>i.e.</em>, through programming). While other mathematical models could remain unimplemented, ABM models are hardly useful if not able to be solved through computer simulation. However, a model implementation carries much extra baggage, and many possible implementations exist for the same model. Therefore, modellers and their audience must differentiate between the model and its implementation.</p>
@@ -579,7 +580,7 @@ div.csl-indent {
 <p><strong>Understanding</strong>. The modeller must understand the model, know the variety of dynamics it can generate, and be aware of its limitations regarding the representation of the target system.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p><strong>Documenting</strong>. The understanding obtained by the modeller at one point is of little use to others and, eventually, her or himself in the long-term future. To ensure that such an understanding is passed through, we must invest significant time in documenting the model’s conceptual design and source code. Note that this is not equivalent to an academic publication, especially because most scientific journals push for a greater emphasis on the results rather than the bits and pieces of simulation models.</p>
+<p><strong>Communicating or Documenting</strong>. The understanding obtained by the modeller at one point is of little use to others and, eventually, her or himself in the long-term future. To ensure that such an understanding is passed through, we must invest significant time in documenting the model’s conceptual design and source code. Note that this is not equivalent to an academic publication, especially because most scientific journals push for a greater emphasis on the results rather than the bits and pieces of simulation models.</p>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -597,15 +598,19 @@ div.csl-indent {
 </section>
 <section id="best-practices" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="best-practices"><span class="header-section-number">4.3</span> Best practices</h2>
-<p>Before jumping into practice, let us go over three general strategies that can offer a way out to at least some of the problems mentioned here. These strategies are: <em>refactoring regularly</em>, <em>enforcing modularity</em> and <em>being explorative</em>.</p>
-<section id="refactoring-regularly" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="refactoring-regularly"><span class="header-section-number">4.3.1</span> Refactoring regularly</h3>
-<p>By definition, <a href="https://en.wikipedia.org/wiki/Code_refactoring">refactoring</a> means that your code change but remains capable of producing the same result. Refactoring encompasses all tasks aiming to generalize the code, make it extendable, and also make it cleaner (more readable) and faster.</p>
+<p>Before jumping into practice, let us go over three general strategies that can offer a way out to at least some of the problems mentioned here. These strategies are: <em>version control</em>, <em>refactoring regularly</em>, <em>enforcing modularity</em> and <em>being explorative</em>.</p>
+<section id="version-control" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="version-control"><span class="header-section-number">4.3.1</span> Version control</h3>
+<p>Since modelling an ABM model eventually involves creating a piece of software (implementation), it is important to use version control to keep track of changes and to be able to revert to previous versions if necessary. This is especially important when working in a team, but also when working alone. Version control is also useful for keeping track of changes in the documentation and for keeping track of changes in the data used for the model. This kind of technology is an essential part of the software development process and we will dedicate a whole day to it, later in the course.</p>
+</section>
+<section id="refactoring-regularly" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="refactoring-regularly"><span class="header-section-number">4.3.2</span> Refactoring regularly</h3>
+<p>By definition, <a href="https://en.wikipedia.org/wiki/Code_refactoring">refactoring</a> means that your code change but remains capable of producing the same result. Refactoring encompasses all tasks aiming to generalize the code, make it extendible, and also make it cleaner (more readable) and faster.</p>
 <p>However, there is a trade-off between these three goals. For example, replacing default values with calculations or indirect values will probably increase processing time. In practice, this trade-off is irrelevant until your model is very complex, populated (many entities), or must be simulated for many different conditions. I recommend always being attentive to the readability, commentary, and documentation of your code. Assuming you are interested in creating models for academic discussion (i.e., science rather than engineering), the priority is to communicate your models to others.</p>
 <p>There are many actions in code that can be considered refactoring. Too many for us to enumerate here. Probably the best and more educational approach is to encounter examples of practices, both good and bad, think about them, and try to do better. In this sense, we will go over several examples along with the tutorial that hopefully will illustrate when and how you should refactor your model code.</p>
 </section>
-<section id="enforcing-modularity" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="enforcing-modularity"><span class="header-section-number">4.3.2</span> Enforcing modularity</h3>
+<section id="enforcing-modularity" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="enforcing-modularity"><span class="header-section-number">4.3.3</span> Enforcing modularity</h3>
 <p>One of the most critical aspects related to refactoring is code modularity. The so-called <a href="https://en.wikipedia.org/wiki/Single-responsibility_principle">Single Responsibility Principle (SRP)</a> has been established in software engineering and serves as an excellent guiding principle for building complex code.</p>
 <p>In software like ABM models, modularity also has application at a higher level, in the form of submodels. Creating models as assembles of submodels enables researchers to focus on their areas of interest and expertise without necessarily over reducing the complexity of everything else.</p>
 <p>ABM has been, and still is, often critisised for being a too complex and arbitrary approach in its aim and domain. Truthfully, ABM models tend to overgrow in detail regarding certain aspects while bluntly simplifying other elements. This is primarily a combined effect of the internal limitations of the modellers and their teams (time, budget, expertise, etc.) and the lack of opportunities for code reuse. Modularity offers an exit to this.</p>
@@ -628,16 +633,20 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="being-explorative" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="being-explorative"><span class="header-section-number">4.3.3</span> Being explorative</h3>
-<p>The last general recommendation to be made about doing ABM is: to be explorative. As mentioned, some have critisised ABM for being too speculative and arbitrary. Yes, ABM models often require many specifications to work, some of which escape the modeller’s expertise entirely. In front of this, we can either avoid ABM altogether or accept it, going the proverbial extra mile in making most “free decisions” based on a deeper study of possible design alternatives.</p>
+<section id="being-explorative" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="being-explorative"><span class="header-section-number">4.3.4</span> Being explorative</h3>
+<p>The last general recommendation to be made about doing ABM is: to be explorative. As mentioned, some have criticised ABM for being too speculative and arbitrary. Yes, ABM models often require many specifications to work, some of which escape the modeller’s expertise entirely. In front of this, we can either avoid ABM altogether or accept it, going the proverbial extra mile in making most “free decisions” based on a deeper study of possible design alternatives.</p>
 <p>Similar to how we can use stochasticity, creating and exploring design alternatives is always a good idea to better understand our conceptual model’s weak points. Observing the differences in dynamics generated by those alternatives will help us decide how to define those uncertain areas further while reducing the risk of unconsciously running over important modelling decisions. In the tutorial, we will illustrate a few strategies for implementing and handling design alternatives.</p>
 </section>
-<section id="documentation" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="documentation"><span class="header-section-number">4.3.4</span> Documentation</h3>
+<section id="documentation" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="documentation"><span class="header-section-number">4.3.5</span> Documentation</h3>
 <p>A short disclaimer before we start: the approach used here for conceptual modelling and model documentation is <strong>not</strong> considered a standard in the ABM community.</p>
-<p>In the bibliography, you will find many other recommendations and examples, particularly those converging into the practices closer to Computer Science and Ecology. For example, many consider a necessary standard to be the <a href="https://en.wikipedia.org/wiki/Unified_Modeling_Language">Unified Modeling Language (UML)</a>. The Overview-Design-Details (ODD) protocol is also quite strongly advocated by ABM practitioners <span class="citation" data-cites="Grimm2006 Grimm2010 Muller2013">(<a href="references.html#ref-Grimm2006" role="doc-biblioref">Grimm et al. 2006</a>, <a href="references.html#ref-Grimm2010" role="doc-biblioref">2010</a>; <a href="references.html#ref-Muller2013" role="doc-biblioref">Müller et al. 2013</a>)</span>.</p>
-<p>After years of creating and reviewing ABM models, I would argue that these are not as useful or applicable as claimed, and the time spent in learning these could be better used to improve one’s programming skills. However, I believe that any student of ABM should know about these proposed standards and then judge and decide for themselves. I only use simple text and free-styled graphs for this tutorial while trying to enforce the most clarity in the code possible.</p>
+<p>In the bibliography, you will find many other recommendations and examples, particularly those converging into the practices closer to Computer Science and Ecology. For example, many consider a necessary standard to be the <a href="https://en.wikipedia.org/wiki/Unified_Modeling_Language">Unified Modeling Language (UML)</a>, which includes many types of diagrams.</p>
+<p><a title="Derfel73; Pmerson, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:UML_diagrams_overview.svg"><img width="512" alt="UML diagrams overview" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/512px-UML_diagrams_overview.svg.png?20161201151843"></a> <br> <span style="font-size:small; text-align: right;">Derfel73; Pmerson, Public domain, via Wikimedia Commons</span></p>
+<p><a title="Jvlivs, Copyrighted free use, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Restaurant-UML-UC.png"><img width="256" alt="Restaurant-UML-UC" src="https://upload.wikimedia.org/wikipedia/commons/4/48/Restaurant-UML-UC.png?20061214232237"></a> <br> <span style="font-size:small; text-align: right;">Use case diagram. Jvlivs, Copyrighted free use, via Wikimedia Commons</span></p>
+<p>The Overview-Design-Details (ODD) protocol is also quite strongly advocated by ABM practitioners and constantly revisited and updated <span class="citation" data-cites="Grimm2006 Grimm2010 grimm_odd_2020 Muller2013">(<a href="references.html#ref-Grimm2006" role="doc-biblioref">Grimm et al. 2006</a>, <a href="references.html#ref-Grimm2010" role="doc-biblioref">2010</a>, <a href="references.html#ref-grimm_odd_2020" role="doc-biblioref">2020</a>; <a href="references.html#ref-Muller2013" role="doc-biblioref">Müller et al. 2013</a>)</span>.</p>
+<p><a title="Source: Grimm et al. (2020)" href="https://www.jasss.org/23/2/7.html" target="_blank"> <img src="https://www.jasss.org/23/2/7/Figure3.png" alt="Example of visualisation of ODDs" style="width: 550px; border: none; box-shadow: none; margin-bottom: 0%; background-color: azure;"> </a> <br> <span style="font-size:small; text-align: right;">Grimm et al.&nbsp;(2020)</span></p>
+<p>After years of creating and reviewing ABM models, I would argue that these are not as useful or applicable as hoped, especially when the intended audience is greatly oblivious to simulation modelling and, of course, such standards. Consider that in other disciplines, a minimal knowledge of mathematical modelling, including simulation modelling, and programming is a common curricular requirement at the undergraduate level. For those of us pursuing this approach in archaeology and history, having ourselves an academic track in the Humanities, the time spent in learning documentation standards could be better used to improve one’s programming skills, for example. However, any student of ABM should be aware of these proposed standards and judge for themselves. Being informed about them, and effectively using them, will always get you into a better place as a modeller. I use simple text and generic graphs for this course, on the other hand emphasising the importance of maximum clarity in the code.</p>
 </section>
 </section>
 <section id="learning-resources" class="level2" data-number="4.4">
@@ -652,6 +661,9 @@ Grimm, Volker, Uta Berger, Finn Bastiansen, Sigrunn Eliassen, Vincent Ginot, Jar
 </div>
 <div id="ref-Grimm2010" class="csl-entry" role="listitem">
 Grimm, Volker, Uta Berger, Donald L. DeAngelis, J. Gary Polhill, Jarl Giske, and Steven F. Railsback. 2010. <span>“The <span>ODD</span> Protocol: <span>A</span> Review and First Update.”</span> <em>Ecological Modelling</em> 221 (23): 2760–68. <a href="https://doi.org/10.1016/J.ECOLMODEL.2010.08.019">https://doi.org/10.1016/J.ECOLMODEL.2010.08.019</a>.
+</div>
+<div id="ref-grimm_odd_2020" class="csl-entry" role="listitem">
+Grimm, Volker, Steven F. Railsback, Christian E. Vincenot, Uta Berger, Cara Gallagher, Donald L. DeAngelis, Bruce Edmonds, et al. 2020. <span>“The <span>ODD</span> <span>Protocol</span> for <span>Describing</span> <span>Agent</span>-<span>Based</span> and <span>Other</span> <span>Simulation</span> <span>Models</span>: <span>A</span> <span>Second</span> <span>Update</span> to <span>Improve</span> <span>Clarity</span>, <span>Replication</span>, and <span>Structural</span> <span>Realism</span>.”</span> <em>Journal of Artificial Societies and Social Simulation</em> 23 (2): 7.
 </div>
 <div id="ref-Muller2013" class="csl-entry" role="listitem">
 Müller, Birgit, Friedrich Bohn, Gunnar Dreßler, Jürgen Groeneveld, Christian Klassert, Romina Martin, Maja Schlüter, Jule Schulze, Hanna Weise, and Nina Schwarz. 2013. <span>“Describing Human Decisions in Agent-Based Models – <span>ODD</span> + <span>D</span>, an Extension of the <span>ODD</span> Protocol.”</span> <em>Environmental Modelling &amp; Software</em> 48 (October): 37–48. <a href="https://doi.org/10.1016/J.ENVSOFT.2013.06.003">https://doi.org/10.1016/J.ENVSOFT.2013.06.003</a>.
@@ -1070,8 +1082,8 @@ Romanowska, Iza, Colin D. Wren, and Stefani A. Crabtree. 2021. <em>Agent-<span>B
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./concept-intro.html" class="pagination-link" aria-label="Conceptual modelling">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./concept-intro.html" class="pagination-link" aria-label="Conceptual modelling of processes">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conceptual modelling of processes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
