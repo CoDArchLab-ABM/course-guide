@@ -37,6 +37,8 @@ where *f* and *g* are functions, yet to be defined.
 >a function is a relation between a set of inputs and a set of permissible outputs with the property that each input is related to exactly one output.
 
 :::
+:::
+:::
 
 Such expressions rephrase the original explanation in a way that is more amenable to formalisation. They read as:
 
@@ -79,7 +81,23 @@ After a few iterations of this reasoning process, our formal expressions will un
 
 Remember, while defining a parameter adds complexity, it also marks the point in a branch of thought where modelling *stops*, that is, where something that could certainly be described as complex and dynamic is reduced to a fixed value. 
 
-In light of the context and research questions, you should decide when to sacrifice the *representativeness* of your model to ensure that it can be *implemented*, *understood*, and *validated* in the future.
+::: {.callout-note}
+
+::: {.grid}
+
+::: {.g-col-6}
+
+**Important modelling terminology**
+
+**Variable**: it varies with time. It is part of the object of interest and its dynamics are interpreted as outputs of the phenomenon (&approx;model).  
+
+**Parameter**: it does not vary with time, but it can vary between instances of the phenomenon (&approx;simulation runs). It is considered as an input of the phenomenon (&approx;model).
+
+:::
+:::
+:::
+
+In light of the context and research questions, you should decide when to sacrifice the *representativeness* of your model (the "want to") to ensure that it can be *implemented*, *understood*, and *validated* in the future (the "can do").
 
 ## Reusing consolidated structures
 
@@ -123,6 +141,8 @@ The introduction of the first factor can be simple: a hostile relationship will 
 
 ![Conceptual model after adding one logic bifurcation](assets/images/conceptual-model-example-6.png)
 
+>**Note**: the logic bifurcations are not part of the causal graph. They are part of the model's logic.
+
 The second factor will create yet another bifurcation, relevant only if the settlement's neighborhood is *friendly*. If times are *good*, we will assume that immigration is triggered, because the settlement is attractive to new residents. If times are *bad*, emigration is triggered instead, to represent the growing number of inhabitants who are dissatisfied with local living conditions.
 
 ![Conceptual model after adding two logic bifurcations](assets/images/conceptual-model-example-7.png)
@@ -141,7 +161,7 @@ Notice that once the process is conceptualised as distributed, it will be increa
 
 For example, let us define "reproduce" as a decision on whether a household will branch a new one given that a certain probability threshold, called the household fission rate, a household-level parameter replacing the population-level natural growth rate:
 
-![Conceptual model after conversion to agent-based](assets/images/conceptual-model-example-9.png)
+![A tentative "reproduce" process](assets/images/conceptual-model-example-9.png)
 
 Remember, specifications can be at this stage still quite vague and undefined. For example, how should we determine whether the household fission rate is sufficiently large? Moreover, observe how, yet again, we rely on the promise of a new function, household fission. Thinking of functions in terms of **modules** can help us expand our conceptual model without getting stuck on details that will only be truly handled once we move to implementation.
 
