@@ -37,6 +37,23 @@ Data analysis and plots (R scripts)
 Revision / new hypothesis
 ```
 
+```mermaid
+flowchart LR
+    A[💡 Conceptualisation<br/>Define system, agents, hypotheses] --> 
+    B[🧱 Implementation<br/>NetLogo model (.nlogo)]
+    B --> C[🔄 Version control<br/>Git + GitHub]
+    C --> D[🧪 Experimentation<br/>BehaviorSpace runs]
+    D --> E[📊 Analysis<br/>R scripts, plots, stats]
+    E --> F[📢 Publication<br/>Release + Zenodo DOI]
+    F --> A[🔁 Revision & new hypotheses]
+    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
+    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
+    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px
+    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
+    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
+    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
+```
+
 Treat this as a *living process*: your repository should tell the story of how your model evolved.
 
 ---
