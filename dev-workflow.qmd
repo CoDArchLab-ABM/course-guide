@@ -2,7 +2,81 @@
 
 ## The "big picture"
 
+Agent-based modelling (ABM) is more than coding—it is an iterative and cumulative research process that benefits from software engineering principles. Each simulation model can be seen as a small research *software project*, and the modeller as its *developer*.
+Thinking like a software developer helps to ensure that the model is:
 
-## Tools and services checklist
+* **Reproducible:** anyone (including your future self) can run it and obtain the same results.
+* **Transparent:** the model’s assumptions, mechanisms, and implementation are easy to inspect.
+* **Collaborative:** colleagues can contribute, review, or reuse your code and data.
+* **Evolvable:** improvements, corrections, or new experiments can be added without breaking the project.
 
+A typical simulation-modelling workflow can be represented as a cycle of five stages:
 
+1. **Conceptualisation:** Define the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.
+2. **Implementation:** Translate the conceptual model into executable code (e.g., in NetLogo).
+3. **Version control:** Track every change with Git; publish and document the model using GitHub.
+4. **Experimentation:** Run systematic simulations using NetLogo’s *BehaviorSpace* or custom scripts (e.g., in R).
+5. **Analysis and publication:** Process and visualise simulation outputs in R, write up results, and share your full project repository.
+
+In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.
+The goal is *incremental improvement* rather than perfection at once.
+
+### Example workflow
+
+```
+Conceptual Model (diagram, notes)
+        ↓
+Implementation in NetLogo (.nlogo)
+        ↓
+Versioning and documentation (Git + GitHub)
+        ↓
+Simulation experiments (BehaviorSpace)
+        ↓
+Data analysis and plots (R scripts)
+        ↺
+Revision / new hypothesis
+```
+
+Treat this as a *living process*: your repository should tell the story of how your model evolved.
+
+---
+
+## 8.2 Tools and services checklist
+
+To follow best practices, every simulation modeller should maintain a working toolkit and a structured workflow environment. Below is a checklist tailored to this course.
+
+| Category                          | Tool / Service                   | Purpose                                                   | Key Concepts / Skills                                  |
+| --------------------------------- | -------------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| **Version control**               | **Git**                          | Track changes to your project files                       | Commits, branches, merges, history                     |
+|                                   | **GitHub**                       | Host and share repositories online                        | README, issues, pull requests, releases                |
+| **Model implementation**          | **NetLogo**                      | Main platform for building agent-based models             | Interface design, procedures, agents, patches, globals |
+| **Data analysis & visualization** | **R**                            | Process simulation results, generate plots and statistics | R scripts, data frames, ggplot2, tidyverse             |
+| **Interoperability**              | **RNetLogo** (optional)          | Run NetLogo from R for batch experiments                  | Automation, reproducibility                            |
+| **Documentation**                 | **Markdown (.md)**               | Write guides, notebooks, and documentation                | Formatting, headings, links, code blocks               |
+|                                   | **README.md**                    | Front page of your GitHub repository                      | Summary, usage, citation                               |
+| **Reproducible environment**      | **Project folders**              | Organise code, data, results, and docs                    | Clear structure, consistent naming                     |
+| **Collaboration and feedback**    | **GitHub Issues / Discussions**  | Record bugs, ideas, and model questions                   | Issue tracking, commenting                             |
+| **Archival and citation**         | **Zenodo** (later in the course) | Assign a DOI to your final model                          | Versioned release, FAIR principles                     |
+
+### Minimal setup for this course
+
+After today and before proceeding to the next sessions, make sure you have:
+
+* [ ] Installed **Git**, **NetLogo**, and **R**. These are present in the lab computers, but it is recommended that you also have these installed in your personal computer.
+* [ ] Created a **GitHub account**.
+* [ ] Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.
+* [ ] Tested pushing/pulling a simple repository.
+* [ ] Set up a structured folder for your project (e.g., `model/`, `data/`, `results/`, `docs/`) and write a minimal README file.
+
+Optional but recommended:
+
+* [ ] Installed **RStudio** (for R).
+* [ ] Installed **VS Code** (for editing text and code files).
+* [ ] Install GitHub Desktop.
+* [ ] Linked GitHub to Zenodo for future publication.
+
+---
+
+### Summary
+
+A good modeller is a good *steward of code*. The tools are not the goal—they are supports for clarity, reproducibility, and collaboration. In this course, you will gradually assemble your own simulation software project, learning to combine conceptual, technical, and organisational skills.
