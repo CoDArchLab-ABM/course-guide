@@ -561,6 +561,20 @@ Simulation experiments (BehaviorSpace)
 Data analysis and plots (R scripts)
         ↺
 Revision / new hypothesis</code></pre>
+<pre class="mermaid"><code>flowchart LR
+    A[💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses] --&gt; 
+    B[🧱 Implementation&lt;br/&gt;NetLogo model (.nlogo)]
+    B --&gt; C[🔄 Version control&lt;br/&gt;Git + GitHub]
+    C --&gt; D[🧪 Experimentation&lt;br/&gt;BehaviorSpace runs]
+    D --&gt; E[📊 Analysis&lt;br/&gt;R scripts, plots, stats]
+    E --&gt; F[📢 Publication&lt;br/&gt;Release + Zenodo DOI]
+    F --&gt; A[🔁 Revision &amp; new hypotheses]
+    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
+    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
+    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px
+    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
+    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
+    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px</code></pre>
 <p>Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
 <hr>
 </section>
