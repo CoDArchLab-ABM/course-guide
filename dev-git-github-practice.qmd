@@ -14,7 +14,7 @@ All course repositories are hosted under
 2. Once inside the organisation, you can see the list of other student projects.
 3. You can also create repositories under your own GitHub username if you prefer, and later transfer them to the organisation.
 
-> 💡 *Being part of the organisation helps with collaboration, visibility, and shared templates.*
+> 💡 *Being part of the organisation helps with collaboration, visibility, and the use of shared templates.*
 
 ---
 
@@ -35,10 +35,7 @@ You can create your repository **entirely through the GitHub web interface**, no
 
 > 💡 *Starting with a README and license ensures that your project is immediately valid, citable, and shareable.*
 
-If you **can work locally** (on your own computer or a managed laptop):
-
-* You may also initialise the repository on your machine using Git, then push it to GitHub.
-* This will be covered later in the course.
+If you **can work locally** (on your own computer or a managed laptop), you may also initialise the repository on your machine using Git, then push it to GitHub.
 
 ---
 
@@ -110,7 +107,7 @@ Once your initial structure is in place:
 
 ---
 
-## 10.5 If you later gain local access
+## If you later gain local access
 
 Once you can install and use Git locally, you can clone your repository and continue developing offline:
 
@@ -193,7 +190,7 @@ A full conceptual description is available in [`docs/notes.md`](docs/notes.md).
 
 ## Repository structure
 
-```
+\`\`\`
 
 model/       → NetLogo model files (.nlogo)
 data/        → Input datasets (CSV, shapefiles, etc.)
@@ -201,7 +198,7 @@ results/     → Simulation outputs
 scripts/     → R scripts for analysis
 docs/        → Documentation and notes
 
-```
+\`\`\`
 
 ## Usage
 
@@ -234,10 +231,10 @@ If you use or adapt this model, please cite:
 ## Acknowledgements
 
 This work was developed as part of the MA course *Agent-based Modelling for Archaeologists: From Concept to Application and Publication*,  
-taught by Andreas Angourakis, University of [Your Institution].
+taught by Andreas Angourakis at the University of Cologne.
 
 ```
 
-You can find a project template in the course organisation (`project2025_template`) with files and directories for the typical contents already created.
+You can find a project template in the course organisation ([`project2025_template`](https://github.com/CoDArchLab-ABM/project2025_template)) with files and directories for the typical contents already created.
 
 You may "fork" the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.
