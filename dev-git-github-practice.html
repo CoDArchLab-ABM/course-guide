@@ -539,6 +539,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.5.1</span> Summary</a></li>
   </ul></li>
+  <li><a href="#optional-template-for-your-readme-file" id="toc-optional-template-for-your-readme-file" class="nav-link" data-scroll-target="#optional-template-for-your-readme-file"><span class="header-section-number">10.6</span> 10.6 Optional: Template for your README file</a>
+  <ul class="collapse">
+  <li><a href="#example-readme.md-template" id="toc-example-readme.md-template" class="nav-link" data-scroll-target="#example-readme.md-template"><span class="header-section-number">10.6.1</span> 📄 Example README.md Template</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/dev-git-github-practice.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -719,6 +723,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>🧭 <strong>Goal:</strong> By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.</p>
 </blockquote>
+<p>Perfect — here’s an optional <strong>template README.md</strong> section that fits seamlessly at the end of Chapter 10. It’s concise, encourages documentation habits early, and aligns with research-reproducibility and open-science principles. It also references the course context so students understand what to include and why.</p>
+<hr>
+</section>
+</section>
+<section id="optional-template-for-your-readme-file" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="optional-template-for-your-readme-file"><span class="header-section-number">10.6</span> 10.6 Optional: Template for your README file</h2>
+<p>Every GitHub repository starts with a <code>README.md</code> file. It serves as the <em>front page</em> of your project and should answer three key questions:</p>
+<ol type="1">
+<li><strong>What is this project?</strong></li>
+<li><strong>How can others use it or learn from it?</strong></li>
+<li><strong>How can it be cited or extended?</strong></li>
+</ol>
+<p>Below is a template you can copy into your repository’s README file and adapt to your project. Sections marked with <code>&lt;!-- comments --&gt;</code> are suggestions to help you fill in the content.</p>
+<hr>
+<section id="example-readme.md-template" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="example-readme.md-template"><span class="header-section-number">10.6.1</span> 📄 Example README.md Template</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Project2025_&lt;model-name&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)</span><span class="co">](https://doi.org/10.5281/zenodo.xxxxxxx)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Briefly describe your simulation model in 2–3 sentences. --&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>This project develops an agent-based model (ABM) that explores <span class="co">[</span><span class="ot">process or phenomenon, e.g., settlement dynamics and trade interactions</span><span class="co">]</span> in an archaeological context.  </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>It was created as part of the MA course *Agent-based Modelling for Archaeologists* at the University of <span class="co">[</span><span class="ot">Your Institution</span><span class="co">]</span>.</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Concept and objectives</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Describe what the model represents and what questions it addresses. --&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>The model aims to simulate <span class="co">[</span><span class="ot">describe processes, behaviours, or hypotheses</span><span class="co">]</span>.  </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>It is designed to help explore how <span class="co">[</span><span class="ot">key mechanisms</span><span class="co">]</span> influence <span class="co">[</span><span class="ot">outcomes of interest</span><span class="co">]</span>.</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model design</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Summarise the main elements: environment, agents, and processes. --&gt;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Agents:** <span class="co">[</span><span class="ot">e.g., settlements, traders, households</span><span class="co">]</span>  </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Environment:** <span class="co">[</span><span class="ot">e.g., spatial grid, network, landscape data</span><span class="co">]</span>  </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Key processes:** <span class="co">[</span><span class="ot">list mechanisms such as migration, exchange, resource use</span><span class="co">]</span>  </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Temporal scale:** <span class="co">[</span><span class="ot">e.g., yearly steps, 100 iterations</span><span class="co">]</span>  </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>A full conceptual description is available in <span class="co">[</span><span class="ot">`docs/notes.md`</span><span class="co">](docs/notes.md)</span>.</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository structure</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>model/ → NetLogo model files (.nlogo) data/ → Input datasets (CSV, shapefiles, etc.) results/ → Simulation outputs scripts/ → R scripts for analysis docs/ → Documentation and notes</p>
+<pre><code>
+## Usage
+
+### Requirements
+- [NetLogo](https://ccl.northwestern.edu/netlogo/)
+- [R](https://www.r-project.org/) (optional, for analysis)
+
+### How to run
+1. Open `model/&lt;your_model&gt;.nlogo` in NetLogo.  
+2. Use the Interface tab to initialise and run the simulation.  
+3. Use **BehaviorSpace** (NetLogo menu → Tools → BehaviorSpace) to run batch experiments.  
+4. Store output files in the `results/` folder for later analysis.
+
+## Results
+
+&lt;!-- Mention what kind of outputs or figures you expect. --&gt;
+Simulation results include [key indicators, e.g., settlement sizes, trade volumes, population changes].  
+Analysis scripts in `scripts/` generate plots and summaries.
+
+## License
+
+This project is licensed under the [LICENSE](LICENSE) file included in the repository.
+
+## Citation
+
+If you use or adapt this model, please cite:
+
+&gt; [Your Name]. (2025). *Project2025_&lt;model-name&gt;: An agent-based model of [topic]*. Version 0.1. DOI: [https://doi.org/10.5281/zenodo.xxxxxxx](https://doi.org/10.5281/zenodo.xxxxxxx)
+
+## Acknowledgements
+
+This work was developed as part of the MA course *Agent-based Modelling for Archaeologists: From Concept to Application and Publication*,  
+taught by Andreas Angourakis, University of [Your Institution].
+</code></pre>
+<p>You can find a project template in the course organisation (<code>project2025_template</code>) with files and directories for the typical contents already created.</p>
+<p>You may “fork” the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.</p>
 
 
 </section>
