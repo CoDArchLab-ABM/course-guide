@@ -1,8 +1,25 @@
-# Using NetLogo's Behavior Space {#sim-behavior-space}
+# Using NetLogo's Behaviour Space {#sim-behavior-space}
 
 ## Introduction
 
-
+```mermaid
+flowchart LR
+    A[⚙️ Model setup<br/>NetLogo model ready (.nlogo)] -->
+    B[🎛️ Define experiment<br/>BehaviorSpace parameters & settings]
+    B --> C[▶️ Run experiments<br/>Multiple model runs with varied parameters]
+    C --> D[💾 Export results<br/>CSV output files]
+    D --> E[📊 Analyse results<br/>R scripts for plots & statistics]
+    E --> F[🧩 Interpret results<br/>Compare to hypotheses or data]
+    F --> G[🔁 Refine model or experiment<br/>Adjust parameters, mechanisms]
+    G --> B
+    style A fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
+    style B fill:#fffbea,stroke:#c4a000,stroke-width:1px
+    style C fill:#fef6e4,stroke:#ff8c00,stroke-width:1px
+    style D fill:#f0f9f0,stroke:#009900,stroke-width:1px
+    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
+    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
+    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px
+```
 
 ## Single simulation run
 
