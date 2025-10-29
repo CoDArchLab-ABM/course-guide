@@ -535,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#creating-a-new-repository" id="toc-creating-a-new-repository" class="nav-link" data-scroll-target="#creating-a-new-repository"><span class="header-section-number">10.2</span> Creating a new repository</a></li>
   <li><a href="#populating-your-repository" id="toc-populating-your-repository" class="nav-link" data-scroll-target="#populating-your-repository"><span class="header-section-number">10.3</span> Populating your repository</a></li>
   <li><a href="#publishing-version-0.1" id="toc-publishing-version-0.1" class="nav-link" data-scroll-target="#publishing-version-0.1"><span class="header-section-number">10.4</span> Publishing version 0.1</a></li>
-  <li><a href="#if-you-later-gain-local-access" id="toc-if-you-later-gain-local-access" class="nav-link" data-scroll-target="#if-you-later-gain-local-access"><span class="header-section-number">10.5</span> 10.5 If you later gain local access</a>
+  <li><a href="#if-you-later-gain-local-access" id="toc-if-you-later-gain-local-access" class="nav-link" data-scroll-target="#if-you-later-gain-local-access"><span class="header-section-number">10.5</span> If you later gain local access</a>
   <ul class="collapse">
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.5.1</span> Summary</a></li>
   </ul></li>
@@ -579,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>You can also create repositories under your own GitHub username if you prefer, and later transfer them to the organisation.</li>
 </ol>
 <blockquote class="blockquote">
-<p>💡 <em>Being part of the organisation helps with collaboration, visibility, and shared templates.</em></p>
+<p>💡 <em>Being part of the organisation helps with collaboration, visibility, and the use of shared templates.</em></p>
 </blockquote>
 <hr>
 </section>
@@ -600,11 +600,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>💡 <em>Starting with a README and license ensures that your project is immediately valid, citable, and shareable.</em></p>
 </blockquote>
-<p>If you <strong>can work locally</strong> (on your own computer or a managed laptop):</p>
-<ul>
-<li>You may also initialise the repository on your machine using Git, then push it to GitHub.</li>
-<li>This will be covered later in the course.</li>
-</ul>
+<p>If you <strong>can work locally</strong> (on your own computer or a managed laptop), you may also initialise the repository on your machine using Git, then push it to GitHub.</p>
 <hr>
 </section>
 <section id="populating-your-repository" class="level2" data-number="10.3">
@@ -668,7 +664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 <section id="if-you-later-gain-local-access" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="if-you-later-gain-local-access"><span class="header-section-number">10.5</span> 10.5 If you later gain local access</h2>
+<h2 data-number="10.5" class="anchored" data-anchor-id="if-you-later-gain-local-access"><span class="header-section-number">10.5</span> If you later gain local access</h2>
 <p>Once you can install and use Git locally, you can clone your repository and continue developing offline:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/CoDArchLab-ABM/project2025_<span class="op">&lt;</span>model-name<span class="op">&gt;</span>.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Work as usual:</p>
@@ -765,43 +761,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>A full conceptual description is available in <span class="co">[</span><span class="ot">`docs/notes.md`</span><span class="co">](docs/notes.md)</span>.</span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository structure</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>model/ → NetLogo model files (.nlogo) data/ → Input datasets (CSV, shapefiles, etc.) results/ → Simulation outputs scripts/ → R scripts for analysis docs/ → Documentation and notes</p>
-<pre><code>
-## Usage
-
-### Requirements
-- [NetLogo](https://ccl.northwestern.edu/netlogo/)
-- [R](https://www.r-project.org/) (optional, for analysis)
-
-### How to run
-1. Open `model/&lt;your_model&gt;.nlogo` in NetLogo.  
-2. Use the Interface tab to initialise and run the simulation.  
-3. Use **BehaviorSpace** (NetLogo menu → Tools → BehaviorSpace) to run batch experiments.  
-4. Store output files in the `results/` folder for later analysis.
-
-## Results
-
-&lt;!-- Mention what kind of outputs or figures you expect. --&gt;
-Simulation results include [key indicators, e.g., settlement sizes, trade volumes, population changes].  
-Analysis scripts in `scripts/` generate plots and summaries.
-
-## License
-
-This project is licensed under the [LICENSE](LICENSE) file included in the repository.
-
-## Citation
-
-If you use or adapt this model, please cite:
-
-&gt; [Your Name]. (2025). *Project2025_&lt;model-name&gt;: An agent-based model of [topic]*. Version 0.1. DOI: [https://doi.org/10.5281/zenodo.xxxxxxx](https://doi.org/10.5281/zenodo.xxxxxxx)
-
-## Acknowledgements
-
-This work was developed as part of the MA course *Agent-based Modelling for Archaeologists: From Concept to Application and Publication*,  
-taught by Andreas Angourakis, University of [Your Institution].
-</code></pre>
-<p>You can find a project template in the course organisation (<code>project2025_template</code>) with files and directories for the typical contents already created.</p>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Repository structure</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="sc">\`\`\`</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>model/       → NetLogo model files (.nlogo)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>data/        → Input datasets (CSV, shapefiles, etc.)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>results/     → Simulation outputs</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>scripts/     → R scripts for analysis</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>docs/        → Documentation and notes</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="sc">\`\`\`</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Usage</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Requirements</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">NetLogo</span><span class="co">](https://ccl.northwestern.edu/netlogo/)</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R</span><span class="co">](https://www.r-project.org/)</span> (optional, for analysis)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### How to run</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`model/&lt;your_model&gt;.nlogo`</span> in NetLogo.  </span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Use the Interface tab to initialise and run the simulation.  </span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Use **BehaviorSpace** (NetLogo menu → Tools → BehaviorSpace) to run batch experiments.  </span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Store output files in the <span class="in">`results/`</span> folder for later analysis.</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Mention what kind of outputs or figures you expect. --&gt;</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>Simulation results include <span class="co">[</span><span class="ot">key indicators, e.g., settlement sizes, trade volumes, population changes</span><span class="co">]</span>.  </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>Analysis scripts in <span class="in">`scripts/`</span> generate plots and summaries.</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## License</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>This project is licensed under the <span class="co">[</span><span class="ot">LICENSE</span><span class="co">](LICENSE)</span> file included in the repository.</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Citation</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>If you use or adapt this model, please cite:</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">Your Name</span><span class="co">]</span><span class="at">. (2025). *Project2025_&lt;model-name&gt;: An agent-based model of [topic]*. Version 0.1. DOI: </span><span class="co">[</span><span class="ot">https://doi.org/10.5281/zenodo.xxxxxxx</span><span class="co">](https://doi.org/10.5281/zenodo.xxxxxxx)</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Acknowledgements</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>This work was developed as part of the MA course *Agent-based Modelling for Archaeologists: From Concept to Application and Publication*,  </span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>taught by Andreas Angourakis at the University of Cologne.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can find a project template in the course organisation (<a href="https://github.com/CoDArchLab-ABM/project2025_template"><code>project2025_template</code></a>) with files and directories for the typical contents already created.</p>
 <p>You may “fork” the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.</p>
 
 
