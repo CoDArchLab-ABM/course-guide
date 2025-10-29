@@ -50,7 +50,7 @@ project2025_<model-name>/
 ├── model/               # NetLogo models (.nlogo files)
 ├── data/                # Input data files (CSV, shapefiles, etc.)
 ├── results/             # Simulation outputs
-├── scripts/             # R or Python scripts for analysis
+├── analysis/             # R or Python scripts for analysis
 ├── docs/                # Markdown or PDF documentation
 │   └── notes.md
 ├── LICENSE
@@ -145,7 +145,7 @@ It also references the course context so students understand what to include and
 
 ---
 
-## 10.6 Optional: Template for your README file
+## Optional: Template for your README file
 
 Every GitHub repository starts with a `README.md` file.
 It serves as the *front page* of your project and should answer three key questions:
@@ -195,7 +195,7 @@ A full conceptual description is available in [`docs/notes.md`](docs/notes.md).
 model/       → NetLogo model files (.nlogo)
 data/        → Input datasets (CSV, shapefiles, etc.)
 results/     → Simulation outputs
-scripts/     → R scripts for analysis
+analysis/     → R scripts for analysis
 docs/        → Documentation and notes
 
 \`\`\`
