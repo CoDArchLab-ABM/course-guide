@@ -428,29 +428,40 @@
     "href": "dev-git-github-practice.html",
     "title": "10  Creating your simulation model repository",
     "section": "",
-    "text": "10.1 Join the course GitHub Organisation\nhttps://github.com/CoDArchLab-ABM",
+    "text": "10.1 Join the course GitHub organisation\nThis chapter puts into practice the workflow introduced earlier (Chapter 8). You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a living record of your project’s evolution — from conceptualisation and first prototype to final publication.\nAll course repositories are hosted under 👉 https://github.com/CoDArchLab-ABM",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Creating your simulation model repository</span>"
     ]
   },
   {
-    "objectID": "dev-git-github-practice.html#initialising-the-repository",
-    "href": "dev-git-github-practice.html#initialising-the-repository",
+    "objectID": "dev-git-github-practice.html#join-the-course-github-organisation",
+    "href": "dev-git-github-practice.html#join-the-course-github-organisation",
     "title": "10  Creating your simulation model repository",
-    "section": "10.2 Initialising the repository",
-    "text": "10.2 Initialising the repository\nCreate a GitHub repository under your user. Named it project2025_ followed by your model name (no special characters). Initialise with the following properties: a. Public b. With a README file c. with .gitignore (template for R) d. With a license of your choice.",
+    "section": "",
+    "text": "Accept the invitation sent by your instructor (check your GitHub notifications or email).\nOnce inside the organisation, you can see the list of other student projects.\nYou can also create repositories under your own GitHub username if you prefer, and later transfer them to the organisation.\n\n\n💡 Being part of the organisation helps with collaboration, visibility, and shared templates.",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Creating your simulation model repository</span>"
     ]
   },
   {
-    "objectID": "dev-git-github-practice.html#populating-the-repository",
-    "href": "dev-git-github-practice.html#populating-the-repository",
+    "objectID": "dev-git-github-practice.html#creating-a-new-repository",
+    "href": "dev-git-github-practice.html#creating-a-new-repository",
     "title": "10  Creating your simulation model repository",
-    "section": "10.3 Populating the repository",
-    "text": "10.3 Populating the repository\nAdd all other conventional files mentioned above, even if they remain empty for now.\nEdit your README file and commit/push your changes.",
+    "section": "10.2 Creating a new repository",
+    "text": "10.2 Creating a new repository\nYou can create your repository entirely through the GitHub web interface, no local software required.\n\nGo to your GitHub homepage → Repositories → New.\nName it following the convention: project2025_&lt;model-name&gt; (use only lowercase letters, digits, and underscores).\nInitialise it with:\n\n✅ a README.md file\n✅ a .gitignore (choose the R template)\n✅ a license of your choice (e.g. MIT, GPL-3.0, CC-BY-4.0)\n\nSet visibility to Public.\n\n\n💡 Starting with a README and license ensures that your project is immediately valid, citable, and shareable.\n\nIf you can work locally (on your own computer or a managed laptop):\n\nYou may also initialise the repository on your machine using Git, then push it to GitHub.\nThis will be covered later in the course.",
+    "crumbs": [
+      "Preparing as a software developer",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Creating your simulation model repository</span>"
+    ]
+  },
+  {
+    "objectID": "dev-git-github-practice.html#populating-your-repository",
+    "href": "dev-git-github-practice.html#populating-your-repository",
+    "title": "10  Creating your simulation model repository",
+    "section": "10.3 Populating your repository",
+    "text": "10.3 Populating your repository\nYour repository should reflect a clean, modular project structure from the beginning. Create the following files and folders — even if they remain empty for now.\nproject2025_&lt;model-name&gt;/\n│\n├── model/               # NetLogo models (.nlogo files)\n├── data/                # Input data files (CSV, shapefiles, etc.)\n├── results/             # Simulation outputs\n├── scripts/             # R or Python scripts for analysis\n├── docs/                # Markdown or PDF documentation\n│   └── notes.md\n├── LICENSE\n├── README.md\n└── .gitignore\nIf you work in the browser, use GitHub’s “Add file → Create new file” to add folders and files. Each new file can be created and edited directly online.\nWhen you edit a file:\n\nScroll down to “Commit changes.”\nWrite a short message describing your change (e.g. Add empty folders and README).\nChoose “Commit directly to the main branch.”\n\nThis saves and versions your work immediately.\n\n💡 Even if you cannot install Git locally, you still gain the benefits of version control and public documentation.",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Creating your simulation model repository</span>"
@@ -461,7 +472,18 @@
     "href": "dev-git-github-practice.html#publishing-version-0.1",
     "title": "10  Creating your simulation model repository",
     "section": "10.4 Publishing version 0.1",
-    "text": "10.4 Publishing version 0.1\n\nSet up the GitHub-Zenodo connection.\n\nPublish your repository (under your username or a GitHub organisation that you own).\n\nUpdate README with the new Zenodo DOI (badge).",
+    "text": "10.4 Publishing version 0.1\nOnce your initial structure is in place:\n\nSet up GitHub–Zenodo connection\n\nGo to https://zenodo.org → Sign in with GitHub.\nAuthorise Zenodo to access your repositories.\nIn Zenodo, enable archiving for your project2025_&lt;model-name&gt; repository.\n\nCreate your first release\n\nIn your repository → “Releases” → “Draft a new release”.\nTag: v0.1\nTitle: Version 0.1 (initial structure)\nDescription: a short note about what this version contains.\n\nPublish\n\nOnce published, Zenodo will automatically mint a DOI for your repository snapshot.\n\nUpdate README\n\nAdd the Zenodo DOI badge at the top of your README.md.\nExample:\n[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)\n\n\n\n💡 This makes your project formally citable and demonstrates best practices for open science.",
+    "crumbs": [
+      "Preparing as a software developer",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Creating your simulation model repository</span>"
+    ]
+  },
+  {
+    "objectID": "dev-git-github-practice.html#if-you-later-gain-local-access",
+    "href": "dev-git-github-practice.html#if-you-later-gain-local-access",
+    "title": "10  Creating your simulation model repository",
+    "section": "10.5 10.5 If you later gain local access",
+    "text": "10.5 10.5 If you later gain local access\nOnce you can install and use Git locally, you can clone your repository and continue developing offline:\ngit clone https://github.com/CoDArchLab-ABM/project2025_&lt;model-name&gt;.git\nWork as usual:\ngit add .\ngit commit -m \"Implement new agent rules\"\ngit push\nYour history and Zenodo releases will remain intact — this is a seamless transition.\n\n\n10.5.1 Summary\n\n\n\n\n\n\n\n\nStep\nDescription\nOnline only?\n\n\n\n\nCreate repository\nInitialise on GitHub with README, license, and .gitignore\n✅\n\n\nAdd folders/files\nUse GitHub web editor\n✅\n\n\nCommit and version\nDone via “Commit changes” in browser\n✅\n\n\nPublish release and DOI\nConnect to Zenodo\n✅\n\n\nClone locally (optional)\nUse Git on your computer\n❌\n\n\n\n\n🧭 Goal: By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Creating your simulation model repository</span>"

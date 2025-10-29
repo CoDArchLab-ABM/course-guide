@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -496,10 +531,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#join-the-course-github-organisation" id="toc-join-the-course-github-organisation" class="nav-link active" data-scroll-target="#join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub Organisation</a></li>
-  <li><a href="#initialising-the-repository" id="toc-initialising-the-repository" class="nav-link" data-scroll-target="#initialising-the-repository"><span class="header-section-number">10.2</span> Initialising the repository</a></li>
-  <li><a href="#populating-the-repository" id="toc-populating-the-repository" class="nav-link" data-scroll-target="#populating-the-repository"><span class="header-section-number">10.3</span> Populating the repository</a></li>
+  <li><a href="#join-the-course-github-organisation" id="toc-join-the-course-github-organisation" class="nav-link active" data-scroll-target="#join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub organisation</a></li>
+  <li><a href="#creating-a-new-repository" id="toc-creating-a-new-repository" class="nav-link" data-scroll-target="#creating-a-new-repository"><span class="header-section-number">10.2</span> Creating a new repository</a></li>
+  <li><a href="#populating-your-repository" id="toc-populating-your-repository" class="nav-link" data-scroll-target="#populating-your-repository"><span class="header-section-number">10.3</span> Populating your repository</a></li>
   <li><a href="#publishing-version-0.1" id="toc-publishing-version-0.1" class="nav-link" data-scroll-target="#publishing-version-0.1"><span class="header-section-number">10.4</span> Publishing version 0.1</a></li>
+  <li><a href="#if-you-later-gain-local-access" id="toc-if-you-later-gain-local-access" class="nav-link" data-scroll-target="#if-you-later-gain-local-access"><span class="header-section-number">10.5</span> 10.5 If you later gain local access</a>
+  <ul class="collapse">
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.5.1</span> Summary</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/dev-git-github-practice.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -525,30 +564,164 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>This chapter puts into practice the workflow introduced earlier (Chapter 8). You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a <strong>living record</strong> of your project’s evolution — from conceptualisation and first prototype to final publication.</p>
+<hr>
 <section id="join-the-course-github-organisation" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub Organisation</h2>
-<p>https://github.com/CoDArchLab-ABM</p>
+<h2 data-number="10.1" class="anchored" data-anchor-id="join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub organisation</h2>
+<p>All course repositories are hosted under 👉 <strong><a href="https://github.com/CoDArchLab-ABM">https://github.com/CoDArchLab-ABM</a></strong></p>
+<ol type="1">
+<li>Accept the invitation sent by your instructor (check your GitHub notifications or email).</li>
+<li>Once inside the organisation, you can see the list of other student projects.</li>
+<li>You can also create repositories under your own GitHub username if you prefer, and later transfer them to the organisation.</li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <em>Being part of the organisation helps with collaboration, visibility, and shared templates.</em></p>
+</blockquote>
+<hr>
 </section>
-<section id="initialising-the-repository" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="initialising-the-repository"><span class="header-section-number">10.2</span> Initialising the repository</h2>
-<p>Create a GitHub repository under your user. Named it <code>project2025_</code> followed by your model name (no special characters). Initialise with the following properties: a. Public b. With a README file c.&nbsp;with .gitignore (template for R) d.&nbsp;With a license of your choice.</p>
+<section id="creating-a-new-repository" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="creating-a-new-repository"><span class="header-section-number">10.2</span> Creating a new repository</h2>
+<p>You can create your repository <strong>entirely through the GitHub web interface</strong>, no local software required.</p>
+<ol type="1">
+<li><p>Go to your GitHub homepage → <strong>Repositories → New</strong>.</p></li>
+<li><p>Name it following the convention: <code>project2025_&lt;model-name&gt;</code> (use only lowercase letters, digits, and underscores).</p></li>
+<li><p>Initialise it with:</p>
+<ul>
+<li>✅ a <strong>README.md</strong> file</li>
+<li>✅ a <strong>.gitignore</strong> (choose the <em>R</em> template)</li>
+<li>✅ a <strong>license</strong> of your choice (e.g.&nbsp;MIT, GPL-3.0, CC-BY-4.0)</li>
+</ul></li>
+<li><p>Set visibility to <strong>Public</strong>.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <em>Starting with a README and license ensures that your project is immediately valid, citable, and shareable.</em></p>
+</blockquote>
+<p>If you <strong>can work locally</strong> (on your own computer or a managed laptop):</p>
+<ul>
+<li>You may also initialise the repository on your machine using Git, then push it to GitHub.</li>
+<li>This will be covered later in the course.</li>
+</ul>
+<hr>
 </section>
-<section id="populating-the-repository" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="populating-the-repository"><span class="header-section-number">10.3</span> Populating the repository</h2>
-<p>Add all other conventional files mentioned above, even if they remain empty for now.</p>
-<p>Edit your README file and commit/push your changes.</p>
+<section id="populating-your-repository" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="populating-your-repository"><span class="header-section-number">10.3</span> Populating your repository</h2>
+<p>Your repository should reflect a clean, modular project structure from the beginning. Create the following files and folders — even if they remain empty for now.</p>
+<pre><code>project2025_&lt;model-name&gt;/
+│
+├── model/               # NetLogo models (.nlogo files)
+├── data/                # Input data files (CSV, shapefiles, etc.)
+├── results/             # Simulation outputs
+├── scripts/             # R or Python scripts for analysis
+├── docs/                # Markdown or PDF documentation
+│   └── notes.md
+├── LICENSE
+├── README.md
+└── .gitignore</code></pre>
+<p>If you work <strong>in the browser</strong>, use GitHub’s “Add file → Create new file” to add folders and files. Each new file can be created and edited directly online.</p>
+<p>When you edit a file:</p>
+<ol type="1">
+<li>Scroll down to “Commit changes.”</li>
+<li>Write a short message describing your change (e.g.&nbsp;<em>Add empty folders and README</em>).</li>
+<li>Choose “Commit directly to the main branch.”</li>
+</ol>
+<p>This saves and versions your work immediately.</p>
+<blockquote class="blockquote">
+<p>💡 <em>Even if you cannot install Git locally, you still gain the benefits of version control and public documentation.</em></p>
+</blockquote>
+<hr>
 </section>
 <section id="publishing-version-0.1" class="level2" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="publishing-version-0.1"><span class="header-section-number">10.4</span> Publishing version 0.1</h2>
+<p>Once your initial structure is in place:</p>
+<ol type="1">
+<li><p><strong>Set up GitHub–Zenodo connection</strong></p>
 <ul>
-<li>Set up the GitHub-Zenodo connection.<br>
-</li>
-<li>Publish your repository (under your username or a GitHub organisation that you own).<br>
-</li>
-<li>Update README with the new Zenodo DOI (badge).</li>
-</ul>
+<li>Go to <a href="https://zenodo.org">https://zenodo.org</a> → Sign in with GitHub.</li>
+<li>Authorise Zenodo to access your repositories.</li>
+<li>In Zenodo, enable archiving for your <code>project2025_&lt;model-name&gt;</code> repository.</li>
+</ul></li>
+<li><p><strong>Create your first release</strong></p>
+<ul>
+<li>In your repository → “Releases” → “Draft a new release”.</li>
+<li>Tag: <code>v0.1</code></li>
+<li>Title: <code>Version 0.1 (initial structure)</code></li>
+<li>Description: a short note about what this version contains.</li>
+</ul></li>
+<li><p><strong>Publish</strong></p>
+<ul>
+<li>Once published, Zenodo will automatically mint a <strong>DOI</strong> for your repository snapshot.</li>
+</ul></li>
+<li><p><strong>Update README</strong></p>
+<ul>
+<li><p>Add the Zenodo DOI badge at the top of your <code>README.md</code>.</p></li>
+<li><p>Example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)</span><span class="co">](https://doi.org/10.5281/zenodo.xxxxxxx)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul></li>
+</ol>
+<blockquote class="blockquote">
+<p>💡 <em>This makes your project formally citable and demonstrates best practices for open science.</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="if-you-later-gain-local-access" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="if-you-later-gain-local-access"><span class="header-section-number">10.5</span> 10.5 If you later gain local access</h2>
+<p>Once you can install and use Git locally, you can clone your repository and continue developing offline:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/CoDArchLab-ABM/project2025_<span class="op">&lt;</span>model-name<span class="op">&gt;</span>.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Work as usual:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Implement new agent rules"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Your history and Zenodo releases will remain intact — this is a seamless transition.</p>
+<hr>
+<section id="summary" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">10.5.1</span> Summary</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 61%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Description</th>
+<th>Online only?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Create repository</td>
+<td>Initialise on GitHub with README, license, and .gitignore</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>Add folders/files</td>
+<td>Use GitHub web editor</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>Commit and version</td>
+<td>Done via “Commit changes” in browser</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td>Publish release and DOI</td>
+<td>Connect to Zenodo</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>Clone locally (optional)</td>
+<td>Use Git on your computer</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>🧭 <strong>Goal:</strong> By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.</p>
+</blockquote>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
