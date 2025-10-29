@@ -141,3 +141,103 @@ Your history and Zenodo releases will remain intact — this is a seamless trans
 | Clone locally (optional) | Use Git on your computer                                  | ❌            |
 
 > 🧭 **Goal:** By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.
+
+Perfect — here’s an optional **template README.md** section that fits seamlessly at the end of Chapter 10.
+It’s concise, encourages documentation habits early, and aligns with research-reproducibility and open-science principles.
+It also references the course context so students understand what to include and why.
+
+---
+
+## 10.6 Optional: Template for your README file
+
+Every GitHub repository starts with a `README.md` file.
+It serves as the *front page* of your project and should answer three key questions:
+
+1. **What is this project?**
+2. **How can others use it or learn from it?**
+3. **How can it be cited or extended?**
+
+Below is a template you can copy into your repository’s README file and adapt to your project.
+Sections marked with `<!-- comments -->` are suggestions to help you fill in the content.
+
+---
+
+### 📄 Example README.md Template
+
+```markdown
+# Project2025_<model-name>
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
+
+## Overview
+
+<!-- Briefly describe your simulation model in 2–3 sentences. -->
+This project develops an agent-based model (ABM) that explores [process or phenomenon, e.g., settlement dynamics and trade interactions] in an archaeological context.  
+It was created as part of the MA course *Agent-based Modelling for Archaeologists* at the University of [Your Institution].
+
+## Concept and objectives
+
+<!-- Describe what the model represents and what questions it addresses. -->
+The model aims to simulate [describe processes, behaviours, or hypotheses].  
+It is designed to help explore how [key mechanisms] influence [outcomes of interest].
+
+## Model design
+
+<!-- Summarise the main elements: environment, agents, and processes. -->
+- **Agents:** [e.g., settlements, traders, households]  
+- **Environment:** [e.g., spatial grid, network, landscape data]  
+- **Key processes:** [list mechanisms such as migration, exchange, resource use]  
+- **Temporal scale:** [e.g., yearly steps, 100 iterations]  
+
+A full conceptual description is available in [`docs/notes.md`](docs/notes.md).
+
+## Repository structure
+
+```
+
+model/       → NetLogo model files (.nlogo)
+data/        → Input datasets (CSV, shapefiles, etc.)
+results/     → Simulation outputs
+scripts/     → R scripts for analysis
+docs/        → Documentation and notes
+
+```
+
+## Usage
+
+### Requirements
+- [NetLogo](https://ccl.northwestern.edu/netlogo/)
+- [R](https://www.r-project.org/) (optional, for analysis)
+
+### How to run
+1. Open `model/<your_model>.nlogo` in NetLogo.  
+2. Use the Interface tab to initialise and run the simulation.  
+3. Use **BehaviorSpace** (NetLogo menu → Tools → BehaviorSpace) to run batch experiments.  
+4. Store output files in the `results/` folder for later analysis.
+
+## Results
+
+<!-- Mention what kind of outputs or figures you expect. -->
+Simulation results include [key indicators, e.g., settlement sizes, trade volumes, population changes].  
+Analysis scripts in `scripts/` generate plots and summaries.
+
+## License
+
+This project is licensed under the [LICENSE](LICENSE) file included in the repository.
+
+## Citation
+
+If you use or adapt this model, please cite:
+
+> [Your Name]. (2025). *Project2025_<model-name>: An agent-based model of [topic]*. Version 0.1. DOI: [https://doi.org/10.5281/zenodo.xxxxxxx](https://doi.org/10.5281/zenodo.xxxxxxx)
+
+## Acknowledgements
+
+This work was developed as part of the MA course *Agent-based Modelling for Archaeologists: From Concept to Application and Publication*,  
+taught by Andreas Angourakis, University of [Your Institution].
+
+```
+
+You can find a project template in the course organisation (`project2025_template`) with files and directories for the typical contents already created.
+
+You may "fork" the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.
