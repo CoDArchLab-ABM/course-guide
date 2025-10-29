@@ -1,25 +1,143 @@
 # Creating your simulation model repository {#dev-git-github-practice}
 
-## Join the course GitHub Organisation 
+This chapter puts into practice the workflow introduced earlier (Chapter 8). You will now create a proper, version-controlled home for your simulation model.
+Your repository will serve as a **living record** of your project’s evolution — from conceptualisation and first prototype to final publication.
 
-https://github.com/CoDArchLab-ABM
+---
 
-## Initialising the repository
+## Join the course GitHub organisation
 
-Create a GitHub repository under your user. Named it `project2025_` followed by your model name (no special characters). Initialise with the following properties:
-    a. Public
-    b. With a README file
-    c. with .gitignore (template for R)
-    d. With a license of your choice.
+All course repositories are hosted under
+👉 **[https://github.com/CoDArchLab-ABM](https://github.com/CoDArchLab-ABM)**
 
-## Populating the repository
+1. Accept the invitation sent by your instructor (check your GitHub notifications or email).
+2. Once inside the organisation, you can see the list of other student projects.
+3. You can also create repositories under your own GitHub username if you prefer, and later transfer them to the organisation.
 
-Add all other conventional files mentioned above, even if they remain empty for now. 
-  
-Edit your README file and commit/push your changes.   
+> 💡 *Being part of the organisation helps with collaboration, visibility, and shared templates.*
+
+---
+
+## Creating a new repository
+
+You can create your repository **entirely through the GitHub web interface**, no local software required.
+
+1. Go to your GitHub homepage → **Repositories → New**.
+2. Name it following the convention:
+   `project2025_<model-name>`
+   (use only lowercase letters, digits, and underscores).
+3. Initialise it with:
+
+   * ✅ a **README.md** file
+   * ✅ a **.gitignore** (choose the *R* template)
+   * ✅ a **license** of your choice (e.g. MIT, GPL-3.0, CC-BY-4.0)
+4. Set visibility to **Public**.
+
+> 💡 *Starting with a README and license ensures that your project is immediately valid, citable, and shareable.*
+
+If you **can work locally** (on your own computer or a managed laptop):
+
+* You may also initialise the repository on your machine using Git, then push it to GitHub.
+* This will be covered later in the course.
+
+---
+
+## Populating your repository
+
+Your repository should reflect a clean, modular project structure from the beginning.
+Create the following files and folders — even if they remain empty for now.
+
+```
+project2025_<model-name>/
+│
+├── model/               # NetLogo models (.nlogo files)
+├── data/                # Input data files (CSV, shapefiles, etc.)
+├── results/             # Simulation outputs
+├── scripts/             # R or Python scripts for analysis
+├── docs/                # Markdown or PDF documentation
+│   └── notes.md
+├── LICENSE
+├── README.md
+└── .gitignore
+```
+
+If you work **in the browser**, use GitHub’s “Add file → Create new file” to add folders and files.
+Each new file can be created and edited directly online.
+
+When you edit a file:
+
+1. Scroll down to “Commit changes.”
+2. Write a short message describing your change (e.g. *Add empty folders and README*).
+3. Choose “Commit directly to the main branch.”
+
+This saves and versions your work immediately.
+
+> 💡 *Even if you cannot install Git locally, you still gain the benefits of version control and public documentation.*
+
+---
 
 ## Publishing version 0.1
 
-  * Set up the GitHub-Zenodo connection.  
-  * Publish your repository (under your username or a GitHub organisation that you own).   
-  * Update README with the new Zenodo DOI (badge).
+Once your initial structure is in place:
+
+1. **Set up GitHub–Zenodo connection**
+
+   * Go to [https://zenodo.org](https://zenodo.org) → Sign in with GitHub.
+   * Authorise Zenodo to access your repositories.
+   * In Zenodo, enable archiving for your `project2025_<model-name>` repository.
+
+2. **Create your first release**
+
+   * In your repository → “Releases” → “Draft a new release”.
+   * Tag: `v0.1`
+   * Title: `Version 0.1 (initial structure)`
+   * Description: a short note about what this version contains.
+
+3. **Publish**
+
+   * Once published, Zenodo will automatically mint a **DOI** for your repository snapshot.
+
+4. **Update README**
+
+   * Add the Zenodo DOI badge at the top of your `README.md`.
+   * Example:
+
+     ```markdown
+     [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)](https://doi.org/10.5281/zenodo.xxxxxxx)
+     ```
+
+> 💡 *This makes your project formally citable and demonstrates best practices for open science.*
+
+---
+
+## 10.5 If you later gain local access
+
+Once you can install and use Git locally, you can clone your repository and continue developing offline:
+
+```bash
+git clone https://github.com/CoDArchLab-ABM/project2025_<model-name>.git
+```
+
+Work as usual:
+
+```bash
+git add .
+git commit -m "Implement new agent rules"
+git push
+```
+
+Your history and Zenodo releases will remain intact — this is a seamless transition.
+
+---
+
+### Summary
+
+| Step                     | Description                                               | Online only? |
+| ------------------------ | --------------------------------------------------------- | ------------ |
+| Create repository        | Initialise on GitHub with README, license, and .gitignore | ✅            |
+| Add folders/files        | Use GitHub web editor                                     | ✅            |
+| Commit and version       | Done via “Commit changes” in browser                      | ✅            |
+| Publish release and DOI  | Connect to Zenodo                                         | ✅            |
+| Clone locally (optional) | Use Git on your computer                                  | ❌            |
+
+> 🧭 **Goal:** By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.
