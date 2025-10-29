@@ -351,7 +351,18 @@
     "href": "dev-workflow.html",
     "title": "8  A simulation modeller as a software: a workflow",
     "section": "",
-    "text": "8.1 The “big picture”",
+    "text": "8.1 The “big picture”\nAgent-based modelling (ABM) is more than coding—it is an iterative and cumulative research process that benefits from software engineering principles. Each simulation model can be seen as a small research software project, and the modeller as its developer. Thinking like a software developer helps to ensure that the model is:\nA typical simulation-modelling workflow can be represented as a cycle of five stages:\nIn practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control. The goal is incremental improvement rather than perfection at once.",
+    "crumbs": [
+      "Preparing as a software developer",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>A simulation modeller as a software: a workflow</span>"
+    ]
+  },
+  {
+    "objectID": "dev-workflow.html#the-big-picture",
+    "href": "dev-workflow.html#the-big-picture",
+    "title": "8  A simulation modeller as a software: a workflow",
+    "section": "",
+    "text": "Reproducible: anyone (including your future self) can run it and obtain the same results.\nTransparent: the model’s assumptions, mechanisms, and implementation are easy to inspect.\nCollaborative: colleagues can contribute, review, or reuse your code and data.\nEvolvable: improvements, corrections, or new experiments can be added without breaking the project.\n\n\n\nConceptualisation: Define the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.\nImplementation: Translate the conceptual model into executable code (e.g., in NetLogo).\nVersion control: Track every change with Git; publish and document the model using GitHub.\nExperimentation: Run systematic simulations using NetLogo’s BehaviorSpace or custom scripts (e.g., in R).\nAnalysis and publication: Process and visualise simulation outputs in R, write up results, and share your full project repository.\n\n\n\n8.1.1 Example workflow\nConceptual Model (diagram, notes)\n        ↓\nImplementation in NetLogo (.nlogo)\n        ↓\nVersioning and documentation (Git + GitHub)\n        ↓\nSimulation experiments (BehaviorSpace)\n        ↓\nData analysis and plots (R scripts)\n        ↺\nRevision / new hypothesis\nTreat this as a living process: your repository should tell the story of how your model evolved.",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>A simulation modeller as a software: a workflow</span>"
@@ -361,8 +372,8 @@
     "objectID": "dev-workflow.html#tools-and-services-checklist",
     "href": "dev-workflow.html#tools-and-services-checklist",
     "title": "8  A simulation modeller as a software: a workflow",
-    "section": "8.2 Tools and services checklist",
-    "text": "8.2 Tools and services checklist",
+    "section": "8.2 8.2 Tools and services checklist",
+    "text": "8.2 8.2 Tools and services checklist\nTo follow best practices, every simulation modeller should maintain a working toolkit and a structured workflow environment. Below is a checklist tailored to this course.\n\n\n\n\n\n\n\n\n\nCategory\nTool / Service\nPurpose\nKey Concepts / Skills\n\n\n\n\nVersion control\nGit\nTrack changes to your project files\nCommits, branches, merges, history\n\n\n\nGitHub\nHost and share repositories online\nREADME, issues, pull requests, releases\n\n\nModel implementation\nNetLogo\nMain platform for building agent-based models\nInterface design, procedures, agents, patches, globals\n\n\nData analysis & visualization\nR\nProcess simulation results, generate plots and statistics\nR scripts, data frames, ggplot2, tidyverse\n\n\nInteroperability\nRNetLogo (optional)\nRun NetLogo from R for batch experiments\nAutomation, reproducibility\n\n\nDocumentation\nMarkdown (.md)\nWrite guides, notebooks, and documentation\nFormatting, headings, links, code blocks\n\n\n\nREADME.md\nFront page of your GitHub repository\nSummary, usage, citation\n\n\nReproducible environment\nProject folders\nOrganise code, data, results, and docs\nClear structure, consistent naming\n\n\nCollaboration and feedback\nGitHub Issues / Discussions\nRecord bugs, ideas, and model questions\nIssue tracking, commenting\n\n\nArchival and citation\nZenodo (later in the course)\nAssign a DOI to your final model\nVersioned release, FAIR principles\n\n\n\n\n8.2.1 Minimal setup for this course\nAfter today and before proceeding to the next sessions, make sure you have:\n\nInstalled Git, NetLogo, and R. These are present in the lab computers, but it is recommended that you also have these installed in your personal computer.\nCreated a GitHub account.\nConfigured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.\nTested pushing/pulling a simple repository.\nSet up a structured folder for your project (e.g., model/, data/, results/, docs/) and write a minimal README file.\n\nOptional but recommended:\n\nInstalled RStudio (for R).\nInstalled VS Code (for editing text and code files).\nInstall GitHub Desktop.\nLinked GitHub to Zenodo for future publication.\n\n\n\n\n8.2.2 Summary\nA good modeller is a good steward of code. The tools are not the goal—they are supports for clarity, reproducibility, and collaboration. In this course, you will gradually assemble your own simulation software project, learning to combine conceptual, technical, and organisational skills.",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>A simulation modeller as a software: a workflow</span>"

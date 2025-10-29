@@ -496,8 +496,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-big-picture" id="toc-the-big-picture" class="nav-link active" data-scroll-target="#the-big-picture"><span class="header-section-number">8.1</span> The “big picture”</a></li>
-  <li><a href="#tools-and-services-checklist" id="toc-tools-and-services-checklist" class="nav-link" data-scroll-target="#tools-and-services-checklist"><span class="header-section-number">8.2</span> Tools and services checklist</a></li>
+  <li><a href="#the-big-picture" id="toc-the-big-picture" class="nav-link active" data-scroll-target="#the-big-picture"><span class="header-section-number">8.1</span> The “big picture”</a>
+  <ul class="collapse">
+  <li><a href="#example-workflow" id="toc-example-workflow" class="nav-link" data-scroll-target="#example-workflow"><span class="header-section-number">8.1.1</span> Example workflow</a></li>
+  </ul></li>
+  <li><a href="#tools-and-services-checklist" id="toc-tools-and-services-checklist" class="nav-link" data-scroll-target="#tools-and-services-checklist"><span class="header-section-number">8.2</span> 8.2 Tools and services checklist</a>
+  <ul class="collapse">
+  <li><a href="#minimal-setup-for-this-course" id="toc-minimal-setup-for-this-course" class="nav-link" data-scroll-target="#minimal-setup-for-this-course"><span class="header-section-number">8.2.1</span> Minimal setup for this course</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.2.2</span> Summary</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/dev-workflow.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -525,11 +532,145 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="the-big-picture" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="the-big-picture"><span class="header-section-number">8.1</span> The “big picture”</h2>
+<p>Agent-based modelling (ABM) is more than coding—it is an iterative and cumulative research process that benefits from software engineering principles. Each simulation model can be seen as a small research <em>software project</em>, and the modeller as its <em>developer</em>. Thinking like a software developer helps to ensure that the model is:</p>
+<ul>
+<li><strong>Reproducible:</strong> anyone (including your future self) can run it and obtain the same results.</li>
+<li><strong>Transparent:</strong> the model’s assumptions, mechanisms, and implementation are easy to inspect.</li>
+<li><strong>Collaborative:</strong> colleagues can contribute, review, or reuse your code and data.</li>
+<li><strong>Evolvable:</strong> improvements, corrections, or new experiments can be added without breaking the project.</li>
+</ul>
+<p>A typical simulation-modelling workflow can be represented as a cycle of five stages:</p>
+<ol type="1">
+<li><strong>Conceptualisation:</strong> Define the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.</li>
+<li><strong>Implementation:</strong> Translate the conceptual model into executable code (e.g., in NetLogo).</li>
+<li><strong>Version control:</strong> Track every change with Git; publish and document the model using GitHub.</li>
+<li><strong>Experimentation:</strong> Run systematic simulations using NetLogo’s <em>BehaviorSpace</em> or custom scripts (e.g., in R).</li>
+<li><strong>Analysis and publication:</strong> Process and visualise simulation outputs in R, write up results, and share your full project repository.</li>
+</ol>
+<p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control. The goal is <em>incremental improvement</em> rather than perfection at once.</p>
+<section id="example-workflow" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="example-workflow"><span class="header-section-number">8.1.1</span> Example workflow</h3>
+<pre><code>Conceptual Model (diagram, notes)
+        ↓
+Implementation in NetLogo (.nlogo)
+        ↓
+Versioning and documentation (Git + GitHub)
+        ↓
+Simulation experiments (BehaviorSpace)
+        ↓
+Data analysis and plots (R scripts)
+        ↺
+Revision / new hypothesis</code></pre>
+<p>Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
+<hr>
+</section>
 </section>
 <section id="tools-and-services-checklist" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="tools-and-services-checklist"><span class="header-section-number">8.2</span> Tools and services checklist</h2>
+<h2 data-number="8.2" class="anchored" data-anchor-id="tools-and-services-checklist"><span class="header-section-number">8.2</span> 8.2 Tools and services checklist</h2>
+<p>To follow best practices, every simulation modeller should maintain a working toolkit and a structured workflow environment. Below is a checklist tailored to this course.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 32%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Tool / Service</th>
+<th>Purpose</th>
+<th>Key Concepts / Skills</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Version control</strong></td>
+<td><strong>Git</strong></td>
+<td>Track changes to your project files</td>
+<td>Commits, branches, merges, history</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>GitHub</strong></td>
+<td>Host and share repositories online</td>
+<td>README, issues, pull requests, releases</td>
+</tr>
+<tr class="odd">
+<td><strong>Model implementation</strong></td>
+<td><strong>NetLogo</strong></td>
+<td>Main platform for building agent-based models</td>
+<td>Interface design, procedures, agents, patches, globals</td>
+</tr>
+<tr class="even">
+<td><strong>Data analysis &amp; visualization</strong></td>
+<td><strong>R</strong></td>
+<td>Process simulation results, generate plots and statistics</td>
+<td>R scripts, data frames, ggplot2, tidyverse</td>
+</tr>
+<tr class="odd">
+<td><strong>Interoperability</strong></td>
+<td><strong>RNetLogo</strong> (optional)</td>
+<td>Run NetLogo from R for batch experiments</td>
+<td>Automation, reproducibility</td>
+</tr>
+<tr class="even">
+<td><strong>Documentation</strong></td>
+<td><strong>Markdown (.md)</strong></td>
+<td>Write guides, notebooks, and documentation</td>
+<td>Formatting, headings, links, code blocks</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>README.md</strong></td>
+<td>Front page of your GitHub repository</td>
+<td>Summary, usage, citation</td>
+</tr>
+<tr class="even">
+<td><strong>Reproducible environment</strong></td>
+<td><strong>Project folders</strong></td>
+<td>Organise code, data, results, and docs</td>
+<td>Clear structure, consistent naming</td>
+</tr>
+<tr class="odd">
+<td><strong>Collaboration and feedback</strong></td>
+<td><strong>GitHub Issues / Discussions</strong></td>
+<td>Record bugs, ideas, and model questions</td>
+<td>Issue tracking, commenting</td>
+</tr>
+<tr class="even">
+<td><strong>Archival and citation</strong></td>
+<td><strong>Zenodo</strong> (later in the course)</td>
+<td>Assign a DOI to your final model</td>
+<td>Versioned release, FAIR principles</td>
+</tr>
+</tbody>
+</table>
+<section id="minimal-setup-for-this-course" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="minimal-setup-for-this-course"><span class="header-section-number">8.2.1</span> Minimal setup for this course</h3>
+<p>After today and before proceeding to the next sessions, make sure you have:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Installed <strong>Git</strong>, <strong>NetLogo</strong>, and <strong>R</strong>. These are present in the lab computers, but it is recommended that you also have these installed in your personal computer.</label></li>
+<li><label><input type="checkbox">Created a <strong>GitHub account</strong>.</label></li>
+<li><label><input type="checkbox">Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.</label></li>
+<li><label><input type="checkbox">Tested pushing/pulling a simple repository.</label></li>
+<li><label><input type="checkbox">Set up a structured folder for your project (e.g., <code>model/</code>, <code>data/</code>, <code>results/</code>, <code>docs/</code>) and write a minimal README file.</label></li>
+</ul>
+<p>Optional but recommended:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Installed <strong>RStudio</strong> (for R).</label></li>
+<li><label><input type="checkbox">Installed <strong>VS Code</strong> (for editing text and code files).</label></li>
+<li><label><input type="checkbox">Install GitHub Desktop.</label></li>
+<li><label><input type="checkbox">Linked GitHub to Zenodo for future publication.</label></li>
+</ul>
+<hr>
+</section>
+<section id="summary" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.2.2</span> Summary</h3>
+<p>A good modeller is a good <em>steward of code</em>. The tools are not the goal—they are supports for clarity, reproducibility, and collaboration. In this course, you will gradually assemble your own simulation software project, learning to combine conceptual, technical, and organisational skills.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
