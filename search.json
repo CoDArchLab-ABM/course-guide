@@ -1526,67 +1526,78 @@
   {
     "objectID": "sim-behavior-space.html",
     "href": "sim-behavior-space.html",
-    "title": "31  Using NetLogo’s Behavior Space",
+    "title": "31  Using NetLogo’s Behaviour Space",
     "section": "",
     "text": "31.1 Introduction",
     "crumbs": [
       "Designing and running Simulation experiments",
-      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behavior Space</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
+    ]
+  },
+  {
+    "objectID": "sim-behavior-space.html#introduction",
+    "href": "sim-behavior-space.html#introduction",
+    "title": "31  Using NetLogo’s Behaviour Space",
+    "section": "",
+    "text": "flowchart LR\n    A[⚙️ Model setup&lt;br/&gt;NetLogo model ready (.nlogo)] --&gt;\n    B[🎛️ Define experiment&lt;br/&gt;BehaviorSpace parameters & settings]\n    B --&gt; C[▶️ Run experiments&lt;br/&gt;Multiple model runs with varied parameters]\n    C --&gt; D[💾 Export results&lt;br/&gt;CSV output files]\n    D --&gt; E[📊 Analyse results&lt;br/&gt;R scripts for plots & statistics]\n    E --&gt; F[🧩 Interpret results&lt;br/&gt;Compare to hypotheses or data]\n    F --&gt; G[🔁 Refine model or experiment&lt;br/&gt;Adjust parameters, mechanisms]\n    G --&gt; B\n    style A fill:#e6f3ff,stroke:#2176ff,stroke-width:1px\n    style B fill:#fffbea,stroke:#c4a000,stroke-width:1px\n    style C fill:#fef6e4,stroke:#ff8c00,stroke-width:1px\n    style D fill:#f0f9f0,stroke:#009900,stroke-width:1px\n    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px\n    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px\n    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px",
+    "crumbs": [
+      "Designing and running Simulation experiments",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {
     "objectID": "sim-behavior-space.html#single-simulation-run",
     "href": "sim-behavior-space.html#single-simulation-run",
-    "title": "31  Using NetLogo’s Behavior Space",
+    "title": "31  Using NetLogo’s Behaviour Space",
     "section": "31.2 Single simulation run",
     "text": "31.2 Single simulation run",
     "crumbs": [
       "Designing and running Simulation experiments",
-      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behavior Space</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {
     "objectID": "sim-behavior-space.html#repetitions-under-the-same-parameter-configuration",
     "href": "sim-behavior-space.html#repetitions-under-the-same-parameter-configuration",
-    "title": "31  Using NetLogo’s Behavior Space",
+    "title": "31  Using NetLogo’s Behaviour Space",
     "section": "31.3 Repetitions under the same parameter configuration",
     "text": "31.3 Repetitions under the same parameter configuration",
     "crumbs": [
       "Designing and running Simulation experiments",
-      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behavior Space</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {
     "objectID": "sim-behavior-space.html#varying-parameters",
     "href": "sim-behavior-space.html#varying-parameters",
-    "title": "31  Using NetLogo’s Behavior Space",
+    "title": "31  Using NetLogo’s Behaviour Space",
     "section": "31.4 Varying parameters",
     "text": "31.4 Varying parameters",
     "crumbs": [
       "Designing and running Simulation experiments",
-      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behavior Space</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {
     "objectID": "sim-behavior-space.html#selecting-output-variables",
     "href": "sim-behavior-space.html#selecting-output-variables",
-    "title": "31  Using NetLogo’s Behavior Space",
+    "title": "31  Using NetLogo’s Behaviour Space",
     "section": "31.5 selecting output variables",
     "text": "31.5 selecting output variables",
     "crumbs": [
       "Designing and running Simulation experiments",
-      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behavior Space</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {
     "objectID": "sim-behavior-space.html#advanced-workflows",
     "href": "sim-behavior-space.html#advanced-workflows",
-    "title": "31  Using NetLogo’s Behavior Space",
+    "title": "31  Using NetLogo’s Behaviour Space",
     "section": "31.6 Advanced workflows",
     "text": "31.6 Advanced workflows\n\n31.6.1 Using special procedures\n\n\n31.6.2 output extra files\n\n\n31.6.3 Running settings from file",
     "crumbs": [
       "Designing and running Simulation experiments",
-      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behavior Space</span>"
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {

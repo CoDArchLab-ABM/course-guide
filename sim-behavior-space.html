@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>31&nbsp; Using NetLogo’s Behavior Space – Agent-based modelling for archaeologists. From concept to application and publication</title>
+<title>31&nbsp; Using NetLogo’s Behaviour Space – Agent-based modelling for archaeologists. From concept to application and publication</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sim-behavior-space.html">Designing and running Simulation experiments</a></li><li class="breadcrumb-item"><a href="./sim-behavior-space.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behavior Space</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sim-behavior-space.html">Designing and running Simulation experiments</a></li><li class="breadcrumb-item"><a href="./sim-behavior-space.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behaviour Space</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -428,7 +428,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sim-behavior-space.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behavior Space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behaviour Space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -513,9 +513,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sim-behavior-space.html">Designing and running Simulation experiments</a></li><li class="breadcrumb-item"><a href="./sim-behavior-space.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behavior Space</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sim-behavior-space.html">Designing and running Simulation experiments</a></li><li class="breadcrumb-item"><a href="./sim-behavior-space.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behaviour Space</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sim-behavior-space" class="quarto-section-identifier"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behavior Space</span></span></h1>
+<h1 class="title"><span id="sim-behavior-space" class="quarto-section-identifier"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Using NetLogo’s Behaviour Space</span></span></h1>
 </div>
 
 
@@ -534,6 +534,22 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2" data-number="31.1">
 <h2 data-number="31.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">31.1</span> Introduction</h2>
+<pre class="mermaid"><code>flowchart LR
+    A[⚙️ Model setup&lt;br/&gt;NetLogo model ready (.nlogo)] --&gt;
+    B[🎛️ Define experiment&lt;br/&gt;BehaviorSpace parameters &amp; settings]
+    B --&gt; C[▶️ Run experiments&lt;br/&gt;Multiple model runs with varied parameters]
+    C --&gt; D[💾 Export results&lt;br/&gt;CSV output files]
+    D --&gt; E[📊 Analyse results&lt;br/&gt;R scripts for plots &amp; statistics]
+    E --&gt; F[🧩 Interpret results&lt;br/&gt;Compare to hypotheses or data]
+    F --&gt; G[🔁 Refine model or experiment&lt;br/&gt;Adjust parameters, mechanisms]
+    G --&gt; B
+    style A fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
+    style B fill:#fffbea,stroke:#c4a000,stroke-width:1px
+    style C fill:#fef6e4,stroke:#ff8c00,stroke-width:1px
+    style D fill:#f0f9f0,stroke:#009900,stroke-width:1px
+    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
+    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
+    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px</code></pre>
 </section>
 <section id="single-simulation-run" class="level2" data-number="31.2">
 <h2 data-number="31.2" class="anchored" data-anchor-id="single-simulation-run"><span class="header-section-number">31.2</span> Single simulation run</h2>
