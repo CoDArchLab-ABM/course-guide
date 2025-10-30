@@ -537,7 +537,8 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Reproducible:</strong> anyone (including your future self) can run it and obtain the same results.</li>
 <li><strong>Transparent:</strong> the model’s assumptions, mechanisms, and implementation are easy to inspect.</li>
 <li><strong>Collaborative:</strong> colleagues can contribute, review, or reuse your code and data.</li>
-<li><strong>Evolvable:</strong> improvements, corrections, or new experiments can be added without breaking the project.</li>
+<li><strong>Extensible:</strong> improvements, corrections, or new experiments can be added without breaking the project.</li>
+<li><strong>Reusable:</strong> others can build on your work.</li>
 </ul>
 <p>A typical simulation-modelling workflow can be represented as a cycle of five stages:</p>
 <ol type="1">
@@ -550,34 +551,19 @@ ul.task-list li input[type="checkbox"] {
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control. The goal is <em>incremental improvement</em> rather than perfection at once.</p>
 <section id="example-workflow" class="level3" data-number="8.1.1">
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="example-workflow"><span class="header-section-number">8.1.1</span> Example workflow</h3>
-<!--```
-Conceptual Model (diagram, notes)
+<pre><code>💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses
         ↓
-Implementation in NetLogo (.nlogo)
+🧱 Implementation&lt;br/&gt;NetLogo model
         ↓
-Versioning and documentation (Git + GitHub)
+🔄 Version control&lt;br/&gt;Git + GitHub
         ↓
-Simulation experiments (BehaviorSpace)
+🧪 Experimentation&lt;br/&gt;BehaviorSpace runs
         ↓
-Data analysis and plots (R scripts)
+📊 Analysis&lt;br/&gt;R scripts, plots, stats
+        ↓
+📢 Publication&lt;br/&gt;Release + Zenodo DOI
         ↺
-Revision / new hypothesis
-```-->
-<pre class="{mermaid}"><code>flowchart TB
-    A[💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses] ==&gt; B[🧱 Implementation&lt;br/&gt;NetLogo model]
-    B ==&gt; C[🔄 Version control&lt;br/&gt;Git + GitHub]
-    C ==&gt; D[🧪 Experimentation&lt;br/&gt;BehaviorSpace runs]
-    D ==&gt; E[📊 Analysis&lt;br/&gt;R scripts, plots, stats]
-    E ==&gt; F[📢 Publication&lt;br/&gt;Release + Zenodo DOI]
-    F ==&gt; G[🔁 Revision &amp; new hypotheses]
-    G ==&gt; A
-    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
-    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
-    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px
-    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
-    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
-    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
-    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px</code></pre>
+🔁 Revision &amp; new hypotheses</code></pre>
 <p>Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
 <hr>
 </section>
