@@ -44,7 +44,7 @@ Treat this as a *living process*: your repository should tell the story of how y
 
 ---
 
-## 8.2 Tools and services checklist
+## Tools and services checklist
 
 To follow best practices, every simulation modeller should maintain a working toolkit and a structured workflow environment. Below is a checklist tailored to this course.
 
