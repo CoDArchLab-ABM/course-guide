@@ -37,8 +37,9 @@ Data analysis and plots (R scripts)
 Revision / new hypothesis
 ```
 
-```mermaid
-flowchart LR
+```{r}
+DiagrammeR::DiagrammeR("
+  flowchart LR
     A[💡 Conceptualisation<br/>Define system, agents, hypotheses] --> 
     B[🧱 Implementation<br/>NetLogo model (.nlogo)]
     B --> C[🔄 Version control<br/>Git + GitHub]
@@ -52,6 +53,7 @@ flowchart LR
     style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
     style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
     style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
+", type = "mermaid")
 ```
 
 Treat this as a *living process*: your repository should tell the story of how your model evolved.
