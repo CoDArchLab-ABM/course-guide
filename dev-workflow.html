@@ -76,9 +76,6 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -553,7 +550,8 @@ ul.task-list li input[type="checkbox"] {
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control. The goal is <em>incremental improvement</em> rather than perfection at once.</p>
 <section id="example-workflow" class="level3" data-number="8.1.1">
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="example-workflow"><span class="header-section-number">8.1.1</span> Example workflow</h3>
-<pre><code>Conceptual Model (diagram, notes)
+<!--```
+Conceptual Model (diagram, notes)
         ↓
 Implementation in NetLogo (.nlogo)
         ↓
@@ -563,38 +561,23 @@ Simulation experiments (BehaviorSpace)
         ↓
 Data analysis and plots (R scripts)
         ↺
-Revision / new hypothesis</code></pre>
-<div class="cell" data-fig-width="6" data-layout-align="default">
-<div class="cell-output-display">
-<div id="fig-mermaid" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mermaid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
-<pre class="mermaid mermaid-js" data-label="fig-mermaid">flowchart LR
-    A[💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses] --&gt; B[🧱 Implementation&lt;br/&gt;NetLogo model]
-    B --&gt; C[🔄 Version control&lt;br/&gt;Git + GitHub]
-    C --&gt; D[🧪 Experimentation&lt;br/&gt;BehaviorSpace runs]
-    D --&gt; E[📊 Analysis&lt;br/&gt;R scripts, plots, stats]
-    E --&gt; F[📢 Publication&lt;br/&gt;Release + Zenodo DOI]
-    F --&gt; G[🔁 Revision &amp; new hypotheses]
-    G --&gt; A
+Revision / new hypothesis
+```-->
+<pre class="{mermaid}"><code>flowchart TB
+    A[💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses] ==&gt; B[🧱 Implementation&lt;br/&gt;NetLogo model]
+    B ==&gt; C[🔄 Version control&lt;br/&gt;Git + GitHub]
+    C ==&gt; D[🧪 Experimentation&lt;br/&gt;BehaviorSpace runs]
+    D ==&gt; E[📊 Analysis&lt;br/&gt;R scripts, plots, stats]
+    E ==&gt; F[📢 Publication&lt;br/&gt;Release + Zenodo DOI]
+    F ==&gt; G[🔁 Revision &amp; new hypotheses]
+    G ==&gt; A
     style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
     style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
     style C fill:#f0f9f0,stroke:#009900,stroke-width:1px
     style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
     style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
     style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
-    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px
-</pre>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-mermaid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.1
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
+    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px</code></pre>
 <p>Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
 <hr>
 </section>
