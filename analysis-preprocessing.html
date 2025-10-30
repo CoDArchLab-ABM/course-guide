@@ -111,6 +111,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/d3-3.3.8/d3.min.js"></script>
+<script src="site_libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="site_libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="site_libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="site_libs/chromatography-0.1/chromatography.js"></script>
+<script src="site_libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -567,24 +576,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="analysis-pipeline-for-simulation-results" class="level2" data-number="34.1">
 <h2 data-number="34.1" class="anchored" data-anchor-id="analysis-pipeline-for-simulation-results"><span class="header-section-number">34.1</span> 📊 Analysis Pipeline for Simulation Results</h2>
-<pre class="mermaid"><code>flowchart LR
-    A[💾 Simulation outputs&lt;br/&gt;BehaviorSpace CSV files] --&gt;
-    B[📥 Import data&lt;br/&gt;R: read.csv(), tidyverse]
-    B --&gt; C[🧹 Clean &amp; prepare&lt;br/&gt;Data wrangling, filtering, reshaping]
-    C --&gt; D[📈 Explore&lt;br/&gt;Descriptive plots, distributions, correlations]
-    D --&gt; E[📊 Analyse&lt;br/&gt;Statistical models, sensitivity analysis]
-    E --&gt; F[🖼️ Visualise&lt;br/&gt;Publication-ready plots, dashboards]
-    F --&gt; G[🧩 Interpret&lt;br/&gt;Compare with hypotheses, archaeological data]
-    G --&gt; H[📘 Report &amp; share&lt;br/&gt;RMarkdown, GitHub, Zenodo DOI]
-    H --&gt; A[🔁 Feedback loop&lt;br/&gt;Refine model or experiment design]
-    style A fill:#f0f9f0,stroke:#009900,stroke-width:1px
-    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
-    style C fill:#fffbea,stroke:#c4a000,stroke-width:1px
-    style D fill:#fef6e4,stroke:#ff8c00,stroke-width:1px
-    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
-    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
-    style G fill:#fdf2ff,stroke:#9933ff,stroke-width:1px
-    style H fill:#fef6e4,stroke:#c4a000,stroke-width:1px</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">DiagrammeR</span>(<span class="st">"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">  flowchart LR</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">    A[💾 Simulation outputs&lt;br/&gt;BehaviorSpace CSV files] --&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">    B[📥 Import data&lt;br/&gt;R: read.csv(), tidyverse]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">    B --&gt; C[🧹 Clean &amp; prepare&lt;br/&gt;Data wrangling, filtering, reshaping]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">    C --&gt; D[📈 Explore&lt;br/&gt;Descriptive plots, distributions, correlations]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">    D --&gt; E[📊 Analyse&lt;br/&gt;Statistical models, sensitivity analysis]</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">    E --&gt; F[🖼️ Visualise&lt;br/&gt;Publication-ready plots, dashboards]</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    F --&gt; G[🧩 Interpret&lt;br/&gt;Compare with hypotheses, archaeological data]</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    G --&gt; H[📘 Report &amp; share&lt;br/&gt;RMarkdown, GitHub, Zenodo DOI]</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">    H --&gt; A[🔁 Feedback loop&lt;br/&gt;Refine model or experiment design]</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">    style A fill:#f0f9f0,stroke:#009900,stroke-width:1px</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">    style C fill:#fffbea,stroke:#c4a000,stroke-width:1px</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">    style D fill:#fef6e4,stroke:#ff8c00,stroke-width:1px</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">    style G fill:#fdf2ff,stroke:#9933ff,stroke-width:1px</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">    style H fill:#fef6e4,stroke:#c4a000,stroke-width:1px</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">type =</span> <span class="st">"mermaid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-9edd1f98c5eea7e8c355" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-9edd1f98c5eea7e8c355">{"x":{"diagram":"\n  flowchart LR\n    A[💾 Simulation outputs<br/>BehaviorSpace CSV files] -->\n    B[📥 Import data<br/>R: read.csv(), tidyverse]\n    B --> C[🧹 Clean & prepare<br/>Data wrangling, filtering, reshaping]\n    C --> D[📈 Explore<br/>Descriptive plots, distributions, correlations]\n    D --> E[📊 Analyse<br/>Statistical models, sensitivity analysis]\n    E --> F[🖼️ Visualise<br/>Publication-ready plots, dashboards]\n    F --> G[🧩 Interpret<br/>Compare with hypotheses, archaeological data]\n    G --> H[📘 Report & share<br/>RMarkdown, GitHub, Zenodo DOI]\n    H --> A[🔁 Feedback loop<br/>Refine model or experiment design]\n    style A fill:#f0f9f0,stroke:#009900,stroke-width:1px\n    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px\n    style C fill:#fffbea,stroke:#c4a000,stroke-width:1px\n    style D fill:#fef6e4,stroke:#ff8c00,stroke-width:1px\n    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px\n    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px\n    style G fill:#fdf2ff,stroke:#9933ff,stroke-width:1px\n    style H fill:#fef6e4,stroke:#c4a000,stroke-width:1px\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="setting-up-our-script-environment" class="level2" data-number="34.2">
 <h2 data-number="34.2" class="anchored" data-anchor-id="setting-up-our-script-environment"><span class="header-section-number">34.2</span> Setting up our script environment</h2>

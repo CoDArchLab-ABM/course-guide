@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -76,6 +111,15 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/d3-3.3.8/d3.min.js"></script>
+<script src="site_libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="site_libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="site_libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="site_libs/chromatography-0.1/chromatography.js"></script>
+<script src="site_libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -534,22 +578,30 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2" data-number="31.1">
 <h2 data-number="31.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">31.1</span> Introduction</h2>
-<pre class="mermaid"><code>flowchart LR
-    A[⚙️ Model setup&lt;br/&gt;NetLogo model ready (.nlogo)] --&gt;
-    B[🎛️ Define experiment&lt;br/&gt;BehaviorSpace parameters &amp; settings]
-    B --&gt; C[▶️ Run experiments&lt;br/&gt;Multiple model runs with varied parameters]
-    C --&gt; D[💾 Export results&lt;br/&gt;CSV output files]
-    D --&gt; E[📊 Analyse results&lt;br/&gt;R scripts for plots &amp; statistics]
-    E --&gt; F[🧩 Interpret results&lt;br/&gt;Compare to hypotheses or data]
-    F --&gt; G[🔁 Refine model or experiment&lt;br/&gt;Adjust parameters, mechanisms]
-    G --&gt; B
-    style A fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
-    style B fill:#fffbea,stroke:#c4a000,stroke-width:1px
-    style C fill:#fef6e4,stroke:#ff8c00,stroke-width:1px
-    style D fill:#f0f9f0,stroke:#009900,stroke-width:1px
-    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
-    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
-    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">DiagrammeR</span>(<span class="st">"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">  flowchart LR</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">    A[⚙️ Model setup&lt;br/&gt;NetLogo model ready (.nlogo)] --&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">    B[🎛️ Define experiment&lt;br/&gt;BehaviorSpace parameters &amp; settings]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">    B --&gt; C[▶️ Run experiments&lt;br/&gt;Multiple model runs with varied parameters]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">    C --&gt; D[💾 Export results&lt;br/&gt;CSV output files]</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">    D --&gt; E[📊 Analyse results&lt;br/&gt;R scripts for plots &amp; statistics]</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">    E --&gt; F[🧩 Interpret results&lt;br/&gt;Compare to hypotheses or data]</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    F --&gt; G[🔁 Refine model or experiment&lt;br/&gt;Adjust parameters, mechanisms]</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    G --&gt; B</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">    style A fill:#e6f3ff,stroke:#2176ff,stroke-width:1px</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">    style B fill:#fffbea,stroke:#c4a000,stroke-width:1px</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">    style C fill:#fef6e4,stroke:#ff8c00,stroke-width:1px</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">    style D fill:#f0f9f0,stroke:#009900,stroke-width:1px</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">type =</span> <span class="st">"mermaid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-a060024a94d3b98b8940" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-a060024a94d3b98b8940">{"x":{"diagram":"\n  flowchart LR\n    A[⚙️ Model setup<br/>NetLogo model ready (.nlogo)] -->\n    B[🎛️ Define experiment<br/>BehaviorSpace parameters & settings]\n    B --> C[▶️ Run experiments<br/>Multiple model runs with varied parameters]\n    C --> D[💾 Export results<br/>CSV output files]\n    D --> E[📊 Analyse results<br/>R scripts for plots & statistics]\n    E --> F[🧩 Interpret results<br/>Compare to hypotheses or data]\n    F --> G[🔁 Refine model or experiment<br/>Adjust parameters, mechanisms]\n    G --> B\n    style A fill:#e6f3ff,stroke:#2176ff,stroke-width:1px\n    style B fill:#fffbea,stroke:#c4a000,stroke-width:1px\n    style C fill:#fef6e4,stroke:#ff8c00,stroke-width:1px\n    style D fill:#f0f9f0,stroke:#009900,stroke-width:1px\n    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px\n    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px\n    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="single-simulation-run" class="level2" data-number="31.2">
 <h2 data-number="31.2" class="anchored" data-anchor-id="single-simulation-run"><span class="header-section-number">31.2</span> Single simulation run</h2>

@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -76,6 +111,15 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/d3-3.3.8/d3.min.js"></script>
+<script src="site_libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="site_libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet">
+<script src="site_libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="site_libs/chromatography-0.1/chromatography.js"></script>
+<script src="site_libs/DiagrammeR-binding-1.0.11/DiagrammeR.js"></script>
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -561,20 +605,28 @@ Simulation experiments (BehaviorSpace)
 Data analysis and plots (R scripts)
         ↺
 Revision / new hypothesis</code></pre>
-<pre class="mermaid"><code>flowchart LR
-    A[💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses] --&gt; 
-    B[🧱 Implementation&lt;br/&gt;NetLogo model (.nlogo)]
-    B --&gt; C[🔄 Version control&lt;br/&gt;Git + GitHub]
-    C --&gt; D[🧪 Experimentation&lt;br/&gt;BehaviorSpace runs]
-    D --&gt; E[📊 Analysis&lt;br/&gt;R scripts, plots, stats]
-    E --&gt; F[📢 Publication&lt;br/&gt;Release + Zenodo DOI]
-    F --&gt; A[🔁 Revision &amp; new hypotheses]
-    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
-    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
-    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px
-    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
-    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
-    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px</code></pre>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">DiagrammeR</span>(<span class="st">"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">  flowchart LR</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">    A[💡 Conceptualisation&lt;br/&gt;Define system, agents, hypotheses] --&gt; </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">    B[🧱 Implementation&lt;br/&gt;NetLogo model (.nlogo)]</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">    B --&gt; C[🔄 Version control&lt;br/&gt;Git + GitHub]</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">    C --&gt; D[🧪 Experimentation&lt;br/&gt;BehaviorSpace runs]</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">    D --&gt; E[📊 Analysis&lt;br/&gt;R scripts, plots, stats]</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">    E --&gt; F[📢 Publication&lt;br/&gt;Release + Zenodo DOI]</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">    F --&gt; A[🔁 Revision &amp; new hypotheses]</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">type =</span> <span class="st">"mermaid"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-9869c1b6cf0a0596877f" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-9869c1b6cf0a0596877f">{"x":{"diagram":"\n  flowchart LR\n    A[💡 Conceptualisation<br/>Define system, agents, hypotheses] --> \n    B[🧱 Implementation<br/>NetLogo model (.nlogo)]\n    B --> C[🔄 Version control<br/>Git + GitHub]\n    C --> D[🧪 Experimentation<br/>BehaviorSpace runs]\n    D --> E[📊 Analysis<br/>R scripts, plots, stats]\n    E --> F[📢 Publication<br/>Release + Zenodo DOI]\n    F --> A[🔁 Revision & new hypotheses]\n    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px\n    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px\n    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px\n    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px\n    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px\n    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px\n"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 <p>Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
 <hr>
 </section>
