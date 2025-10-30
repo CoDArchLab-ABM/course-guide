@@ -2,11 +2,10 @@
 
 ## 📊 Analysis Pipeline for Simulation Results
 
-```{r}
-DiagrammeR::DiagrammeR("
-  flowchart LR
+```{mermaid}
+flowchart TB
     A[💾 Simulation outputs<br/>BehaviorSpace CSV files] -->
-    B[📥 Import data<br/>R: read.csv(), tidyverse]
+    B[📥 Import data<br/>R, tidyverse]
     B --> C[🧹 Clean & prepare<br/>Data wrangling, filtering, reshaping]
     C --> D[📈 Explore<br/>Descriptive plots, distributions, correlations]
     D --> E[📊 Analyse<br/>Statistical models, sensitivity analysis]
@@ -22,7 +21,6 @@ DiagrammeR::DiagrammeR("
     style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
     style G fill:#fdf2ff,stroke:#9933ff,stroke-width:1px
     style H fill:#fef6e4,stroke:#c4a000,stroke-width:1px
-", type = "mermaid")
 ```
 
 ## Setting up our script environment

@@ -23,7 +23,7 @@ The goal is *incremental improvement* rather than perfection at once.
 
 ### Example workflow
 
-```
+<!--```
 Conceptual Model (diagram, notes)
         ↓
 Implementation in NetLogo (.nlogo)
@@ -35,19 +35,16 @@ Simulation experiments (BehaviorSpace)
 Data analysis and plots (R scripts)
         ↺
 Revision / new hypothesis
-```
-
+```-->
 ```{mermaid}
-%%| label: fig-mermaid
-%%| fig-width: 6
-flowchart LR
-    A[💡 Conceptualisation<br/>Define system, agents, hypotheses] --> B[🧱 Implementation<br/>NetLogo model]
-    B --> C[🔄 Version control<br/>Git + GitHub]
-    C --> D[🧪 Experimentation<br/>BehaviorSpace runs]
-    D --> E[📊 Analysis<br/>R scripts, plots, stats]
-    E --> F[📢 Publication<br/>Release + Zenodo DOI]
-    F --> G[🔁 Revision & new hypotheses]
-    G --> A
+flowchart TB
+    A[💡 Conceptualisation<br/>Define system, agents, hypotheses] ==> B[🧱 Implementation<br/>NetLogo model]
+    B ==> C[🔄 Version control<br/>Git + GitHub]
+    C ==> D[🧪 Experimentation<br/>BehaviorSpace runs]
+    D ==> E[📊 Analysis<br/>R scripts, plots, stats]
+    E ==> F[📢 Publication<br/>Release + Zenodo DOI]
+    F ==> G[🔁 Revision & new hypotheses]
+    G ==> A
     style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
     style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
     style C fill:#f0f9f0,stroke:#009900,stroke-width:1px

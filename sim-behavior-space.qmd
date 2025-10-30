@@ -2,10 +2,9 @@
 
 ## Introduction
 
-```{r}
-DiagrammeR::DiagrammeR("
-  flowchart LR
-    A[⚙️ Model setup<br/>NetLogo model ready (.nlogo)] -->
+```{mermaid}
+flowchart TB
+    A[⚙️ Model setup<br/>NetLogo model ready] -->
     B[🎛️ Define experiment<br/>BehaviorSpace parameters & settings]
     B --> C[▶️ Run experiments<br/>Multiple model runs with varied parameters]
     C --> D[💾 Export results<br/>CSV output files]
@@ -20,7 +19,6 @@ DiagrammeR::DiagrammeR("
     style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
     style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
     style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px
-", type = "mermaid")
 ```
 
 ## Single simulation run
