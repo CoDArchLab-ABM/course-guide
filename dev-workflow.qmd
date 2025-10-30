@@ -8,7 +8,8 @@ Thinking like a software developer helps to ensure that the model is:
 * **Reproducible:** anyone (including your future self) can run it and obtain the same results.
 * **Transparent:** the model’s assumptions, mechanisms, and implementation are easy to inspect.
 * **Collaborative:** colleagues can contribute, review, or reuse your code and data.
-* **Evolvable:** improvements, corrections, or new experiments can be added without breaking the project.
+* **Extensible:** improvements, corrections, or new experiments can be added without breaking the project.
+* **Reusable:** others can build on your work.
 
 A typical simulation-modelling workflow can be represented as a cycle of five stages:
 
@@ -23,35 +24,20 @@ The goal is *incremental improvement* rather than perfection at once.
 
 ### Example workflow
 
-<!--```
-Conceptual Model (diagram, notes)
+```
+💡 Conceptualisation<br/>Define system, agents, hypotheses
         ↓
-Implementation in NetLogo (.nlogo)
+🧱 Implementation<br/>NetLogo model
         ↓
-Versioning and documentation (Git + GitHub)
+🔄 Version control<br/>Git + GitHub
         ↓
-Simulation experiments (BehaviorSpace)
+🧪 Experimentation<br/>BehaviorSpace runs
         ↓
-Data analysis and plots (R scripts)
+📊 Analysis<br/>R scripts, plots, stats
+        ↓
+📢 Publication<br/>Release + Zenodo DOI
         ↺
-Revision / new hypothesis
-```-->
-```{mermaid}
-flowchart TB
-    A[💡 Conceptualisation<br/>Define system, agents, hypotheses] ==> B[🧱 Implementation<br/>NetLogo model]
-    B ==> C[🔄 Version control<br/>Git + GitHub]
-    C ==> D[🧪 Experimentation<br/>BehaviorSpace runs]
-    D ==> E[📊 Analysis<br/>R scripts, plots, stats]
-    E ==> F[📢 Publication<br/>Release + Zenodo DOI]
-    F ==> G[🔁 Revision & new hypotheses]
-    G ==> A
-    style A fill:#fef6e4,stroke:#c4a000,stroke-width:1px
-    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
-    style C fill:#f0f9f0,stroke:#009900,stroke-width:1px
-    style D fill:#fff4e6,stroke:#ff8c00,stroke-width:1px
-    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
-    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
-    style G fill:#fef6e4,stroke:#c4a000,stroke-width:1px
+🔁 Revision & new hypotheses
 ```
 
 Treat this as a *living process*: your repository should tell the story of how your model evolved.

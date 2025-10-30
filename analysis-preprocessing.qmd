@@ -2,25 +2,24 @@
 
 ## 📊 Analysis Pipeline for Simulation Results
 
-```{mermaid}
-flowchart TB
-    A[💾 Simulation outputs<br/>BehaviorSpace CSV files] -->
-    B[📥 Import data<br/>R, tidyverse]
-    B --> C[🧹 Clean & prepare<br/>Data wrangling, filtering, reshaping]
-    C --> D[📈 Explore<br/>Descriptive plots, distributions, correlations]
-    D --> E[📊 Analyse<br/>Statistical models, sensitivity analysis]
-    E --> F[🖼️ Visualise<br/>Publication-ready plots, dashboards]
-    F --> G[🧩 Interpret<br/>Compare with hypotheses, archaeological data]
-    G --> H[📘 Report & share<br/>RMarkdown, GitHub, Zenodo DOI]
-    H --> A[🔁 Feedback loop<br/>Refine model or experiment design]
-    style A fill:#f0f9f0,stroke:#009900,stroke-width:1px
-    style B fill:#e6f3ff,stroke:#2176ff,stroke-width:1px
-    style C fill:#fffbea,stroke:#c4a000,stroke-width:1px
-    style D fill:#fef6e4,stroke:#ff8c00,stroke-width:1px
-    style E fill:#f3e6ff,stroke:#9933ff,stroke-width:1px
-    style F fill:#fff0f5,stroke:#cc3366,stroke-width:1px
-    style G fill:#fdf2ff,stroke:#9933ff,stroke-width:1px
-    style H fill:#fef6e4,stroke:#c4a000,stroke-width:1px
+```
+💾 Simulation outputs<br/>BehaviorSpace CSV files
+        ↓
+📥 Import data<br/>R, tidyverse
+        ↓
+🧹 Clean & prepare<br/>Data wrangling, filtering, reshaping
+        ↓
+📈 Explore<br/>Descriptive plots, distributions, correlations
+        ↓
+📊 Analyse<br/>Statistical models, sensitivity analysis
+        ↓
+🖼️ Visualise<br/>Publication-ready plots, dashboard
+        ↓
+🧩 Interpret<br/>Compare with hypotheses, archaeological data
+        ↓
+📘 Report & share<br/>RMarkdown, GitHub, Zenodo DOI
+        ↺
+🔁 Refine model or experiment design
 ```
 
 ## Setting up our script environment
