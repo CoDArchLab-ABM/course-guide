@@ -237,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dev-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">A simulation modeller as a software: a workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">A simulation modeller as a software developer: a workflow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -539,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.5.1</span> Summary</a></li>
   </ul></li>
-  <li><a href="#optional-template-for-your-readme-file" id="toc-optional-template-for-your-readme-file" class="nav-link" data-scroll-target="#optional-template-for-your-readme-file"><span class="header-section-number">10.6</span> Optional: Template for your README file</a>
+  <li><a href="#writing-your-readme-file" id="toc-writing-your-readme-file" class="nav-link" data-scroll-target="#writing-your-readme-file"><span class="header-section-number">10.6</span> Writing your README file</a>
   <ul class="collapse">
   <li><a href="#example-readme.md-template" id="toc-example-readme.md-template" class="nav-link" data-scroll-target="#example-readme.md-template"><span class="header-section-number">10.6.1</span> 📄 Example README.md Template</a></li>
   </ul></li>
@@ -568,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This chapter puts into practice the workflow introduced earlier (Chapter 8). You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a <strong>living record</strong> of your project’s evolution — from conceptualisation and first prototype to final publication.</p>
+<p>This chapter puts into practice the workflow introduced earlier (Chapter <span class="citation" data-cites="dev-git-github">(<a href="references.html#ref-dev-git-github" role="doc-biblioref"><strong>dev-git-github?</strong></a>)</span>). You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a <strong>living record</strong> of your project’s evolution — from conceptualisation and first prototype to final publication.</p>
 <hr>
 <section id="join-the-course-github-organisation" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub organisation</h2>
@@ -601,6 +601,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>💡 <em>Starting with a README and license ensures that your project is immediately valid, citable, and shareable.</em></p>
 </blockquote>
 <p>If you <strong>can work locally</strong> (on your own computer or a managed laptop), you may also initialise the repository on your machine using Git, then push it to GitHub.</p>
+<blockquote class="blockquote">
+<p>NOTE: You can find a project template in the course organisation (<a href="https://github.com/CoDArchLab-ABM/project2025_template"><code>project2025_template</code></a>) with files and directories for the typical contents already created. You may “fork” the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.</p>
+</blockquote>
 <hr>
 </section>
 <section id="populating-your-repository" class="level2" data-number="10.3">
@@ -611,7 +614,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ├── model/               # NetLogo models (.nlogo files)
 ├── data/                # Input data files (CSV, shapefiles, etc.)
 ├── results/             # Simulation outputs
-├── analysis/             # R or Python scripts for analysis
+├── analysis/            # R or Python scripts for analysis
 ├── docs/                # Markdown or PDF documentation
 │   └── notes.md
 ├── LICENSE
@@ -723,8 +726,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="optional-template-for-your-readme-file" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="optional-template-for-your-readme-file"><span class="header-section-number">10.6</span> Optional: Template for your README file</h2>
+<section id="writing-your-readme-file" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="writing-your-readme-file"><span class="header-section-number">10.6</span> Writing your README file</h2>
 <p>Every GitHub repository starts with a <code>README.md</code> file. It serves as the <em>front page</em> of your project and should answer three key questions:</p>
 <ol type="1">
 <li><strong>What is this project?</strong></li>
@@ -805,8 +808,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>This work was developed as part of the MA course *Agent-based Modelling for Archaeologists: From Concept to Application and Publication*,  </span>
 <span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>taught by Andreas Angourakis at the University of Cologne.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You can find a project template in the course organisation (<a href="https://github.com/CoDArchLab-ABM/project2025_template"><code>project2025_template</code></a>) with files and directories for the typical contents already created.</p>
-<p>You may “fork” the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.</p>
 
 
 </section>
