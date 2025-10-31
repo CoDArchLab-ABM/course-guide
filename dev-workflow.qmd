@@ -1,4 +1,4 @@
-# A simulation modeller as a software: a workflow {#dev-workflow}
+# A simulation modeller as a software developer: a workflow {#dev-workflow}
 
 ## The "big picture"
 
@@ -11,36 +11,89 @@ Thinking like a software developer helps to ensure that the model is:
 * **Extensible:** improvements, corrections, or new experiments can be added without breaking the project.
 * **Reusable:** others can build on your work.
 
-A typical simulation-modelling workflow can be represented as a cycle of five stages:
+We can recast the generic modelling steps we saw in Chapter @intro-abm-method into a software development workflow represented as:
 
-1. **Conceptualisation:** Define the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.
-2. **Implementation:** Translate the conceptual model into executable code (e.g., in NetLogo).
-3. **Version control:** Track every change with Git; publish and document the model using GitHub.
-4. **Experimentation:** Run systematic simulations using NetLogo’s *BehaviorSpace* or custom scripts (e.g., in R).
-5. **Analysis and publication:** Process and visualise simulation outputs in R, write up results, and share your full project repository.
+1. **Conceptual model:** Definitions the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.  
+2. **Implementation or "implemented model":** Translation the conceptual model into executable code (e.g., in NetLogo). Expanded through "coding sessions".  
+4. **Version control:** After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly on the remote repository using your browser, you will need to commit changes individually for each file. When changing your model in NetLogo, you will have to open the `.nlogo` or `.nlogox` in a text editor and copy-paste the content into the remote version (not recommended).
+5. **Experimentation:** Run simulations manually in NetLogo, or systematic experiments using NetLogo’s *BehaviorSpace* or custom procedures in NetLogo, external files (e.g., datasets generated in R), or executing NetLogo from R.  
+6. **Analysis:** Process and visualise simulation outputs in R, write up results.  
+7. **Publication**: publish and share your full project repository, including analysis outputs (specific outputs can be used for an article).
+
+```{r}
+DiagrammeR::grViz("
+digraph dev_workflow {
+
+graph [layout = dot, rankdir = TB, overlap = false]
+
+node [shape = box]
+A [label = '💡 Conceptualise']
+B [label = '📝 Design']
+C [label = '🧱 Programme']
+D [label = '🔄 Commit changes']
+E [label = '🧪 Experiment/simulate']
+F [label = '📊 Analyse']
+G [label = '📢 Publish']
+
+A -> B -> C -> D -> E -> F -> G
+}")
+```
 
 In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.
-The goal is *incremental improvement* rather than perfection at once.
 
-### Example workflow
+```{r}
+DiagrammeR::grViz("
+digraph dev_workflow {
+
+graph [layout = dot, rankdir = TB, overlap = false]
+
+node [shape = box]
+A [label = '💡 Conceptualise']
+B [label = '📝 Design']
+C [label = '🧱 Programme']
+D [label = '🔄 Commit changes']
+E [label = '🧪 Experiment/simulate']
+F [label = '📊 Analyse']
+G [label = '📢 Publish']
+H [label = '🔁 Revise', shape = circle]
+
+A -> B -> C -> D -> E -> F -> G
+C -> H D -> H E -> H F -> H G -> H
+H -> B H -> C H -> D H -> E H -> F H -> G
+}")
+```
+
+The goal is *incremental improvement* rather than perfection at once. Treat this as a *living process*: your repository should tell the story of how your model evolved.
+
+In practice, your workflow should go over these steps in time in a safe, but tentative way: 
 
 ```
-💡 Conceptualisation<br/>Define system, agents, hypotheses
+💡📝 First conceptual model with enough definitions (variables, parameters, agents, functions)
         ↓
-🧱 Implementation<br/>NetLogo model
+🧱 First programming session creating a few model elements (not runnable)
         ↓
-🔄 Version control<br/>Git + GitHub
+🔄 Commit changes: "add netlogo file"
         ↓
-🧪 Experimentation<br/>BehaviorSpace runs
+🔁📝 Rethinking a few definitions
         ↓
-📊 Analysis<br/>R scripts, plots, stats
+🧱 Second programming session updating the model with new definitions (not runnable)
         ↓
-📢 Publication<br/>Release + Zenodo DOI
-        ↺
-🔁 Revision & new hypotheses
+🔄 Commit changes: "update netlogo file"
+        ↓
+🧱 Third programming session creating minimal set of procedures for initialisation (runnable)
+        ↓
+🔄 Commit changes: "update netlogo file"
+        ↓
+...
+        ↓
+🧪📊 Run a few simulations and observe the model dynamics (also output variables)
+        ↓
+🔁🧱 Refine a model procedure, not quite behaving as intended
+        ↓
+...
+        ↓
+...
 ```
-
-Treat this as a *living process*: your repository should tell the story of how your model evolved.
 
 ---
 
@@ -53,30 +106,34 @@ To follow best practices, every simulation modeller should maintain a working to
 | **Version control**               | **Git**                          | Track changes to your project files                       | Commits, branches, merges, history                     |
 |                                   | **GitHub**                       | Host and share repositories online                        | README, issues, pull requests, releases                |
 | **Model implementation**          | **NetLogo**                      | Main platform for building agent-based models             | Interface design, procedures, agents, patches, globals |
-| **Data analysis & visualization** | **R**                            | Process simulation results, generate plots and statistics | R scripts, data frames, ggplot2, tidyverse             |
-| **Interoperability**              | **RNetLogo** (optional)          | Run NetLogo from R for batch experiments                  | Automation, reproducibility                            |
+| **Data analysis & visualization** | **R** (later in the course)     | Process simulation results, generate plots and statistics | R scripts, data frames, ggplot2, tidyverse             |
+|                                   | **RStudio** (optional)          | More agility using R (UI elements for common operations), allow seamless use of notebook formats, other script extensions and git                        | initial configuration, creating projects, package installation, notebook interaction                |
+| **Interoperability**              | **RNetLogo** (optional)          | Run NetLogo from R for batch experiments                  | Automation, reproducibility, less flexibility            |
 | **Documentation**                 | **Markdown (.md)**               | Write guides, notebooks, and documentation                | Formatting, headings, links, code blocks               |
 |                                   | **README.md**                    | Front page of your GitHub repository                      | Summary, usage, citation                               |
 | **Reproducible environment**      | **Project folders**              | Organise code, data, results, and docs                    | Clear structure, consistent naming                     |
-| **Collaboration and feedback**    | **GitHub Issues / Discussions**  | Record bugs, ideas, and model questions                   | Issue tracking, commenting                             |
+|                                   | a general-purpose IDE (e.g. **VS Code**)  | Quick edit and manage all files with easy git integration and other features. Particularly useful for editing files not directly related to NetLogo or R.   | integrated file editing and management, essential when using other programming languages (e.g. HTML, Python).                   |
+| **Collaboration and feedback**    | **GitHub Issues / Discussions** (optional)  | Record bugs, ideas, and model questions                   | Issue tracking, commenting              |
 | **Archival and citation**         | **Zenodo** (later in the course) | Assign a DOI to your final model                          | Versioned release, FAIR principles                     |
 
 ### Minimal setup for this course
 
-After today and before proceeding to the next sessions, make sure you have:
+After this session and before proceeding to the next sessions, you should have:
 
-* [ ] Installed **Git**, **NetLogo**, and **R**. These are present in the lab computers, but it is recommended that you also have these installed in your personal computer.
 * [ ] Created a **GitHub account**.
-* [ ] Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.
-* [ ] Tested pushing/pulling a simple repository.
+* [ ] Tested pushing/pulling a simple repository for your model(s).
 * [ ] Set up a structured folder for your project (e.g., `model/`, `data/`, `results/`, `docs/`) and write a minimal README file.
+* [ ] Linked GitHub to Zenodo for future publication.
 
-Optional but recommended:
+When using your own computer to work in a local repository:
+* [ ] Installed **Git**, **NetLogo**, and **R**. These are present in the lab computers.
+* [ ] Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.
+
+Optional but recommended if using your own computer:
 
 * [ ] Installed **RStudio** (for R).
 * [ ] Installed **VS Code** (for editing text and code files).
 * [ ] Install GitHub Desktop.
-* [ ] Linked GitHub to Zenodo for future publication.
 
 ---
 

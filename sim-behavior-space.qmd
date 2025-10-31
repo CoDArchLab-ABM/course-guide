@@ -3,19 +3,19 @@
 ## Introduction
 
 ```
-⚙️ Model setup<br/>NetLogo model ready
+⚙️ Model setup: NetLogo model ready
         ↓
-🎛️ Define experiment<br/>BehaviorSpace parameters & setting
+🎛️ Define experiment: BehaviorSpace parameters & setting
         ↓
-▶️ Run experiments<br/>Multiple model runs with varied parameters
+▶️ Run experiments: Multiple model runs with varied parameters
         ↓
-💾 Export results<br/>CSV output files
+💾 Export results: CSV output files
         ↓
-📊 Analyse results<br/>R scripts for plots & statistics
+📊 Analyse results: R scripts for plots & statistics
         ↓
-🧩 Interpret results<br/>Compare to hypotheses or data
+🧩 Interpret results: Compare to hypotheses or data
         ↺
-🔁 Refine model or experiment<br/>Adjust parameters, mechanisms
+🔁 Refine model or experiment: Adjust parameters, mechanisms
 ```
 
 ## Single simulation run

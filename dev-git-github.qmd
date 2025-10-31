@@ -88,7 +88,7 @@ To verify if Git is installed on your machine, follow these steps:
 
 ### What is GitHub?
 
-GitHub is a cloud-based platform that enables developers to store, manage, and collaborate on code repositories. It builds on Git, a version control system, by adding collaborative features like pull requests, issue tracking, and discussions, which make it easier for teams to work together on software projects. 
+GitHub is a cloud-based platform that enables developers to store, manage, and collaborate on code repositories. It builds on Git functionalities by adding collaborative features like pull requests, issue tracking, and discussions, which make it easier for teams to work together on software projects. 
 
 GitHub also offers hosting for open-source projects, allowing anyone to contribute or review code. With integrations for CI/CD, project management tools, and documentation, GitHub is a popular choice for developers worldwide to manage both personal and professional projects.
 
@@ -381,3 +381,7 @@ This connection allows you to generate and manage DOIs for GitHub repositories, 
 - @noauthor_module-5-open-research-software-and-open-sourcecontent_developmenttask_2md_nodate  
 - @noauthor_issue_nodate  
 :::
+
+---
+
+In this course, we follow a particular minimal repository structure, specific to our needs. In the next chapter, you will be creating your own model repository using this specifications or directly a template.

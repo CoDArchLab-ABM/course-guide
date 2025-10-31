@@ -3,21 +3,21 @@
 ## 📊 Analysis Pipeline for Simulation Results
 
 ```
-💾 Simulation outputs<br/>BehaviorSpace CSV files
+💾 Simulation outputs: BehaviorSpace CSV files
         ↓
-📥 Import data<br/>R, tidyverse
+📥 Import data: R, tidyverse
         ↓
-🧹 Clean & prepare<br/>Data wrangling, filtering, reshaping
+🧹 Clean & prepare: Data wrangling, filtering, reshaping
         ↓
-📈 Explore<br/>Descriptive plots, distributions, correlations
+📈 Explore: Descriptive plots, distributions, correlations
         ↓
-📊 Analyse<br/>Statistical models, sensitivity analysis
+📊 Analyse: Statistical models, sensitivity analysis
         ↓
-🖼️ Visualise<br/>Publication-ready plots, dashboard
+🖼️ Visualise: Publication-ready plots, dashboard
         ↓
-🧩 Interpret<br/>Compare with hypotheses, archaeological data
+🧩 Interpret: Compare with hypotheses, archaeological data
         ↓
-📘 Report & share<br/>RMarkdown, GitHub, Zenodo DOI
+📘 Report & share: RMarkdown, GitHub, Zenodo DOI
         ↺
 🔁 Refine model or experiment design
 ```

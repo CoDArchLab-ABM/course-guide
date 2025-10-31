@@ -1,7 +1,6 @@
 # Creating your simulation model repository {#dev-git-github-practice}
 
-This chapter puts into practice the workflow introduced earlier (Chapter 8). You will now create a proper, version-controlled home for your simulation model.
-Your repository will serve as a **living record** of your project’s evolution — from conceptualisation and first prototype to final publication.
+This chapter puts into practice the workflow introduced earlier (Chapter @dev-git-github). You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a **living record** of your project’s evolution — from conceptualisation and first prototype to final publication.
 
 ---
 
@@ -37,6 +36,8 @@ You can create your repository **entirely through the GitHub web interface**, no
 
 If you **can work locally** (on your own computer or a managed laptop), you may also initialise the repository on your machine using Git, then push it to GitHub.
 
+> NOTE: You can find a project template in the course organisation ([`project2025_template`](https://github.com/CoDArchLab-ABM/project2025_template)) with files and directories for the typical contents already created. You may "fork" the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.
+
 ---
 
 ## Populating your repository
@@ -50,7 +51,7 @@ project2025_<model-name>/
 ├── model/               # NetLogo models (.nlogo files)
 ├── data/                # Input data files (CSV, shapefiles, etc.)
 ├── results/             # Simulation outputs
-├── analysis/             # R or Python scripts for analysis
+├── analysis/            # R or Python scripts for analysis
 ├── docs/                # Markdown or PDF documentation
 │   └── notes.md
 ├── LICENSE
@@ -145,7 +146,7 @@ It also references the course context so students understand what to include and
 
 ---
 
-## Optional: Template for your README file
+## Writing your README file
 
 Every GitHub repository starts with a `README.md` file.
 It serves as the *front page* of your project and should answer three key questions:
@@ -234,7 +235,3 @@ This work was developed as part of the MA course *Agent-based Modelling for Arch
 taught by Andreas Angourakis at the University of Cologne.
 
 ```
-
-You can find a project template in the course organisation ([`project2025_template`](https://github.com/CoDArchLab-ABM/project2025_template)) with files and directories for the typical contents already created.
-
-You may "fork" the template for a model repository and modify it accordingly, or create it from scratch using the guidelines above and populate it with files as you develop your project.
