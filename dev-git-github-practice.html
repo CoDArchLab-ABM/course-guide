@@ -512,7 +512,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Conclusion and free practice {#conclusion}</span></a>
+ <span class="menu-text">Conclusion and free practice</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -531,17 +531,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#join-the-course-github-organisation" id="toc-join-the-course-github-organisation" class="nav-link active" data-scroll-target="#join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub organisation</a></li>
-  <li><a href="#creating-a-new-repository" id="toc-creating-a-new-repository" class="nav-link" data-scroll-target="#creating-a-new-repository"><span class="header-section-number">10.2</span> Creating a new repository</a></li>
-  <li><a href="#populating-your-repository" id="toc-populating-your-repository" class="nav-link" data-scroll-target="#populating-your-repository"><span class="header-section-number">10.3</span> Populating your repository</a></li>
-  <li><a href="#publishing-version-0.1" id="toc-publishing-version-0.1" class="nav-link" data-scroll-target="#publishing-version-0.1"><span class="header-section-number">10.4</span> Publishing version 0.1</a></li>
-  <li><a href="#if-you-later-gain-local-access" id="toc-if-you-later-gain-local-access" class="nav-link" data-scroll-target="#if-you-later-gain-local-access"><span class="header-section-number">10.5</span> If you later gain local access</a>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link active" data-scroll-target="#preparation"><span class="header-section-number">10.1</span> Preparation</a></li>
+  <li><a href="#join-the-course-github-organisation" id="toc-join-the-course-github-organisation" class="nav-link" data-scroll-target="#join-the-course-github-organisation"><span class="header-section-number">10.2</span> Join the course GitHub organisation</a></li>
+  <li><a href="#creating-a-new-repository" id="toc-creating-a-new-repository" class="nav-link" data-scroll-target="#creating-a-new-repository"><span class="header-section-number">10.3</span> Creating a new repository</a></li>
+  <li><a href="#populating-your-repository" id="toc-populating-your-repository" class="nav-link" data-scroll-target="#populating-your-repository"><span class="header-section-number">10.4</span> Populating your repository</a></li>
+  <li><a href="#publishing-version-0.1" id="toc-publishing-version-0.1" class="nav-link" data-scroll-target="#publishing-version-0.1"><span class="header-section-number">10.5</span> Publishing version 0.1</a></li>
+  <li><a href="#if-you-later-gain-local-access" id="toc-if-you-later-gain-local-access" class="nav-link" data-scroll-target="#if-you-later-gain-local-access"><span class="header-section-number">10.6</span> If you later gain local access</a>
   <ul class="collapse">
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.5.1</span> Summary</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.6.1</span> Summary</a></li>
   </ul></li>
-  <li><a href="#writing-your-readme-file" id="toc-writing-your-readme-file" class="nav-link" data-scroll-target="#writing-your-readme-file"><span class="header-section-number">10.6</span> Writing your README file</a>
+  <li><a href="#writing-your-readme-file" id="toc-writing-your-readme-file" class="nav-link" data-scroll-target="#writing-your-readme-file"><span class="header-section-number">10.7</span> Writing your README file</a>
   <ul class="collapse">
-  <li><a href="#example-readme.md-template" id="toc-example-readme.md-template" class="nav-link" data-scroll-target="#example-readme.md-template"><span class="header-section-number">10.6.1</span> 📄 Example README.md Template</a></li>
+  <li><a href="#example-readme.md-template" id="toc-example-readme.md-template" class="nav-link" data-scroll-target="#example-readme.md-template"><span class="header-section-number">10.7.1</span> 📄 Example README.md Template</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/dev-git-github-practice.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -568,10 +569,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This chapter puts into practice the workflow introduced earlier (Chapter <span class="citation" data-cites="dev-git-github">(<a href="references.html#ref-dev-git-github" role="doc-biblioref"><strong>dev-git-github?</strong></a>)</span>). You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a <strong>living record</strong> of your project’s evolution — from conceptualisation and first prototype to final publication.</p>
+<p>This chapter puts into practice the workflow introduced earlier. You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a <strong>living record</strong> of your project’s evolution — from conceptualisation and first prototype to final publication.</p>
 <hr>
-<section id="join-the-course-github-organisation" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="join-the-course-github-organisation"><span class="header-section-number">10.1</span> Join the course GitHub organisation</h2>
+<section id="preparation" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="preparation"><span class="header-section-number">10.1</span> Preparation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Created a <strong>GitHub account</strong>.</label></li>
+<li><label><input type="checkbox">Created a <strong>Zenodo account</strong>.</label></li>
+</ul>
+<p>In this session, we will be using the browser interface only. But do consider installing and configuring the rest of the software in order to be able to work locally in your own computer</p>
+<hr>
+</section>
+<section id="join-the-course-github-organisation" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="join-the-course-github-organisation"><span class="header-section-number">10.2</span> Join the course GitHub organisation</h2>
 <p>All course repositories are hosted under 👉 <strong><a href="https://github.com/CoDArchLab-ABM">https://github.com/CoDArchLab-ABM</a></strong></p>
 <ol type="1">
 <li>Accept the invitation sent by your instructor (check your GitHub notifications or email).</li>
@@ -583,11 +593,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <hr>
 </section>
-<section id="creating-a-new-repository" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="creating-a-new-repository"><span class="header-section-number">10.2</span> Creating a new repository</h2>
+<section id="creating-a-new-repository" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="creating-a-new-repository"><span class="header-section-number">10.3</span> Creating a new repository</h2>
 <p>You can create your repository <strong>entirely through the GitHub web interface</strong>, no local software required.</p>
 <ol type="1">
 <li><p>Go to your GitHub homepage → <strong>Repositories → New</strong>.</p></li>
+<li><p>Choose owner as your user (you can later create a fork in the course organisation)</p></li>
 <li><p>Name it following the convention: <code>project2025_&lt;model-name&gt;</code> (use only lowercase letters, digits, and underscores).</p></li>
 <li><p>Initialise it with:</p>
 <ul>
@@ -606,8 +617,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <hr>
 </section>
-<section id="populating-your-repository" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="populating-your-repository"><span class="header-section-number">10.3</span> Populating your repository</h2>
+<section id="populating-your-repository" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="populating-your-repository"><span class="header-section-number">10.4</span> Populating your repository</h2>
 <p>Your repository should reflect a clean, modular project structure from the beginning. Create the following files and folders — even if they remain empty for now.</p>
 <pre><code>project2025_&lt;model-name&gt;/
 │
@@ -633,8 +644,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <hr>
 </section>
-<section id="publishing-version-0.1" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="publishing-version-0.1"><span class="header-section-number">10.4</span> Publishing version 0.1</h2>
+<section id="publishing-version-0.1" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="publishing-version-0.1"><span class="header-section-number">10.5</span> Publishing version 0.1</h2>
+<p>Despite your repository might be empty, you may want to practice publishing your repositories in Zenodo or at least make sure that everything is ready for later publication.</p>
 <p>Once your initial structure is in place:</p>
 <ol type="1">
 <li><p><strong>Set up GitHub–Zenodo connection</strong></p>
@@ -649,6 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Tag: <code>v0.1</code></li>
 <li>Title: <code>Version 0.1 (initial structure)</code></li>
 <li>Description: a short note about what this version contains.</li>
+<li>Click on the “Publish release” button.</li>
 </ul></li>
 <li><p><strong>Publish</strong></p>
 <ul>
@@ -656,7 +669,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><p><strong>Update README</strong></p>
 <ul>
-<li><p>Add the Zenodo DOI badge at the top of your <code>README.md</code>.</p></li>
+<li><p>Add the Zenodo <strong>DOI badge</strong> at the top of your <code>README.md</code>.</p></li>
 <li><p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)</span><span class="co">](https://doi.org/10.5281/zenodo.xxxxxxx)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul></li>
@@ -666,8 +679,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <hr>
 </section>
-<section id="if-you-later-gain-local-access" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="if-you-later-gain-local-access"><span class="header-section-number">10.5</span> If you later gain local access</h2>
+<section id="if-you-later-gain-local-access" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="if-you-later-gain-local-access"><span class="header-section-number">10.6</span> If you later gain local access</h2>
 <p>Once you can install and use Git locally, you can clone your repository and continue developing offline:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/CoDArchLab-ABM/project2025_<span class="op">&lt;</span>model-name<span class="op">&gt;</span>.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Work as usual:</p>
@@ -676,8 +689,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Your history and Zenodo releases will remain intact — this is a seamless transition.</p>
 <hr>
-<section id="summary" class="level3" data-number="10.5.1">
-<h3 data-number="10.5.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">10.5.1</span> Summary</h3>
+<section id="summary" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="summary"><span class="header-section-number">10.6.1</span> Summary</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -722,12 +735,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p>🧭 <strong>Goal:</strong> By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.</p>
 </blockquote>
-<p>Perfect — here’s an optional <strong>template README.md</strong> section that fits seamlessly at the end of Chapter 10. It’s concise, encourages documentation habits early, and aligns with research-reproducibility and open-science principles. It also references the course context so students understand what to include and why.</p>
-<hr>
 </section>
 </section>
-<section id="writing-your-readme-file" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="writing-your-readme-file"><span class="header-section-number">10.6</span> Writing your README file</h2>
+<section id="writing-your-readme-file" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="writing-your-readme-file"><span class="header-section-number">10.7</span> Writing your README file</h2>
 <p>Every GitHub repository starts with a <code>README.md</code> file. It serves as the <em>front page</em> of your project and should answer three key questions:</p>
 <ol type="1">
 <li><strong>What is this project?</strong></li>
@@ -736,8 +747,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Below is a template you can copy into your repository’s README file and adapt to your project. Sections marked with <code>&lt;!-- comments --&gt;</code> are suggestions to help you fill in the content.</p>
 <hr>
-<section id="example-readme.md-template" class="level3" data-number="10.6.1">
-<h3 data-number="10.6.1" class="anchored" data-anchor-id="example-readme.md-template"><span class="header-section-number">10.6.1</span> 📄 Example README.md Template</h3>
+<section id="example-readme.md-template" class="level3" data-number="10.7.1">
+<h3 data-number="10.7.1" class="anchored" data-anchor-id="example-readme.md-template"><span class="header-section-number">10.7.1</span> 📄 Example README.md Template</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Project2025_&lt;model-name&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.xxxxxxx.svg)</span><span class="co">](https://doi.org/10.5281/zenodo.xxxxxxx)</span></span>

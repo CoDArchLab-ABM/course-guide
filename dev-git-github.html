@@ -532,7 +532,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Conclusion and free practice {#conclusion}</span></a>
+ <span class="menu-text">Conclusion and free practice</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -551,7 +551,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#version-control-and-git" id="toc-version-control-and-git" class="nav-link active" data-scroll-target="#version-control-and-git"><span class="header-section-number">9.1</span> Version-control and Git</a>
+  <li><a href="#version-control-and-git" id="toc-version-control-and-git" class="nav-link active" data-scroll-target="#version-control-and-git"><span class="header-section-number">9.1</span> Version control and Git</a>
   <ul class="collapse">
   <li><a href="#version-control-general-concept-and-its-usefulness" id="toc-version-control-general-concept-and-its-usefulness" class="nav-link" data-scroll-target="#version-control-general-concept-and-its-usefulness"><span class="header-section-number">9.1.1</span> Version control: general concept and its usefulness</a></li>
   <li><a href="#benefits-of-version-control" id="toc-benefits-of-version-control" class="nav-link" data-scroll-target="#benefits-of-version-control"><span class="header-section-number">9.1.2</span> Benefits of Version Control</a></li>
@@ -594,7 +594,7 @@ div.csl-indent {
 
 
 <section id="version-control-and-git" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="version-control-and-git"><span class="header-section-number">9.1</span> Version-control and Git</h2>
+<h2 data-number="9.1" class="anchored" data-anchor-id="version-control-and-git"><span class="header-section-number">9.1</span> Version control and Git</h2>
 <section id="version-control-general-concept-and-its-usefulness" class="level3" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="version-control-general-concept-and-its-usefulness"><span class="header-section-number">9.1.1</span> Version control: general concept and its usefulness</h3>
 <p>Version control is a system that helps track and manage file changes over time. It’s widely used in software development, but its applications extend to any field where file management is essential, including document editing, research, and project management. At its core, version control provides a historical record of changes. It allows users to revert to previous versions, identify when and why changes were made, and work collaboratively without the risk of overwriting each other’s work.</p>
@@ -634,11 +634,26 @@ div.csl-indent {
 </div>
 </div>
 <ul>
-<li><p><strong>Commit</strong>: A snapshot of changes in the repository. Each commit has a unique ID, allowing you to track and revert changes as needed [<a href="https://git-scm.com/docs/gitglossary">1</a>].</p></li>
-<li><p><strong>Branch</strong>: A separate line of development. The default branch is usually called <code>main</code> or <code>master</code>. Branches allow you to work on features independently before merging them into the main project [<a href="https://www.pluralsight.com/resources/blog/cloud/git-terms-explained">2</a>].</p></li>
-<li><p><strong>Merge</strong>: The process of integrating changes from one branch into another. Typically, this involves merging a feature branch into the main branch.</p></li>
 <li><p><strong>Pull</strong>: A command that fetches changes from a remote repository and merges them into your local branch, ensuring your local work is up-to-date with the remote [<a href="https://www.pluralsight.com/resources/blog/cloud/git-terms-explained">2</a>].</p></li>
 <li><p><strong>Push</strong>: Uploads your commits from the local repository to the remote repository, making your changes available to others.</p></li>
+</ul>
+<div class="quarto-layout-panel" data-layout="[[2,1], [1]]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 66.7%;justify-content: flex-start;">
+<ul>
+<li><p><strong>Commit</strong>: A snapshot of changes in the repository. Each commit has a unique ID, allowing you to track and revert changes as needed [<a href="https://git-scm.com/docs/gitglossary">1</a>].</p></li>
+<li><p><strong>Branch</strong>: A separate line of development. The default branch is usually called <code>main</code> or <code>master</code>. Branches allow you to work on features independently before merging them into the main project [<a href="https://www.pluralsight.com/resources/blog/cloud/git-terms-explained">2</a>]. A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches are used for development or testing. Branches are typically merged into the main branch once they are finalized.</p></li>
+</ul>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<p><a title="Revision_controlled_project_visualization.svg: *Subversion_project_visualization.svg: Traced by User:Stannered, original by en:User:Sami Kerola
+derivative work: Moxfyre (talk)
+derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-sa/3.0/>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Revision_controlled_project_visualization-2010-24-02.svg"><img width="128" alt="Visualization of the &quot;history tree&quot; of a revision controlled project," src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Revision_controlled_project_visualization-2010-24-02.svg/128px-Revision_controlled_project_visualization-2010-24-02.svg.png?20100224233137"></a></p>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Merge</strong>: The process of integrating changes from one branch into another. Typically, this involves merging a feature branch into the main branch.</li>
 </ul>
 <p>Understanding these terms is crucial for effective Git usage and collaboration in any project.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -701,6 +716,7 @@ div.csl-indent {
 <figure class="figure">
 <a title="GitHub Inc., MIT <http://opensource.org/licenses/mit-license.php>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"><img width="64" alt="Octicons-mark-github" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/512px-Octicons-mark-github.svg.png?20180806170715" class="figure-img"></a> <fig-caption>GitHub icon</fig-caption>
 </figure>
+<p>GitHub was created by Tom Preston-Werner, Chris Wanstrath, and PJ Hyett in 2008 and acquired by Microsoft in 2018, growing considerably in size and service features.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -743,10 +759,9 @@ div.csl-indent {
 <h3 data-number="9.3.2" class="anchored" data-anchor-id="github-terminology"><span class="header-section-number">9.3.2</span> GitHub terminology</h3>
 <p>Understanding the core vocabulary associated with GitHub operations can help users make the most of this platform, especially for collaborative or open-source projects. Here are some key concepts to keep in mind:</p>
 <ul>
-<li><p><strong>Forking</strong>: Forking creates a personal copy of someone else’s GitHub repository in your account. It allows users to experiment with changes without affecting the original repository, and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.</p></li>
 <li><p><strong>Cloning</strong>: Cloning involves creating a local copy of a repository on your machine. By cloning a repository, users can work offline and change files that can later be pushed back to the GitHub repository. This process is essential for local development, allowing users to commit changes and manage their workflow effectively with Git commands.</p></li>
+<li><p><strong>Forking</strong>: Forking creates a personal copy of someone else’s GitHub repository in your account. It allows users to experiment with changes without affecting the original repository, and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.</p></li>
 <li><p><strong>Pull Requests</strong>: A pull request (PR) is a way to propose changes in a repository. After modifying a forked or branched version of a repository, a developer can open a pull request, which initiates a review process. This feature is central to collaboration on GitHub, allowing others to review, discuss, and approve proposed changes before they are merged into the main branch.</p></li>
-<li><p><strong>Branching</strong>: A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches are used for development or testing. Branches are typically merged into the main branch once they are finalized.</p></li>
 <li><p><strong>Commits and Push</strong>: A commit is a snapshot of changes in the repository. Every commit includes a message describing the changes, and each commit builds upon previous ones, creating a history of the repository’s development. Pushing is uploading these commits to GitHub from a local repository. After a series of commits on a local branch, a user can push these changes to the corresponding branch on GitHub to keep the remote repository up-to-date.</p></li>
 <li><p><strong>Gists</strong>: A gist is a simple way to share code snippets or single files. Gists can be public or secret, and they are particularly useful for sharing configuration files or code examples. Users can fork and edit Gists, making them a lightweight collaboration and code-sharing tool.</p></li>
 <li><p><strong>Issues and Discussions</strong>: Issues are GitHub’s built-in tracking system for bugs, tasks, and feature requests. They allow users to report problems, suggest new features, and engage in conversations related to the project. Discussions provide a more open forum-style setting for broader conversation, enabling users to share ideas, ask questions, and contribute knowledge that might not directly relate to specific code changes.</p></li>
@@ -785,7 +800,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Local with GitHub Desktop
+<span class="screen-reader-only">Note</span>Local with GitHub Desktop (recommended)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -831,7 +846,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Remote with Web Browser
+<span class="screen-reader-only">Note</span>Remote with Web Browser (limited functionality)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -882,7 +897,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Local with Console Commands (advanced users)
+<span class="screen-reader-only">Note</span>Local with console commands (advanced users)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
