@@ -557,15 +557,15 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-b0fbb16956d2be550fbb" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-b0fbb16956d2be550fbb">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-8fb4ab47f4cbf518df3a" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-8fb4ab47f4cbf518df3a">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-5d2df4426979fa590273" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-5d2df4426979fa590273">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-2bf20b030ee650221729" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-2bf20b030ee650221729">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>The goal is <em>incremental improvement</em> rather than perfection at once. Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
@@ -715,8 +715,12 @@ ul.task-list li input[type="checkbox"] {
 </label></li>
 <li><label><input type="checkbox">Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.</label></li>
 </ul>
-<p>Also recommended:<br>
-* [ ] Installed <strong>VS Code</strong> or equivalent (for editing text and code files). * [ ] Install <strong>Zotero</strong> or equivalent and create a user account.</p>
+<p>Also recommended:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Installed <strong>VS Code</strong> or equivalent (for editing text and code files).<br>
+</label></li>
+<li><label><input type="checkbox">Install <strong>Zotero</strong> or equivalent and create a user account.</label></li>
+</ul>
 <hr>
 </section>
 <section id="summary" class="level3" data-number="8.2.2">
