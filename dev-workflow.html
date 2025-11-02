@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -591,51 +556,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Publication</strong>: publish and share your full project repository, including analysis outputs (specific outputs can be used for an article).</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph dev_workflow {</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">graph [layout = dot, rankdir = TB, overlap = false]</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">node [shape = box]</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">A [label = '💡 Conceptualise']</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">B [label = '📝 Design']</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">C [label = '🧱 Programme']</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">D [label = '🔄 Commit changes']</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">E [label = '🧪 Experiment/simulate']</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">F [label = '📊 Analyse']</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">G [label = '📢 Publish']</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; F -&gt; G</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-6ad3c11d86ae184c8e00" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-6ad3c11d86ae184c8e00">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-c048549c6003e2029aac" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-c048549c6003e2029aac">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph dev_workflow {</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">graph [layout = dot, rankdir = TB, overlap = false]</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">node [shape = box]</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">A [label = '💡 Conceptualise']</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">B [label = '📝 Design']</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">C [label = '🧱 Programme']</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">D [label = '🔄 Commit changes']</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">E [label = '🧪 Experiment/simulate']</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">F [label = '📊 Analyse']</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">G [label = '📢 Publish']</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">H [label = '🔁 Revise', shape = circle]</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="st">A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; F -&gt; G</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="st">C -&gt; H D -&gt; H E -&gt; H F -&gt; H G -&gt; H</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="st">H -&gt; B H -&gt; C H -&gt; D H -&gt; E H -&gt; F H -&gt; G</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">}"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-fed30a8e2f3c8516861a" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-fed30a8e2f3c8516861a">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-9c4c0fe3d1aebf4338f0" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-9c4c0fe3d1aebf4338f0">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>The goal is <em>incremental improvement</em> rather than perfection at once. Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
@@ -735,24 +665,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Summary, usage, citation</td>
 </tr>
 <tr class="odd">
+<td></td>
+<td><strong>BibTeX (.bib)</strong> and software like <strong>Zotero</strong></td>
+<td>Manage bibliographic database, faster import and export of references, citation style agnostic</td>
+<td>BibTeX entries, citation in any kind of document</td>
+</tr>
+<tr class="even">
 <td><strong>Reproducible environment</strong></td>
 <td><strong>Project folders</strong></td>
 <td>Organise code, data, results, and docs</td>
 <td>Clear structure, consistent naming</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td>a general-purpose IDE (e.g.&nbsp;<strong>VS Code</strong>)</td>
 <td>Quick edit and manage all files with easy git integration and other features. Particularly useful for editing files not directly related to NetLogo or R.</td>
 <td>integrated file editing and management, essential when using other programming languages (e.g.&nbsp;HTML, Python).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Collaboration and feedback</strong></td>
 <td><strong>GitHub Issues / Discussions</strong> (optional)</td>
 <td>Record bugs, ideas, and model questions</td>
 <td>Issue tracking, commenting</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Archival and citation</strong></td>
 <td><strong>Zenodo</strong> (later in the course)</td>
 <td>Assign a DOI to your final model</td>
@@ -762,20 +698,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <section id="minimal-setup-for-this-course" class="level3" data-number="8.2.1">
 <h3 data-number="8.2.1" class="anchored" data-anchor-id="minimal-setup-for-this-course"><span class="header-section-number">8.2.1</span> Minimal setup for this course</h3>
-<p>After this session and before proceeding to the next sessions, you should have:</p>
+<p>By the next session, you will have:</p>
 <ul class="task-list">
 <li><label><input type="checkbox">Created a <strong>GitHub account</strong>.</label></li>
-<li><label><input type="checkbox">Tested pushing/pulling a simple repository for your model(s).</label></li>
-<li><label><input type="checkbox">Set up a structured folder for your project (e.g., <code>model/</code>, <code>data/</code>, <code>results/</code>, <code>docs/</code>) and write a minimal README file.</label></li>
+<li><label><input type="checkbox">Created a simple repository for your model(s).</label></li>
+<li><label><input type="checkbox">Set up a structured folder for your project and write a minimal README file.</label></li>
+<li><label><input type="checkbox">Added these to your GitHub repository.</label></li>
+<li><label><input type="checkbox">Created a <strong>Zenodo account</strong>.</label></li>
 <li><label><input type="checkbox">Linked GitHub to Zenodo for future publication.</label></li>
 </ul>
-<p>When using your own computer to work in a local repository: * [ ] Installed <strong>Git</strong>, <strong>NetLogo</strong>, and <strong>R</strong>. These are present in the lab computers. * [ ] Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.</p>
-<p>Optional but recommended if using your own computer:</p>
+<p>When using your own computer to work in a local repository:</p>
 <ul class="task-list">
-<li><label><input type="checkbox">Installed <strong>RStudio</strong> (for R).</label></li>
-<li><label><input type="checkbox">Installed <strong>VS Code</strong> (for editing text and code files).</label></li>
-<li><label><input type="checkbox">Install GitHub Desktop.</label></li>
+<li><label><input type="checkbox">Installed <strong>Git</strong> (and <strong>GitHub Desktop</strong>) on your computer.<br>
+</label></li>
+<li><label><input type="checkbox">Installed <strong>NetLogo</strong>, and <strong>R</strong> (and <strong>RStudio</strong>).<br>
+</label></li>
+<li><label><input type="checkbox">Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.</label></li>
 </ul>
+<p>Also recommended:<br>
+* [ ] Installed <strong>VS Code</strong> or equivalent (for editing text and code files). * [ ] Install <strong>Zotero</strong> or equivalent and create a user account.</p>
 <hr>
 </section>
 <section id="summary" class="level3" data-number="8.2.2">
