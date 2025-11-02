@@ -135,8 +135,9 @@ When using your own computer to work in a local repository:
 * [ ] Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.  
 
 Also recommended:  
-* [ ] Installed **VS Code** or equivalent (for editing text and code files).
-* [ ] Install **Zotero** or equivalent and create a user account.
+
+* [ ] Installed **VS Code** or equivalent (for editing text and code files).  
+* [ ] Install **Zotero** or equivalent and create a user account.  
 
 ---
 
