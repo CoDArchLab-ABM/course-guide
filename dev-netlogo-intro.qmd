@@ -2,11 +2,11 @@
 
 ## Preparation
 
-To prepare for the sessions of Tuesday to Friday, you need to:
+To prepare for the next sessions, you need to:
 
 - Download or 'clone' the contents of [this repository](https://github.com/CoDArchLab-ABM/course-guide/) into a local folder. Select ![Code](assets/images/Code-button.png) in the top right of the repository page in GitHub, and choose one of the options given.
 
-- Download and install NetLogo version 6.4.0. The operating system-specific installation files are found here: https://ccl.northwestern.edu/netlogo/download.shtml
+- Download and install NetLogo latest version (only if working in your own computer). Currently, it is NetLogo 7.0.2 (file extension .nlogox), but consider that lab computers might have a previous version (file extension .nlogo). The operating system-specific installation files are found here: https://ccl.northwestern.edu/netlogo/download.shtml
 
 ## Excursion to ABMA
 

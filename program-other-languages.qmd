@@ -1,2 +1,94 @@
 # Sneak-peak at other languages {#program-other-languages}
 
+You are now introduced to NetLogo. However, please remember that **agent-based modelling (ABM)** is not limited to this language and platform.
+It is highly recommended that you learn and practice with other programming languages to experience how ABM models can be implemented in different ways, with different goals and trade-offs.
+
+## 13.1 ABM beyond NetLogo
+
+Potentially, any programming language can be used to implement an ABM model. After all, an ABM is “just code” describing the state and behaviour of multiple interacting agents over time. However, ABM modellers typically rely on specialised **frameworks** or **libraries** that provide ready-made functions for creating agents, scheduling their actions, managing environments, and recording outputs.
+
+These frameworks help standardise model structure, improve reproducibility, and often support integration with data analysis or visualisation tools.
+
+Below are some of the most relevant ABM platforms and libraries beyond NetLogo. Each of them offers different strengths and target audiences.
+
+---
+
+## 13.2 Major ABM platforms and libraries
+
+### 🧩 **RePast** (Recursive Porous Agent Simulation Toolkit)
+
+* **Languages:** Java (RePast J), Python (RePast Py), and RePast Simphony (with GUI).
+* **Highlights:** A long-established, research-oriented platform; used in social science, ecology, and urban modelling.
+* **Why it matters:** Provides strong support for building complex, data-driven models; integrates with GIS and statistical analysis.
+* **Learn more:** [https://repast.github.io](https://repast.github.io)
+
+### ⚙️ **AnyLogic**
+
+* **Language:** Java-based, with a graphical modelling interface.
+* **Highlights:** Commercial and widely used in industry (logistics, epidemiology, economics). Combines ABM, system dynamics, and discrete-event simulation.
+* **Why it matters:** Demonstrates how ABM concepts are applied in professional and business contexts, often for decision-support.
+* **Learn more:** [https://www.anylogic.com](https://www.anylogic.com)
+
+### 🐍 **Mesa** (Python)
+
+* **Language:** Python.
+* **Highlights:** Open-source ABM framework with web-based visualisation; well integrated with data science libraries like NumPy and pandas.
+* **Why it matters:** Ideal for researchers who already use Python for data analysis. Encourages modular and reproducible modelling workflows.
+* **Learn more:** [https://mesa.readthedocs.io](https://mesa.readthedocs.io)
+
+### 🧮 **Agents.jl** (Julia)
+
+* **Language:** Julia.
+* **Highlights:** Modern, high-performance ABM library that is easy to integrate with numerical computing and visualisation tools in Julia.
+* **Why it matters:** Demonstrates how ABM can benefit from efficient computation and real-time data analysis in a single language.
+* **Learn more:** [https://juliadynamics.github.io/Agents.jl/stable/](https://juliadynamics.github.io/Agents.jl/stable/)
+
+## 13.5 Quick comparison of ABM frameworks
+
+| Platform / Library             | Language                      | Visual interface                                  | Typical use cases                                                    | License / Access                            | Learning curve                             |
+| ------------------------------ | ----------------------------- | ------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------ |
+| **NetLogo**                    | NetLogo (Logo-like)           | ✅ Built-in GUI, easy model prototyping            | Education, conceptual models, rapid exploration                      | Free & open-source                          | ⭐ Beginner-friendly                        |
+| **RePast** (Simphony / J / Py) | Java / Python                 | ✅ (Simphony) or code-only                         | Complex scientific ABM, GIS models, large-scale simulations          | Free & open-source                          | ⭐⭐⭐ Advanced                               |
+| **AnyLogic**                   | Java-based                    | ✅ Professional GUI, multi-method                  | Industry simulation (health, transport, logistics), decision-support | Commercial (educational licenses available) | ⭐⭐⭐⭐ High but powerful                     |
+| **Mesa**                       | Python                        | ✅ Web-based UI templates                          | Research ABM + Python data analysis pipelines                        | Free & open-source                          | ⭐⭐ Intermediate (Python skills needed)     |
+| **Agents.jl**                  | Julia                         | ✅ Visualisation in Julia ecosystem                | High-performance scientific computing, real-time analysis            | Free & open-source                          | ⭐⭐⭐ Intermediate–Advanced                  |
+| **Pandora**                    | Python (archaeology-oriented) | ⚠️ Limited tooling (model-specific visualisation) | Human–environment interactions, past societies                       | Free & open-source (tesselle ecosystem)     | ⭐⭐ Intermediate (Python/archaeology focus) |
+
+Legend for learning-curve stars:
+
+* ⭐ Beginner → ⭐⭐⭐⭐ Advanced / steep learning curve
+
+---
+
+## 13.3 Other frameworks and resources
+
+There are many more ABM frameworks across different domains and programming languages.
+The **SWARM.org** community maintains an updated list of simulation platforms, including older but historically significant systems such as **Swarm**, **MASON**, and **NetLogo** itself.
+
+➡️ Explore: [https://www.swarm.org/wiki/ABM_Resources](https://www.swarm.org/wiki/ABM_Resources)
+
+---
+
+## 13.4 What to take away
+
+* **NetLogo** is ideal for learning ABM concepts quickly, focusing on model logic rather than low-level programming.
+* **Other frameworks** (like Mesa, RePast, or Agents.jl) offer greater flexibility, scalability, and integration with scientific workflows — but they require more programming experience.
+* Understanding multiple environments helps you:
+
+  * Evaluate models written by others in different ecosystems.
+  * Choose the right tool for your own future research.
+  * Appreciate that ABM is not a “NetLogo thing” but a **modelling approach** applicable across disciplines.
+
+---
+
+## 💡 Optional exploration
+
+If you’re curious, pick one of the above frameworks and browse its documentation.
+Ask yourself:
+
+* How are agents defined and scheduled?
+* How is the simulation environment represented (grid, network, continuous space)?
+* How are outputs collected and visualised?
+  These are the same questions you will address in your own models, regardless of language.
+
+---

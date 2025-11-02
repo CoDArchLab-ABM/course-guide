@@ -1,6 +1,6 @@
 # Git and GitHub {#dev-git-github}
 
-## Version-control and Git
+## Version control and Git
 
 ### Version control: general concept and its usefulness  
 
@@ -45,15 +45,23 @@ Here are some essential Git terms to know:
 
 :::
 
-- **Commit**: A snapshot of changes in the repository. Each commit has a unique ID, allowing you to track and revert changes as needed [[1](https://git-scm.com/docs/gitglossary)].
-
-- **Branch**: A separate line of development. The default branch is usually called `main` or `master`. Branches allow you to work on features independently before merging them into the main project [[2](https://www.pluralsight.com/resources/blog/cloud/git-terms-explained)].
-
-- **Merge**: The process of integrating changes from one branch into another. Typically, this involves merging a feature branch into the main branch.
-
 - **Pull**: A command that fetches changes from a remote repository and merges them into your local branch, ensuring your local work is up-to-date with the remote [[2](https://www.pluralsight.com/resources/blog/cloud/git-terms-explained)].
 
 - **Push**: Uploads your commits from the local repository to the remote repository, making your changes available to others.
+
+::: {layout="[[2,1], [1]]"}
+
+- **Commit**: A snapshot of changes in the repository. Each commit has a unique ID, allowing you to track and revert changes as needed [[1](https://git-scm.com/docs/gitglossary)].
+
+- **Branch**: A separate line of development. The default branch is usually called `main` or `master`. Branches allow you to work on features independently before merging them into the main project [[2](https://www.pluralsight.com/resources/blog/cloud/git-terms-explained)].  A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches are used for development or testing. Branches are typically merged into the main branch once they are finalized.
+
+<a title="Revision_controlled_project_visualization.svg: *Subversion_project_visualization.svg: Traced by User:Stannered, original by en:User:Sami Kerola
+derivative work: Moxfyre (talk)
+derivative work: Echion2, CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Revision_controlled_project_visualization-2010-24-02.svg"><img width="128" alt="Visualization of the &quot;history tree&quot; of a revision controlled project," src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Revision_controlled_project_visualization-2010-24-02.svg/128px-Revision_controlled_project_visualization-2010-24-02.svg.png?20100224233137"></a>
+
+:::
+
+- **Merge**: The process of integrating changes from one branch into another. Typically, this involves merging a feature branch into the main branch.
 
 Understanding these terms is crucial for effective Git usage and collaboration in any project.
 
@@ -97,6 +105,7 @@ GitHub also offers hosting for open-source projects, allowing anyone to contribu
 <fig-caption>GitHub icon</fig-caption>
 </figure>
 
+GitHub was created by Tom Preston-Werner, Chris Wanstrath, and PJ Hyett in 2008 and acquired by Microsoft in 2018, growing considerably in size and service features.
 
 ::: {.callout-caution  collapse="true"}
 ## CHECK: GitHub user and GitHub Desktop installation {.unnumbered}
@@ -125,13 +134,11 @@ In your Internet browser, make sure that your own GitHub user profile page is sa
 
 Understanding the core vocabulary associated with GitHub operations can help users make the most of this platform, especially for collaborative or open-source projects. Here are some key concepts to keep in mind:
 
-- **Forking**: Forking creates a personal copy of someone else’s GitHub repository in your account. It allows users to experiment with changes without affecting the original repository, and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.
-
 - **Cloning**: Cloning involves creating a local copy of a repository on your machine. By cloning a repository, users can work offline and change files that can later be pushed back to the GitHub repository. This process is essential for local development, allowing users to commit changes and manage their workflow effectively with Git commands.
 
-- **Pull Requests**: A pull request (PR) is a way to propose changes in a repository. After modifying a forked or branched version of a repository, a developer can open a pull request, which initiates a review process. This feature is central to collaboration on GitHub, allowing others to review, discuss, and approve proposed changes before they are merged into the main branch.
+- **Forking**: Forking creates a personal copy of someone else’s GitHub repository in your account. It allows users to experiment with changes without affecting the original repository, and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.
 
-- **Branching**: A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches are used for development or testing. Branches are typically merged into the main branch once they are finalized.
+- **Pull Requests**: A pull request (PR) is a way to propose changes in a repository. After modifying a forked or branched version of a repository, a developer can open a pull request, which initiates a review process. This feature is central to collaboration on GitHub, allowing others to review, discuss, and approve proposed changes before they are merged into the main branch.
 
 - **Commits and Push**: A commit is a snapshot of changes in the repository. Every commit includes a message describing the changes, and each commit builds upon previous ones, creating a history of the repository's development. Pushing is uploading these commits to GitHub from a local repository. After a series of commits on a local branch, a user can push these changes to the corresponding branch on GitHub to keep the remote repository up-to-date.
 
@@ -154,7 +161,7 @@ Understanding the core vocabulary associated with GitHub operations can help use
 GitHub offers various workflows to manage repositories. Here are three common methods:
 
 ::: {.callout-note collapse="true"}
-#### Local with GitHub Desktop {.unnumbered}
+#### Local with GitHub Desktop (recommended) {.unnumbered}
 
 For those who prefer a graphical user interface (GUI):
 
@@ -186,7 +193,7 @@ For those who prefer a graphical user interface (GUI):
 :::
 
 ::: {.callout-note collapse="true"}
-#### Remote with Web Browser {.unnumbered}
+#### Remote with Web Browser (limited functionality) {.unnumbered}
 You can also work directly on GitHub.com:
 
 **Forking a Repository**
@@ -223,7 +230,7 @@ You can also work directly on GitHub.com:
 :::
 
 ::: {.callout-note collapse="true"}
-#### Local with Console Commands (advanced users) {.unnumbered}
+#### Local with console commands (advanced users) {.unnumbered}
 
 To work with Git via the command line:
 

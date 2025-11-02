@@ -1,2 +1,30 @@
 # NetLogo tutorials {#program-netlogo-tutorials}
 
+In this chapter you will be guided toward a solid foundation in NetLogo by working through the four official tutorials provided by the NetLogo developers. These tutorials are not optional extras but rather the *core learning path* into the modelling environment we will use throughout this course. They introduce the interface, the language, and the modelling mindset you will need for your simulation work.
+
+## Why work through these tutorials?
+
+By completing these tutorials you will:
+
+* Become comfortable with NetLogo’s **user interface**, including the Interface, Info and Code tabs.
+* Understand how to **explore existing models** (via the Models Library), how to modify them and what the underlying code does.
+* Gain experience of the **basic commands** of the NetLogo language (for turtles, patches, observer) and how to execute simple instructions.
+* Move into defining your own **procedures**, building up models step-by-step, and working with the Code tab in a purposeful way.
+* Prepare yourself to implement the more complex models we will build later (such as the “Pond Trade” and “Messara Trade” models), with confidence in NetLogo as a modelling platform.
+
+Because you will be using NetLogo in a research-modelling context (not just a classroom tutorial), the earlier you solidify your familiarity with the environment, the more time you will have for conceptual modelling, experimentation, and analysis.
+
+## The tutorial sequence
+
+Below is the sequence of the four tutorials, with short commentary on what you should focus on, and suggestions on how they link to your archaeological modelling work.
+
+| #                                           | Tutorial                                                                                                                                                                                                                                            | Focus and highlights for this course                                                                                                                                                                                                                                                  |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **#0 – Sample Model**                       | [“What is NetLogo?” / Sample Model](https://docs.netlogo.org/sample.html)                                                                                                                                                                           | Your entry point: open NetLogo, pick a model from the Models Library, explore buttons, sliders, plots, monitors. Ask: What do I see happening? What parameters do I have control over? This will help you think like a modeller inspecting someone else’s agent-based system.         |
+| **#1 – Models** ([docs.netlogo.org][1])     | Explore the Models Library in more depth. Learn about interface elements (buttons, sliders, choosers, switches), how a model is controlled, how it runs. For example, the Wolf-Sheep Predation model is used to illustrate. ([docs.netlogo.org][1]) | Focus: when you later build a settlement-migration model (like in Session 6/7), you will need to design sliders and switches for your key mechanisms (migration rate, resource availability, etc.). Get accustomed to making predictions: “What will happen if I change this slider?” |
+| **#2 – Commands** ([docs.netlogo.org][2])   | Learn how to issue commands through the Command Center, how agents behave (turtles, patches, observer), and basic language primitives. For example, in the Traffic Basic model you explore effects of simple commands.                              | Focus: For your archaeological simulations you will need to script commands to initialise agents, set up the landscape, change states over time. This tutorial anchors that programming mindset: what happens behind the scenes when the user clicks “setup” or “go”.                 |
+| **#3 – Procedures** ([docs.netlogo.org][3]) | You learn to build a full model: define `setup` and `go` procedures, define agent variables, use `ask` commands, make plots, etc. This is where you move from “explore someone else’s model” to “build your own.” ([docs.netlogo.org][3])           | Focus: When you come to sessions 17-22 (Pond Trade II/III) you will be programming agent behaviours and submodels. This tutorial arms you with the techniques of structuring code, naming procedures, using global variables and agent variables.                                     |
+
+[1]: https://docs.netlogo.org/tutorial1.html?utm_source=chatgpt.com "Tutorial #1: Models"
+[2]: https://docs.netlogo.org/tutorial2.html?utm_source=chatgpt.com "Tutorial #2: Commands"
+[3]: https://docs.netlogo.org/tutorial3.html?utm_source=chatgpt.com "Tutorial #3: Procedures"
