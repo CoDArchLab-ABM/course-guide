@@ -3,7 +3,7 @@
 You are now introduced to NetLogo. However, please remember that **agent-based modelling (ABM)** is not limited to this language and platform.
 It is highly recommended that you learn and practice with other programming languages to experience how ABM models can be implemented in different ways, with different goals and trade-offs.
 
-## 13.1 ABM beyond NetLogo
+## ABM beyond NetLogo
 
 Potentially, any programming language can be used to implement an ABM model. After all, an ABM is “just code” describing the state and behaviour of multiple interacting agents over time. However, ABM modellers typically rely on specialised **frameworks** or **libraries** that provide ready-made functions for creating agents, scheduling their actions, managing environments, and recording outputs.
 
@@ -13,7 +13,7 @@ Below are some of the most relevant ABM platforms and libraries beyond NetLogo. 
 
 ---
 
-## 13.2 Major ABM platforms and libraries
+## Major ABM platforms and libraries
 
 ### 🧩 **RePast** (Recursive Porous Agent Simulation Toolkit)
 
@@ -43,7 +43,7 @@ Below are some of the most relevant ABM platforms and libraries beyond NetLogo. 
 * **Why it matters:** Demonstrates how ABM can benefit from efficient computation and real-time data analysis in a single language.
 * **Learn more:** [https://juliadynamics.github.io/Agents.jl/stable/](https://juliadynamics.github.io/Agents.jl/stable/)
 
-## 13.5 Quick comparison of ABM frameworks
+## Quick comparison of ABM frameworks
 
 | Platform / Library             | Language                      | Visual interface                                  | Typical use cases                                                    | License / Access                            | Learning curve                             |
 | ------------------------------ | ----------------------------- | ------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------ |
@@ -60,7 +60,7 @@ Legend for learning-curve stars:
 
 ---
 
-## 13.3 Other frameworks and resources
+## Other frameworks and resources
 
 There are many more ABM frameworks across different domains and programming languages.
 The **SWARM.org** community maintains an updated list of simulation platforms, including older but historically significant systems such as **Swarm**, **MASON**, and **NetLogo** itself.
@@ -69,7 +69,7 @@ The **SWARM.org** community maintains an updated list of simulation platforms, i
 
 ---
 
-## 13.4 What to take away
+## What to take away
 
 * **NetLogo** is ideal for learning ABM concepts quickly, focusing on model logic rather than low-level programming.
 * **Other frameworks** (like Mesa, RePast, or Agents.jl) offer greater flexibility, scalability, and integration with scientific workflows — but they require more programming experience.
