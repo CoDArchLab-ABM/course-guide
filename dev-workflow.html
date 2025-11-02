@@ -542,30 +542,30 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Extensible:</strong> improvements, corrections, or new experiments can be added without breaking the project.</li>
 <li><strong>Reusable:</strong> others can build on your work.</li>
 </ul>
-<p>We can recast the generic modelling steps we saw in Chapter <span class="citation" data-cites="intro-abm-method">(<a href="references.html#ref-intro-abm-method" role="doc-biblioref"><strong>intro-abm-method?</strong></a>)</span> into a software development workflow represented as:</p>
+<p>We can recast the generic modelling steps into a software development workflow represented as:</p>
 <ol type="1">
-<li><strong>Conceptual model:</strong> Definitions the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.<br>
+<li><strong>Conceptual model:</strong> Defines the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.<br>
 </li>
-<li><strong>Implementation or “implemented model”:</strong> Translation the conceptual model into executable code (e.g., in NetLogo). Expanded through “coding sessions”.<br>
+<li><strong>Implementation or “implemented model”:</strong> Translate the conceptual model into executable code (e.g., in NetLogo). Expanded through “coding sessions”.<br>
 </li>
-<li><strong>Version control:</strong> After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly on the remote repository using your browser, you will need to commit changes individually for each file. When changing your model in NetLogo, you will have to open the <code>.nlogo</code> or <code>.nlogox</code> in a text editor and copy-paste the content into the remote version (not recommended).</li>
+<li><strong>Version control:</strong> After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly in the remote repository in your browser, you will need to commit changes to each file individually. When changing your model in NetLogo, you will have to open the <code>.nlogo</code> or <code>.nlogox</code> file in a text editor and copy-paste its contents into the remote version (not recommended).</li>
 <li><strong>Experimentation:</strong> Run simulations manually in NetLogo, or systematic experiments using NetLogo’s <em>BehaviorSpace</em> or custom procedures in NetLogo, external files (e.g., datasets generated in R), or executing NetLogo from R.<br>
 </li>
 <li><strong>Analysis:</strong> Process and visualise simulation outputs in R, write up results.<br>
 </li>
-<li><strong>Publication</strong>: publish and share your full project repository, including analysis outputs (specific outputs can be used for an article).</li>
+<li><strong>Publication</strong>: publish and share your complete project repository, including analysis outputs (specific outputs can be used for an article).</li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-60367591f8549939d8d0" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-60367591f8549939d8d0">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-b0fbb16956d2be550fbb" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b0fbb16956d2be550fbb">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-207fad2e5534e1e7c6bc" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-207fad2e5534e1e7c6bc">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-5d2df4426979fa590273" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-5d2df4426979fa590273">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>The goal is <em>incremental improvement</em> rather than perfection at once. Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
@@ -582,7 +582,7 @@ ul.task-list li input[type="checkbox"] {
         ↓
 🔄 Commit changes: "update netlogo file"
         ↓
-🧱 Third programming session creating minimal set of procedures for initialisation (runnable)
+🧱 Third programming session creating a minimal set of procedures for initialisation (runnable)
         ↓
 🔄 Commit changes: "update netlogo file"
         ↓
@@ -643,7 +643,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td></td>
 <td><strong>RStudio</strong> (optional)</td>
-<td>More agility using R (UI elements for common operations), allow seamless use of notebook formats, other script extensions and git</td>
+<td>More agility using R (UI elements for common operations), allows seamless use of notebook formats, other script extensions and git</td>
 <td>initial configuration, creating projects, package installation, notebook interaction</td>
 </tr>
 <tr class="even">
