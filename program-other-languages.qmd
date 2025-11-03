@@ -11,6 +11,10 @@ These frameworks help standardise model structure, improve reproducibility, and 
 
 Below are some of the most relevant ABM platforms and libraries beyond NetLogo. Each of them offers different strengths and target audiences.
 
+## Other platforms and languages
+
+Consider yourself introduced to NetLogo! However, please remember that ABM is not limited to this language and platform. It is highly recommended that you learn and practice with other programming languages to experience ABM models beyond NetLogo implementations.
+
 ---
 
 ## Major ABM platforms and libraries
@@ -52,7 +56,6 @@ Below are some of the most relevant ABM platforms and libraries beyond NetLogo. 
 | **AnyLogic**                   | Java-based                    | ✅ Professional GUI, multi-method                  | Industry simulation (health, transport, logistics), decision-support | Commercial (educational licenses available) | ⭐⭐⭐⭐ High but powerful                     |
 | **Mesa**                       | Python                        | ✅ Web-based UI templates                          | Research ABM + Python data analysis pipelines                        | Free & open-source                          | ⭐⭐ Intermediate (Python skills needed)     |
 | **Agents.jl**                  | Julia                         | ✅ Visualisation in Julia ecosystem                | High-performance scientific computing, real-time analysis            | Free & open-source                          | ⭐⭐⭐ Intermediate–Advanced                  |
-| **Pandora**                    | Python (archaeology-oriented) | ⚠️ Limited tooling (model-specific visualisation) | Human–environment interactions, past societies                       | Free & open-source (tesselle ecosystem)     | ⭐⭐ Intermediate (Python/archaeology focus) |
 
 Legend for learning-curve stars:
 

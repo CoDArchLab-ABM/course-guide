@@ -28,9 +28,11 @@ ERROR: Nothing named YOU has been defined.
 
 Oops! NetLogo still doesn't know "you". Or is it that it cannot *understand* you? Well let us get you two properly introduced...
 
+Before continuing, we should note: NetLogo does have its own vocabulary, containing what we will call **"primitives"**, to which we can add many more "words", as long as we define them first using what NetLogo *can* understand. Without going into details now, just keep in mind that, in NetLogo language, special kinds of "words" are **reporters**, which are practical equivalents to **values**, and **commands**, which wrap the necessary steps to **do** something.
+
 ## Entities
 
-The (real) first thing one should learn about NetLogo, and most agent-based modeling systems, is that it handles *mainly* two types of entities/agents: `patches`, cells of a square grid, and `turtles`, which are proper "agents" (i.e., mobile, autonomous entities). Both entities have *primitives* (built-in, default properties), some of which can be modified by processes in your model. For example, you can't modify the position of a patch, but you can change its filling color.
+The (real) first thing one should learn about NetLogo, and most agent-based modelling systems, is that it handles *mainly* two types of entities/agents: `patches`, cells of a square grid, and `turtles`, which are proper "agents" (i.e., mobile, autonomous entities). Both entities have primitives (built-in, default properties), some of which can be modified by processes in your model. For example, you can't modify the position of a patch, but you can change its filling colour.
 
 <p style="text-align: center;">
 <a title="NetLogo world and entities (Figure 2 in Izquierdo et al. 2019)" href="https://wisc.pb.unizin.org/agent-based-evolutionary-game-dynamics/"><img width="400" style="background-color: white" alt="NetLogo entities" src="https://wisc.pb.unizin.org/app/uploads/sites/28/2018/09/the-netlogo-world.png"></a>
@@ -40,19 +42,28 @@ The (real) first thing one should learn about NetLogo, and most agent-based mode
 
 As seen in the figure above, NetLogo also includes a third type of entity, `links`, which has the particularity of describing a connection between two `turtles` and thus not having specific spatial coordinates of their own. We will deal with links later on, but for now we focus on the other entities, which are more commonly used in models.
 
-All `patches` and `turtles` can be identified individually through primitives. Turtles have a unique numerical identifier (`who`) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (`pxcor` and `pycor`), as they occupy each a single position in a grid (see **Grid**). To reference a specific turtle or patch:
+All `patches` and `turtles` can be identified individually through primitives. Turtles have a unique numerical identifier (`who`) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (`pxcor` and `pycor`), as they occupy each a single position in a grid (see **Grid**). To reference a specific turtle, patch or link:
 
 ```NetLogo
 turtle <WHO_NUMBER>
 patch <PXCOR> <PYCOR>
+link <WHO_NUMBER> <WHO_NUMBER>
 ```
 
-NetLogo allows you to define types of `turtles` as if it where a primitive, declarings its name as a `breed`:
+NetLogo allows you to define types of `turtles` as if it where a primitive, declaring its name as a `breed`:
 
 ```NetLogo
 breed [<BREED_1_NAME_PLURAL> <BREED_1_NAME_SINGULAR>]
 
 breed [<BREED_2_NAME_PLURAL> <BREED_2_NAME_SINGULAR>]
+```
+
+For example:
+
+```NetLogo
+breed [apples apple]
+
+breed [pears pear]
 ```
 
 We can then use the plural or singular form of the `breed` name directly, instead of referring to the generic `turtles`.
@@ -61,14 +72,29 @@ We can then use the plural or singular form of the `breed` name directly, instea
 <BREED_1_NAME_SINGULAR> <WHO_NUMBER>
 ```
 
-This is useful, of course, when there are more the one `breed`to be defined, so that they are easily distinguished and inteligible in the code.
-
-Agents can be specifically selected also without considering their specific IDs. The `one-of` primitive offers a easy way to randomly select one agent (`turtles` and `patches`) from all (or a subset of all) agents of a given type.
+Or:
 
 ```NetLogo
-one-of <BREED_2_NAME_PLURAL>
+pear 2
+```
+
+This is useful, of course, when there are more the one `breed` to be defined, so that they are easily distinguished and intelligible in the code.
+
+We can also refer to agents collectively as:
+```NetLogo
+<BREED_1_NAME_PLURAL>
+```
+```NetLogo
+pears
+```
+or randomly as:
+
+```NetLogo
+one-of apples
 one-of patches
 ```
+
+The `one-of` primitive offers a easy way to randomly select one agent (`turtles` and `patches`) from all (or a subset of all) agents of a given type.
 
 Last, we should keep in mind that `turtles` can be created and destroyed on-the-fly during simulations, while `patches` are created in the background upon initialisation, according to the model settings (*e.g.* grid dimensions), but never destroyed during simulation runs.
 
@@ -81,6 +107,14 @@ The most fundamental elements of NetLogo, as in any programming language, is var
 ```NetLogo
 set <VARIABLE_NAME> <VALUE>
 ```
+
+For example:
+
+```NetLogo
+set x 123
+```
+
+Meaning "set the variable x to be the number 123".
 
 While variable names are fragments of contiguous text following a naming convention (*e.g.* `my-variable`, `myVariable`, `my_variable`, etc.), values can be of the following data types:
 
@@ -107,17 +141,30 @@ turtles-own [ <TURTLE_VARIABLE_NAME> ]
 patches-own [ <PATCHES_VARIABLE_NAME> ]
 ```
 
+For example:
+```NetLogo
+globals [ x y ]
+
+turtles-own [ weight ]
+
+apples-own [ redness ]
+```
+
 As an exception to this general rule, variables can also be declared "locally" using the following syntaxes:
 
 ```NetLogo
 let <VARIABLE_NAME> <VALUE>
+```
+For example:
+```NetLogo
+let freshness 100
 ```
 
 As in other programming languages, having a variable declared locally means it is inside a temporary computation environment, such as a procedure (see below). Once the environment is closed, the variable is automatically discarded in the background.
 
 ## Expressing equations
 
-As we will see examples further on, the values of variables can be transformed in different ways, using different syntaxes, depending on their type. Possibly the most straightforward case is to perform basic arithmetic operations over numerical variables, expressing equations. These can be writen using the special characters normally used in most programming languages (`+`, `-`, `*`, `/`, `(`, etc.):
+As we will see examples further on, the values of variables can be transformed in different ways, using different syntaxes, depending on their type. Possibly the most straightforward case is to perform basic arithmetic operations over numerical variables, expressing equations. These can be written using the special characters normally used in most programming languages (`+`, `-`, `*`, `/`, `(`, etc.):
 
 ```NetLogo
 set myVariable (2 + 2) * 10 / ((2 + 2) * 10)
@@ -161,7 +208,7 @@ set myVariable 2 set myOtherVariable 10 let myTemporaryVariable 2 * myVariable *
 
 Knowing this, is particularly useful whenever you want to test the outcome of a longer command sequence in NetLogo's console ("Command Center"). 
 
-## Logic operators
+## Logical operators
 
 As most programming languages, NetLogo can evaluate equalities and inequalities and return a Boolean value (`true` or `false`). The related logical operators are:
 
@@ -170,7 +217,7 @@ As most programming languages, NetLogo can evaluate equalities and inequalities 
 - `>`: "greater than".  
 - `>=`: "greater than or equal to".  
 - `<`: "less than".  
-- `<=`: "less than or equalt to".
+- `<=`: "less than or equal to".
 
 For example, try:
 
@@ -445,9 +492,3 @@ One of the most useful resources of NetLogo's documentation is the *dictionary* 
 The dictionary is particularly useful whenever you are learning by example, as in our case. For instance, regarding the earlier mention of `distance`, you could have searched it in the dictionary directly. Whenever you find yourself reading NetLogo code with violet or blue words that you do not understand, take the habit of searching them in NetLogo's *dictionary*.
 
 For **more information** consult [NetLogo Programming Guide](https://ccl.northwestern.edu/netlogo/docs/programming.html).
-
-## Other platforms and languages
-
-Consider yourself introduced to NetLogo! However, please remember that ABM is not limited to this language and platform. It is highly recommended that you learn and practice with other programming languages to experience ABM models beyond NetLogo implementations.
-
-Potentially, any programming language can be used to implement an ABM model. However, it is useful to count on specific support software in most cases. A few of the most relevant platforms and libraries to know about are: [RePast](https://en.wikipedia.org/wiki/Repast_(modeling_toolkit)), [AnyLogic](https://www.anylogic.com/), [Mesa](https://mesa.readthedocs.io/), [Agents.jl](https://juliadynamics.github.io/Agents.jl/stable/), and [Pandora](http://xrubio.github.io/pandora/). See many others in [this list by SWARM.org](http://www.swarm.org/wiki/ABM_Resources).
