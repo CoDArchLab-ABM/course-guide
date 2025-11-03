@@ -11,14 +11,14 @@ Thinking like a software developer helps to ensure that the model is:
 * **Extensible:** improvements, corrections, or new experiments can be added without breaking the project.
 * **Reusable:** others can build on your work.
 
-We can recast the generic modelling steps we saw in Chapter @intro-abm-method into a software development workflow represented as:
+We can recast the generic modelling steps into a software development workflow represented as:
 
-1. **Conceptual model:** Definitions the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.  
-2. **Implementation or "implemented model":** Translation the conceptual model into executable code (e.g., in NetLogo). Expanded through "coding sessions".  
-4. **Version control:** After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly on the remote repository using your browser, you will need to commit changes individually for each file. When changing your model in NetLogo, you will have to open the `.nlogo` or `.nlogox` in a text editor and copy-paste the content into the remote version (not recommended).
+1. **Conceptual model:** Defines the system, processes, and hypotheses. Identify inputs (data), outputs, and validation criteria.  
+2. **Implementation or "implemented model":** Translate the conceptual model into executable code (e.g., in NetLogo). Expanded through "coding sessions".  
+4. **Version control:** After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly in the remote repository in your browser, you will need to commit changes to each file individually. When changing your model in NetLogo, you will have to open the `.nlogo` or `.nlogox` file in a text editor and copy-paste its contents into the remote version (not recommended).
 5. **Experimentation:** Run simulations manually in NetLogo, or systematic experiments using NetLogo’s *BehaviorSpace* or custom procedures in NetLogo, external files (e.g., datasets generated in R), or executing NetLogo from R.  
 6. **Analysis:** Process and visualise simulation outputs in R, write up results.  
-7. **Publication**: publish and share your full project repository, including analysis outputs (specific outputs can be used for an article).
+7. **Publication**: publish and share your complete project repository, including analysis outputs (specific outputs can be used for an article).
 
 ```{r, echo=FALSE}
 DiagrammeR::grViz("
@@ -80,7 +80,7 @@ In practice, your workflow should go over these steps in time in a safe, but ten
         ↓
 🔄 Commit changes: "update netlogo file"
         ↓
-🧱 Third programming session creating minimal set of procedures for initialisation (runnable)
+🧱 Third programming session creating a minimal set of procedures for initialisation (runnable)
         ↓
 🔄 Commit changes: "update netlogo file"
         ↓
@@ -107,7 +107,7 @@ To follow best practices, every simulation modeller should maintain a working to
 |                                   | **GitHub**                       | Host and share repositories online                        | README, issues, pull requests, releases                |
 | **Model implementation**          | **NetLogo**                      | Main platform for building agent-based models             | Interface design, procedures, agents, patches, globals |
 | **Data analysis & visualization** | **R** (later in the course)     | Process simulation results, generate plots and statistics | R scripts, data frames, ggplot2, tidyverse             |
-|                                   | **RStudio** (optional)          | More agility using R (UI elements for common operations), allow seamless use of notebook formats, other script extensions and git                        | initial configuration, creating projects, package installation, notebook interaction                |
+|                                   | **RStudio** (optional)          | More agility using R (UI elements for common operations), allows seamless use of notebook formats, other script extensions and git                        | initial configuration, creating projects, package installation, notebook interaction                |
 | **Interoperability**              | **RNetLogo** (optional)          | Run NetLogo from R for batch experiments                  | Automation, reproducibility, less flexibility            |
 | **Documentation**                 | **Markdown (.md)**               | Write guides, notebooks, and documentation                | Formatting, headings, links, code blocks               |
 |                                   | **README.md**                    | Front page of your GitHub repository                      | Summary, usage, citation                               |
@@ -135,8 +135,9 @@ When using your own computer to work in a local repository:
 * [ ] Configured Git (username, email, SSH key or HTTPS). This is necessary when using version control locally in your computer.  
 
 Also recommended:  
-* [ ] Installed **VS Code** or equivalent (for editing text and code files).
-* [ ] Install **Zotero** or equivalent and create a user account.
+
+* [ ] Installed **VS Code** or equivalent (for editing text and code files).  
+* [ ] Install **Zotero** or equivalent and create a user account.  
 
 ---
 
