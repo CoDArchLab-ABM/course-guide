@@ -1,6 +1,6 @@
 # NetLogo tutorials {#program-netlogo-tutorials}
 
-In this chapter you will be guided toward a solid foundation in NetLogo by working through the four official tutorials provided by the NetLogo developers. These tutorials are not optional extras but rather the *core learning path* into the modelling environment we will use throughout this course. They introduce the interface, the language, and the modelling mindset you will need for your simulation work.
+In this chapter you will be guided toward a solid foundation in NetLogo by working through the four official tutorials provided by the NetLogo developers. These tutorials are not optional extras but rather the *core learning path* into the modelling environment we will use throughout this course. They introduce the interface, the language, and the modelling mindset you will need for your simulation work. Before the tutorials, you can also have a quick look at [The Beginner's Guide to NetLogo Programming](https://ccl.northwestern.edu/netlogo/bind/) and learn or refresh your knowledge about the basics of NetLogo language with video tutorials and topic articles. It would be especially useful for you to read their page about the 11 most important [primitives](http://ccl.northwestern.edu/netlogo/bind/article/first-11-netlogo-primitives-to-learn.html).
 
 ## Why work through these tutorials?
 
