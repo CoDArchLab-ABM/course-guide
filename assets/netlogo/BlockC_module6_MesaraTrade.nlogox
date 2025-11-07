@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model version="NetLogo 7.0.0-beta2" snapToGrid="false">
+<model version="NetLogo 7.0.2" snapToGrid="false">
   <code><![CDATA[;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; GNU GENERAL PUBLIC LICENSE ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -52,6 +52,9 @@ globals
 
   width
   height
+  
+  areaPerPatch
+  patchWidth
 
   ;;; GIS data holders
   sitesData_EMIII-MMIA
@@ -1490,7 +1493,7 @@ end
 to import-routes-from-file
 
   ;;; get unique file name corresponding to the current setting
-  let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=" randomSeed ".txt")
+  let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=0.txt")
 
   ifelse (not file-exists? filePath)
   [ print (word "WARNING: could not find '" filePath "'") stop ] ;;; unfortunately the stop command doesn't stop the setup procedure
@@ -1811,7 +1814,7 @@ histogram [relativePathCostInPort + item 4 culturalVector] of settlements</updat
     <monitor x="558" precision="2" y="1010" height="60" fontSize="9" width="100" display="z [min, max]">(list (precision z_min 2) (precision z_max 2))</monitor>
     <slider x="300" step="1" y="1068" max="100" width="257" display="runoff-curve_max" height="50" min="runoff-curve_min" direction="Horizontal" default="80.0" variable="runoff-curve_max"></slider>
     <slider x="300" step="0.01" y="848" max="1" width="257" display="par_albedo_max" height="50" min="par_albedo_min" direction="Horizontal" default="0.5" variable="par_albedo_max"></slider>
-    <slider x="300" step="1" y="903" max="0.2" width="257" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.5" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
+    <slider x="300" step="1" y="903" max="0.2" width="257" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="1.0" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
     <slider x="300" step="1" y="958" max="1" width="257" display="drainage-coefficient_max" height="50" min="drainage-coefficient_min" direction="Horizontal" default="2000.0" variable="drainage-coefficient_max"></slider>
     <slider x="300" step="1" y="1013" max="2000" width="257" display="root-zone-depth_max" height="50" min="root-zone-depth_min" direction="Horizontal" default="2000.0" variable="root-zone-depth_max" units="mm"></slider>
     <monitor x="558" precision="2" y="842" height="60" fontSize="9" width="100" display="albedo [min, max]">(list (precision albedo_min 2) (precision albedo_max 2))</monitor>

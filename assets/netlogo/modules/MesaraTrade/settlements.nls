@@ -82,7 +82,7 @@ to update-settlements
     ; prodution is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
     update-ARIDinCatchmentArea
     update-catchmentArea
-    set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * ARIDinCatchmentArea
+    set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * (1 - ARIDinCatchmentArea)
 
     ; determine the current and potential number of traders
     set currentNumberOfTraders get-current-number-of-traders

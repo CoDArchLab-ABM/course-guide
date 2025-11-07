@@ -63,7 +63,7 @@ end
 to import-routes-from-file
 
   ;;; get unique file name corresponding to the current setting
-  let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=" randomSeed ".txt")
+  let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=0.txt")
 
   ifelse (not file-exists? filePath)
   [ print (word "WARNING: could not find '" filePath "'") stop ] ;;; unfortunately the stop command doesn't stop the setup procedure

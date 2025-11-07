@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model version="NetLogo 7.0.0-beta2" snapToGrid="false">
+<model version="NetLogo 7.0.2" snapToGrid="false">
   <code><![CDATA[;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; GNU GENERAL PUBLIC LICENSE ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -71,6 +71,9 @@ globals
 
   width
   height
+  
+  areaPerPatch
+  patchWidth
 
   ;;; GIS data holders
   sitesData_EMIII-MMIA
@@ -245,7 +248,7 @@ patches-own
     <view x="409" wrappingAllowedX="true" y="10" frameRate="30.0" minPycor="0" height="465" showTickCounter="true" patchSize="3.0" fontSize="10" wrappingAllowedY="true" width="738" tickCounterLabel="ticks" maxPycor="154" updateMode="0" maxPxcor="245" minPxcor="0"></view>
     <button x="14" actionKey="1" y="11" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">setup</button>
     <button x="189" actionKey="4" y="10" height="40" disableUntilTicks="false" forever="true" kind="Observer" width="55">go</button>
-    <input x="5" multiline="false" y="68" height="60" variable="randomSeed" type="number" width="100">0.0</input>
+    <input x="5" multiline="false" y="68" height="60" variable="randomSeed" type="number" width="100">1.0</input>
     <button x="71" actionKey="2" y="11" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">go</button>
     <chooser x="14" y="248" height="60" variable="display-mode" current="0" width="246" display="display-mode">
       <choice type="string" value="elevation"></choice>
@@ -277,7 +280,6 @@ patches-own
     <slider x="40" step="0.01" y="495" max="25" width="305" display="maxSettlementSizeDecayRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxSettlementSizeDecayRate" units="% of sizeLevel"></slider>
     <slider x="40" step="0.01" y="550" max="25" width="275" display="maxStockDecayRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxStockDecayRate" units="% of stock"></slider>
     <slider x="40" step="0.01" y="605" max="25" width="275" display="maxProductionRate" height="50" min="0" direction="Horizontal" default="15.0" variable="maxProductionRate" units="% of sizeLevel"></slider>
-    <slider x="319" step="0.01" y="549" max="25" width="280" display="maxTraitTransmissionRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxTraitTransmissionRate" units="% of trait difference"></slider>
     <plot x="1489" autoPlotX="true" yMax="10.0" autoPlotY="true" y="1372" xMin="0.0" height="175" legend="false" xMax="10.0" yMin="0.0" width="233" display="year preciptation">
       <setup>let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
 set-plot-x-range 0 (yearLengthInDays + 1)</setup>
@@ -445,14 +447,12 @@ histogram [(item 10 culturalVector) / maxMutationVariation] of settlements</upda
         <update>histogram [(item 7 culturalVector) / maxProductionRate] of settlements</update>
       </pen>
     </plot>
-    <note x="718" y="778" backgroundDark="0" fontSize="9" width="51" markdown="false" height="19" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">size decay</note>
     <monitor x="977" precision="2" y="764" height="60" fontSize="9" width="104" display="modes">(word (length modesSizeDecayTrait) " " modesSizeDecayTrait)</monitor>
     <monitor x="872" precision="2" y="764" height="60" fontSize="9" width="100" display="std. dev">stdDevSizeDecayTrait</monitor>
     <monitor x="767" precision="2" y="764" height="60" fontSize="9" width="100" display="mean">meanSizeDecayTrait</monitor>
     <monitor x="976" precision="2" y="827" height="60" fontSize="9" width="104" display="modes">(word (length modesStockDecayTrait) " " modesStockDecayTrait)</monitor>
     <monitor x="766" precision="2" y="827" height="60" fontSize="9" width="100" display="mean">meanStockDecayTrait</monitor>
     <monitor x="871" precision="2" y="827" height="60" fontSize="9" width="100" display="std. dev.">stdDevStockDecayTrait</monitor>
-    <note x="709" y="846" backgroundDark="0" fontSize="9" width="55" markdown="false" height="22" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">stock decay</note>
     <monitor x="978" precision="2" y="891" height="60" fontSize="9" width="104" display="modes">(word (length modesProductionTrait) " " modesProductionTrait)</monitor>
     <monitor x="873" precision="2" y="891" height="60" fontSize="9" width="100" display="std. dev.">stdDevProductionTrait</monitor>
     <monitor x="768" precision="2" y="891" height="60" fontSize="9" width="100" display="mean">meanProductionTrait</monitor>
@@ -463,11 +463,9 @@ histogram [(item 10 culturalVector) / maxMutationVariation] of settlements</upda
     <monitor x="1144" precision="2" y="764" height="60" fontSize="9" width="100" display="mean">meanFreqOverQualTrait</monitor>
     <monitor x="1249" precision="2" y="764" height="60" fontSize="9" width="100" display="st. dev">stdDevFreqOverQualTrait</monitor>
     <monitor x="1354" precision="2" y="764" height="60" fontSize="9" width="115" display="modes">(word (length modesFreqOverQualTrait) " " modesFreqOverQualTrait)</monitor>
-    <note x="1088" y="785" backgroundDark="0" fontSize="9" width="56" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">freq./ qual.</note>
     <monitor x="1354" precision="2" y="827" height="60" fontSize="9" width="115" display="modes">(word (length modesTransmissionTrait) " " modesTransmissionTrait)</monitor>
     <monitor x="1249" precision="2" y="827" height="60" fontSize="9" width="100" display="st. dev.">stdDevTransmissionTrait</monitor>
     <monitor x="1144" precision="2" y="827" height="60" fontSize="9" width="100" display="mean">meanTransmissionTrait</monitor>
-    <note x="1109" y="838" backgroundDark="0" fontSize="9" width="30" markdown="false" height="20" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">trans.</note>
     <monitor x="1354" precision="2" y="892" height="60" fontSize="9" width="115" display="modes">(word (length modesMutationTrait) " " modesMutationTrait)</monitor>
     <monitor x="1249" precision="2" y="892" height="60" fontSize="9" width="100" display="st. dev.">stdDevMutationTrait</monitor>
     <monitor x="1144" precision="2" y="892" height="60" fontSize="9" width="100" display="mean">meanMutationTrait</monitor>
@@ -503,9 +501,7 @@ histogram [item 1 culturalVector] of settlements</setup>
     <monitor x="865" precision="2" y="1356" height="60" fontSize="9" width="100" display="std. dev.">stdDevBlueTrait</monitor>
     <monitor x="970" precision="2" y="1356" height="60" fontSize="9" width="104" display="modes">(word (length modesBlueTrait) " " modesBlueTrait)</monitor>
     <monitor x="866" precision="17" y="1422" height="60" fontSize="9" width="100" display="interval">"[ 0 - 255 )"</monitor>
-    <note x="735" y="1248" backgroundDark="0" fontSize="12" width="23" markdown="false" height="20" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#1</note>
     <note x="733" y="1311" backgroundDark="0" fontSize="12" width="25" markdown="false" height="23" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#2</note>
-    <note x="735" y="1371" backgroundDark="0" fontSize="12" width="23" markdown="false" height="25" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#3</note>
     <plot x="1160" autoPlotX="true" yMax="10.0" autoPlotY="true" yAxis="frequency" y="1025" xMin="0.0" height="191" legend="true" xMax="10.0" yMin="0.0" width="268" xAxis="variant" display="Trader technology (movement cost)">
       <setup></setup>
       <update>carefully [ set-plot-x-range floor min [min (list (item 3 culturalVector) (item 4 culturalVector))] of settlements - 1  ceiling max [max (list (item 3 culturalVector) (item 4 culturalVector))] of settlements + 1 ] []</update>
@@ -528,8 +524,6 @@ histogram [relativePathCostInPort + item 4 culturalVector] of settlements</updat
     <monitor x="1140" precision="2" y="1222" height="60" fontSize="9" width="100" display="mean">meanLandTechTrait</monitor>
     <monitor x="1245" precision="2" y="1222" height="60" fontSize="9" width="100" display="std. dev">stdDevLandTechTrait</monitor>
     <monitor x="1350" precision="2" y="1222" height="60" fontSize="9" width="104" display="modes">(word (length modesLandTechTrait) " " modesLandTechTrait)</monitor>
-    <note x="1110" y="1308" backgroundDark="0" fontSize="10" width="28" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Port</note>
-    <note x="1107" y="1244" backgroundDark="0" fontSize="10" width="30" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Land</note>
     <slider x="33" step="0.01" y="849" max="par_albedo_max" width="261" display="par_albedo_min" height="50" min="0" direction="Horizontal" default="0.2" variable="par_albedo_min"></slider>
     <slider x="33" step="0.01" y="961" max="drainage-coefficient_max" width="261" display="drainage-coefficient_min" height="50" min="0" direction="Horizontal" default="0.2" variable="drainage-coefficient_min"></slider>
     <slider x="33" step="1" y="1017" max="root-zone-depth_max" width="261" display="root-zone-depth_min" height="50" min="0" direction="Horizontal" default="200.0" variable="root-zone-depth_min" units="mm"></slider>
@@ -551,6 +545,15 @@ histogram [relativePathCostInPort + item 4 culturalVector] of settlements</updat
     <monitor x="301" precision="0" y="9" height="60" fontSize="11" width="100">currentYear</monitor>
     <monitor x="289" precision="0" y="71" height="60" fontSize="11" width="114">currentDayOfYear</monitor>
     <button x="141" y="321" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="154">parameters-to-default</button>
+    <slider x="319" step="0.01" y="549" max="25" width="312" display="maxTraitTransmissionRate" height="50" min="0" direction="Horizontal" default="20.0" variable="maxTraitTransmissionRate" units="% of trait difference"></slider>
+    <note x="710" y="846" backgroundDark="0" fontSize="9" width="55" markdown="false" height="30" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">stock decay</note>
+    <note x="1104" y="838" backgroundDark="0" fontSize="9" width="35" markdown="false" height="26" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">trans.</note>
+    <note x="1104" y="785" backgroundDark="0" fontSize="9" width="40" markdown="false" height="36" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">freq./ qual.</note>
+    <note x="710" y="783" backgroundDark="0" fontSize="9" width="51" markdown="false" height="32" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">size decay</note>
+    <note x="730" y="1248" backgroundDark="0" fontSize="12" width="28" markdown="false" height="20" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#1</note>
+    <note x="1100" y="1244" backgroundDark="0" fontSize="10" width="37" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Land</note>
+    <note x="1103" y="1308" backgroundDark="0" fontSize="10" width="35" markdown="false" height="18" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Port</note>
+    <note x="732" y="1371" backgroundDark="0" fontSize="12" width="26" markdown="false" height="25" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">#3</note>
   </widgets>
   <info>## WHAT IS IT?
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<model version="NetLogo 7.0.0-beta2" snapToGrid="false">
+<model version="NetLogo 7.0.2" snapToGrid="false">
   <code><![CDATA[;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;; DECLARATION HEADER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -17,6 +17,9 @@ globals
   width
   height
 
+  areaPerPatch
+  patchWidth
+  
   ;;; GIS data holders
   sitesData_EMIII-MMIA
   sitesData_MMIB
@@ -79,6 +82,72 @@ to set-world-dimensions
   resize-world 0 width 0 height
 
   set-patch-size 3
+  
+  ; Match NetLogo world to the dataset envelope
+  gis:set-world-envelope gis:envelope-of elevationData
+
+  ; Calculate area equivalent to a patch
+
+  ; if units are in degrees
+  ;set areaPerPatch calculate-patch-area-degrees elevationData
+
+  ; if units are in meters
+  set areaPerPatch calculate-patch-area-meters elevationData
+
+  set patchWidth sqrt (areaPerPatch * 10000) ;;; m = ha * 10,000
+
+end
+
+to-report calculate-patch-area-degrees [ rasterData ]
+
+  ; Get the envelope: [min-x min-y max-x max-y] in degrees
+  let env gis:envelope-of rasterData
+  let min-lon item 0 env
+  let min-lat item 2 env
+  let max-lon item 1 env
+  let max-lat item 3 env
+
+  ; Calculate central latitude (φ₀)
+  let lat0 (min-lat + max-lat) / 2
+
+  ; Get raster resolution (number of cells)
+  set width gis:width-of rasterData     ; number of columns
+  set height gis:height-of rasterData   ; number of rows
+
+  ; Cell size (in degrees)
+  let dlon (max-lon - min-lon) / width
+  let dlat (max-lat - min-lat) / height
+
+  ; Earth radius (meters)
+  let R 6371000
+
+  ; Area per raster cell in square meters (approximate)
+  let patchArea (R ^ 2) * abs dlon * abs dlat * cos(lat0 * pi / 180) * (pi / 180) ^ 2
+
+  ; Report the result
+;  print (word "Approximate area per patch: " patchArea " m² (" (patchArea / 10000) " ha) at latitude " lat0)
+
+  report patchArea / 10000
+
+end
+
+to-report calculate-patch-area-meters [ gisData ]
+
+  let env gis:envelope-of gisData
+
+  let gis-width item 1 env - item 0 env
+  let gis-height item 3 env - item 2 env
+;  print (word "width: " gis-width ", height: " gis-height)
+
+  let num-patches-x max-pxcor - min-pxcor + 1
+  let num-patches-y max-pycor - min-pycor + 1
+  ;set patch-width gis-width / num-patches-x
+
+  let patchArea (gis-width * gis-height) / (num-patches-x * num-patches-y)
+;  print (word "area-per-patch=" area-per-patch)
+  set patchArea patchArea / 10000 ; square meters to hectares
+
+  report patchArea
 
 end
 
@@ -239,7 +308,7 @@ to load-gis
 
 end]]></code>
   <widgets>
-    <view x="139" wrappingAllowedX="true" y="6" frameRate="30.0" minPycor="0" height="465" showTickCounter="true" patchSize="3.0" fontSize="10" wrappingAllowedY="true" width="738" tickCounterLabel="ticks" maxPycor="154" updateMode="0" maxPxcor="245" minPxcor="0"></view>
+    <view x="139" wrappingAllowedX="true" y="6" frameRate="30.0" minPycor="0" height="211" showTickCounter="true" patchSize="3.0" fontSize="10" wrappingAllowedY="true" width="333" tickCounterLabel="ticks" maxPycor="154" updateMode="0" maxPxcor="245" minPxcor="0"></view>
     <button x="21" y="24" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="63" sizeVersion="0">setup</button>
     <button x="4" y="70" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="126" sizeVersion="0">switch-site-labels</button>
   </widgets>
