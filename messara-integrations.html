@@ -712,13 +712,35 @@ end</code></pre>
 <section id="extension-arid-as-a-factor-of-settlement-productivity" class="level2" data-number="29.3">
 <h2 data-number="29.3" class="anchored" data-anchor-id="extension-arid-as-a-factor-of-settlement-productivity"><span class="header-section-number">29.3</span> Extension: ARID as a factor of settlement productivity</h2>
 <p>Last, we need to connect ARID to settlement productivity.</p>
-<p>We first calculate the value of two new settlement variables, <code>catchmentArea</code> and <code>ARIDinCatchmentArea</code>. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on <code>sizeLevel</code> and two parameters, <code>catchmentSlope</code> and <code>catchmentRadiusMaximum</code>. This is a <em>very</em> preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Mesara Valley.</p>
+<p>We first calculate the value of two new settlement variables, <code>catchmentArea</code> and <code>ARIDinCatchmentArea</code>. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on <code>sizeLevel</code> and two parameters, <code>catchmentSlope</code> and <code>catchmentRadiusMaximum</code>. This is a <em>very</em> preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.</p>
 <pre class="netlogo"><code>settlements-own
 [
   ...
   catchmentArea
   ARIDinCatchmentArea
 ]
+
+...
+
+to update-settlements
+
+  ask settlements
+  [
+    let thisSettlement self
+
+    ; the sizeLevel of settlements decays with a constant rate, up to 1 (minimum)
+    set sizeLevel max (list 1 (sizeLevel * (1 - ((item 5 culturalVector) / 100)) ) )
+    ; production in stock also decays with a constant rate
+    set stock stock * (1 - ((item 6 culturalVector) / 100))
+    ; prodution is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
+    update-ARIDinCatchmentArea
+    update-catchmentArea
+    set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * ARIDinCatchmentArea
+
+    ...
+  ]
+
+end
 
 ...
 
@@ -748,6 +770,7 @@ end</code></pre>
 <em>View of MesaraTrade after set up</em></p>
 <p><img src="assets/screenshots/BlockC_module6_MesaraTrade interface.png" class="img-fluid" alt="View of MesaraTrade interface"><br>
 <em>View of MesaraTrade interface</em></p>
+<p>But WAIT! Is there something off about how the new version is running?</p>
 
 
 </section>
