@@ -196,7 +196,7 @@ end
 
 Last, we need to connect ARID to settlement productivity.
 
-We first calculate the value of two new settlement variables, `catchmentArea` and `ARIDinCatchmentArea`. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on `sizeLevel` and two parameters, `catchmentSlope` and `catchmentRadiusMaximum`. This is a *very* preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Mesara Valley.
+We first calculate the value of two new settlement variables, `catchmentArea` and `ARIDinCatchmentArea`. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on `sizeLevel` and two parameters, `catchmentSlope` and `catchmentRadiusMaximum`. This is a *very* preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.
 
 ```NetLogo
 settlements-own
@@ -205,6 +205,28 @@ settlements-own
   catchmentArea
   ARIDinCatchmentArea
 ]
+
+...
+
+to update-settlements
+
+  ask settlements
+  [
+    let thisSettlement self
+
+    ; the sizeLevel of settlements decays with a constant rate, up to 1 (minimum)
+    set sizeLevel max (list 1 (sizeLevel * (1 - ((item 5 culturalVector) / 100)) ) )
+    ; production in stock also decays with a constant rate
+    set stock stock * (1 - ((item 6 culturalVector) / 100))
+    ; prodution is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
+    update-ARIDinCatchmentArea
+    update-catchmentArea
+    set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * ARIDinCatchmentArea
+
+    ...
+  ]
+
+end
 
 ...
 
@@ -238,3 +260,5 @@ And *voilà*! We can now run our boosted Pond Trade model within the context of 
 
 ![View of MesaraTrade interface](assets/screenshots/BlockC_module6_MesaraTrade interface.png)  
 *View of MesaraTrade interface*
+
+But WAIT! Is there something off about how the new version is running?
