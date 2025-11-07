@@ -1,0 +1,254 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; TRADERS.NLS
+;;; Purpose: Trader behaviors and movement (reused/extended from PondTrade).
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to setup-trader [ baseSettlement ]
+
+  set base baseSettlement
+  set isActivated true
+  set restingCountdown 0
+  set transactionsThisYear 0
+
+  ; give meaningful display related to base
+  set shape "person"
+  set color [color] of base
+  set size 3
+
+  choose-destination
+
+end
+
+to update-traders
+
+  let activeTraders traders with [isActivated]
+  let tradersInBase activeTraders with [is-in-base]
+  let tradersInDestination activeTraders with [is-in-destination]
+   
+  ; RESET TRANSACTIONS COUNT IF NEW YEAR
+  if (currentDayOfYear = 1)
+  [ 
+    set totalTransactionsThisYear 0
+    ask activeTraders
+    [
+      set transactionsThisYear 0
+    ]
+  ]
+
+  ; UNLOAD
+  ask (turtle-set tradersInBase tradersInDestination) with [cargoValue > 0]
+  [
+    ; unload cargo (changes sizeLevel)
+    unload-cargo
+  ]
+
+  ; CHECK if the trader can be sustained when in the base
+  ask tradersInBase
+  [
+    if ([potentialNumberOfTraders < currentNumberOfTraders] of base)
+    [
+      ; the current number of traders cannot be sustained
+      set isActivated false
+      ; update currentNumberOfTraders of base
+      ask base [ set currentNumberOfTraders get-current-number-of-traders ]
+    ]
+  ]
+
+  set activeTraders traders with [isActivated] ; update active traders
+  set tradersInBase tradersInBase with [isActivated] ; update traders in base
+  
+  ; LOAD
+  ask (turtle-set tradersInBase tradersInDestination)
+  [
+    ifelse (restingCountdown < 0)
+    [
+      ; load cargo (changes stock)
+      load-cargo
+      if (cargoValue > 0) ; stop resting only when there is any cargo to carry
+      [
+        ; reset restingCountdown
+        set restingCountdown resting-duration
+      ]
+    ]
+    [
+      ; decrease resting-countdown by 1 unit, if negative, keep it at -1
+      set restingCountdown max (list -1 (restingCountdown - 1))
+    ]
+  ]
+
+  ; CHOOSE DESTINATION
+  ask tradersInBase with [cargoValue > 0]
+  [
+    ; update the destination whenever in the base settlement and there is cargo to transport
+    choose-destination
+  ]
+  
+  ; FIND DIRECTION in route
+  ask (turtle-set tradersInBase tradersInDestination) with [cargoValue > 0]
+  [
+    update-last-position
+    find-direction
+  ]
+
+  ; TRAVEL DAYLIGHT JOURNEY
+  ask activeTraders with [cargoValue > 0]
+  [
+    travel-a-day
+  ]
+
+end
+
+to update-last-position
+  
+  ; update lastPosition if in a patch centre
+  if ((xcor = [pxcor] of patch-here) and (ycor = [pycor] of patch-here))
+  [
+    set lastPosition patch-here
+  ]
+  
+end
+
+to choose-destination ; ego = trader
+
+  let thisTrader self
+
+  ; get routes connecting the base settlement
+  let routesFromBase get-routes-to-settlement [base] of thisTrader
+
+  ; order these routes by benefit/cost ratio
+  set routesFromBase sort-by [ [?1 ?2] -> benefit-cost-of-route ?1 thisTrader > benefit-cost-of-route ?2 thisTrader ] routesFromBase
+
+  ; print the options available
+;  foreach routesFromBase
+;  [
+;    print "==============================================================="
+;    print "route between:"
+;    print [who] of get-origin-and-destination ?
+;    print "has the benefit-cost ratio of:"
+;    print benefit-cost-of-route ?
+;  ]
+;  print "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x"
+
+  ; select the one with higher benefit/cost ratio
+  set route first routesFromBase
+
+  ; get the settlement of destination
+  set destination one-of (get-origin-and-destination route) with [who != [who] of ([base] of thisTrader)]
+
+end
+
+to find-direction ; ego = trader
+  
+  ; find where in the route list is the trader
+  let currentPosition position lastPosition route
+
+  ; set direction if in a settlement
+  ifelse (currentPosition = 0) ; in the first extreme of the route list
+  [
+    ; move in the route list towards larger index numbers
+    set direction 1
+  ]
+  [
+    if (currentPosition = (length route - 1)) ; in the last extreme of the route list
+    [
+      ; move in the route list towards smaller index numbers
+      set direction -1
+    ]
+  ]
+  ; else the trader is in route to either the base or the destination
+
+end
+
+to travel-a-day
+  
+  let minutes-to-travel daylight-hours * 60
+  
+  while [ minutes-to-travel > 0 ]
+  [
+    update-last-position
+    
+    move-towards-in-a-minute get-next-patch-in-route
+    
+    ifelse (is-in-base or is-in-destination) 
+    [
+      set minutes-to-travel 0 ; stop if already reached base or destination
+    ]
+    [
+      set minutes-to-travel minutes-to-travel - 1 ; continue until minutes-to-travel are spent
+    ]
+  ]
+  
+end
+
+to-report get-next-patch-in-route ; ego = trader
+
+  ; find where in the route list is the trader
+  let currentPosition position lastPosition route
+
+  ; move through the route following direction
+  report item (currentPosition + direction) route
+  
+end
+
+to move-towards-in-a-minute [ targetPatch ]
+  
+  ;move-to targetPatch ; constant travel time (1 patch per tick)
+  facexy ([pxcor] of targetPatch) ([pycor] of targetPatch)
+
+  let distToTargetPatch (distancexy ([pxcor] of targetPatch) ([pycor] of targetPatch))
+  
+  let walkingSpeedHere (1 / pathCost) * travellingSpeed * 1000 / patchWidth ; (km/h) * 1000 -> m/h ; m/h / (patchWidth) -> patchWidth(s) / h
+  
+  let maxDistWalkedInAMinute walkingSpeedHere / 60 ; patchWidth(s) / h / 60 -> patchWidth(s) / minute
+  
+  forward min (list maxDistWalkedInAMinute distToTargetPatch) 
+  
+  ; NOTE: move all the way to the target or less, but never overshoot, if speed is actually fast enough.
+
+end
+
+to-report is-in-base ; ego = trader
+
+  report (xcor = [xcor] of base) and (ycor = [ycor] of base) ; if the trader arrived at the centre of the base patch
+
+end
+
+to-report is-in-destination ; ego = trader
+
+  report (xcor = [xcor] of destination) and (ycor = [ycor] of destination) ; if the trader arrived at the centre of the destination patch
+
+end
+
+to unload-cargo ; ego = trader
+
+  let thisTrader self
+  let settlementHere one-of settlements-here
+
+  ; unload cargo
+  ask settlementHere [ add-trade-effect thisTrader ]
+  
+  set transactionsThisYear transactionsThisYear + 1
+  set totalTransactionsThisYear totalTransactionsThisYear + 1
+
+end
+
+to load-cargo ; ego = trader
+
+  let me self
+  let settlementHere one-of settlements-here
+
+  ; (try) load cargo
+  set cargoValue min (list cargo-capacity ([stock] of settlementHere)) ; the trader can only carry as much as the settlement stock or its capacity
+  
+  if (cargoValue > 0)
+  [ 
+    ask settlementHere [ set stock stock - ([cargoValue] of me) ] ; reduces the settlement stock
+
+    set culturalSample [culturalVector] of settlementHere
+    
+    set transactionsThisYear transactionsThisYear + 1 
+    set totalTransactionsThisYear totalTransactionsThisYear + 1
+  ]
+
+end

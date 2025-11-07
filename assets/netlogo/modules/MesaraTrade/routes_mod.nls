@@ -1,0 +1,191 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ROUTES.NLS
+;;; Purpose: Routes and path helpers (reused/extended from PondTrade).
+;;; Should be used together with ROUTES_CALCULATION.NLS, if calculation of routes is intended.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to-report get-route [ settlement1 settlement2 ] ; accepts two settlements and returns a route
+
+  ; get routes connecting settlement1
+  let routesFromSettlement1 filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = settlement1) or
+    ([one-of settlements-here] of last ?1 = settlement1)
+  ] routes
+
+  ; get the route connecting settlement2 from the previous list
+  let routeFromSettlement1ToSettlement2 filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = settlement2) or
+    ([one-of settlements-here] of last ?1 = settlement2)
+  ] routesFromSettlement1
+
+  report first routeFromSettlement1ToSettlement2
+
+end
+
+to assign-path-cost
+
+  ask patches with [elevation = noElevationDataTag] [ set pathCost 9999 ] ;;; this makes routes crossing patches with no elevation data extremely unlikely
+
+  ask patchesWithElevationData
+  [
+    let myValidNeighborsAndI (patch-set self (neighbors with [elevation > noElevationDataTag]))
+
+    ifelse (count myValidNeighborsAndI > 1)
+    [
+      set pathCost standard-deviation [elevation] of myValidNeighborsAndI
+    ]
+    [
+      set pathCost 1
+    ]
+  ]
+  
+  set maxPathCost max [pathCost] of patchesWithElevationData
+
+end
+
+to-report get-path-cost [ aPatch aTrader ]
+
+  let pathCostOfPatch [pathCost] of aPatch
+  ifelse ([any? settlements-here] of aPatch)
+  [
+    ; path cost in port apply
+    set pathCostOfPatch pathCostOfPatch + [(item 4 culturalVector)] of [base] of aTrader
+  ]
+  [
+    ; path cost in land apply
+    set pathCostOfPatch pathCostOfPatch + [(item 3 culturalVector)] of [base] of aTrader
+  ]
+  report pathCostOfPatch
+
+end
+
+to-report get-origin-and-destination [ aRoute ] ; accepts a route and returns a turtle-set with two settlements
+
+  report (turtle-set ([ one-of settlements-here ] of first aRoute) ([one-of settlements-here ] of last aRoute))
+
+end
+
+to-report get-routes-to-settlement [ aSettlement ] ; accepts a settlement and return a list of routes
+
+  report filter
+  [ ?1 ->
+    ([one-of settlements-here] of first ?1 = aSettlement) or
+    ([one-of settlements-here] of last ?1 = aSettlement)
+  ] routes
+
+end
+
+to-report benefit-cost-of-route [ aRoute aTrader ] ; accepts a route andpan returns a number (the benefit/cost ratio of the route)
+
+  let cost 0
+
+  foreach aRoute ; for every patch in the given route
+  [ ?1 ->
+    set cost cost + get-path-cost ?1 aTrader
+  ]
+
+  let originAndDestination get-origin-and-destination aRoute
+  let benefit 0
+  ask originAndDestination [ set benefit benefit + sizeLevel ] ; the benefit is the sum of the sizeLevel of the two settlements
+
+  report benefit / cost
+
+end
+
+to paint-routes
+
+  ;;; define list of shades of red in NetLogo
+  let redShades (list 11 12 13 14 15 16 17 18 19)
+  ;;; NOTE: this is needed because rgb colors based on elevation are a list
+  ;;; while NetLogo color are numbers
+
+  ; resets route patches to the terrain color
+;  foreach routes
+;  [ ?1 ->
+;    let aRoute ?1
+;
+;    foreach aRoute
+;    [ ??1 ->
+;      ask ??1 [ display-elevation ]
+;    ]
+;  ]
+
+  ; paint route patches in shades of red depending on route frequency
+  foreach routes
+  [ ?1 ->
+    let aRoute ?1
+
+    foreach aRoute
+    [ ??1 ->
+      ask ??1
+      [
+        if (showRoutes)
+        [
+          ifelse (not member? pcolor redShades) ; if its the first route crossing the patch
+          [
+            set pcolor 11
+          ]
+          [
+            set pcolor min (list (pcolor + 1) (19)) ; sets a maximum at 19 (the brightest)
+          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to paint-active-routes
+
+  ask traders
+  [
+    foreach route
+    [ ?1 ->
+      ask ?1
+      [
+        ifelse (showActiveRoutes)
+        [
+          set pcolor yellow
+        ]
+        [
+;          if (not showRoutes) ; if not displaying all routes
+;          [
+;            ; resets to the patch terrain color
+;            display-elevation
+;          ]
+        ]
+      ]
+    ]
+  ]
+
+end
+
+to import-routes-from-file
+
+  ;;; get unique file name corresponding to the current setting
+  let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=0.txt")
+
+  ifelse (not file-exists? filePath)
+  [ print (word "WARNING: could not find '" filePath "'") stop ] ;;; unfortunately the stop command doesn't stop the setup procedure
+  [
+    file-open filePath
+
+    set routes []
+
+    while [not file-at-end?]
+    [
+      let lineString file-read-line
+      set lineString remove-item 0 lineString
+      set lineString remove-item (length lineString - 1) lineString
+      set lineString (word "(list " lineString " )")
+
+      set routes lput (run-result lineString) routes
+    ]
+  ]
+
+  file-close
+
+end
