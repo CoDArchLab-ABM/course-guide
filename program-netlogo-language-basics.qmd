@@ -42,6 +42,20 @@ The (real) first thing one should learn about NetLogo, and most agent-based mode
 
 As seen in the figure above, NetLogo also includes a third type of entity, `links`, which has the particularity of describing a connection between two `turtles` and thus not having specific spatial coordinates of their own. We will deal with links later on, but for now we focus on the other entities, which are more commonly used in models.
 
+::: {.callout-note}
+
+::: {.grid}
+
+::: {.g-col-6}
+
+The term "turtle" comes from the base language from which NetLogo was developed from, called "Logo" (in turn, an adaptation of another language, [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)), where instructions can be given to one agent or robot ("turtle") to move and draw a line graph. It was conceived to teach programming concepts -- in fact, I had the opportunity of participating in one Logo session back in my school!
+
+<a title="NightElfik, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KochTurtleAnim.gif"><img width="256" alt="KochTurtleAnim" src="https://upload.wikimedia.org/wikipedia/commons/0/09/KochTurtleAnim.gif?20110330124613"></a>
+
+:::
+
+::: {.g-col-6}
+
 All `patches` and `turtles` can be identified individually through primitives. Turtles have a unique numerical identifier (`who`) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (`pxcor` and `pycor`), as they occupy each a single position in a grid (see **Grid**). To reference a specific turtle, patch or link:
 
 ```NetLogo
@@ -271,7 +285,7 @@ turtle 0 < turtle 1
 patch 0 0 > patch 1 1
 ```
 
-Note that in other programming languages the equal sign might be reserved to setting the value of a variable. For example, `"a" = "b"` will return `false` in NetLogo, while in R it will assign a value "b" to an variable named "a". By the way, to acheive the same in R, we should write `"a" == "b"`.
+Note that in other programming languages the equal sign might be reserved to setting the value of a variable. For example, `"a" = "b"` will return `false` in NetLogo, while in R it will assign a value "b" to an variable named "a". By the way, to achieve the same in R, we should write `"a" == "b"`.
 
 ## Procedures
 
@@ -393,6 +407,11 @@ ask <ENTITIES>
 ]
 ```
 
+Try this out in the command center:
+```NetLogo
+ask patches [ set pcolor blue ]
+```
+
 ## Entities with variables, logic operations, and procedures
 
 Commands inside the `ask` structure can be both direct variable operations and procedures. For instance:
@@ -453,11 +472,11 @@ to celebrate-birthday
 end
 ```
 
-## Grid
+## Grid (world)
 
 One should spend some time understanding the grid structure and associated syntax. It is recommendable to consult the "settings" pop-up window in the "interface tab":
 
-![The settings pop-up window in NetLogo](https://ccl.northwestern.edu/netlogo/docs/images/interfacetab/settings.gif)  
+![The settings pop-up window in NetLogo](https://ccl.northwestern.edu/netlogo/5.3.1/docs/images/interface/settings.png)  
 *The settings pop-up window in NetLogo*
 
 The default configuration is a 33x33 grid with the position (0,0) at the centre. Both dimensions and centre can be easily edited for each particular model. Moreover, we can specify agents behaviour at the borders by ticking the "wrap" options. Wrapping the world limits means that, for instance, under the default setting mentioned above, the position (-16,0) is adjacent to (16,0). In the console, we can "ask" the patch at (-16,0) to print its distance to the patch at (16,0), using the primitive function `distance` (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#distance):

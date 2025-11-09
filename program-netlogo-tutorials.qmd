@@ -25,6 +25,6 @@ Below is the sequence of the four tutorials, with short commentary on what you s
 | **#2 – Commands** ([docs.netlogo.org][2])   | Learn how to issue commands through the Command Center, how agents behave (turtles, patches, observer), and basic language primitives. For example, in the Traffic Basic model you explore effects of simple commands.                              | Focus: For your archaeological simulations you will need to script commands to initialise agents, set up the landscape, change states over time. This tutorial anchors that programming mindset: what happens behind the scenes when the user clicks “setup” or “go”.                 |
 | **#3 – Procedures** ([docs.netlogo.org][3]) | You learn to build a full model: define `setup` and `go` procedures, define agent variables, use `ask` commands, make plots, etc. This is where you move from “explore someone else’s model” to “build your own.” ([docs.netlogo.org][3])           | Focus: When you come to sessions 17-22 (Pond Trade II/III) you will be programming agent behaviours and submodels. This tutorial arms you with the techniques of structuring code, naming procedures, using global variables and agent variables.                                     |
 
-[1]: https://docs.netlogo.org/tutorial1.html?utm_source=chatgpt.com "Tutorial #1: Models"
-[2]: https://docs.netlogo.org/tutorial2.html?utm_source=chatgpt.com "Tutorial #2: Commands"
-[3]: https://docs.netlogo.org/tutorial3.html?utm_source=chatgpt.com "Tutorial #3: Procedures"
+[1]: https://docs.netlogo.org/tutorial1.html "Tutorial #1: Models"
+[2]: https://docs.netlogo.org/tutorial2.html "Tutorial #2: Commands"
+[3]: https://docs.netlogo.org/tutorial3.html "Tutorial #3: Procedures"

@@ -1,7 +1,6 @@
 # Sneak-peak at other languages {#program-other-languages}
 
-You are now introduced to NetLogo. However, please remember that **agent-based modelling (ABM)** is not limited to this language and platform.
-It is highly recommended that you learn and practice with other programming languages to experience how ABM models can be implemented in different ways, with different goals and trade-offs.
+Consider yourself introduced to NetLogo! However, please remember that ABM is not limited to this language and platform. It is highly recommended that you learn and practice with other programming languages to experience how ABM models can be implemented in different ways, with different goals and trade-offs.
 
 ## ABM beyond NetLogo
 
@@ -10,12 +9,6 @@ Potentially, any programming language can be used to implement an ABM model. Aft
 These frameworks help standardise model structure, improve reproducibility, and often support integration with data analysis or visualisation tools.
 
 Below are some of the most relevant ABM platforms and libraries beyond NetLogo. Each of them offers different strengths and target audiences.
-
-## Other platforms and languages
-
-Consider yourself introduced to NetLogo! However, please remember that ABM is not limited to this language and platform. It is highly recommended that you learn and practice with other programming languages to experience ABM models beyond NetLogo implementations.
-
----
 
 ## Major ABM platforms and libraries
 
@@ -33,18 +26,32 @@ Consider yourself introduced to NetLogo! However, please remember that ABM is no
 * **Why it matters:** Demonstrates how ABM concepts are applied in professional and business contexts, often for decision-support.
 * **Learn more:** [https://www.anylogic.com](https://www.anylogic.com)
 
+### 🗼 **GAMA**
+
+* **Language:** GAML (GAMA Modelling Language), based on Java.
+* **Highlights:** Open-source, designed for spatial and multi-agent simulations. Used in ecology, geography, and urban planning.
+* **Why it matters:** Provides a strong focus on spatial modelling and GIS integration, making it ideal for environmental and geographic applications.
+* **Learn more:** [https://gama-platform.github.io](https://gama-platform.github.io)
+
+### 🦖 **MASON**
+
+* **Language:** Java
+* **Highlights:** Open-source, designed for large-scale, high-performance simulations. Used in ecology, social science, and engineering.
+* **Why it matters:** Provides a strong focus on performance and scalability, making it suitable for large-scale simulations.
+* **Learn more:** [https://cs.gmu.edu/~eclab/projects/mason](https://cs.gmu.edu/~eclab/projects/mason)
+
 ### 🐍 **Mesa** (Python)
 
-* **Language:** Python.
+* **Language:** Python
 * **Highlights:** Open-source ABM framework with web-based visualisation; well integrated with data science libraries like NumPy and pandas.
 * **Why it matters:** Ideal for researchers who already use Python for data analysis. Encourages modular and reproducible modelling workflows.
-* **Learn more:** [https://mesa.readthedocs.io](https://mesa.readthedocs.io)
+* **Learn more:** [https://mesa.readthedocs.io/latest/](https://mesa.readthedocs.io/latest/)
 
 ### 🧮 **Agents.jl** (Julia)
 
-* **Language:** Julia.
+* **Language:** Julia
 * **Highlights:** Modern, high-performance ABM library that is easy to integrate with numerical computing and visualisation tools in Julia.
-* **Why it matters:** Demonstrates how ABM can benefit from efficient computation and real-time data analysis in a single language.
+* **Why it matters:** Demonstrates how ABM can benefit from efficient computation and real-time data analysis in a single language. Provides a strong focus on performance and scalability, making it suitable for large-scale simulations.
 * **Learn more:** [https://juliadynamics.github.io/Agents.jl/stable/](https://juliadynamics.github.io/Agents.jl/stable/)
 
 ## Quick comparison of ABM frameworks
@@ -54,19 +61,18 @@ Consider yourself introduced to NetLogo! However, please remember that ABM is no
 | **NetLogo**                    | NetLogo (Logo-like)           | ✅ Built-in GUI, easy model prototyping            | Education, conceptual models, rapid exploration                      | Free & open-source                          | ⭐ Beginner-friendly                        |
 | **RePast** (Simphony / J / Py) | Java / Python                 | ✅ (Simphony) or code-only                         | Complex scientific ABM, GIS models, large-scale simulations          | Free & open-source                          | ⭐⭐⭐ Advanced                               |
 | **AnyLogic**                   | Java-based                    | ✅ Professional GUI, multi-method                  | Industry simulation (health, transport, logistics), decision-support | Commercial (educational licenses available) | ⭐⭐⭐⭐ High but powerful                     |
+| **GAMA**                       | GAML (Java-based)             | ✅ Built-in GUI, GIS integration                   | Ecology, geography, urban planning                                   | Free & open-source                          | ⭐⭐ Intermediate (Java skills needed)      |
+| **MASON**                      | Java                          | ✅ Code-only, some built-in visualisation tools    | Ecology, social science, engineering, large-scale simulations        | Free & open-source                          | ⭐⭐⭐ Advanced                               |
 | **Mesa**                       | Python                        | ✅ Web-based UI templates                          | Research ABM + Python data analysis pipelines                        | Free & open-source                          | ⭐⭐ Intermediate (Python skills needed)     |
 | **Agents.jl**                  | Julia                         | ✅ Visualisation in Julia ecosystem                | High-performance scientific computing, real-time analysis            | Free & open-source                          | ⭐⭐⭐ Intermediate–Advanced                  |
 
-Legend for learning-curve stars:
-
-* ⭐ Beginner → ⭐⭐⭐⭐ Advanced / steep learning curve
 
 ---
 
 ## Other frameworks and resources
 
 There are many more ABM frameworks across different domains and programming languages.
-The **SWARM.org** community maintains an updated list of simulation platforms, including older but historically significant systems such as **Swarm**, **MASON**, and **NetLogo** itself.
+The **SWARM.org** community maintains an updated list of simulation platforms, including older but historically significant systems such as **Swarm**.
 
 ➡️ Explore: [https://www.swarm.org/wiki/ABM_Resources](https://www.swarm.org/wiki/ABM_Resources)
 
