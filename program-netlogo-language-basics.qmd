@@ -54,7 +54,9 @@ The term "turtle" comes from the base language from which NetLogo was developed 
 
 :::
 
-::: {.g-col-6}
+:::
+
+:::
 
 All `patches` and `turtles` can be identified individually through primitives. Turtles have a unique numerical identifier (`who`) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (`pxcor` and `pycor`), as they occupy each a single position in a grid (see **Grid**). To reference a specific turtle, patch or link:
 
