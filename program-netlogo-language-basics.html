@@ -498,16 +498,6 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#console-interaction" id="toc-console-interaction" class="nav-link active" data-scroll-target="#console-interaction"><span class="header-section-number">12.1</span> Console interaction</a></li>
   <li><a href="#entities" id="toc-entities" class="nav-link" data-scroll-target="#entities"><span class="header-section-number">12.2</span> Entities</a></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">12.3</span> Variables</a></li>
-  <li><a href="#expressing-equations" id="toc-expressing-equations" class="nav-link" data-scroll-target="#expressing-equations"><span class="header-section-number">12.4</span> Expressing equations</a></li>
-  <li><a href="#logical-operators" id="toc-logical-operators" class="nav-link" data-scroll-target="#logical-operators"><span class="header-section-number">12.5</span> Logical operators</a></li>
-  <li><a href="#procedures" id="toc-procedures" class="nav-link" data-scroll-target="#procedures"><span class="header-section-number">12.6</span> Procedures</a></li>
-  <li><a href="#logic-bifurcations-if-and-ifelse" id="toc-logic-bifurcations-if-and-ifelse" class="nav-link" data-scroll-target="#logic-bifurcations-if-and-ifelse"><span class="header-section-number">12.7</span> Logic bifurcations: <code>if</code> and <code>ifelse</code></a></li>
-  <li><a href="#iterators-loops" id="toc-iterators-loops" class="nav-link" data-scroll-target="#iterators-loops"><span class="header-section-number">12.8</span> Iterators (<em>loops</em>)</a></li>
-  <li><a href="#entities-with-variables-logic-operations-and-procedures" id="toc-entities-with-variables-logic-operations-and-procedures" class="nav-link" data-scroll-target="#entities-with-variables-logic-operations-and-procedures"><span class="header-section-number">12.9</span> Entities with variables, logic operations, and procedures</a></li>
-  <li><a href="#grid" id="toc-grid" class="nav-link" data-scroll-target="#grid"><span class="header-section-number">12.10</span> Grid</a></li>
-  <li><a href="#commenting-code" id="toc-commenting-code" class="nav-link" data-scroll-target="#commenting-code"><span class="header-section-number">12.11</span> Commenting code</a></li>
-  <li><a href="#dictionary" id="toc-dictionary" class="nav-link" data-scroll-target="#dictionary"><span class="header-section-number">12.12</span> Dictionary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/program-netlogo-language-basics.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -565,6 +555,22 @@ Caution
 <a title="NetLogo world and entities (Figure 2 in Izquierdo et al. 2019)" href="https://wisc.pb.unizin.org/agent-based-evolutionary-game-dynamics/"><img width="400" style="background-color: white" alt="NetLogo entities" src="https://wisc.pb.unizin.org/app/uploads/sites/28/2018/09/the-netlogo-world.png"></a> <br> <i style="color: grey;">NetLogo world and entities (Figure 2 in Izquierdo et al.&nbsp;2019)</i>
 </p>
 <p>As seen in the figure above, NetLogo also includes a third type of entity, <code>links</code>, which has the particularity of describing a connection between two <code>turtles</code> and thus not having specific spatial coordinates of their own. We will deal with links later on, but for now we focus on the other entities, which are more commonly used in models.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="grid">
+<div class="g-col-6">
+<p>The term “turtle” comes from the base language from which NetLogo was developed from, called “Logo” (in turn, an adaptation of another language, <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>, where instructions can be given to one agent or robot (“turtle”) to move and draw a line graph. It was conceived to teach programming concepts – in fact, I had the opportunity of participating in one Logo session back in my school!</p>
+<p><a title="NightElfik, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KochTurtleAnim.gif"><img width="256" alt="KochTurtleAnim" src="https://upload.wikimedia.org/wikipedia/commons/0/09/KochTurtleAnim.gif?20110330124613"></a></p>
+</div>
+<div class="g-col-6">
 <p>All <code>patches</code> and <code>turtles</code> can be identified individually through primitives. Turtles have a unique numerical identifier (<code>who</code>) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (<code>pxcor</code> and <code>pycor</code>), as they occupy each a single position in a grid (see <strong>Grid</strong>). To reference a specific turtle, patch or link:</p>
 <pre class="netlogo"><code>turtle &lt;WHO_NUMBER&gt;
 patch &lt;PXCOR&gt; &lt;PYCOR&gt;
@@ -591,7 +597,6 @@ one-of patches</code></pre>
 <p>The <code>one-of</code> primitive offers a easy way to randomly select one agent (<code>turtles</code> and <code>patches</code>) from all (or a subset of all) agents of a given type.</p>
 <p>Last, we should keep in mind that <code>turtles</code> can be created and destroyed on-the-fly during simulations, while <code>patches</code> are created in the background upon initialisation, according to the model settings (<em>e.g.</em> grid dimensions), but never destroyed during simulation runs.</p>
 <p>See NetLogo’s documentation on agents for further details (https://ccl.northwestern.edu/netlogo/docs/programming.html#agents).</p>
-</section>
 <section id="variables" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="variables"><span class="header-section-number">12.3</span> Variables</h2>
 <p>The most fundamental elements of NetLogo, as in any programming language, is variables. To assign a value to a variable we use the general syntax or code structure:</p>
@@ -699,7 +704,7 @@ set myVariable myTemporaryVariable / myTemporaryVariable</code></pre>
 <p>Valid, but not recommended: compares the internal ID of entities, which express the creation order, which is often arbitrary.</p>
 <pre class="netlogo"><code>turtle 0 &lt; turtle 1
 patch 0 0 &gt; patch 1 1</code></pre>
-<p>Note that in other programming languages the equal sign might be reserved to setting the value of a variable. For example, <code>"a" = "b"</code> will return <code>false</code> in NetLogo, while in R it will assign a value “b” to an variable named “a”. By the way, to acheive the same in R, we should write <code>"a" == "b"</code>.</p>
+<p>Note that in other programming languages the equal sign might be reserved to setting the value of a variable. For example, <code>"a" = "b"</code> will return <code>false</code> in NetLogo, while in R it will assign a value “b” to an variable named “a”. By the way, to achieve the same in R, we should write <code>"a" == "b"</code>.</p>
 </section>
 <section id="procedures" class="level2" data-number="12.6">
 <h2 data-number="12.6" class="anchored" data-anchor-id="procedures"><span class="header-section-number">12.6</span> Procedures</h2>
@@ -785,6 +790,8 @@ Caution
 [ 
   &lt;DO_SOMETHING&gt;
 ]</code></pre>
+<p>Try this out in the command center:</p>
+<pre class="netlogo"><code>ask patches [ set pcolor blue ]</code></pre>
 </section>
 <section id="entities-with-variables-logic-operations-and-procedures" class="level2" data-number="12.9">
 <h2 data-number="12.9" class="anchored" data-anchor-id="entities-with-variables-logic-operations-and-procedures"><span class="header-section-number">12.9</span> Entities with variables, logic operations, and procedures</h2>
@@ -827,10 +834,10 @@ Caution
 
 end</code></pre>
 </section>
-<section id="grid" class="level2" data-number="12.10">
-<h2 data-number="12.10" class="anchored" data-anchor-id="grid"><span class="header-section-number">12.10</span> Grid</h2>
+<section id="grid-world" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="grid-world"><span class="header-section-number">12.10</span> Grid (world)</h2>
 <p>One should spend some time understanding the grid structure and associated syntax. It is recommendable to consult the “settings” pop-up window in the “interface tab”:</p>
-<p><img src="https://ccl.northwestern.edu/netlogo/docs/images/interfacetab/settings.gif" class="img-fluid" alt="The settings pop-up window in NetLogo"><br>
+<p><img src="https://ccl.northwestern.edu/netlogo/5.3.1/docs/images/interface/settings.png" class="img-fluid" alt="The settings pop-up window in NetLogo"><br>
 <em>The settings pop-up window in NetLogo</em></p>
 <p>The default configuration is a 33x33 grid with the position (0,0) at the centre. Both dimensions and centre can be easily edited for each particular model. Moreover, we can specify agents behaviour at the borders by ticking the “wrap” options. Wrapping the world limits means that, for instance, under the default setting mentioned above, the position (-16,0) is adjacent to (16,0). In the console, we can “ask” the patch at (-16,0) to print its distance to the patch at (16,0), using the primitive function <code>distance</code> (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#distance):</p>
 <pre><code>observer&gt; ask patch -16 0 [ print distance patch 16 0 ]
@@ -853,6 +860,11 @@ end</code></pre>
 <p>For <strong>more information</strong> consult <a href="https://ccl.northwestern.edu/netlogo/docs/programming.html">NetLogo Programming Guide</a>.</p>
 
 
+</section>
+</div>
+</div>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
