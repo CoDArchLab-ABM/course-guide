@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -59,7 +59,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-46385b24d3fde8766d5335a75c40e237.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -123,9 +123,7 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Agent-based modelling for archaeologists. From concept to application and publication</a> 
         <div class="sidebar-tools-main">
@@ -292,7 +290,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pond-trade-terrain.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo: Creating a “pond” terrain</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,16 +549,16 @@ div.csl-indent {
 
 <section id="starting-with-models-as-references" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="starting-with-models-as-references"><span class="header-section-number">15.1</span> Starting with models as references</h2>
-<p>To complement the initial “brainstorming” of conceptual models, modellers will often search and review models already published on related subjects, considering if these could be reused, at least as an inspiration.</p>
-<p>Keeping yourself posted about the ABM community may give you an edge. Unfortunately, academic publishing has become a saturated media, and it is relatively hard to be updated about specific types of research, such as ABM models, which are often spread in many kinds of publications. Public model repositories, such as <a href="https://www.comses.net/">CoMSES</a> and initiatives like the modular library from <a href="https://archaeology-abm.github.io/NASSA-hub">NASSA</a> may aid you greatly in this task. But, ultimately, finding a relevant model will depend on your skills in Internet search (including prompting the right LLM!) and the attention others have put to preparing and publishing their models.</p>
-<p>In the following example, instead of building a model from scratch, we will be visiting the conceptual model corresponding to the <strong><em>Pond Trade</em></strong> model, designed by me in 2018 to facilitate learning ABM, mainly for archaeology and history.</p>
-<p>Having started with a mechanism definition (the model), which already is declared to represent a phenomenon relevant to archaeologists (trade), we will then proceed to select a set of types of evidence and a case study to demonstrate it.</p>
+<p>To complement the initial “brainstorming” of conceptual models, modellers will often search for and review models already published on related subjects, considering whether they could be reused, at least as inspiration.</p>
+<p>Keeping yourself posted about the ABM community may give you an edge. Unfortunately, academic publishing has become a saturated field, and it is relatively hard to stay up to date on specific research areas, such as ABM models, which are often spread across many kinds of publications. Public model repositories, such as <a href="https://www.comses.net/">CoMSES</a> and initiatives like the modular library from <a href="https://archaeology-abm.github.io/NASSA-hub">NASSA</a> may aid you greatly in this task. But, ultimately, finding a relevant model will depend on your skills in Internet search (including prompting the right LLM!) and the attention others have put into preparing and publishing their models.</p>
+<p>In the following example, instead of building a model from scratch, we will visit the conceptual model for the <strong><em>Pond Trade</em></strong> model, designed by me in 2018 to facilitate learning ABM, mainly for archaeology and history.</p>
+<p>Having started with a mechanism definition (the model), which is already declared to represent a phenomenon relevant to archaeologists (trade), we will then proceed to select a set of evidence types and a case study to demonstrate it.</p>
 </section>
 <section id="the-pond-trade-context" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="the-pond-trade-context"><span class="header-section-number">15.2</span> The Pond Trade context</h2>
-<p>The Pond Trade model represents mechanisms that link cultural integration and economic cycles caused by the exchange of materials (“trade”) between settlements placed in a heterogeneous space (“pond”). The Pond Trade design intentionally includes several aspects commonly used by other ABM models in archaeology and social sciences, such as multiple types of agents, the representation of a so-called “cultural vector”, procedural generation of data, network dynamics, and the reuse of published submodels and algorithms.</p>
-<p>The Pond Trade model and all its versions were developed by myself, Andreas Angourakis, and are available for download in <a href="https://codarchlab-abm.github.io/course-guide/assets/netlogo/">this repository</a> and its <a href="https://github.com/Andros-Spica/PondTrade">original repository</a>.</p>
-<p>A similar model, TravellerSim, was presented by Graham and Steiner <span class="citation" data-cites="graham_travellersim_2008">(<a href="references.html#ref-graham_travellersim_2008" role="doc-biblioref">2008</a>)</span>, who were revisiting an older non-ABM model <span class="citation" data-cites="rihll_modelling_1991">(<a href="references.html#ref-rihll_modelling_1991" role="doc-biblioref">Rihll and Wilson 1991, 59–95</a>)</span>, even though one was not based on the other. All three, and indeed many more, coincide in the “informal formulation” of the core mechanism, rooted in economic theory, relating the size of settlements to how they are interconnected.</p>
+<p>The Pond Trade model represents mechanisms that link cultural integration and economic cycles caused by the exchange of materials (“trade”) between settlements placed in a heterogeneous space (“pond”). The Pond Trade design intentionally includes several aspects commonly used by other ABM models in archaeology and the social sciences, such as multiple agent types, the representation of a so-called “cultural vector”, procedural data generation, network dynamics, and the reuse of published submodels and algorithms.</p>
+<p>The Pond Trade model and all its versions were developed by me, Andreas Angourakis, and are available for download in <a href="https://codarchlab-abm.github.io/course-guide/assets/netlogo/">this repository</a> and its <a href="https://github.com/Andros-Spica/PondTrade">original repository</a>.</p>
+<p>A similar model, TravellerSim, was presented by Graham and Steiner <span class="citation" data-cites="graham_travellersim_2008">(<a href="references.html#ref-graham_travellersim_2008" role="doc-biblioref">2008</a>)</span>, who revisited an older non-ABM model <span class="citation" data-cites="rihll_modelling_1991">(<a href="references.html#ref-rihll_modelling_1991" role="doc-biblioref">Rihll and Wilson 1991, 59–95</a>)</span>, even though the latter was not based on the former. All three, and indeed many more, coincide in the “informal formulation” of the core mechanism, rooted in economic theory, which relates the size of settlements to their interconnectivity.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -573,7 +571,7 @@ Note
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Such a situation, where similar mechanisms are modelled from scratch several times by different researchers, is, in fact, prevalent in the ABM community. There is a growing number of publications and models spreading over many specialised circles, which do not always cover all details about model implementation. Meanwhile, there is still no adequate logistical support for orderly sharing and searching for models across disciplines, despite the efforts made by CoMSES. The primary mission of NASSA is to offer a long-term solution to this problem.</p>
+<p>Such a situation, where similar mechanisms are modelled from scratch several times by different researchers, is, in fact, prevalent in the ABM community. There is a growing number of publications and models circulating across many specialised circles that do not always cover all the details of model implementation. Meanwhile, there is still no adequate logistical support for orderly sharing and searching for models across disciplines, despite CoMSES’ efforts, among other localised initiatives. The primary mission of NASSA is to offer a long-term solution to this problem.</p>
 </div>
 </div>
 </div>
@@ -602,9 +600,17 @@ Note
 - Traders travel faster or slower depending on the terrain - Once in their base settlement, traders evaluate all possible trips and choose the one with the greater cost-benefit ratio<br>
 - Traders carry economic value and cultural traits between the base and destination settlements - Settlement size depends on the economic value received from trading - The economic value produced in a settlement depends on its size - The number of traders per settlement depends on its size</p>
 <p><strong>Targeted dynamics</strong>:<br>
-Settlements that become trade hubs will increase in size and have a greater cultural influence over their trade partners, though also receiving much of their aggregated influences</p>
+Settlements that become trade hubs will increase in size and have a greater cultural influence over their trade partners, though also receiving much of their aggregated influences.</p>
+<p>Or, stated more systematically:</p>
+<ul>
+<li>Settlements grow or shrink depending on the economic value received through trade<br>
+</li>
+<li>Trade routes emerge and disappear depending on their usage<br>
+</li>
+<li>Cultural traits spread between settlements through traders</li>
+</ul>
 <p>The display above might seem somewhat chaotic and vague, but it intends to represent one of the best-case scenarios in terms of the conciseness of the initial conceptual model. There are no golden rules, good-for-all schemes or “right words” at this stage. You should start from your (or your team’s) knowledge and hypotheses and move these into implementation, where you may revise them. In my opinion, you should not limit your ideas beforehand to external frameworks (<em>e.g.</em>, some of the points required in the ODD).</p>
-<p>Still, we count here on the second layer of the conceptual model, which allows us to have an overall plan of the implementation steps.</p>
+<p>We count here on the several progressive versions of the Pond Trade conceptual model as examples of how to expand and update the initial design target.</p>
 </section>
 <section id="base-terrain" class="level2" data-number="15.5">
 <h2 data-number="15.5" class="anchored" data-anchor-id="base-terrain"><span class="header-section-number">15.5</span> Base terrain</h2>
@@ -636,7 +642,7 @@ Settlements that become trade hubs will increase in size and have a greater cult
 </ul>
 <p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
-<p><em>Expected dynamics</em>: cultural integration as the outcome of exchange network dynamics</p>
+<p><em>Expected dynamics</em>: cultural integration (clusters) as the outcome of exchange network dynamics</p>
 </section>
 <section id="conclusion" class="level2" data-number="15.8">
 <h2 data-number="15.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">15.8</span> Conclusion</h2>
@@ -1061,8 +1067,8 @@ Rihll, T. E., and A. G. Wilson. 1991. <span>“Modelling Settlement Structures i
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./pond-trade-terrain.html" class="pagination-link" aria-label="Getting started with NetLogo">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pond-trade-terrain.html" class="pagination-link" aria-label="Getting started with NetLogo: Creating a &quot;pond&quot; terrain">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Getting started with NetLogo: Creating a “pond” terrain</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
