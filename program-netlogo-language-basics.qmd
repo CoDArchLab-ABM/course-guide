@@ -50,17 +50,11 @@ As seen in the figure above, NetLogo also includes a third type of entity, `link
 
 The term "turtle" comes from the base language from which NetLogo was developed from, called "Logo" (in turn, an adaptation of another language, [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)), where instructions can be given to one agent or robot ("turtle") to move and draw a line graph. It was conceived to teach programming concepts -- in fact, I had the opportunity of participating in one Logo session back in my school!
 
-:::
-
-::: {.g-col-6}
-
 <a title="NightElfik, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KochTurtleAnim.gif"><img width="256" alt="KochTurtleAnim" src="https://upload.wikimedia.org/wikipedia/commons/0/09/KochTurtleAnim.gif?20110330124613"></a>
 
 :::
 
-:::
-
-:::
+::: {.g-col-6}
 
 All `patches` and `turtles` can be identified individually through primitives. Turtles have a unique numerical identifier (`who`) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (`pxcor` and `pycor`), as they occupy each a single position in a grid (see **Grid**). To reference a specific turtle, patch or link:
 
