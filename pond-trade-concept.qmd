@@ -37,7 +37,7 @@ The initial inspiration for a model design may be theoretically profound, empiri
 - An active trade route will increase the economic size of settlements at both ends  
 - An increase in size will increase trade by: 
   - Making a settlement more attractive to traders from other settlements  
-  - Allowing the settlement to host more traders.
+  - Allowing the settlement to host more traders.  
 - An active trade route will increase the cultural similarity between two settlements through the movement of traders and goods from one settlement to the other (cultural transmission)  
 
 **Elements** (potentially entities):  
