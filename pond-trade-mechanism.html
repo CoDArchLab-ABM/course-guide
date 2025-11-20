@@ -514,9 +514,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>We now reach the “spicy” part of the development of PondTrade. Until this point, settlements are completely static, and traders are only created in <code>setup</code>, then travel back and forth without any consequence to settlements.</p>
+<p>We now reach the “spicy” part of PondTrade’s development. Until this point, settlements are entirely static, and traders are created only in <code>setup</code>, then travel back and forth without affecting settlements.</p>
 <p>First, we want to implement the feedback loop described in the conceptual model, connecting settlement size, production, and trade inflow.</p>
-<p>Let us re-organise the behavioural cycle of traders into a new separate procedure <code>update-traders</code>:</p>
+<p>Let us reorganise the behavioural cycle of traders into a new separate procedure, <code>update-traders</code>:</p>
 <pre class="netlogo"><code>to update-traders
 
   let tradersInBase traders with [is-in-base]
@@ -673,8 +673,8 @@ to add-trade-effect [ value ] ; ego = settlement
 
 end
 </code></pre>
-<p>Observe that we are defining a very simple “submodel” , where the economic size units of one settlement produce an equivalent amount of transportable value (<code>cargoValue</code>), which is transferred by traders to another settlement, again as economic size units. However, with this mechanism, we are increasing the economic size of settlements in every trader trip but never decrease it. To avoid this, we must specify a second mechanism that “decays” economic size with time, up to a baseline arbitrary value (<em>i.e.</em>, 1).</p>
-<p>For now, we implement this mechanism directly inside the <code>go</code>procedure, where we also call <code>update-traders</code>:</p>
+<p>Observe that we are defining a very simple “submodel”, where the economic size units of one settlement produce an equivalent amount of transportable value (<code>cargoValue</code>), which is transferred by traders to another settlement, again as economic size units. However, with this mechanism, we are increasing the economic size of settlements in every trader trip but never decreasing it. To avoid this, we must specify a second mechanism that “decays” economic size over time, up to an arbitrary baseline value (i.e., 1).</p>
+<p>For now, we implement this mechanism directly inside the <code>go</code> procedure, where we also call <code>update-traders</code>:</p>
 <pre class="netlogo"><code>to go
 
   tick
@@ -691,7 +691,7 @@ end
 
 end</code></pre>
 <p>We must add to the interface yet another parameter to regulate decay, <code>settlementSizeDecayRate</code> (from 0 to 25, by 0.01, default value of 5). This is expressed as the percentage of sizeLevel that is subtracted at each simulation step.</p>
-<p>To better explore the effects of this feedback loop, it is time for us to start adding some plots to the interface. Select Plot in the dropdown menu and add two plot objects, as you have done with buttons, sliders, etc. Configure them as follows:</p>
+<p>To better explore the effects of this feedback loop, we should start adding plots to the interface. Select Plot in the dropdown menu and add two plot objects, as you have done with buttons, sliders, etc. Configure them as follows:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 100%">
@@ -708,8 +708,8 @@ end</code></pre>
 <p>We can now run the model with a few settlements and repeat <code>go</code> many times. Explore different <code>seed</code> numbers. Are settlements reacting to traders’ dynamics at all? Is the value of <code>settlementSizeDecayRate</code> too high or low? What are we doing wrong?</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step08_adding-feedback-loops-1-interface.png" class="img-fluid" alt="Pond Trade step 8"><br>
 <em>Pond Trade step 8</em></p>
-<p>Before moving to the second feedback loop, we must solve our problem. If you followed any of the different approaches for debugging (<em>e.g.</em>, inspecting agents, printing messages in mid-code), you have detected that traders are not transporting any cargoValue. The problem resides in how we have scheduled the calls for <code>unload-cargo</code>and <code>load-cargo</code>. Notice that we added <code>load-cargo</code> to a conditional call <code>ask (turtle-set tradersInBase tradersInDestination) with [cargoValue &gt; 0]</code>, only relevant to traders <em>with cargo</em>, which is impossible for traders to fulfill initially.</p>
-<p>We re-organise <code>update-traders</code>as follows:</p>
+<p>Before moving to the second feedback loop, we must solve our problem. If you followed any of the different approaches for debugging (<em>e.g.</em>, inspecting agents, printing messages in mid-code), you have detected that traders are not transporting any cargo value. The problem resides in how we have scheduled the calls for <code>unload-cargo</code> and <code>load-cargo</code>. Notice that we added <code>load-cargo</code> to a conditional call <code>ask (turtle-set tradersInBase tradersInDestination) with [cargoValue &gt; 0]</code>, only relevant to traders <em>with cargo</em>, which is impossible for traders to fulfil initially.</p>
+<p>We reorganise <code>update-traders</code> as follows:</p>
 <pre class="netlogo"><code>to update-traders
   
   ...
@@ -737,7 +737,7 @@ end</code></pre>
 <hr>
 <p>The second positive feedback loop in our concept model relates settlement size, the number of traders per settlement, and trade inflow.</p>
 <p>The key addition is that now we will have to differentiate, for each settlement, between <code>currentNumberOfTraders</code> and <code>potentialNumberOfTraders</code>, and update these according <code>sizeLevel</code>. To wrap up all this, we finally implement an update procedure specifically for settlements (<code>update-settlements</code>).</p>
-<p>We will also need to manage the traders that are left outside the maximum value for its base settlement. We create the tag <code>isActivated</code>, in order to avoid creating and deleting too many traders in the same simulation run (<em>i.e.</em>, it might become a problem when <code>who</code> numbers start getting bigger and bigger).</p>
+<p>We will also need to manage the traders that are left outside the maximum value for their base settlement. We create the tag <code>isActivated</code> to avoid creating and deleting too many traders in the same simulation run (i.e., it might become a problem as <code>who</code> numbers grow).</p>
 <pre class="netlogo"><code>settlements-own
 [
   sizeLevel
@@ -846,11 +846,11 @@ to-report get-current-number-of-traders ; ego = settlement
 
 end
 </code></pre>
-<p>Settlements will now calculate <code>potentialNumberOfTraders</code> at every simulation step as a number equal to its size and be allowed to create/reactivate or deactivate any traders accordingly.</p>
+<p>Settlements will now calculate <code>potentialNumberOfTraders</code> at every simulation step as a number equal to its size and will be allowed to create/reactivate or deactivate any traders accordingly.</p>
 <p>Add a new Plot to visualise the count of traders through time, using the update command: <code>plot count traders with [isActivated]</code></p>
 <p>Our second feedback loop is now up and running!</p>
-<p>However, our implementation is still rough on the edges and needs a bit of refactoring and model extensions.</p>
-<p>The representation of the production process is overly simplistic. With no separable entity from sizeLevel, production value gets immediately replaced after traders load their cargo. We must introduce a new settlement variable, <code>stock</code>, to keep track of the flow of economic value and implement a more explicit representation of production and value decay, independent of size decay. For this, we introduce two new parameters, <code>productionRate</code> and <code>stockDecayRate</code> (use same interface configuration from <code>settlementSizeDecayRate</code>).</p>
+<p>However, our implementation is still rough around the edges and needs some refactoring and model extensions.</p>
+<p>The representation of the production process is overly simplistic. Since there is no separate entity for sizeLevel, production value is immediately replaced after traders load their cargo. We must introduce a new settlement variable, <code>stock</code>, to keep track of the flow of economic value and implement a more explicit representation of production and value decay, independent of size decay. For this, we introduce two new parameters, <code>productionRate</code> and <code>stockDecayRate</code> (use the same interface configuration as <code>settlementSizeDecayRate</code>).</p>
 <pre class="netlogo"><code>settlements-own
 [
   ...
@@ -941,7 +941,7 @@ to update-settlements
   ]
 
 end</code></pre>
-<p>In <code>get-potential-number-of-traders</code>, there is a <em>hidden</em> magic number worth exploring. We name it <code>frequencyOverQuality</code>and make it a “trait” of settlements, setting it in <code>create-coastal-settlements</code> as a random number between 0 and 1:</p>
+<p>In <code>get-potential-number-of-traders</code>, there is a <em>hidden</em> magic number worth exploring. We name it <code>frequencyOverQuality</code> and make it a “trait” of settlements, setting it in <code>create-coastal-settlements</code> as a random number between 0 and 1:</p>
 <pre class="netlogo"><code>settlements-own
 [
   ...
@@ -985,14 +985,14 @@ to-report get-potential-number-of-traders ; ego = settlement
     )
 
 end</code></pre>
-<p>As its name tries to state, this trait’s meaning is: “how much the frequency of trade is prioritised over the quality of the cargo”. This is because the more traders a settlement has, the less cargo each will be able to get from <code>stock</code>, which will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.</p>
-<p>We can now observe how the number of traders in our pond reaches an oscillating, stable low level most of the time. We can observe some exceptions by exploring higher values of <code>numberOfSettlements</code>. With enough settlements, our feedback loops push the dynamics towards the emergence of hubs, boosting the overall number of traders.</p>
+<p>As its name suggests, this trait’s meaning is: “how much the frequency of trade is prioritised over the quality of the cargo”. This is because the more traders a settlement has, the less cargo each will be able to get from <code>stock</code>, and so each will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.</p>
+<p>We can now observe that the number of traders in our pond oscillates around a stable low level most of the time. We can observe some exceptions by exploring higher values of <code>numberOfSettlements</code>. With enough settlements, our feedback loops push the dynamics towards the emergence of hubs, boosting the overall number of traders.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step09_adding-feedback-loops-2-interface.png" class="img-fluid" alt="Pond Trade step 9"><br>
 <em>Pond Trade step 9</em></p>
-<p>We reach the end of the implementation steps for the first-tier PondTrade model. Given all changes and extensions we made, we must go back to our conceptual model and update it accordingly.</p>
-<p><img src="images/0_conceptAtStep9_firstTier.png" class="img-fluid" alt="Pond Trade conceptual model revised at step 9 (first tier)"><br>
+<p>We reach the end of the implementation steps for the first-tier PondTrade model. Given all the changes and extensions we made, we must revisit our conceptual model and update it accordingly.</p>
+<p><img src="assets/images/0_conceptAtStep9_firstTier.png" class="img-fluid" alt="Pond Trade conceptual model revised at step 9 (first tier)"><br>
 <em>Pond Trade conceptual model revised at step 9 (first tier)</em></p>
-<p>This graphical description is still far from the implementation code, as it should be. However, it is now adequate for the new conceptual changes we introduced in code.</p>
+<p>This graphical description is still far from the implementation code, as it should be. However, it is now adequate for the new conceptual changes we introduced in the code.</p>
 
 
 
