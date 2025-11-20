@@ -1,10 +1,10 @@
 # Implementing mechanisms {#pond-trade-mechanims}
 
-We now reach the "spicy" part of the development of PondTrade. Until this point, settlements are completely static, and traders are only created in `setup`, then travel back and forth without any consequence to settlements.
+We now reach the "spicy" part of PondTrade's development. Until this point, settlements are entirely static, and traders are created only in `setup`, then travel back and forth without affecting settlements.
 
 First, we want to implement the feedback loop described in the conceptual model, connecting settlement size, production, and trade inflow.
 
-Let us re-organise the behavioural cycle of traders into a new separate procedure `update-traders`:
+Let us reorganise the behavioural cycle of traders into a new separate procedure, `update-traders`:
 
 ```NetLogo
 to update-traders
@@ -170,9 +170,9 @@ end
 
 ```
 
-Observe that we are defining a very simple "submodel" , where the economic size units of one settlement produce an equivalent amount of transportable value (`cargoValue`), which is transferred by traders to another settlement, again as economic size units. However, with this mechanism, we are increasing the economic size of settlements in every trader trip but never decrease it. To avoid this, we must specify a second mechanism that "decays" economic size with time, up to a baseline arbitrary value (*i.e.*, 1).
+Observe that we are defining a very simple "submodel", where the economic size units of one settlement produce an equivalent amount of transportable value (`cargoValue`), which is transferred by traders to another settlement, again as economic size units. However, with this mechanism, we are increasing the economic size of settlements in every trader trip but never decreasing it. To avoid this, we must specify a second mechanism that "decays" economic size over time, up to an arbitrary baseline value (i.e., 1).
 
-For now, we implement this mechanism directly inside the `go`procedure, where we also call `update-traders`:
+For now, we implement this mechanism directly inside the `go` procedure, where we also call `update-traders`:
 
 ```NetLogo
 to go
@@ -194,7 +194,7 @@ end
 
 We must add to the interface yet another parameter to regulate decay, `settlementSizeDecayRate` (from 0 to 25, by 0.01, default value of 5). This is expressed as the percentage of sizeLevel that is subtracted at each simulation step.
 
-To better explore the effects of this feedback loop, it is time for us to start adding some plots to the interface. Select Plot in the dropdown menu and add two plot objects, as you have done with buttons, sliders, etc. Configure them as follows:
+To better explore the effects of this feedback loop, we should start adding plots to the interface. Select Plot in the dropdown menu and add two plot objects, as you have done with buttons, sliders, etc. Configure them as follows:
 
 |  |
 | --- |
@@ -206,9 +206,9 @@ We can now run the model with a few settlements and repeat `go` many times. Expl
 ![Pond Trade step 8](assets/screenshots/BlockB_PondTrade_step08_adding-feedback-loops-1-interface.png)  
 *Pond Trade step 8*
 
-Before moving to the second feedback loop, we must solve our problem. If you followed any of the different approaches for debugging (*e.g.*, inspecting agents, printing messages in mid-code), you have detected that traders are not transporting any cargoValue. The problem resides in how we have scheduled the calls for `unload-cargo`and `load-cargo`. Notice that we added `load-cargo` to a conditional call `ask (turtle-set tradersInBase tradersInDestination) with [cargoValue > 0]`, only relevant to traders *with cargo*, which is impossible for traders to fulfill initially.
+Before moving to the second feedback loop, we must solve our problem. If you followed any of the different approaches for debugging (*e.g.*, inspecting agents, printing messages in mid-code), you have detected that traders are not transporting any cargo value. The problem resides in how we have scheduled the calls for `unload-cargo` and `load-cargo`. Notice that we added `load-cargo` to a conditional call `ask (turtle-set tradersInBase tradersInDestination) with [cargoValue > 0]`, only relevant to traders *with cargo*, which is impossible for traders to fulfil initially.
 
-We re-organise `update-traders`as follows:
+We reorganise `update-traders` as follows:
 
 ```NetLogo
 to update-traders
@@ -245,7 +245,7 @@ The second positive feedback loop in our concept model relates settlement size, 
 
 The key addition is that now we will have to differentiate, for each settlement, between `currentNumberOfTraders` and `potentialNumberOfTraders`, and update these according `sizeLevel`. To wrap up all this, we finally implement an update procedure specifically for settlements (`update-settlements`).
 
-We will also need to manage the traders that are left outside the maximum value for its base settlement. We create the tag `isActivated`, in order to avoid creating and deleting too many traders in the same simulation run (*i.e.*, it might become a problem when `who` numbers start getting bigger and bigger).
+We will also need to manage the traders that are left outside the maximum value for their base settlement. We create the tag `isActivated` to avoid creating and deleting too many traders in the same simulation run (i.e., it might become a problem as `who` numbers grow).
 
 ```NetLogo
 settlements-own
@@ -358,15 +358,15 @@ end
 
 ```
 
-Settlements will now calculate `potentialNumberOfTraders` at every simulation step as a number equal to its size and be allowed to create/reactivate or deactivate any traders accordingly.
+Settlements will now calculate `potentialNumberOfTraders` at every simulation step as a number equal to its size and will be allowed to create/reactivate or deactivate any traders accordingly.
 
 Add a new Plot to visualise the count of traders through time, using the update command: `plot count traders with [isActivated]`
 
 Our second feedback loop is now up and running!
 
-However, our implementation is still rough on the edges and needs a bit of refactoring and model extensions.
+However, our implementation is still rough around the edges and needs some refactoring and model extensions.
 
-The representation of the production process is overly simplistic. With no separable entity from sizeLevel, production value gets immediately replaced after traders load their cargo. We must introduce a new settlement variable, `stock`, to keep track of the flow of economic value and implement a more explicit representation of production and value decay, independent of size decay. For this, we introduce two new parameters, `productionRate` and `stockDecayRate` (use same interface configuration from `settlementSizeDecayRate`).
+The representation of the production process is overly simplistic. Since there is no separate entity for sizeLevel, production value is immediately replaced after traders load their cargo. We must introduce a new settlement variable, `stock`, to keep track of the flow of economic value and implement a more explicit representation of production and value decay, independent of size decay. For this, we introduce two new parameters, `productionRate` and `stockDecayRate` (use the same interface configuration as `settlementSizeDecayRate`).
 
 ```NetLogo
 settlements-own
@@ -461,7 +461,7 @@ to update-settlements
 end
 ```
 
-In `get-potential-number-of-traders`, there is a *hidden* magic number worth exploring. We name it `frequencyOverQuality`and make it a "trait" of settlements, setting it in `create-coastal-settlements` as a random number between 0 and 1:
+In `get-potential-number-of-traders`, there is a *hidden* magic number worth exploring. We name it `frequencyOverQuality` and make it a "trait" of settlements, setting it in `create-coastal-settlements` as a random number between 0 and 1:
 
 ```NetLogo
 settlements-own
@@ -509,16 +509,16 @@ to-report get-potential-number-of-traders ; ego = settlement
 end
 ```
 
-As its name tries to state, this trait's meaning is: "how much the frequency of trade is prioritised over the quality of the cargo". This is because the more traders a settlement has, the less cargo each will be able to get from `stock`, which will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.
+As its name suggests, this trait's meaning is: "how much the frequency of trade is prioritised over the quality of the cargo". This is because the more traders a settlement has, the less cargo each will be able to get from `stock`, and so each will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.
 
-We can now observe how the number of traders in our pond reaches an oscillating, stable low level most of the time. We can observe some exceptions by exploring higher values of `numberOfSettlements`. With enough settlements, our feedback loops push the dynamics towards the emergence of hubs, boosting the overall number of traders.
+We can now observe that the number of traders in our pond oscillates around a stable low level most of the time. We can observe some exceptions by exploring higher values of `numberOfSettlements`. With enough settlements, our feedback loops push the dynamics towards the emergence of hubs, boosting the overall number of traders.
 
 ![Pond Trade step 9](assets/screenshots/BlockB_PondTrade_step09_adding-feedback-loops-2-interface.png)  
 *Pond Trade step 9*
 
-We reach the end of the implementation steps for the first-tier PondTrade model. Given all changes and extensions we made, we must go back to our conceptual model and update it accordingly.
+We reach the end of the implementation steps for the first-tier PondTrade model. Given all the changes and extensions we made, we must revisit our conceptual model and update it accordingly.
 
-![Pond Trade conceptual model revised at step 9 (first tier)](images/0_conceptAtStep9_firstTier.png)  
+![Pond Trade conceptual model revised at step 9 (first tier)](assets/images/0_conceptAtStep9_firstTier.png)  
 *Pond Trade conceptual model revised at step 9 (first tier)*
 
-This graphical description is still far from the implementation code, as it should be. However, it is now adequate for the new conceptual changes we introduced in code. 
+This graphical description is still far from the implementation code, as it should be. However, it is now adequate for the new conceptual changes we introduced in the code. 
