@@ -524,9 +524,9 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="second-tier-model" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="second-tier-model"><span class="header-section-number">20.1</span> Second-tier model</h2>
-<p>We will now go over the implementation of the second-tier PondTrade model (steps 10 to 13). The pace in this section will be significantly faster. I ask you only to comprehend the main aspects added at each step and concern yourself only with the files already in the root directory.</p>
-<p>Remember the conceptual model for this tier, as we defined back at the beginning.</p>
-<p><img src="images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
+<p>We will now go over the implementation of the second-tier PondTrade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.</p>
+<p>Remember the conceptual model for this tier we defined at the beginning.</p>
+<p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
 <p>Apart from assimilating the changes we made to the first-tier model, our goal here will be to implement the following:</p>
 <ul>
@@ -603,7 +603,7 @@ to update-display
 end</code></pre>
 <p><img src="assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png" class="img-fluid" alt="Pond Trade step 10 - settlement with cultural vector"><br>
 <em>Pond Trade step 10 - settlement with cultural vector</em></p>
-<p>Next, we add a mechanism for traders to record the state of their base <code>culturalVector</code> while loading their cargo and pass this vector as an influence over another settlement’s <code>culturalVector</code>, when unloading. More specifically, this influence will decrease the difference between values in each trait to a measure dependent on the parameter <code>traitTransmissionRate</code> (slider, from 0 to 25, by 0.01, default value = 1).</p>
+<p>Next, we add a mechanism for traders to record the state of their base <code>culturalVector</code> while loading their cargo and to pass this vector as an influence on another settlement’s <code>culturalVector</code> when unloading. More specifically, this influence will decrease the difference between values in each trait to a value determined by the parameter <code>traitTransmissionRate</code> (slider, from 0 to 25, by 0.01, default value = 1).</p>
 <pre class="netlogo"><code>traders-own
 [
   ...
@@ -647,7 +647,7 @@ end</code></pre>
 <p>With these changes, the model dynamics will now include a general cultural convergence whenever trade partners become stable, especially when trade hubs emerge. After a few thousand simulation steps, the visual result is that all settlements hold the same colour.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface.png" class="img-fluid" alt="Pond Trade step 10"><br>
 <em>Pond Trade step 10</em></p>
-<p>According to our initial conceptual model, the next step is implementing a mechanism of undirected variation. We can easily include this as the addition of noise to the value of each trait on the pass of each time step. As with transmission, we could have it regulated by a global parameter of trait mutation rate. However, it may feel already that we have too many global parameters that we can easily conceive as varying widely among settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during the implementation process, back when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters about settlements were implemented instead as traits in <code>culturalVector</code> and allowed to evolve?</p>
+<p>According to our initial conceptual model, the next step is to implement a mechanism for undirected variation. We can easily include this by adding noise to the value of each trait at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters that we can easily conceive as varying widely among settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters about settlements were implemented instead as traits in <code>culturalVector</code> and allowed to evolve?</p>
 </section>
 <section id="step-11-trait-selection" class="level2" data-number="20.3">
 <h2 data-number="20.3" class="anchored" data-anchor-id="step-11-trait-selection"><span class="header-section-number">20.3</span> Step 11: trait selection</h2>
@@ -682,7 +682,7 @@ end</code></pre>
 </tr>
 </tbody>
 </table>
-<p>We will also exploit the opportunity further and create two extra elements to which we will refer as land and port technology, which will allow us to modify how <code>pathCost</code> affects traders’ decisions and movements. For these, we need to introduce two extra hyperparameters <code>landTechVariation</code> and <code>portTechVariation</code>. Notice that we could do the same to the path cost in water, though it would affect the rhythm of the model more drastically.</p>
+<p>We will also further exploit this opportunity and create two additional elements, which we will refer to as land and port technology, to modify how <code>pathCost</code> affects traders’ decisions and movements. For these, we need to introduce two extra hyperparameters, <code>landTechVariation</code> and <code>portTechVariation</code>. Notice that we could do the same for the path cost in water, though it would affect the model’s rhythm more drastically.</p>
 <p>We change the code for initialising settlements so that each trait within <code>culturalVector</code> is sampled randomly according to the hyperparameters above:</p>
 <pre class="netlogo"><code>to create-coastal-settlements
 
@@ -866,7 +866,7 @@ to-report mutate-trait [ traitValue minValue maxValue mutationVar ]
   report (max (list minValue min (list maxValue (traitValue + (random-normal 0 mutationVar) * (maxValue - minValue)))))
 
 end</code></pre>
-<p>To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values of each trait and settlement, giving us a sense of both convergence or <em>cultural integration</em> and possibly revealing any evolutionary trends caused by trait selection. For instance, we would expect high selective pressure for settlements with a higher production rate since it is part of the positive feedback loops we implemented earlier in the first tier.</p>
+<p>To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values for each trait and settlement, giving us a sense of both convergence (or <em>cultural integration</em>) and possibly revealing evolutionary trends driven by trait selection. For instance, we would expect high selective pressure on settlements with higher production rates, since they are part of the positive feedback loops we implemented earlier in the first tier.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step11_trait-selection-interface.png" class="img-fluid" alt="Pond Trade step 11"><br>
 <em>Pond Trade step 11</em></p>
 <p>At this stage, we also had to introduce stop conditions to interrupt simulation runs, especially given the potential number of traders under some parameter configurations. The conditions are added to the <code>go</code> procedure:</p>
