@@ -2,11 +2,11 @@
 
 ## Second-tier model
 
-We will now go over the implementation of the second-tier PondTrade model (steps 10 to 13). The pace in this section will be significantly faster. I ask you only to comprehend the main aspects added at each step and concern yourself only with the files already in the root directory.
+We will now go over the implementation of the second-tier PondTrade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.
 
-Remember the conceptual model for this tier, as we defined back at the beginning.
+Remember the conceptual model for this tier we defined at the beginning.
 
-![Pond Trade conceptual model at start (second tier)](images/0_conceptAtStart_secondTier.png)  
+![Pond Trade conceptual model at start (second tier)](assets/images/0_conceptAtStart_secondTier.png)  
 *Pond Trade conceptual model at start (second tier)*
 
 Apart from assimilating the changes we made to the first-tier model, our goal here will be to implement the following:
@@ -86,7 +86,7 @@ end
 ![Pond Trade step 10 - settlement with cultural vector](assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png)  
 *Pond Trade step 10 - settlement with cultural vector*
 
-Next, we add a mechanism for traders to record the state of their base `culturalVector` while loading their cargo and pass this vector as an influence over another settlement's `culturalVector`, when unloading. More specifically, this influence will decrease the difference between values in each trait to a measure dependent on the parameter `traitTransmissionRate` (slider, from 0 to 25, by 0.01, default value = 1).
+Next, we add a mechanism for traders to record the state of their base `culturalVector` while loading their cargo and to pass this vector as an influence on another settlement's `culturalVector` when unloading. More specifically, this influence will decrease the difference between values in each trait to a value determined by the parameter `traitTransmissionRate` (slider, from 0 to 25, by 0.01, default value = 1).
 
 ```NetLogo
 traders-own
@@ -136,7 +136,7 @@ With these changes, the model dynamics will now include a general cultural conve
 ![Pond Trade step 10](assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface.png)  
 *Pond Trade step 10*
 
-According to our initial conceptual model, the next step is implementing a mechanism of undirected variation. We can easily include this as the addition of noise to the value of each trait on the pass of each time step. As with transmission, we could have it regulated by a global parameter of trait mutation rate. However, it may feel already that we have too many global parameters that we can easily conceive as varying widely among settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during the implementation process, back when we defined `frequencyOverQuality`: *what if* most of the parameters about settlements were implemented instead as traits in `culturalVector` and allowed to evolve?
+According to our initial conceptual model, the next step is to implement a mechanism for undirected variation. We can easily include this by adding noise to the value of each trait at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters that we can easily conceive as varying widely among settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined `frequencyOverQuality`: *what if* most of the parameters about settlements were implemented instead as traits in `culturalVector` and allowed to evolve?
 
 ## Step 11: trait selection
 
@@ -150,7 +150,7 @@ To internalise most parameters as trait values in `culturalVector`, we must conv
 | traitTransmissionRate | maxTraitTransmissionRate |
 | (traitMutationRate) | maxMutationVariation |
 
- We will also exploit the opportunity further and create two extra elements to which we will refer as land and port technology, which will allow us to modify how `pathCost` affects traders' decisions and movements. For these, we need to introduce two extra hyperparameters `landTechVariation` and `portTechVariation`. Notice that we could do the same to the path cost in water, though it would affect the rhythm of the model more drastically.
+ We will also further exploit this opportunity and create two additional elements, which we will refer to as land and port technology, to modify how `pathCost` affects traders' decisions and movements. For these, we need to introduce two extra hyperparameters, `landTechVariation` and `portTechVariation`. Notice that we could do the same for the path cost in water, though it would affect the model's rhythm more drastically.
 
 We change the code for initialising settlements so that each trait within `culturalVector` is sampled randomly according to the hyperparameters above:
 
@@ -347,7 +347,7 @@ to-report mutate-trait [ traitValue minValue maxValue mutationVar ]
 end
 ```
 
-To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values of each trait and settlement, giving us a sense of both convergence or *cultural integration* and possibly revealing any evolutionary trends caused by trait selection. For instance, we would expect high selective pressure for settlements with a higher production rate since it is part of the positive feedback loops we implemented earlier in the first tier. 
+To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values for each trait and settlement, giving us a sense of both convergence (or *cultural integration*) and possibly revealing evolutionary trends driven by trait selection. For instance, we would expect high selective pressure on settlements with higher production rates, since they are part of the positive feedback loops we implemented earlier in the first tier. 
 
 ![Pond Trade step 11](assets/screenshots/BlockB_PondTrade_step11_trait-selection-interface.png)  
 *Pond Trade step 11*
