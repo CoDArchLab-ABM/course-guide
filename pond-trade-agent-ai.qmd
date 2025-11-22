@@ -2,20 +2,33 @@
 
 ## Modelling behaviour
 
-We advance into implementing the behaviour rules, *i.e.* Artificial Inteligence, of each agent type, particularly `traders`. The conceptual model specifies the following: 
+We advance into implementing the behaviour rules, *i.e.* Artificial Intelligence, of each agent type, particularly `traders`. Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and act like humans (or anything we consider intelligent). In the context of ABM, AI refers to the rules and decision-making processes that govern the behaviour of individual agents within the model.
 
-- `settlements`: produce goods according to their size and a productivity term. They create or destroy traders according to their current size. 
-- `traders`: take some goods from their base and deliver them to another settlement, which is chosen based on the size of other settlements and the distance between these and the base settlement. Traders will then return with goods from that settlement back to the base and restart the cycle.
+For our model, based on the conceptual model, we will implement simple behaviour for two agent types:
 
-Implementing this will take us several steps in development (up to step 9). Given the importance and potential complexity of these behaviours, let us start by implementing the most fundamental aspect: the traders' criterium for choosing a destination settlement. We have mentioned "distance", yet how should traders measure such distance in a heterogeneous terrain?
+- `settlements`: 
+  - `produce goods according to their size and a productivity term. 
+  - create or destroy traders according to their current size. 
+- `traders`: 
+  - take some goods from their base and deliver them to another settlement, 
+  - which is chosen based on the size of other settlements and the distance between these and the base settlement.
+  - Traders will then return with goods from that settlement back to the base and restart the cycle.
 
-## Implementing path finding
+Implementing this will take us several steps in development (up to step 9). 
 
-In the original repository of the PondTrade model, you will notice an initial attempt to approach this aspect through a simple network implementation, using NetLogo's `links` ([PondTrade_step07_agent AI v1_links.nlogo](https://github.com/Andros-Spica/PondTrade/blob/master/PondTrade_step07_agent%20AI%20v1_links.nlogo)). This approach is similar to other ABM and network-based models applied to topics of trade and settlement interactions.
+## Implementing path finding 🤔
 
-However, as you may know, there can be a significant difference between a straight line measurement (Euclidean distance) and a more complex path cost calculation that uses terrain data. As the PondTrade model eventually did, we will to "complicate" our design and make a proper "least-cost route" calculation using this as a perfect excuse for learning.
+Given the importance and potential complexity of these behaviours, let us start by implementing the most fundamental aspect: the traders' criterion for choosing a destination settlement. We have mentioned "distance", yet how should traders measure such distance in a heterogeneous terrain?
 
-But how should we implement a least-cost path algorithm in NetLogo? We follow our modular philosophy, search and find an implementation of the [A* (A-star) algorithm in NetLogo User Community Models](http://ccl.northwestern.edu/netlogo/models/community/Astardemo1). We get the main fragment of the code and adapt it to our purposes, making sure we keep a clear reference to the source as a commentary header:shown. Do the same to check the information about this trader `base`. This time, however, write the `inspect settlement <WHO NUMBER>` directly into the console. You can now verify that the trader and settlement were assigned the same colour.
+In the original repository of the Pond Trade model, you will notice an initial attempt to approach this aspect through a simple network implementation, using NetLogo's `links` ([PondTrade_step07_agent AI v1_links.nlogo](https://github.com/Andros-Spica/PondTrade/blob/master/PondTrade_step07_agent%20AI%20v1_links.nlogo)). This approach is similar to other ABM and network-based models applied to topics of trade and settlement interactions.
+
+However, as you may know, there can be a significant difference between a straight line measurement (Euclidean distance) and a more complex path cost calculation that uses terrain data. As the Pond Trade model eventually did, we will to "complicate" our design and make a proper "least-cost route" calculation using this as a perfect excuse for learning.
+
+But how should we implement a least-cost path algorithm in NetLogo? We follow our modular philosophy, search and find an implementation of the [A* (A-star) algorithm in NetLogo User Community Models](http://ccl.northwestern.edu/netlogo/models/community/Astardemo1). 
+
+We get the main fragment of the code from this and adapt it to our purposes, making sure we keep a clear reference to the source as a commentary header:
+
+Note: Try to walk through this code and understand it; but don't panic if you don't!
 
 ```NetLogo
 patches-own
@@ -155,6 +168,23 @@ to-report find-a-path [ source-patch destination-patch]
 end
 ```
 
+Once the algorithm is clear, we need to assign path costs to patches. How should we do that? 
+
+Before looking at the solution, try to write the code yourself:
+
+- Each patch has a `pathCost` variable (already defined)
+- Land patches have a high `pathCost` (arbitrary,e.g. 1000)
+- Water patches have a low `pathCost` (the baseline, i.e. 1)
+
+A few questions to guide your solution:
+- When and where should this be done?
+- Do we need to do it every time we run the search?
+- What value should be a parameter (slider) in the interface?
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
+
 Because our model assigns different path costs for each patch (*i.e.*, land or water), we must create a new procedure that assigns these costs and add a call to it just after the other steps in `create-map`:
 
 ```NetLogo
@@ -183,6 +213,16 @@ end
 ```
 
 We are forced then to introduce another parameter, `relativePathCostInLand`, which specifies how much the movement on land costs in relation to the movement on the water. Add a slider in the interface (from 0 to 100, by 0.01, default value at 50).
+
+:::
+
+**EXTRA CHALLENGE**: further differentiate the path cost in settlements, i.e. cost to "port".
+
+Tip: follow the same rationale from above, except consider how to distinguish a patch as a "port" and what could be the more efficient way of assigning their path cost.
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
 
 Given the special circumstance of traders arriving and leaving settlements, let us introduce a differential value for `pathCost` in patches with settlements. For this we should modify `create-coastal-settlements` and introduce the parameter `relativePathCostInPort` (from 0 to 100, by 0.01, default value at 10):
 
@@ -217,19 +257,47 @@ end
 
 Notice that `relativePathCostInPort` will generally not affect A* results since routes will always have two patches with this `pathCost`. However, it does matter because routes will more likely avoid going through a third settlement if a path through water is available.
 
-## Testing the algorithm
+:::
 
-You can now experiment with the A* algorithm by running `setup`as it is, and then `find-a-path` between two patches of your choosing. To observe how the algorithm works, you can "uncomment" the lines, including code about colouring patches within the algorithm code. Then, reduce the simulation speed in the interface and rerun the procedure.
+## Testing the A* path-finding
+
+You can now experiment with the A* algorithm by running `setup`as it is, and then `find-a-path` between two patches of your choosing. 
+
+Follow these steps:
+- Uncomment the lines involving `set pcolor ...` in the `find-a-path` procedure to visualise the search process
+- reduce the simulation speed to see the search process
+- run `setup` (which now sets `pathCost`)
+- In the command center, run: 
+
+```NetLogo
+show find-a-path (patch -30 -30) (patch 30 -30)
+```
+
+Try various coordinates to see how the search process work with different contexts.</small>
 
 |  |  |  |  |
 | --- | --- | --- | --- |
 | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process0.png" width="100"> | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process1.png" width="100"> | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process2.png" width="100"> | <img src="assets/screenshots/BlockB_PondTrade_step07_agent AI v2_AStar view-process3.png" width="100"> |
 
-Notice how the large difference in path cost between land and water (x50) makes A* avoid drawing a route through land, practically until all adjacent water patches are explored.
+Notice how the large difference in path cost between land and water (x50) makes A* avoid drawing a route through land, practically until all adjacent water patches are explored. This will make routes go around peninsulas, for example.
 
-## Adapting model schedule
+## Finding all routes
 
 Now that we have confirmed the code we just introduced let us implement everything we will need to call A* and keep track of all routes between settlements. Given that A* takes time to compute, we should make everything possible to avoid repeating the calculation of routes.
+
+Our plan is to implement a new procedure, `set-routes`, that will:
+
+- be called during in `setup` after creating the settlements  
+- will ask each settlement to find the best routes to every other settlements  
+- will store the path in a new global variable `routes`  
+
+This involves:
+
+1. creating a new global variable `routes`  
+2. creating a new procedure `set-routes`  
+3. calling `set-routes` in `setup`  
+4. asking each settlement to find the best routes to every other settlements  
+5. storing the path in a new global variable `routes`  
 
 ```NetLogo
 globals [ routes ]
@@ -302,9 +370,25 @@ Running the code as it is will generate the maximum number of routes given the s
 
 Notice that it takes a considerable time to calculate all possible routes, and the number of settlements increases this time exponentially. At this point, we should be aware of how to stop NetLogo while still running a long command. Go to Tools > Halt. This might not work if NetLogo interface is unresponsive. Then the only options are to wait or quit or force-quit NetLogo.
 
-## Decision making
+## Decision making 🤔
 
-Having the calculation of routes solved, we now must use them to inform the decision of traders. Let us create a procedure to be called by traders named `choose-destination`, for which we will need to implement a few "helper" procedures:
+Having the calculation of routes solved, we now must use them to inform the decision of traders. How would you do that?
+
+Before looking at the solution, try to write the code yourself (this is a hard one!):
+
+- Create a new procedure `choose-destination` for the `trader` breed
+- The procedure should:
+  - calculate a "attractiveness" score for each settlement (excluding the base settlement)
+  - choose the destination settlement with the best attractiveness score
+- The attractiveness score should consider:
+  - the size of the settlement (bigger is more attractive)
+  - the distance (total path cost) from the base settlement (closer/less costly is more attractive)
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
+
+Let us create a procedure to be called by traders named `choose-destination`, for which we will need to implement a few "helper" procedures:
 
 ```NetLogo
 traders-own [ base route destination direction lastPosition ]
@@ -410,9 +494,34 @@ Notice that `get-route` is only helpful for debugging and querying the informati
 
 To inform the traders' decisions, we specify a very simple calculation of the potential gain of a route (sum of sizeLevel of origin and destination) and calculate a ratio between the benefit and cost of routes. Traders will then compare these ratios for all possible routes from its base settlement and choose the one with the highest value.
 
-## Movement
+:::
 
-Once a destination is decided, traders must move towards it and then, once there, start the return trip. We implement this behaviour assuming that movement must go through each patch center in the route and that traders move at a maximum speed of `1 / [pathCost] of patch-here`, meaning they will be delayed in proportion to the local value of `pathCost`. 
+## Movement 🤔
+
+Once a destination is decided, traders must move towards it and then, once there, start the return trip. Are you up to this challenge?
+
+Before looking at the solution, try to write the code yourself (this is VERY hard!):
+- Create a new procedure `move-to-destination` for the `trader` breed
+- The procedure should:
+  - move the trader along the selected route towards the destination settlement (or back)
+  - check if the trader is at the destination or base settlement and choose the right direction
+  - check if in a patch centre (round coordinates) to move to the next patch in the route
+  - move progressivelly towards the next patch in the route (not teleporting)
+  - speed should be dependent on the pathCost of the patch-here
+
+Things to consider:
+- How to keep track of the direction of movement?
+- How to keep track of the progress of movement?
+- How to check if the trader is at the destination or base settlement?
+- How to check if the trader is in a patch centre?
+- How to move progressivelly one patch centre to another?
+- How to make the speed dependent on the pathCost of the patch-here?
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
+
+We implement this behaviour assuming that movement must go through each patch centre in the route and that traders move at a maximum speed of `1 / [pathCost] of patch-here`, meaning they will be delayed in proportion to the local value of `pathCost`. 
 
 ```NetLogo
 to move-to-destination ; ego = trader
@@ -469,6 +578,8 @@ end
 ```
 
 As we specified in our conceptual model, traders will choose a destination whenever they are at their base and move towards their current destination.
+
+:::
 
 ## Enhancing visualisation
 
@@ -622,7 +733,7 @@ to create-traders-per-settlement
 end
 ```
 
-Reduce `numberOfSettlements`, vary `seed`, and run `setup` again. Run `go` repeatedly to observe the behaviour of the loner trader.
+Reduce `numberOfSettlements` (e.g. 10) and run `setup` again. Run `go` repeatedly to observe the behaviour of the loner trader.
 
 ![Pond Trade step 7](assets/screenshots/BlockB_PondTrade_step07_agent AI-v2_AStar-interface.png)  
 *Pond Trade step 7*

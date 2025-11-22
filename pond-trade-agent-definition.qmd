@@ -9,12 +9,11 @@ Here is a recommended workflow (outside the class):
 1. Read section in the guide  
 2. Extend the code in your own file (test procedures separately if needed)  
 3. Check if your file matches the solution (no need to be identical)  
-
-**Repeat**
+4. **Repeat**
 
 ## Refresing the specificacions of the conceptual model
 
-Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original PondTrade repository, this will cover the development steps 6 to 9.
+Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original Pond Trade repository, this will cover the development steps 6 to 9.
 
 ![Pond Trade conceptual model at start (first tier)](assets/images/0_conceptAtStart_firstTier.png)  
 *Pond Trade conceptual model at start (first tier)*
@@ -223,7 +222,23 @@ To check this after initialising your agents, right-click on top of a trader and
 
 You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader `base`. This time, however, write the `inspect settlement <WHO NUMBER>` directly into the console. 
 
-However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (`xcor`, `ycor`, `color`, etc.) were set explicitly during initialisation. Go back to `create-traders-per-settlement`, comment-out the line `set color [color] of base`, and run `setup` again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.
+However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (`xcor`, `ycor`, `color`, etc.) were set explicitly during initialisation (overwriting the inherited values). Go back to `create-traders-per-settlement`, comment-out the line `set color [color] of base`:
+
+```NetLogo
+to create-traders-per-settlement
+      ...
+
+      ; give meaningful display related to base
+      set shape "sailboat side" ; import this shape from the library (Tools > Shape editor > import from library)
+      ;set color [color] of base
+      set size 3
+
+      ...
+
+end
+```
+
+Run `setup` again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.
 
 ![Pond Trade step 6 - agent detail](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_agentDetail.png)  
 *Pond Trade step 6 - agent detail*
