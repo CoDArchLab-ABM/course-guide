@@ -4,6 +4,14 @@ In Block B, we will finally build a version of PondTrade through steps that will
 
 So that we can cover all the steps at a good pace, we will not be delving into the same details as in Block A. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like [Text Compare!](https://text-compare.com/)). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu. 
 
+Here is a recommended workflow (outside the class):
+
+1. Read section in the guide  
+2. Extend the code in your own file (test procedures separately if needed)  
+3. Check if your file matches the solution (no need to be identical)  
+
+**Repeat**
+
 ## Refresing the specificacions of the conceptual model
 
 Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original PondTrade repository, this will cover the development steps 6 to 9.
@@ -35,9 +43,29 @@ Notice that we intentionally avoid naming the size of settlements as `size`, sin
 
 :::
 
-## Creating `settlements`
+## Creating `settlements` 🤔
 
 We then write a procedure to handle the creation of all settlements, which under the PondTrade specifications, should always be placed in an empty land patch adjacent to at least one water patch (*i.e.*, coastal settlements).
+
+Before looking at the solution, try to write the code yourself:
+
+- Number of `settlements` set by user via a slider (`numberOfSettlements`)  
+- Create `settlements` on coastal patches only  
+- No more than one `settlement` per patch  
+- Assign them a random `sizeLevel` between 1 and 10 (temporary)  
+- shape: "circle 2" (arbitrary)  
+- size: 1 + `sizeLevel` / 3 (to visualise size differences)  
+
+Work the code as a onion, layer by layer (start with the easier parts):
+
+- How should a `settlement` be initialised? (internal variable settings)  
+- How to check if a patch is coastal?  
+- How to ensure no more than one `settlement` per patch?  
+- How to create a given number of `settlements`?  
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
 
 ```NetLogo
 to create-coastal-settlements
@@ -68,9 +96,32 @@ end
 
 We are introducing the parameter `numberOfSettlements`, which we add to the interface tab as a slider (*e.g.*, spanning from 0 to 100 by increments of 1). We randomise `sizeLevel` to get a sense of how we will visualise these agents.
 
-## Creating `traders`
+:::
 
-We implement the procedure for creating `traders`, which is a call to all settlements to generate several traders proportional to ita `sizelevel`. We give them a nice sailboat shape and place them randomly inside the pond.
+## Creating `traders` 🤔
+
+We implement the procedure for creating `traders`, which is a call to all settlements to generate several traders proportional to its `sizelevel`. We give them a nice sail boat shape and place them randomly inside the pond.
+
+Before looking at the solution, try to write the code yourself:
+
+- Number of `traders` set by the `sizeLevel` of each `settlement` (i.e. bigger settlements have more traders)  
+- Each `trader` has a fixed `base` settlement  
+- color: same as the `base` settlement  
+- shape: "sailboat side" (arbitrary)  
+- size: 3 (arbitrary)  
+- Initially place each `trader` somewhere in the pond (not on land) (temporary)  
+
+Again, separate and conquer the different parts of the code:
+
+- How should a `trader` be initialised? (internal variable settings)  
+- How to assign a random `base` settlement to each `trader`?  
+- How to create a given number of `traders`?  
+
+Tip: use `hatch` to create `traders` from each `settlement`. 
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
 
 ```NetLogo
 to create-traders-per-settlement
@@ -95,9 +146,21 @@ to create-traders-per-settlement
 end
 ```
 
-## Adapting `setup` (initialisation)
+:::
+
+## Adapting `setup` (initialisation) 🤔
 
 Add these procedures to `setup`, after `create-map`:
+
+- Bring all together in `setup` (in which order?)  
+- Ensure any previous simulation is cleared first (`clear-all`)  
+- Fix the random seed (repeatable results)  
+- Add an `update-display` at the end to hide or reveal settlements as per user settings (switch in the interface)  
+- If not already done, create the necessary interface elements (sliders, switches, etc.)  
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
 
 ```NetLogo
 to setup
@@ -145,6 +208,8 @@ to update-display
 end
 ```
 
+:::
+
 ![Pond Trade step 6](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface.png)  
 *Pond Trade step 6*
 
@@ -156,7 +221,9 @@ To check this after initialising your agents, right-click on top of a trader and
 
 ![Pond Trade step 6 - "View" right-click context menu](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_context-menu.png)
 
-You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader `base`. This time, however, write the `inspect settlement <WHO NUMBER>` directly into the console. You can now verify that the trader and settlement were assigned the exact same colour.
+You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader `base`. This time, however, write the `inspect settlement <WHO NUMBER>` directly into the console. 
+
+However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (`xcor`, `ycor`, `color`, etc.) were set explicitly during initialisation. Go back to `create-traders-per-settlement`, comment-out the line `set color [color] of base`, and run `setup` again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.
 
 ![Pond Trade step 6 - agent detail](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_agentDetail.png)  
 *Pond Trade step 6 - agent detail*
