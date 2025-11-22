@@ -496,9 +496,9 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#refresing-the-specificacions-of-the-conceptual-model" id="toc-refresing-the-specificacions-of-the-conceptual-model" class="nav-link active" data-scroll-target="#refresing-the-specificacions-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refresing the specificacions of the conceptual model</a></li>
   <li><a href="#agent-declaration" id="toc-agent-declaration" class="nav-link" data-scroll-target="#agent-declaration"><span class="header-section-number">17.2</span> Agent declaration</a></li>
-  <li><a href="#creating-settlements" id="toc-creating-settlements" class="nav-link" data-scroll-target="#creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code></a></li>
-  <li><a href="#creating-traders" id="toc-creating-traders" class="nav-link" data-scroll-target="#creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code></a></li>
-  <li><a href="#adapting-setup-initialisation" id="toc-adapting-setup-initialisation" class="nav-link" data-scroll-target="#adapting-setup-initialisation"><span class="header-section-number">17.5</span> Adapting <code>setup</code> (initialisation)</a></li>
+  <li><a href="#creating-settlements" id="toc-creating-settlements" class="nav-link" data-scroll-target="#creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code> 🤔</a></li>
+  <li><a href="#creating-traders" id="toc-creating-traders" class="nav-link" data-scroll-target="#creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code> 🤔</a></li>
+  <li><a href="#adapting-setup-initialisation" id="toc-adapting-setup-initialisation" class="nav-link" data-scroll-target="#adapting-setup-initialisation"><span class="header-section-number">17.5</span> Adapting <code>setup</code> (initialisation) 🤔</a></li>
   <li><a href="#check-agent-variable-inheritance" id="toc-check-agent-variable-inheritance" class="nav-link" data-scroll-target="#check-agent-variable-inheritance"><span class="header-section-number">17.6</span> Check agent variable inheritance</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-agent-definition.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -527,6 +527,15 @@ ul.task-list li input[type="checkbox"] {
 
 <p>In Block B, we will finally build a version of PondTrade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.</p>
 <p>So that we can cover all the steps at a good pace, we will not be delving into the same details as in Block A. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like <a href="https://text-compare.com/">Text Compare!</a>). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu.</p>
+<p>Here is a recommended workflow (outside the class):</p>
+<ol type="1">
+<li>Read section in the guide<br>
+</li>
+<li>Extend the code in your own file (test procedures separately if needed)<br>
+</li>
+<li>Check if your file matches the solution (no need to be identical)</li>
+</ol>
+<p><strong>Repeat</strong></p>
 <section id="refresing-the-specificacions-of-the-conceptual-model" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="refresing-the-specificacions-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refresing the specificacions of the conceptual model</h2>
 <p>Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original PondTrade repository, this will cover the development steps 6 to 9.</p>
@@ -562,8 +571,45 @@ Caution
 </div>
 </section>
 <section id="creating-settlements" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code></h2>
+<h2 data-number="17.3" class="anchored" data-anchor-id="creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code> 🤔</h2>
 <p>We then write a procedure to handle the creation of all settlements, which under the PondTrade specifications, should always be placed in an empty land patch adjacent to at least one water patch (<em>i.e.</em>, coastal settlements).</p>
+<p>Before looking at the solution, try to write the code yourself:</p>
+<ul>
+<li>Number of <code>settlements</code> set by user via a slider (<code>numberOfSettlements</code>)<br>
+</li>
+<li>Create <code>settlements</code> on coastal patches only<br>
+</li>
+<li>No more than one <code>settlement</code> per patch<br>
+</li>
+<li>Assign them a random <code>sizeLevel</code> between 1 and 10 (temporary)<br>
+</li>
+<li>shape: “circle 2” (arbitrary)<br>
+</li>
+<li>size: 1 + <code>sizeLevel</code> / 3 (to visualise size differences)</li>
+</ul>
+<p>Work the code as a onion, layer by layer (start with the easier parts):</p>
+<ul>
+<li>How should a <code>settlement</code> be initialised? (internal variable settings)<br>
+</li>
+<li>How to check if a patch is coastal?<br>
+</li>
+<li>How to ensure no more than one <code>settlement</code> per patch?<br>
+</li>
+<li>How to create a given number of <code>settlements</code>?</li>
+</ul>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <pre class="netlogo"><code>to create-coastal-settlements
 
   ; consider only coastal patches
@@ -589,10 +635,49 @@ Caution
 
 end</code></pre>
 <p>We are introducing the parameter <code>numberOfSettlements</code>, which we add to the interface tab as a slider (<em>e.g.</em>, spanning from 0 to 100 by increments of 1). We randomise <code>sizeLevel</code> to get a sense of how we will visualise these agents.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="creating-traders" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code></h2>
-<p>We implement the procedure for creating <code>traders</code>, which is a call to all settlements to generate several traders proportional to ita <code>sizelevel</code>. We give them a nice sailboat shape and place them randomly inside the pond.</p>
+<h2 data-number="17.4" class="anchored" data-anchor-id="creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code> 🤔</h2>
+<p>We implement the procedure for creating <code>traders</code>, which is a call to all settlements to generate several traders proportional to its <code>sizelevel</code>. We give them a nice sail boat shape and place them randomly inside the pond.</p>
+<p>Before looking at the solution, try to write the code yourself:</p>
+<ul>
+<li>Number of <code>traders</code> set by the <code>sizeLevel</code> of each <code>settlement</code> (i.e.&nbsp;bigger settlements have more traders)<br>
+</li>
+<li>Each <code>trader</code> has a fixed <code>base</code> settlement<br>
+</li>
+<li>color: same as the <code>base</code> settlement<br>
+</li>
+<li>shape: “sailboat side” (arbitrary)<br>
+</li>
+<li>size: 3 (arbitrary)<br>
+</li>
+<li>Initially place each <code>trader</code> somewhere in the pond (not on land) (temporary)</li>
+</ul>
+<p>Again, separate and conquer the different parts of the code:</p>
+<ul>
+<li>How should a <code>trader</code> be initialised? (internal variable settings)<br>
+</li>
+<li>How to assign a random <code>base</code> settlement to each <code>trader</code>?<br>
+</li>
+<li>How to create a given number of <code>traders</code>?</li>
+</ul>
+<p>Tip: use <code>hatch</code> to create <code>traders</code> from each <code>settlement</code>.</p>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <pre class="netlogo"><code>to create-traders-per-settlement
 
   ask settlements
@@ -613,10 +698,37 @@ end</code></pre>
   ]
 
 end</code></pre>
+</div>
+</div>
+</div>
 </section>
 <section id="adapting-setup-initialisation" class="level2" data-number="17.5">
-<h2 data-number="17.5" class="anchored" data-anchor-id="adapting-setup-initialisation"><span class="header-section-number">17.5</span> Adapting <code>setup</code> (initialisation)</h2>
+<h2 data-number="17.5" class="anchored" data-anchor-id="adapting-setup-initialisation"><span class="header-section-number">17.5</span> Adapting <code>setup</code> (initialisation) 🤔</h2>
 <p>Add these procedures to <code>setup</code>, after <code>create-map</code>:</p>
+<ul>
+<li>Bring all together in <code>setup</code> (in which order?)<br>
+</li>
+<li>Ensure any previous simulation is cleared first (<code>clear-all</code>)<br>
+</li>
+<li>Fix the random seed (repeatable results)<br>
+</li>
+<li>Add an <code>update-display</code> at the end to hide or reveal settlements as per user settings (switch in the interface)<br>
+</li>
+<li>If not already done, create the necessary interface elements (sliders, switches, etc.)</li>
+</ul>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <pre class="netlogo"><code>to setup
 
   clear-all
@@ -655,6 +767,9 @@ to update-display
   ask settlements [ set hidden? not showSettlements ]
 
 end</code></pre>
+</div>
+</div>
+</div>
 <p><img src="assets/screenshots/BlockB_PondTrade_step06_agent-types-interface.png" class="img-fluid" alt="Pond Trade step 6"><br>
 <em>Pond Trade step 6</em></p>
 </section>
@@ -668,7 +783,8 @@ end</code></pre>
 <figcaption>Pond Trade step 6 - “View” right-click context menu</figcaption>
 </figure>
 </div>
-<p>You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader <code>base</code>. This time, however, write the <code>inspect settlement &lt;WHO NUMBER&gt;</code> directly into the console. You can now verify that the trader and settlement were assigned the exact same colour.</p>
+<p>You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader <code>base</code>. This time, however, write the <code>inspect settlement &lt;WHO NUMBER&gt;</code> directly into the console.</p>
+<p>However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (<code>xcor</code>, <code>ycor</code>, <code>color</code>, etc.) were set explicitly during initialisation. Go back to <code>create-traders-per-settlement</code>, comment-out the line <code>set color [color] of base</code>, and run <code>setup</code> again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_agentDetail.png" class="img-fluid" alt="Pond Trade step 6 - agent detail"><br>
 <em>Pond Trade step 6 - agent detail</em></p>
 
