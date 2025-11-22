@@ -533,12 +533,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li>Extend the code in your own file (test procedures separately if needed)<br>
 </li>
-<li>Check if your file matches the solution (no need to be identical)</li>
+<li>Check if your file matches the solution (no need to be identical)<br>
+</li>
+<li><strong>Repeat</strong></li>
 </ol>
-<p><strong>Repeat</strong></p>
 <section id="refresing-the-specificacions-of-the-conceptual-model" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="refresing-the-specificacions-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refresing the specificacions of the conceptual model</h2>
-<p>Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original PondTrade repository, this will cover the development steps 6 to 9.</p>
+<p>Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original Pond Trade repository, this will cover the development steps 6 to 9.</p>
 <p><img src="assets/images/0_conceptAtStart_firstTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (first tier)"><br>
 <em>Pond Trade conceptual model at start (first tier)</em></p>
 <p>One of the necessary first steps in implementing and ABM model is to define the types of agents we plan to have, based on our initial conceptual model. We must emphasise the <em>plan</em> part here. There is always the possibility that we will revise the conceptual model up to the point that we will require more or fewer specifications about the agents.</p>
@@ -784,7 +785,19 @@ end</code></pre>
 </figure>
 </div>
 <p>You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader <code>base</code>. This time, however, write the <code>inspect settlement &lt;WHO NUMBER&gt;</code> directly into the console.</p>
-<p>However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (<code>xcor</code>, <code>ycor</code>, <code>color</code>, etc.) were set explicitly during initialisation. Go back to <code>create-traders-per-settlement</code>, comment-out the line <code>set color [color] of base</code>, and run <code>setup</code> again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.</p>
+<p>However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (<code>xcor</code>, <code>ycor</code>, <code>color</code>, etc.) were set explicitly during initialisation (overwriting the inherited values). Go back to <code>create-traders-per-settlement</code>, comment-out the line <code>set color [color] of base</code>:</p>
+<pre class="netlogo"><code>to create-traders-per-settlement
+      ...
+
+      ; give meaningful display related to base
+      set shape "sailboat side" ; import this shape from the library (Tools &gt; Shape editor &gt; import from library)
+      ;set color [color] of base
+      set size 3
+
+      ...
+
+end</code></pre>
+<p>Run <code>setup</code> again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_agentDetail.png" class="img-fluid" alt="Pond Trade step 6 - agent detail"><br>
 <em>Pond Trade step 6 - agent detail</em></p>
 
