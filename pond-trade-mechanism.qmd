@@ -23,9 +23,6 @@ Before looking at the solution, try to write the code yourself:
 - Reorganise the behaviour of traders inside a `update-traders` procedure  
 - Settlement size decay over time, down to a minimum size of 1 (use a parameter: `settlementSizeDecayRate`)  
 
-![Pond Trade conceptual model at start (first tier, first loop)](assets/images/0_conceptAtStart_firstTier_firstLoop.png)
-*Pond Trade conceptual model at start (first tier, first loop)*
-
 Things to consider:
 
 - When should traders load and unload goods?  
