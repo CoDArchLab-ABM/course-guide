@@ -489,8 +489,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#implementing-one-feedback-loop---trade-and-economic-size" id="toc-implementing-one-feedback-loop---trade-and-economic-size" class="nav-link active" data-scroll-target="#implementing-one-feedback-loop---trade-and-economic-size"><span class="header-section-number">19.1</span> Implementing one feedback loop - trade and economic size 🤔</a></li>
+  <li><a href="#visualising-dynamics" id="toc-visualising-dynamics" class="nav-link" data-scroll-target="#visualising-dynamics"><span class="header-section-number">19.2</span> Visualising dynamics</a></li>
+  <li><a href="#detecting-and-correcting-mistakes" id="toc-detecting-and-correcting-mistakes" class="nav-link" data-scroll-target="#detecting-and-correcting-mistakes"><span class="header-section-number">19.3</span> Detecting and correcting mistakes 🤔</a></li>
+  <li><a href="#implementing-two-feedback-loops---trade-production-and-trade-number-of-traders" id="toc-implementing-two-feedback-loops---trade-production-and-trade-number-of-traders" class="nav-link" data-scroll-target="#implementing-two-feedback-loops---trade-production-and-trade-number-of-traders"><span class="header-section-number">19.4</span> Implementing two feedback loops - trade-production and trade-number of traders 🤔</a></li>
+  <li><a href="#detecting-hidden-magic-numbers" id="toc-detecting-hidden-magic-numbers" class="nav-link" data-scroll-target="#detecting-hidden-magic-numbers"><span class="header-section-number">19.5</span> Detecting hidden “magic numbers”</a></li>
+  <li><a href="#checking-the-milestone-file-step-9" id="toc-checking-the-milestone-file-step-9" class="nav-link" data-scroll-target="#checking-the-milestone-file-step-9"><span class="header-section-number">19.6</span> Checking the milestone File (step 9)</a></li>
+  <li><a href="#updating-the-conceptual-model" id="toc-updating-the-conceptual-model" class="nav-link" data-scroll-target="#updating-the-conceptual-model"><span class="header-section-number">19.7</span> Updating the conceptual model</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-mechanism.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -514,8 +526,53 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>We now reach the “spicy” part of PondTrade’s development. Until this point, settlements are entirely static, and traders are created only in <code>setup</code>, then travel back and forth without affecting settlements.</p>
-<p>First, we want to implement the feedback loop described in the conceptual model, connecting settlement size, production, and trade inflow.</p>
+<p>We now reach the “spicy” part of Pond Trade’s development. Until this point, settlements are entirely static, and traders are created only in <code>setup</code>, then travel back and forth without affecting settlements.</p>
+<p>Remember that the core dynamics of the first-tier conceptual model was made up of two overlapping feedback loops. It could be decomposed as:</p>
+<ul>
+<li>Settlements produce goods, and have it decay over time.<br>
+</li>
+<li>Traders choose destination✅, load, move✅ and unload goods.<br>
+</li>
+<li>Settlements’ size increase with goods and decay otherwise.<br>
+</li>
+<li>Settlements get more or less traders depending on their size.</li>
+</ul>
+<p><img src="assets/images/0_conceptAtStart_firstTier_loops.png" class="img-fluid" alt="Pond Trade conceptual model at start (first tier)"><br>
+<em>The loops of the first-tier conceptual model and its key implementation points</em></p>
+<section id="implementing-one-feedback-loop---trade-and-economic-size" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="implementing-one-feedback-loop---trade-and-economic-size"><span class="header-section-number">19.1</span> Implementing one feedback loop - trade and economic size 🤔</h2>
+<p>First, we want to implement the general feedback loop described in the conceptual model, connecting settlement size and trade flow.</p>
+<p>Before looking at the solution, try to write the code yourself:</p>
+<ul>
+<li>Traders load and unload goods at the base and destination settlements (use a variable: <code>cargoValue</code>)</li>
+<li>Settlements increase their size with goods coming by trade<br>
+</li>
+<li>Reorganise the behaviour of traders inside a <code>update-traders</code> procedure<br>
+</li>
+<li>Settlement size decay over time, down to a minimum size of 1 (use a parameter: <code>settlementSizeDecayRate</code>)</li>
+</ul>
+<p><img src="assets/images/0_conceptAtStart_firstTier_firstLoop.png" class="img-fluid" alt="Pond Trade conceptual model at start (first tier, first loop)"> <em>Pond Trade conceptual model at start (first tier, first loop)</em></p>
+<p>Things to consider:</p>
+<ul>
+<li>When should traders load and unload goods?<br>
+</li>
+<li>How to increase settlement size based on goods?<br>
+</li>
+<li>How to decrease settlement size over time?</li>
+</ul>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Let us reorganise the behavioural cycle of traders into a new separate procedure, <code>update-traders</code>:</p>
 <pre class="netlogo"><code>to update-traders
 
@@ -691,7 +748,13 @@ end
 
 end</code></pre>
 <p>We must add to the interface yet another parameter to regulate decay, <code>settlementSizeDecayRate</code> (from 0 to 25, by 0.01, default value of 5). This is expressed as the percentage of sizeLevel that is subtracted at each simulation step.</p>
-<p>To better explore the effects of this feedback loop, we should start adding plots to the interface. Select Plot in the dropdown menu and add two plot objects, as you have done with buttons, sliders, etc. Configure them as follows:</p>
+</div>
+</div>
+</div>
+</section>
+<section id="visualising-dynamics" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="visualising-dynamics"><span class="header-section-number">19.2</span> Visualising dynamics</h2>
+<p>To better explore the effects of this feedback loop, we should start adding plots to the interface. Select Plot in the drop-down menu and add two plot objects, as you have done with buttons, sliders, etc. Configure them as follows:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 100%">
@@ -708,7 +771,26 @@ end</code></pre>
 <p>We can now run the model with a few settlements and repeat <code>go</code> many times. Explore different <code>seed</code> numbers. Are settlements reacting to traders’ dynamics at all? Is the value of <code>settlementSizeDecayRate</code> too high or low? What are we doing wrong?</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step08_adding-feedback-loops-1-interface.png" class="img-fluid" alt="Pond Trade step 8"><br>
 <em>Pond Trade step 8</em></p>
-<p>Before moving to the second feedback loop, we must solve our problem. If you followed any of the different approaches for debugging (<em>e.g.</em>, inspecting agents, printing messages in mid-code), you have detected that traders are not transporting any cargo value. The problem resides in how we have scheduled the calls for <code>unload-cargo</code> and <code>load-cargo</code>. Notice that we added <code>load-cargo</code> to a conditional call <code>ask (turtle-set tradersInBase tradersInDestination) with [cargoValue &gt; 0]</code>, only relevant to traders <em>with cargo</em>, which is impossible for traders to fulfil initially.</p>
+</section>
+<section id="detecting-and-correcting-mistakes" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="detecting-and-correcting-mistakes"><span class="header-section-number">19.3</span> Detecting and correcting mistakes 🤔</h2>
+<p>Before moving to the second feedback loop, we must solve our problem.</p>
+<p>Use <code>inspect</code> and printing commands to debug the model.</p>
+<p>Can you tell what is wrong with the model behaviour?</p>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you followed any of the different approaches for debugging (<em>e.g.</em>, inspecting agents, printing messages in mid-code), you have detected that traders are not transporting any cargo value. The problem resides in how we have scheduled the calls for <code>unload-cargo</code> and <code>load-cargo</code>. Notice that we added <code>load-cargo</code> to a conditional call <code>ask (turtle-set tradersInBase tradersInDestination) with [cargoValue &gt; 0]</code>, only relevant to traders <em>with cargo</em>, which is impossible for traders to fulfil initially.</p>
 <p>We reorganise <code>update-traders</code> as follows:</p>
 <pre class="netlogo"><code>to update-traders
   
@@ -734,8 +816,42 @@ end</code></pre>
 <p><img src="assets/screenshots/BlockB_PondTrade_step08_adding feedback loops 1 interface_afterCorrection.png" class="img-fluid" alt="Pond Trade step 8 (after correction)"><br>
 <em>Pond Trade step 8 (after correction)</em></p>
 <p>We can now see how, quite often, one or very few hubs emerge among settlements.</p>
-<hr>
-<p>The second positive feedback loop in our concept model relates settlement size, the number of traders per settlement, and trade inflow.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="implementing-two-feedback-loops---trade-production-and-trade-number-of-traders" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="implementing-two-feedback-loops---trade-production-and-trade-number-of-traders"><span class="header-section-number">19.4</span> Implementing two feedback loops - trade-production and trade-number of traders 🤔</h2>
+<p>We split the general positive feedback loop into two, as specified in our concept model. These represent the effects of trade flow in settlement size through change in stock of goods and the number of traders per settlement.</p>
+<p>Before looking at the solution, try to write the code yourself (medium-to-hard challenge):</p>
+<ul>
+<li>Settlements produce goods every tick in proportion to their size (use a parameter: <code>productionRate</code>; use variables: <code>sizeLevel</code>, <code>stock</code>)<br>
+</li>
+<li>The number of traders per settlement increases with settlement size (use variables: <code>currentNumberOfTraders</code>, <code>potentialNumberOfTraders</code>)<br>
+</li>
+<li>Reorganise the behaviour of settlements inside a <code>update-settlements</code> procedure</li>
+</ul>
+<p>Things to consider:</p>
+<ul>
+<li>How to increase the stock of settlements over time?<br>
+</li>
+<li>How to calculate the potential number of traders?<br>
+</li>
+<li>How to create new traders when needed? How to remove them?</li>
+</ul>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>The key addition is that now we will have to differentiate, for each settlement, between <code>currentNumberOfTraders</code> and <code>potentialNumberOfTraders</code>, and update these according <code>sizeLevel</code>. To wrap up all this, we finally implement an update procedure specifically for settlements (<code>update-settlements</code>).</p>
 <p>We will also need to manage the traders that are left outside the maximum value for their base settlement. We create the tag <code>isActivated</code> to avoid creating and deleting too many traders in the same simulation run (i.e., it might become a problem as <code>who</code> numbers grow).</p>
 <pre class="netlogo"><code>settlements-own
@@ -941,7 +1057,23 @@ to update-settlements
   ]
 
 end</code></pre>
-<p>In <code>get-potential-number-of-traders</code>, there is a <em>hidden</em> magic number worth exploring. We name it <code>frequencyOverQuality</code> and make it a “trait” of settlements, setting it in <code>create-coastal-settlements</code> as a random number between 0 and 1:</p>
+</div>
+</div>
+</div>
+</section>
+<section id="detecting-hidden-magic-numbers" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="detecting-hidden-magic-numbers"><span class="header-section-number">19.5</span> Detecting hidden “magic numbers”</h2>
+<p>In <code>get-potential-number-of-traders</code>, there is a <em>hidden</em> magic number worth exploring. We are assuming that economic size is translated entirely in an increase in the number of traders.</p>
+<pre class="netlogo"><code>to-report get-potential-number-of-traders ; ego = settlement
+
+  report (
+    1 +
+    (sizeLevel - 1) 🪄
+    )
+
+end</code></pre>
+<p>Keeping our ultimate model in mind (i.e., including cultural dynamics), let us use this opportunity and expose this number (“* 1”) as a parametric aspect of our model.</p>
+<p>We name it <code>frequencyOverQuality</code> and make it a “trait” of settlements, setting it in <code>create-coastal-settlements</code> as a random number between 0 and 1:</p>
 <pre class="netlogo"><code>settlements-own
 [
   ...
@@ -986,15 +1118,22 @@ to-report get-potential-number-of-traders ; ego = settlement
 
 end</code></pre>
 <p>As its name suggests, this trait’s meaning is: “how much the frequency of trade is prioritised over the quality of the cargo”. This is because the more traders a settlement has, the less cargo each will be able to get from <code>stock</code>, and so each will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.</p>
+</section>
+<section id="checking-the-milestone-file-step-9" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="checking-the-milestone-file-step-9"><span class="header-section-number">19.6</span> Checking the milestone File (step 9)</h2>
 <p>We can now observe that the number of traders in our pond oscillates around a stable low level most of the time. We can observe some exceptions by exploring higher values of <code>numberOfSettlements</code>. With enough settlements, our feedback loops push the dynamics towards the emergence of hubs, boosting the overall number of traders.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step09_adding-feedback-loops-2-interface.png" class="img-fluid" alt="Pond Trade step 9"><br>
 <em>Pond Trade step 9</em></p>
-<p>We reach the end of the implementation steps for the first-tier PondTrade model. Given all the changes and extensions we made, we must revisit our conceptual model and update it accordingly.</p>
+</section>
+<section id="updating-the-conceptual-model" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="updating-the-conceptual-model"><span class="header-section-number">19.7</span> Updating the conceptual model</h2>
+<p>We reach the end of the implementation steps for the first-tier Pond Trade model. Given all the changes and extensions we made, we must revisit our conceptual model and update it accordingly.</p>
 <p><img src="assets/images/0_conceptAtStep9_firstTier.png" class="img-fluid" alt="Pond Trade conceptual model revised at step 9 (first tier)"><br>
 <em>Pond Trade conceptual model revised at step 9 (first tier)</em></p>
 <p>This graphical description is still far from the implementation code, as it should be. However, it is now adequate for the new conceptual changes we introduced in the code.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1414,4 +1553,4 @@ end</code></pre>
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-mechanism.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-mechanism.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
