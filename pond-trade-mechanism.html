@@ -943,6 +943,43 @@ to update-settlements
 
 end
 
+to update-traders
+
+  ...
+
+  ; UNLOAD
+  ask (turtle-set tradersInBase tradersInDestination) with [cargoValue &gt; 0]
+  [
+    ; unload cargo (changes sizeLevel)
+    unload-cargo
+  ]
+
+  ; CHECK if the trader can be sustained when in the base
+  ask tradersInBase
+  [
+    if ([potentialNumberOfTraders &lt; currentNumberOfTraders] of base)
+    [
+      ; the current number of traders cannot be sustained
+      set isActivated false
+      ; update currentNumberOfTraders of base
+      ask base [ set currentNumberOfTraders get-current-number-of-traders ]
+    ]
+  ]
+
+  set activeTraders traders with [isActivated] ; update active traders
+  set tradersInBase tradersInBase with [isActivated] ; update traders in base
+
+  ; LOAD
+  ask (turtle-set tradersInBase tradersInDestination)
+  [
+    ; load cargo (changes stock)
+    load-cargo
+  ]
+
+  ...
+
+end
+
 ...
 
 to-report get-potential-number-of-traders ; ego = settlement
