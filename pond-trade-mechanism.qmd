@@ -234,6 +234,8 @@ To better explore the effects of this feedback loop, we should start adding plot
 | <img src="assets/screenshots/BlockB_PondTrade_step08_adding-feedback-loops-1-plot1setting.png" width="500"> | 
 | <img src="assets/screenshots/BlockB_PondTrade_step08_adding-feedback-loops-1-plot2setting.png" width="500"> |
 
+## Checking the milestone File (step 8)
+
 We can now run the model with a few settlements and repeat `go` many times. Explore different `seed` numbers. Are settlements reacting to traders' dynamics at all? Is the value of `settlementSizeDecayRate` too high or low? What are we doing wrong?
 
 ![Pond Trade step 8](assets/screenshots/BlockB_PondTrade_step08_adding-feedback-loops-1-interface.png)  

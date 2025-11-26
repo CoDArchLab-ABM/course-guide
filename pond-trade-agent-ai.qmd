@@ -735,5 +735,7 @@ end
 
 Reduce `numberOfSettlements` (e.g. 10) and run `setup` again. Run `go` repeatedly to observe the behaviour of the loner trader.
 
+## Checking the milestone File (step 7)
+
 ![Pond Trade step 7](assets/screenshots/BlockB_PondTrade_step07_agent AI-v2_AStar-interface.png)  
 *Pond Trade step 7*

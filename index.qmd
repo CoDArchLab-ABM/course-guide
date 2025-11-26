@@ -36,14 +36,15 @@ session_data <- cbind.data.frame(
             "Programming for simulation modelling",
             "Pond Trade (I): basics and cellular automata",
             "Pond Trade (II): agents and mechanisms",
+            "Pond Trade (II): agents and mechanisms",
+            "Pond Trade (III): advanced mechanisms, output stats and modularity",
             "Pond Trade (III): advanced mechanisms, output stats and modularity",
             "Messara Trade (I): case, design and spatial input data",
             "Messara Trade (II): time-series input data and plugging modules",
             "Messara Trade (III): verification, optimisation, refactoring and extension",
             "Designing and running Simulation experiments",
-            "Analysis of simulation results",
-            "free practice",
-            "free practice")
+            "Analysis of simulation results"
+            )
 )
 session_data$Date <- factor(session_data$Date, unique(session_data$Date))
 ```

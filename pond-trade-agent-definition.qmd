@@ -1,13 +1,13 @@
 # Defining and initialising agents {#pond-trade-agent-definition}
 
-In Block B, we will finally build a version of Pond Trade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.
+In the following chapters, we will finally build a version of Pond Trade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.
 
-So that we can cover all the steps at a good pace, we will not be delving into the same details as in Block A. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like [Text Compare!](https://text-compare.com/)). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu. 
+So that we can cover all the steps at a good pace, we will not be delving into the same details as in chapter 16. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like [Text Compare!](https://text-compare.com/)). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu. 
 
 Here is a recommended workflow (outside the class):
 
 1. Read section in the guide  
-2. Extend the code in your own file (test procedures separately if needed)  
+2. Extend the code in your own file (test procedures separately if needed), preferably doing the coding challenges  
 3. Check if your file matches the solution (no need to be identical)  
 4. **Repeat**
 
@@ -208,6 +208,8 @@ end
 ```
 
 :::
+
+## Checking the milestone File (step 6)
 
 ![Pond Trade step 6](assets/screenshots/BlockB_PondTrade_step06_agent-types-interface.png)  
 *Pond Trade step 6*

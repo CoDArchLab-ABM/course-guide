@@ -53,6 +53,7 @@ book:
         - program-netlogo-language-basics.qmd
         - program-other-languages.qmd
         - program-netlogo-tutorials.qmd
+    - pond-trade-intro-block.md
     - part: "Pond Trade (I): basics and cellular automata"
       chapters:
         - pond-trade-concept.qmd

@@ -1,0 +1,23 @@
+# Instructions to the Pond Trade block {.unnumbered}
+
+In the remaining chapters you will be called to action, by developing your own NetLogo model files following the guide chapters and the reference Pod Trade model files. These are stored  in the guide GitHub repository, inside "course-guide/assets/netlogo/". 
+
+Prepare and keep in mind the following instructions:
+
+**Where**:
+
+- Download or clone the course guide repository (https://github.com/CoDArchLab-ABM/course-guide). You can also manually download the files from "assets/netlogo" as you need for advancing through the chapters. If you clone it using Git, you will be able to quickly synchronize any changes to the model files happening during the course period.  
+- Start your own NetLogo file (placed at the root directory of your course repository), name it something like "Pond Trade replica", and advance the implementation steps progressively using this file.  
+- Place the NetLogo file inside your own repository, if working with Git locally   
+- When in doubt, create new file versions and accumulate failed attempts for learning purposes; it is not pretty, but it is useful!  
+
+**How**:
+
+- Write the code progressively, following the guide.  
+- Feel free to copy and paste whenever the code fragments become too long.  
+- Test frequently to identify and fix issues early.  
+- Use comments extensively to document your code.  
+- Save versions of your code at significant milestones.  
+- At the end of each step or if you run into any problems, compare your code to the code in the reference files for the corresponding step (inside "course-guide/assets/netlogo/"). Consider using tools like [Text Compare!](https://text-compare.com/).  
+- If your version becomes to chaotic or has too many small variations, use the reference files as a starting point for the next implementation step (e.g., use "BlockA_PondTrade_step05_refactoring and organizing code.nlogox", referenced at the end of chapter 16, to start the work on chapter 17).  
+- Ask for help if you get stuck!  

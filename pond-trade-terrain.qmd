@@ -2,20 +2,6 @@
 
 Now, let us make a minimum working example of all elements explained above while advancing towards the Pond Trade model prototype. Let us start with implementing a minimum base for the Pond Trade model: the pond-like terrain.
 
-## Initial instructions
-
-For this section, I recommend starting your own NetLogo file (placed at the root directory of this repository) and writing the following steps progressively. Feel free to copy and paste whenever the code fragments become too long. If you run into any problems at the end of each step, you may check the corresponding complete script at the repository's root.
-
-Check-list:
-
-- Start your own NetLogo file (inside your own repository, if working with Git locally)  
-- Write the code progressively, following the guide  
-- Test frequently to identify and fix issues early  
-- Use comments extensively to document your code  
-- Save versions of your code at significant milestones  
-- At the end of each step, compare your code to the code in the reference files (inside "assets/netlogo/")
-- Ask for help if you get stuck!
-
 ## Step 0: Drawing a blue circle
 
 Inside a single procedure, called `create-map`, we order (`ask`) all `patches` to do something using the structure: 
@@ -303,6 +289,8 @@ to create-map
 end
 ```
 
+## Checking the milestone File (step 1)
+
 ![Step 1 interface in NetLogo](assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-interface.png)  
 *Pond Trade step 1*
 
@@ -364,6 +352,8 @@ Last, we replace the text reference for colours with NetLogo's numerical codes. 
 
 ![](https://docs.netlogo.org/images/colorpicker/colorpickersimple.png)
 
+
+## Checking the milestone File (step 2)
 
 ![Step 2 interface in NetLogo](assets/screenshots/BlockA_PondTrade_step02_refactoring-interface.png)  
 *Pond Trade step 2*
@@ -451,6 +441,8 @@ end
 ```
 
 We now can generate strange "spray ponds". More importantly, we made the generation process controllable through two parameters that are easily understandable. Play with the parameters and meditate on their effects on the shape of the pond.
+
+## Checking the milestone File (step 3)
 
 ![Pond Trade step 3](assets/screenshots/BlockA_PondTrade_step03_adding-noise-interface.png)  
 *Pond Trade step 3*
@@ -710,6 +702,8 @@ end
 
 We just consolidated a version of our script that is able to create interesting (and more realistic) water body shapes with stochasticity, while being able to vary the output with a set of five parameters clearly displayed and no grave magic number unexposed.
 
+## Checking the milestone File (step 4)
+
 ![Pond Trade step 4](assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing-interface.png)  
 *Pond Trade step 4*
 
@@ -829,6 +823,8 @@ to paint-patches
 end
 
 ```
+
+## Checking the milestone File (step 5)
 
 ![Pond Trade step 5](assets/screenshots/BlockA_PondTrade_step05_refactoring-and-organizing-code-interface.png)  
 *Pond Trade step 5*
