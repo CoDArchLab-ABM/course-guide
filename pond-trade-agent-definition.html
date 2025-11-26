@@ -252,6 +252,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pond-trade-intro-block.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Instructions to the Pond Trade block</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
@@ -499,7 +505,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#creating-settlements" id="toc-creating-settlements" class="nav-link" data-scroll-target="#creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code> 🤔</a></li>
   <li><a href="#creating-traders" id="toc-creating-traders" class="nav-link" data-scroll-target="#creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code> 🤔</a></li>
   <li><a href="#adapting-setup-initialisation" id="toc-adapting-setup-initialisation" class="nav-link" data-scroll-target="#adapting-setup-initialisation"><span class="header-section-number">17.5</span> Adapting <code>setup</code> (initialisation) 🤔</a></li>
-  <li><a href="#check-agent-variable-inheritance" id="toc-check-agent-variable-inheritance" class="nav-link" data-scroll-target="#check-agent-variable-inheritance"><span class="header-section-number">17.6</span> Check agent variable inheritance</a></li>
+  <li><a href="#checking-the-milestone-file-step-6" id="toc-checking-the-milestone-file-step-6" class="nav-link" data-scroll-target="#checking-the-milestone-file-step-6"><span class="header-section-number">17.6</span> Checking the milestone File (step 6)</a></li>
+  <li><a href="#check-agent-variable-inheritance" id="toc-check-agent-variable-inheritance" class="nav-link" data-scroll-target="#check-agent-variable-inheritance"><span class="header-section-number">17.7</span> Check agent variable inheritance</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-agent-definition.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -525,13 +532,13 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>In Block B, we will finally build a version of Pond Trade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.</p>
-<p>So that we can cover all the steps at a good pace, we will not be delving into the same details as in Block A. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like <a href="https://text-compare.com/">Text Compare!</a>). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu.</p>
+<p>In the following chapters, we will finally build a version of Pond Trade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.</p>
+<p>So that we can cover all the steps at a good pace, we will not be delving into the same details as in chapter 16. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like <a href="https://text-compare.com/">Text Compare!</a>). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu.</p>
 <p>Here is a recommended workflow (outside the class):</p>
 <ol type="1">
 <li>Read section in the guide<br>
 </li>
-<li>Extend the code in your own file (test procedures separately if needed)<br>
+<li>Extend the code in your own file (test procedures separately if needed), preferably doing the coding challenges<br>
 </li>
 <li>Check if your file matches the solution (no need to be identical)<br>
 </li>
@@ -771,11 +778,14 @@ end</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="checking-the-milestone-file-step-6" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="checking-the-milestone-file-step-6"><span class="header-section-number">17.6</span> Checking the milestone File (step 6)</h2>
 <p><img src="assets/screenshots/BlockB_PondTrade_step06_agent-types-interface.png" class="img-fluid" alt="Pond Trade step 6"><br>
 <em>Pond Trade step 6</em></p>
 </section>
-<section id="check-agent-variable-inheritance" class="level2" data-number="17.6">
-<h2 data-number="17.6" class="anchored" data-anchor-id="check-agent-variable-inheritance"><span class="header-section-number">17.6</span> Check agent variable inheritance</h2>
+<section id="check-agent-variable-inheritance" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="check-agent-variable-inheritance"><span class="header-section-number">17.7</span> Check agent variable inheritance</h2>
 <p>Unless specified otherwise, all new turtles created with <code>create-&lt;BREED&gt;</code> or <code>sprout-&lt;BREED&gt;</code> are assigned a random colour. In this case, settlements were created by specific patches with <code>sprout-settlements</code>, and these created traders with <code>hatch-traders</code>. Unlike <code>create</code> and <code>sprout</code>, the <code>hatch</code> command assumes that all variables in common between the creator (<code>turtle</code>) and the created (<code>turtle</code>) are to be inherited.</p>
 <p>To check this after initialising your agents, right-click on top of a trader and select “trader &lt;WHO NUMBER&gt; &gt; inspect trader &lt;WHO NUMBER&gt;”.</p>
 <div class="quarto-figure quarto-figure-center">
