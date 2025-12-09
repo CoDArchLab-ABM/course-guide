@@ -632,6 +632,8 @@ end
 
 As its name suggests, this trait's meaning is: "how much the frequency of trade is prioritised over the quality of the cargo". This is because the more traders a settlement has, the less cargo each will be able to get from `stock`, and so each will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.
 
+>To test the effect of `frequencyOverQuality`, create a temporary parameter as a slider in the interface named `frequencyOverQuality_temp`. Then, use it to set up the settlement variable, replacing `random-float 1`. Try different values to see whether and how this value affects the model dynamics. Remember to dlete this slider and return the code to the original configuration.
+
 ## Checking the milestone File (step 9)
 
 We can now observe that the number of traders in our pond oscillates around a stable low level most of the time. We can observe some exceptions by exploring higher values of `numberOfSettlements`. With enough settlements, our feedback loops push the dynamics towards the emergence of hubs, boosting the overall number of traders.

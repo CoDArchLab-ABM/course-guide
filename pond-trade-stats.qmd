@@ -2,11 +2,26 @@
 
 Apart from minor refactoring, the last implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are essentially aggregate measurements about the state of the simulation at a given time step.
 
+## Displaying outputs in the interface 🤔
+
+Try out creating a new interface element to display:
+
+- the number of patches and coastal land patches.
+- the number of activated traders.
+- the mean, min and max cargo value of activated traders.
+- the min and max settlement size level, and the main hub settlement.
+- the mean, min and max total path cost of active routes.
+- the mean, standard deviation and modes of the RGB traits of settlements.
+- the mean, standard deviation and modes of the land and port tech traits of settlements.
+- the mean, standard deviation and modes of the size decay, stock decay and production traits of settlements.
+- the mean, standard deviation and modes of the frequency over quality, transmission and mutation traits of settlements.
+
+## Checking the milestone File (step 12)
+
 ![Pond Trade step 12](assets/screenshots/BlockB_PondTrade_step12_interface-statistics-interface.png)  
 *Pond Trade step 12*
 
-![Pond Trade step 13](assets/screenshots/BlockB_PondTrade_step13_output-statistics-interface.png)  
-*Pond Trade step 13*
+## Recording outputs in variables
 
 The statistics serve as indicators for monitoring complex results while manually running simulations in the interface. Most importantly, they can be used more systematically as data that can be exported for further use in other software, *e.g.*, to perform advanced statistical analyses and more sophisticated graphs.
 
@@ -119,7 +134,14 @@ end
 
 ```
 
+## Checking the milestone File (step 13)
+
+![Pond Trade step 13](assets/screenshots/BlockB_PondTrade_step13_output-statistics-interface.png)  
+*Pond Trade step 13*
+
 We could further implement a procedure to export these and more variables at a specific time of simulations. We will see an example of this in Block C. However, in most cases, we want to use [NetLogo Behavioral Space](https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html). Find it in Tools > Behavior Space. This built-in tool allows you to configure experiments to be run in parallel, within a specific parameter space, and perform a series of commands before, during, or after a simulation run. It includes functionality for exporting simulation data as a CSV file (you will be prompt with a File Explorer window once you press "run" in an experiment).
+
+## Updating the conceptual model
 
 As the final step in developing PondTrade, let us update our second-tier conceptual model, adding a more explicit representation of cultural vectors and their contents.
 

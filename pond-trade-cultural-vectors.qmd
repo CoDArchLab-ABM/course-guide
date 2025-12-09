@@ -1,21 +1,43 @@
 # Implementing complex agents {#pond-trade-cultural-vectors}
 
-## Second-tier model
+## Second-tier model: Pond Trade with cultural evolution
 
-We will now go over the implementation of the second-tier PondTrade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.
+We will now go over the implementation of the second-tier Pond Trade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.
 
 Remember the conceptual model for this tier we defined at the beginning.
 
 ![Pond Trade conceptual model at start (second tier)](assets/images/0_conceptAtStart_secondTier.png)  
 *Pond Trade conceptual model at start (second tier)*
 
-Apart from assimilating the changes we made to the first-tier model, our goal here will be to implement the following:
+We will now extend the Pond Trade model to include a simple mechanism of cultural evolution.
+
+First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called "vector model" of cultural transmission [@axelrod_dissemination_1997; @lipo_mapping_2017; @shennan_pattern_2009; bentley_random_2004; battiston_layered_2017]. 
+
+<img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-017-02040-4/MediaObjects/41598_2017_2040_Fig1_HTML.jpg?as=webp" alt="Battiston et al. 2017, Fig. 1">
+
+*Illustration of the idea of cultural vectors (Battiston et al. 2017, Fig. 1)*
+
+Following this model, each settlement has a "cultural vector", which is a list of cultural traits (e.g., pottery styles, architectural styles, etc.) that represent the aggregated culture of the population of the settlement. These cultural vectors can be modified through the movement of trade goods between settlements, according to a "cultural permeability" that defines how easily cultural traits are transmitted between settlements. In addition, cultural vectors can be modified randomly through time, according to a intrinsic cultural variation (undirected variation) and a mechanism of selection, where certain cultural traits are more likely to be transmitted or retained based on their "fitness" in the environment.
+
+## Implementing Cultural transmission 🤔
+
+Our goal here will be to implement the following:
 
 - a cultural "vector" of settlements, representing a series of cultural traits of the aggregated population of the settlements  
 - a mechanism to modify these cultural vectors through the movement of trade goods, according to a global measure of what we call here "cultural permeability"  
-- a mechanism that modifies cultural vectors randomly through time (undirected variation)  
+- a mechanism that modifies cultural vectors randomly through time (undirected variation) 
 
-## Step 10: cultural vectors
+Before looking at the solution, try to write the code yourself. Things to consider:
+
+- how to represent the cultural vectors?  
+- how to represent the cultural permeability?  
+- how to represent the undirected variation?  
+- how cultural vectors are modified by trade goods?  
+- how to visualise the cultural vectors?  
+
+**Solution (creating cultural vectors)**:
+
+::: {.callout-note collapse="true"}
 
 Let us start with implementing the settlements' cultural vector (`culturalVector`). Since there is, for now, no meaning of traits, we can use this new variable to hold the values of the three numbers defining an RGB colour (*i.e.*, red, green, blue; values between 0 and 255) that will then be shown as the icon colour of the settlement.
 
@@ -83,8 +105,12 @@ to update-display
 end
 ```
 
-![Pond Trade step 10 - settlement with cultural vector](assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png)  
-*Pond Trade step 10 - settlement with cultural vector*
+![Settlement with cultural vector](assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png)  
+*Settlement with cultural vector*
+
+**Solution (transmission)**:
+
+::: {.callout-note collapse="true"}
 
 Next, we add a mechanism for traders to record the state of their base `culturalVector` while loading their cargo and to pass this vector as an influence on another settlement's `culturalVector` when unloading. More specifically, this influence will decrease the difference between values in each trait to a value determined by the parameter `traitTransmissionRate` (slider, from 0 to 25, by 0.01, default value = 1).
 
@@ -131,14 +157,18 @@ to add-trade-effect [ aTrader ] ; ego = settlement
 end
 ```
 
+:::
+
+## Checking the milestone File (step 10)
+
 With these changes, the model dynamics will now include a general cultural convergence whenever trade partners become stable, especially when trade hubs emerge. After a few thousand simulation steps, the visual result is that all settlements hold the same colour. 
 
 ![Pond Trade step 10](assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface.png)  
 *Pond Trade step 10*
 
-According to our initial conceptual model, the next step is to implement a mechanism for undirected variation. We can easily include this by adding noise to the value of each trait at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters that we can easily conceive as varying widely among settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined `frequencyOverQuality`: *what if* most of the parameters about settlements were implemented instead as traits in `culturalVector` and allowed to evolve?
+## Converting parameters into functional agent traits
 
-## Step 11: trait selection
+According to our initial conceptual model, the logical next step would be to implement a mechanism for undirected variation. We can easily include this by adding noise to each trait's value at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters, which we can easily conceive as varying widely across settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined `frequencyOverQuality`: *what if* most of the parameters about settlements were implemented instead as traits in `culturalVector` and allowed to evolve? 🤯
 
 To internalise most parameters as trait values in `culturalVector`, we must convert all former parameters into *hyperparameters*, *i.e.* those values that will be used only to set a range of variation of the settlement-specific values.
 
@@ -150,7 +180,27 @@ To internalise most parameters as trait values in `culturalVector`, we must conv
 | traitTransmissionRate | maxTraitTransmissionRate |
 | (traitMutationRate) | maxMutationVariation |
 
- We will also further exploit this opportunity and create two additional elements, which we will refer to as land and port technology, to modify how `pathCost` affects traders' decisions and movements. For these, we need to introduce two extra hyperparameters, `landTechVariation` and `portTechVariation`. Notice that we could do the same for the path cost in water, though it would affect the model's rhythm more drastically.
+We will also further exploit this opportunity and create two additional elements, which we will refer to as land and port technology, to modify how `pathCost` affects traders' decisions and movements. For these, we need to introduce two extra hyperparameters, `landTechVariation` and `portTechVariation`. Notice that we could do the same for the path cost in water, though it would affect the model's rhythm more drastically.
+
+## Implementing new settlement traits 🤔
+
+Our goal here will be to implement the following:
+
+- Create all new hyperparameters in the interface  
+- Create all new traits in `culturalVector`  
+- Implement the new traits in the model logic  
+- Visualise the new traits using histograms  
+
+Before looking at the solution, try to write the code yourself. Things to consider:
+
+Things to consider:
+
+- Knowing how to implement the previous cultural vector, how would you implement the new traits?  
+- How to use the new traits in the model logic?  
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
 
 We change the code for initialising settlements so that each trait within `culturalVector` is sampled randomly according to the hyperparameters above:
 
@@ -308,9 +358,42 @@ to-report get-path-cost [ aPatch aTrader ]
 end
 ```
 
-Finally, we add a new procedure that apply random (normally-distributed) mutations to all traits separately:
+:::
+
+## Implementing undirected variation 🤔
+
+Our goal here will be to implement the following:
+
+- A mechanism that adds random variation to the cultural traits of settlements at each time step
+
+Things to consider:
+
+- How to implement random variation? What probability distribution should we use?  
+- How to implement the variation mechanism?  
+- Do these traits need to be bounded to a certain range?  
+
+**Solution**:
+
+::: {.callout-note collapse="true"}
+
+We add a new procedure that apply random (normally-distributed) mutations to all traits separately and call it in the `update-settlements` procedure:
 
 ```NetLogo
+to update-settlements
+
+  ask settlements
+  [
+    let thisSettlement self
+
+    ...
+
+    ; add variation to the settlement traits (mutation)
+    mutate-traits
+  ]
+
+end
+
+...
 
 to mutate-traits
 
@@ -349,8 +432,9 @@ end
 
 To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values for each trait and settlement, giving us a sense of both convergence (or *cultural integration*) and possibly revealing evolutionary trends driven by trait selection. For instance, we would expect high selective pressure on settlements with higher production rates, since they are part of the positive feedback loops we implemented earlier in the first tier. 
 
-![Pond Trade step 11](assets/screenshots/BlockB_PondTrade_step11_trait-selection-interface.png)  
-*Pond Trade step 11*
+:::
+
+## Adding a stop condition
 
 At this stage, we also had to introduce stop conditions to interrupt simulation runs, especially given the potential number of traders under some parameter configurations. The conditions are added to the `go` procedure:
 
@@ -369,3 +453,8 @@ to go
 
 end
 ```
+
+## Checking the milestone File (step 11)
+
+![Pond Trade step 11](assets/screenshots/BlockB_PondTrade_step11_trait-selection-interface.png)  
+*Pond Trade step 11*
