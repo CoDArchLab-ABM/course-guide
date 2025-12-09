@@ -495,8 +495,18 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#displaying-outputs-in-the-interface" id="toc-displaying-outputs-in-the-interface" class="nav-link active" data-scroll-target="#displaying-outputs-in-the-interface"><span class="header-section-number">21.1</span> Displaying outputs in the interface 🤔</a></li>
+  <li><a href="#checking-the-milestone-file-step-12" id="toc-checking-the-milestone-file-step-12" class="nav-link" data-scroll-target="#checking-the-milestone-file-step-12"><span class="header-section-number">21.2</span> Checking the milestone File (step 12)</a></li>
+  <li><a href="#recording-outputs-in-variables" id="toc-recording-outputs-in-variables" class="nav-link" data-scroll-target="#recording-outputs-in-variables"><span class="header-section-number">21.3</span> Recording outputs in variables</a></li>
+  <li><a href="#checking-the-milestone-file-step-13" id="toc-checking-the-milestone-file-step-13" class="nav-link" data-scroll-target="#checking-the-milestone-file-step-13"><span class="header-section-number">21.4</span> Checking the milestone File (step 13)</a></li>
+  <li><a href="#updating-the-conceptual-model" id="toc-updating-the-conceptual-model" class="nav-link" data-scroll-target="#updating-the-conceptual-model"><span class="header-section-number">21.5</span> Updating the conceptual model</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-stats.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -521,10 +531,28 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Apart from minor refactoring, the last implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are essentially aggregate measurements about the state of the simulation at a given time step.</p>
+<section id="displaying-outputs-in-the-interface" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="displaying-outputs-in-the-interface"><span class="header-section-number">21.1</span> Displaying outputs in the interface 🤔</h2>
+<p>Try out creating a new interface element to display:</p>
+<ul>
+<li>the number of patches and coastal land patches.</li>
+<li>the number of activated traders.</li>
+<li>the mean, min and max cargo value of activated traders.</li>
+<li>the min and max settlement size level, and the main hub settlement.</li>
+<li>the mean, min and max total path cost of active routes.</li>
+<li>the mean, standard deviation and modes of the RGB traits of settlements.</li>
+<li>the mean, standard deviation and modes of the land and port tech traits of settlements.</li>
+<li>the mean, standard deviation and modes of the size decay, stock decay and production traits of settlements.</li>
+<li>the mean, standard deviation and modes of the frequency over quality, transmission and mutation traits of settlements.</li>
+</ul>
+</section>
+<section id="checking-the-milestone-file-step-12" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="checking-the-milestone-file-step-12"><span class="header-section-number">21.2</span> Checking the milestone File (step 12)</h2>
 <p><img src="assets/screenshots/BlockB_PondTrade_step12_interface-statistics-interface.png" class="img-fluid" alt="Pond Trade step 12"><br>
 <em>Pond Trade step 12</em></p>
-<p><img src="assets/screenshots/BlockB_PondTrade_step13_output-statistics-interface.png" class="img-fluid" alt="Pond Trade step 13"><br>
-<em>Pond Trade step 13</em></p>
+</section>
+<section id="recording-outputs-in-variables" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="recording-outputs-in-variables"><span class="header-section-number">21.3</span> Recording outputs in variables</h2>
 <p>The statistics serve as indicators for monitoring complex results while manually running simulations in the interface. Most importantly, they can be used more systematically as data that can be exported for further use in other software, <em>e.g.</em>, to perform advanced statistical analyses and more sophisticated graphs.</p>
 <p>Here is how step 13 implements those statistics:</p>
 <pre class="netlogo"><code>globals
@@ -631,12 +659,21 @@ to update-output
 
 end
 </code></pre>
+</section>
+<section id="checking-the-milestone-file-step-13" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="checking-the-milestone-file-step-13"><span class="header-section-number">21.4</span> Checking the milestone File (step 13)</h2>
+<p><img src="assets/screenshots/BlockB_PondTrade_step13_output-statistics-interface.png" class="img-fluid" alt="Pond Trade step 13"><br>
+<em>Pond Trade step 13</em></p>
 <p>We could further implement a procedure to export these and more variables at a specific time of simulations. We will see an example of this in Block C. However, in most cases, we want to use <a href="https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html">NetLogo Behavioral Space</a>. Find it in Tools &gt; Behavior Space. This built-in tool allows you to configure experiments to be run in parallel, within a specific parameter space, and perform a series of commands before, during, or after a simulation run. It includes functionality for exporting simulation data as a CSV file (you will be prompt with a File Explorer window once you press “run” in an experiment).</p>
+</section>
+<section id="updating-the-conceptual-model" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="updating-the-conceptual-model"><span class="header-section-number">21.5</span> Updating the conceptual model</h2>
 <p>As the final step in developing PondTrade, let us update our second-tier conceptual model, adding a more explicit representation of cultural vectors and their contents.</p>
 <p><img src="assets/images/0_conceptAtStep13_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at step 13 (second tier)"><br>
 <em>Pond Trade conceptual model at step 13 (second tier)</em></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1056,4 +1093,4 @@ end
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-stats.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-stats.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

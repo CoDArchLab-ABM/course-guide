@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -500,9 +520,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#second-tier-model" id="toc-second-tier-model" class="nav-link active" data-scroll-target="#second-tier-model"><span class="header-section-number">20.1</span> Second-tier model</a></li>
-  <li><a href="#step-10-cultural-vectors" id="toc-step-10-cultural-vectors" class="nav-link" data-scroll-target="#step-10-cultural-vectors"><span class="header-section-number">20.2</span> Step 10: cultural vectors</a></li>
-  <li><a href="#step-11-trait-selection" id="toc-step-11-trait-selection" class="nav-link" data-scroll-target="#step-11-trait-selection"><span class="header-section-number">20.3</span> Step 11: trait selection</a></li>
+  <li><a href="#second-tier-model-pond-trade-with-cultural-evolution" id="toc-second-tier-model-pond-trade-with-cultural-evolution" class="nav-link active" data-scroll-target="#second-tier-model-pond-trade-with-cultural-evolution"><span class="header-section-number">20.1</span> Second-tier model: Pond Trade with cultural evolution</a></li>
+  <li><a href="#implementing-cultural-transmission" id="toc-implementing-cultural-transmission" class="nav-link" data-scroll-target="#implementing-cultural-transmission"><span class="header-section-number">20.2</span> Implementing Cultural transmission 🤔</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-cultural-vectors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -528,13 +547,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="second-tier-model" class="level2" data-number="20.1">
-<h2 data-number="20.1" class="anchored" data-anchor-id="second-tier-model"><span class="header-section-number">20.1</span> Second-tier model</h2>
-<p>We will now go over the implementation of the second-tier PondTrade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.</p>
+<section id="second-tier-model-pond-trade-with-cultural-evolution" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="second-tier-model-pond-trade-with-cultural-evolution"><span class="header-section-number">20.1</span> Second-tier model: Pond Trade with cultural evolution</h2>
+<p>We will now go over the implementation of the second-tier Pond Trade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.</p>
 <p>Remember the conceptual model for this tier we defined at the beginning.</p>
 <p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
-<p>Apart from assimilating the changes we made to the first-tier model, our goal here will be to implement the following:</p>
+<p>We will now extend the Pond Trade model to include a simple mechanism of cultural evolution.</p>
+<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called “vector model” of cultural transmission [<span class="citation" data-cites="axelrod_dissemination_1997">Axelrod (<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">1997</a>)</span>; <span class="citation" data-cites="lipo_mapping_2017">Lipo (<a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">2017</a>)</span>; <span class="citation" data-cites="shennan_pattern_2009">Shennan (<a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">2009</a>)</span>; bentley_random_2004; battiston_layered_2017].</p>
+<p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-017-02040-4/MediaObjects/41598_2017_2040_Fig1_HTML.jpg?as=webp" alt="Battiston et al. 2017, Fig. 1"></p>
+<p><em>Illustration of the idea of cultural vectors (Battiston et al.&nbsp;2017, Fig. 1)</em></p>
+<p>Following this model, each settlement has a “cultural vector”, which is a list of cultural traits (e.g., pottery styles, architectural styles, etc.) that represent the aggregated culture of the population of the settlement. These cultural vectors can be modified through the movement of trade goods between settlements, according to a “cultural permeability” that defines how easily cultural traits are transmitted between settlements. In addition, cultural vectors can be modified randomly through time, according to a intrinsic cultural variation (undirected variation) and a mechanism of selection, where certain cultural traits are more likely to be transmitted or retained based on their “fitness” in the environment.</p>
+</section>
+<section id="implementing-cultural-transmission" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="implementing-cultural-transmission"><span class="header-section-number">20.2</span> Implementing Cultural transmission 🤔</h2>
+<p>Our goal here will be to implement the following:</p>
 <ul>
 <li>a cultural “vector” of settlements, representing a series of cultural traits of the aggregated population of the settlements<br>
 </li>
@@ -542,9 +569,31 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li>a mechanism that modifies cultural vectors randomly through time (undirected variation)</li>
 </ul>
-</section>
-<section id="step-10-cultural-vectors" class="level2" data-number="20.2">
-<h2 data-number="20.2" class="anchored" data-anchor-id="step-10-cultural-vectors"><span class="header-section-number">20.2</span> Step 10: cultural vectors</h2>
+<p>Before looking at the solution, try to write the code yourself. Things to consider:</p>
+<ul>
+<li>how to represent the cultural vectors?<br>
+</li>
+<li>how to represent the cultural permeability?<br>
+</li>
+<li>how to represent the undirected variation?<br>
+</li>
+<li>how cultural vectors are modified by trade goods?<br>
+</li>
+<li>how to visualise the cultural vectors?</li>
+</ul>
+<p><strong>Solution (creating cultural vectors)</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Let us start with implementing the settlements’ cultural vector (<code>culturalVector</code>). Since there is, for now, no meaning of traits, we can use this new variable to hold the values of the three numbers defining an RGB colour (<em>i.e.</em>, red, green, blue; values between 0 and 255) that will then be shown as the icon colour of the settlement.</p>
 <pre class="netlogo"><code>settlements-own
 [
@@ -607,8 +656,21 @@ to update-display
   ]
 
 end</code></pre>
-<p><img src="assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png" class="img-fluid" alt="Pond Trade step 10 - settlement with cultural vector"><br>
-<em>Pond Trade step 10 - settlement with cultural vector</em></p>
+<p><img src="assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png" class="img-fluid" alt="Settlement with cultural vector"><br>
+<em>Settlement with cultural vector</em></p>
+<p><strong>Solution (transmission)</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Next, we add a mechanism for traders to record the state of their base <code>culturalVector</code> while loading their cargo and to pass this vector as an influence on another settlement’s <code>culturalVector</code> when unloading. More specifically, this influence will decrease the difference between values in each trait to a value determined by the parameter <code>traitTransmissionRate</code> (slider, from 0 to 25, by 0.01, default value = 1).</p>
 <pre class="netlogo"><code>traders-own
 [
@@ -650,13 +712,18 @@ to add-trade-effect [ aTrader ] ; ego = settlement
   set sizeLevel sizeLevel + [cargoValue] of aTrader
 
 end</code></pre>
+</div>
+</div>
+</div>
+<section id="checking-the-milestone-file-step-10" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="checking-the-milestone-file-step-10"><span class="header-section-number">20.3</span> Checking the milestone File (step 10)</h2>
 <p>With these changes, the model dynamics will now include a general cultural convergence whenever trade partners become stable, especially when trade hubs emerge. After a few thousand simulation steps, the visual result is that all settlements hold the same colour.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface.png" class="img-fluid" alt="Pond Trade step 10"><br>
 <em>Pond Trade step 10</em></p>
-<p>According to our initial conceptual model, the next step is to implement a mechanism for undirected variation. We can easily include this by adding noise to the value of each trait at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters that we can easily conceive as varying widely among settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters about settlements were implemented instead as traits in <code>culturalVector</code> and allowed to evolve?</p>
 </section>
-<section id="step-11-trait-selection" class="level2" data-number="20.3">
-<h2 data-number="20.3" class="anchored" data-anchor-id="step-11-trait-selection"><span class="header-section-number">20.3</span> Step 11: trait selection</h2>
+<section id="converting-parameters-into-functional-agent-traits" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="converting-parameters-into-functional-agent-traits"><span class="header-section-number">20.4</span> Converting parameters into functional agent traits</h2>
+<p>According to our initial conceptual model, the logical next step would be to implement a mechanism for undirected variation. We can easily include this by adding noise to each trait’s value at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters, which we can easily conceive as varying widely across settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters about settlements were implemented instead as traits in <code>culturalVector</code> and allowed to evolve? 🤯</p>
 <p>To internalise most parameters as trait values in <code>culturalVector</code>, we must convert all former parameters into <em>hyperparameters</em>, <em>i.e.</em> those values that will be used only to set a range of variation of the settlement-specific values.</p>
 <table class="caption-top table">
 <thead>
@@ -689,6 +756,39 @@ end</code></pre>
 </tbody>
 </table>
 <p>We will also further exploit this opportunity and create two additional elements, which we will refer to as land and port technology, to modify how <code>pathCost</code> affects traders’ decisions and movements. For these, we need to introduce two extra hyperparameters, <code>landTechVariation</code> and <code>portTechVariation</code>. Notice that we could do the same for the path cost in water, though it would affect the model’s rhythm more drastically.</p>
+</section>
+<section id="implementing-new-settlement-traits" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="implementing-new-settlement-traits"><span class="header-section-number">20.5</span> Implementing new settlement traits 🤔</h2>
+<p>Our goal here will be to implement the following:</p>
+<ul>
+<li>Create all new hyperparameters in the interface<br>
+</li>
+<li>Create all new traits in <code>culturalVector</code><br>
+</li>
+<li>Implement the new traits in the model logic<br>
+</li>
+<li>Visualise the new traits using histograms</li>
+</ul>
+<p>Before looking at the solution, try to write the code yourself. Things to consider:</p>
+<p>Things to consider:</p>
+<ul>
+<li>Knowing how to implement the previous cultural vector, how would you implement the new traits?<br>
+</li>
+<li>How to use the new traits in the model logic?</li>
+</ul>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>We change the code for initialising settlements so that each trait within <code>culturalVector</code> is sampled randomly according to the hyperparameters above:</p>
 <pre class="netlogo"><code>to create-coastal-settlements
 
@@ -837,8 +937,54 @@ to-report get-path-cost [ aPatch aTrader ]
   report pathCostOfPatch
 
 end</code></pre>
-<p>Finally, we add a new procedure that apply random (normally-distributed) mutations to all traits separately:</p>
-<pre class="netlogo"><code>
+</div>
+</div>
+</div>
+</section>
+<section id="implementing-undirected-variation" class="level2" data-number="20.6">
+<h2 data-number="20.6" class="anchored" data-anchor-id="implementing-undirected-variation"><span class="header-section-number">20.6</span> Implementing undirected variation 🤔</h2>
+<p>Our goal here will be to implement the following:</p>
+<ul>
+<li>A mechanism that adds random variation to the cultural traits of settlements at each time step</li>
+</ul>
+<p>Things to consider:</p>
+<ul>
+<li>How to implement random variation? What probability distribution should we use?<br>
+</li>
+<li>How to implement the variation mechanism?<br>
+</li>
+<li>Do these traits need to be bounded to a certain range?</li>
+</ul>
+<p><strong>Solution</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We add a new procedure that apply random (normally-distributed) mutations to all traits separately and call it in the <code>update-settlements</code> procedure:</p>
+<pre class="netlogo"><code>to update-settlements
+
+  ask settlements
+  [
+    let thisSettlement self
+
+    ...
+
+    ; add variation to the settlement traits (mutation)
+    mutate-traits
+  ]
+
+end
+
+...
+
 to mutate-traits
 
   let mutationVariationToApply (item 10 culturalVector) / 100
@@ -873,8 +1019,12 @@ to-report mutate-trait [ traitValue minValue maxValue mutationVar ]
 
 end</code></pre>
 <p>To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values for each trait and settlement, giving us a sense of both convergence (or <em>cultural integration</em>) and possibly revealing evolutionary trends driven by trait selection. For instance, we would expect high selective pressure on settlements with higher production rates, since they are part of the positive feedback loops we implemented earlier in the first tier.</p>
-<p><img src="assets/screenshots/BlockB_PondTrade_step11_trait-selection-interface.png" class="img-fluid" alt="Pond Trade step 11"><br>
-<em>Pond Trade step 11</em></p>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-a-stop-condition" class="level2" data-number="20.7">
+<h2 data-number="20.7" class="anchored" data-anchor-id="adding-a-stop-condition"><span class="header-section-number">20.7</span> Adding a stop condition</h2>
 <p>At this stage, we also had to introduce stop conditions to interrupt simulation runs, especially given the potential number of traders under some parameter configurations. The conditions are added to the <code>go</code> procedure:</p>
 <pre class="netlogo"><code>to go
 
@@ -889,8 +1039,28 @@ end</code></pre>
   update-display
 
 end</code></pre>
+</section>
+<section id="checking-the-milestone-file-step-11" class="level2" data-number="20.8">
+<h2 data-number="20.8" class="anchored" data-anchor-id="checking-the-milestone-file-step-11"><span class="header-section-number">20.8</span> Checking the milestone File (step 11)</h2>
+<p><img src="assets/screenshots/BlockB_PondTrade_step11_trait-selection-interface.png" class="img-fluid" alt="Pond Trade step 11"><br>
+<em>Pond Trade step 11</em></p>
 
 
+</section>
+</div>
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-axelrod_dissemination_1997" class="csl-entry" role="listitem">
+Axelrod, Robert. 1997. <span>“The <span>Dissemination</span> of <span>Culture</span>: <span>A</span> <span>Model</span> with <span>Local</span> <span>COnvergence</span> and <span>Global</span> <span>Polarization</span>.”</span> <em>The Journal of Conflict Resolution</em> 41 (2): 203–26. <a href="https://public.websites.umich.edu/~axe/research/Dissemination.pdf">https://public.websites.umich.edu/~axe/research/Dissemination.pdf</a>.
+</div>
+<div id="ref-lipo_mapping_2017" class="csl-entry" role="listitem">
+Lipo, Carl P. 2017. <em>Mapping <span>Our</span> <span>Ancestors</span>: <span>Phylogenetic</span> <span>Approaches</span> in <span>Anthropology</span> and <span>Prehistory</span></em>. Transaction Publishers.
+</div>
+<div id="ref-shennan_pattern_2009" class="csl-entry" role="listitem">
+Shennan, Stephen. 2009. <em>Pattern and Process in Cultural Evolution</em>. Origins of Human Behavior and Culture 2. Los Angeles: University of California press.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

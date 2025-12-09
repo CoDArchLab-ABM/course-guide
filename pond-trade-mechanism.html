@@ -1164,6 +1164,9 @@ to-report get-potential-number-of-traders ; ego = settlement
 
 end</code></pre>
 <p>As its name suggests, this trait’s meaning is: “how much the frequency of trade is prioritised over the quality of the cargo”. This is because the more traders a settlement has, the less cargo each will be able to get from <code>stock</code>, and so each will have less time to recover. Therefore, this trait represents an interesting aspect of how different settlements could organise trade.</p>
+<blockquote class="blockquote">
+<p>To test the effect of <code>frequencyOverQuality</code>, create a temporary parameter as a slider in the interface named <code>frequencyOverQuality_temp</code>. Then, use it to set up the settlement variable, replacing <code>random-float 1</code>. Try different values to see whether and how this value affects the model dynamics. Remember to dlete this slider and return the code to the original configuration.</p>
+</blockquote>
 </section>
 <section id="checking-the-milestone-file-step-9" class="level2" data-number="19.7">
 <h2 data-number="19.7" class="anchored" data-anchor-id="checking-the-milestone-file-step-9"><span class="header-section-number">19.7</span> Checking the milestone File (step 9)</h2>
