@@ -76,7 +76,6 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
-<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="site_libs/viz-1.8.2/viz.js"></script>
 <link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
@@ -505,25 +504,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-modularise" id="toc-why-modularise" class="nav-link active" data-scroll-target="#why-modularise"><span class="header-section-number">22.1</span> 🔹 Why Modularise?</a></li>
-  <li><a href="#the-__includes-directive" id="toc-the-__includes-directive" class="nav-link" data-scroll-target="#the-__includes-directive"><span class="header-section-number">22.2</span> 🔹 The <code>__includes</code> Directive</a></li>
+  <li><a href="#why-modularise" id="toc-why-modularise" class="nav-link active" data-scroll-target="#why-modularise"><span class="header-section-number">22.1</span> Why Modularise?</a></li>
+  <li><a href="#the-__includes-directive" id="toc-the-__includes-directive" class="nav-link" data-scroll-target="#the-__includes-directive"><span class="header-section-number">22.2</span> The <code>__includes</code> Directive</a></li>
   <li><a href="#breaking-down-the-pond-trade-model" id="toc-breaking-down-the-pond-trade-model" class="nav-link" data-scroll-target="#breaking-down-the-pond-trade-model"><span class="header-section-number">22.3</span> Breaking Down The Pond Trade Model</a>
   <ul class="collapse">
-  <li><a href="#shared-utilities" id="toc-shared-utilities" class="nav-link" data-scroll-target="#shared-utilities"><span class="header-section-number">22.3.1</span> 🔹 Shared Utilities</a></li>
+  <li><a href="#shared-utilities" id="toc-shared-utilities" class="nav-link" data-scroll-target="#shared-utilities"><span class="header-section-number">22.3.1</span> Shared Utilities</a></li>
   </ul></li>
-  <li><a href="#refactoring-for-a-better-modularity" id="toc-refactoring-for-a-better-modularity" class="nav-link" data-scroll-target="#refactoring-for-a-better-modularity"><span class="header-section-number">22.4</span> ⚒️ Refactoring for a better modularity</a></li>
-  <li><a href="#alternative-organisation-options" id="toc-alternative-organisation-options" class="nav-link" data-scroll-target="#alternative-organisation-options"><span class="header-section-number">22.5</span> 🔹 Alternative Organisation Options</a></li>
-  <li><a href="#activity-refactor-the-artificial-anasazi-model-using-__includes" id="toc-activity-refactor-the-artificial-anasazi-model-using-__includes" class="nav-link" data-scroll-target="#activity-refactor-the-artificial-anasazi-model-using-__includes"><span class="header-section-number">22.6</span> 🧠 Activity: Refactor the <em>Artificial Anasazi</em> Model Using <code>__includes</code></a>
+  <li><a href="#refactoring-for-a-better-modularity" id="toc-refactoring-for-a-better-modularity" class="nav-link" data-scroll-target="#refactoring-for-a-better-modularity"><span class="header-section-number">22.4</span> Refactoring for a better modularity</a></li>
+  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity"><span class="header-section-number">22.5</span> 🧠 Activity</a>
   <ul class="collapse">
-  <li><a href="#learning-objective" id="toc-learning-objective" class="nav-link" data-scroll-target="#learning-objective"><span class="header-section-number">22.6.1</span> 🎯 <strong>Learning Objective</strong></a></li>
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">22.6.2</span> 🪣 <strong>Background</strong></a></li>
-  <li><a href="#step-1-create-the-folder-structure" id="toc-step-1-create-the-folder-structure" class="nav-link" data-scroll-target="#step-1-create-the-folder-structure"><span class="header-section-number">22.6.3</span> 🧩 <strong>Step 1 — Create the Folder Structure</strong></a></li>
-  <li><a href="#step-2-add-the-__includes-statement" id="toc-step-2-add-the-__includes-statement" class="nav-link" data-scroll-target="#step-2-add-the-__includes-statement"><span class="header-section-number">22.6.4</span> ⚙️ <strong>Step 2 — Add the <code>__includes</code> Statement</strong></a></li>
-  <li><a href="#step-3-split-the-code" id="toc-step-3-split-the-code" class="nav-link" data-scroll-target="#step-3-split-the-code"><span class="header-section-number">22.6.5</span> ✂️ <strong>Step 3 — Split the Code</strong></a></li>
-  <li><a href="#step-4-test-the-modular-model" id="toc-step-4-test-the-modular-model" class="nav-link" data-scroll-target="#step-4-test-the-modular-model"><span class="header-section-number">22.6.6</span> 🧪 <strong>Step 4 — Test the Modular Model</strong></a></li>
-  <li><a href="#step-5-reflect-and-discuss" id="toc-step-5-reflect-and-discuss" class="nav-link" data-scroll-target="#step-5-reflect-and-discuss"><span class="header-section-number">22.6.7</span> 💬 <strong>Step 5 — Reflect and Discuss</strong></a></li>
-  <li><a href="#optional-extension" id="toc-optional-extension" class="nav-link" data-scroll-target="#optional-extension"><span class="header-section-number">22.6.8</span> 📚 <strong>Optional Extension</strong></a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">22.6.9</span> 🏺 <strong>Summary</strong></a></li>
+  <li><a href="#step-1-create-the-folder-structure" id="toc-step-1-create-the-folder-structure" class="nav-link" data-scroll-target="#step-1-create-the-folder-structure"><span class="header-section-number">22.5.1</span> 🧩 <strong>Step 1 — Create the Folder Structure</strong></a></li>
+  <li><a href="#step-2-add-the-__includes-statement" id="toc-step-2-add-the-__includes-statement" class="nav-link" data-scroll-target="#step-2-add-the-__includes-statement"><span class="header-section-number">22.5.2</span> ⚙️ <strong>Step 2 — Add the <code>__includes</code> Statement</strong></a></li>
+  <li><a href="#step-3-split-the-code" id="toc-step-3-split-the-code" class="nav-link" data-scroll-target="#step-3-split-the-code"><span class="header-section-number">22.5.3</span> ✂️ <strong>Step 3 — Split the Code</strong></a></li>
+  <li><a href="#step-4-test-the-modular-model" id="toc-step-4-test-the-modular-model" class="nav-link" data-scroll-target="#step-4-test-the-modular-model"><span class="header-section-number">22.5.4</span> 🧪 <strong>Step 4 — Test the Modular Model</strong></a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-modularity.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -552,7 +545,7 @@ ul.task-list li input[type="checkbox"] {
 
 <p>In the early stages of model development, it is common to work within a <strong>single <code>.nlogo</code> file</strong>. This approach keeps all code—setup, agent logic, data collection, and plotting—in one place, which is convenient for learning and experimentation. However, as models grow in complexity, maintaining a long monolithic file becomes difficult. To make large projects easier to navigate, debug, and extend, <strong>NetLogo allows modularisation</strong> through the <code>__includes</code> directive.</p>
 <section id="why-modularise" class="level2" data-number="22.1">
-<h2 data-number="22.1" class="anchored" data-anchor-id="why-modularise"><span class="header-section-number">22.1</span> 🔹 Why Modularise?</h2>
+<h2 data-number="22.1" class="anchored" data-anchor-id="why-modularise"><span class="header-section-number">22.1</span> Why Modularise?</h2>
 <p>Breaking a model into smaller source files improves:</p>
 <ul>
 <li><strong>Readability:</strong> Each file focuses on a specific function (e.g., setup, environment, agent behaviour, data collection).</li>
@@ -563,7 +556,7 @@ ul.task-list li input[type="checkbox"] {
 <p>These have great consequences for supporting <strong>transparent and replicable research</strong>. Instead of one opaque model file, a modular structure makes explicit where, for example, environmental data, agent rules, or calibration routines are defined—facilitating peer review, teaching, and long-term model reuse.</p>
 </section>
 <section id="the-__includes-directive" class="level2" data-number="22.2">
-<h2 data-number="22.2" class="anchored" data-anchor-id="the-__includes-directive"><span class="header-section-number">22.2</span> 🔹 The <code>__includes</code> Directive</h2>
+<h2 data-number="22.2" class="anchored" data-anchor-id="the-__includes-directive"><span class="header-section-number">22.2</span> The <code>__includes</code> Directive</h2>
 <p>NetLogo allows a model to load additional source files (<code>.nls</code>, for <em>NetLogo Source</em>) at runtime. The syntax, placed at the top of your main <code>.nlogo</code> file, is:</p>
 <pre class="netlogo"><code>__includes [
   "modules/setup.nls"
@@ -601,24 +594,34 @@ ul.task-list li input[type="checkbox"] {
 <p>Each <code>.nls</code> file then contains code that is more closely related, even though they are inevitably connect to others. For example, <code>map.nls</code> stores <code>create-map</code> and <code>smooth-coast-line</code>, but while <code>smooth-coast-line</code> is only called by <code>create-map</code>, <code>create-map</code> in turn is called by <code>setup</code>.</p>
 <p>This structure makes it easier to focus on specific model components, understand or modify them, without being overwhelmed by the entire codebase.</p>
 <section id="shared-utilities" class="level3" data-number="22.3.1">
-<h3 data-number="22.3.1" class="anchored" data-anchor-id="shared-utilities"><span class="header-section-number">22.3.1</span> 🔹 Shared Utilities</h3>
-<p>All included files share the same namespace. Therefore, <strong>utility functions</strong>—such as <code>clamp01</code> or <code>random-between</code>—can be stored in a shared file (e.g., <code>root/utils/clamp.nls</code>) and referenced in the main <code>__includes</code> list:</p>
+<h3 data-number="22.3.1" class="anchored" data-anchor-id="shared-utilities"><span class="header-section-number">22.3.1</span> Shared Utilities</h3>
+<p>All included files share the same namespace. Therefore, <strong>common utility functions</strong> can be stored in a single shared file that can be referenced in the main <code>__includes</code> list of different models or <code>.nlogo</code> files.</p>
+<p>For example, we can store <code>commonProcedure.nls</code> in a <code>utils</code> subdirectory insider a larger directory containing subdirectories for two models:</p>
+<pre><code>my models/
+├──PondTrade/
+|   ├── PondTrade.nlogo
+|   └── modules/
+└──OtherModel/
+|   ├── PondTrade.nlogo
+|   └── modules/
+└──utils/
+    └──commonProcedure.nls</code></pre>
+<p>And then use it in</p>
 <pre class="netlogo"><code>__includes [
-  "../utils/clamp.nls"
-  "modules/setup.nls"
-  "modules/trade.nls"
-  "modules/data.nls"
+  ...
+  "../utils/commonProcedure.nls"
+  ...
 ]</code></pre>
-<p>These utilities will then be available to all modules, even though <code>.nls</code> files cannot themselves include other <code>.nls</code> files.</p>
 </section>
 </section>
 <section id="refactoring-for-a-better-modularity" class="level2" data-number="22.4">
-<h2 data-number="22.4" class="anchored" data-anchor-id="refactoring-for-a-better-modularity"><span class="header-section-number">22.4</span> ⚒️ Refactoring for a better modularity</h2>
-<p>Once we split our code into logical parts, we might already gain some useful insights about how to better respect modularity without changing the code behaviour. We have one such a case in <code>map.nls</code>. Here is the call paths involving the two procedures in this file:</p>
+<h2 data-number="22.4" class="anchored" data-anchor-id="refactoring-for-a-better-modularity"><span class="header-section-number">22.4</span> Refactoring for a better modularity</h2>
+<p>Once we split our code into logical parts, we might already gain some useful insights about how to better respect modularity without changing the code behaviour. We have one such a case in <code>map.nls</code>.</p>
+<p>Here is the call paths involving the two procedures in this file:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-d1b167cd2355c537f7d7" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-d1b167cd2355c537f7d7">{"x":{"diagram":"digraph procedureCalls {\n  node [style=filled];\n    \n\n  subgraph cluster_map {\n    label = \"map\";\n    color=blue\n    smooth [label=\"smooth-coast-line\"];\n    create [label=\"create-map\"];\n  }\n\n  subgraph cluster_main {\n    label = \"main\";\n    node [style=filled];\n    color=red\n    setup;\n    go;\n  }\n  \n  subgraph cluster_routes {\n    label=\"routes\";\n    node [style=filled];\n    color=green\n    topproc [label=\"...\"];\n    assignpc [label=\"assign-path-cost\"];\n    bottomproc [label=\"...\"];\n  }\n  \n  \n  create -> setup;\n  smooth -> create;\n  topproc -> setup;\n  bottomproc -> go;\n  assignpc -> create;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-108b86b70f40ac2615a5" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-108b86b70f40ac2615a5">{"x":{"diagram":"digraph procedureCalls {\n  node [style=filled];\n    \n\n  subgraph cluster_map {\n    label = \"map\";\n    color=blue\n    smooth [label=\"smooth-coast-line\"];\n    create [label=\"create-map\"];\n  }\n\n  subgraph cluster_main {\n    label = \"main\";\n    node [style=filled];\n    color=red\n    setup;\n    go;\n  }\n  \n  subgraph cluster_routes {\n    label=\"routes\";\n    node [style=filled];\n    color=green\n    topproc [label=\"...\"];\n    assignpc [label=\"assign-path-cost\"];\n    bottomproc [label=\"...\"];\n  }\n  \n  \n  create -> setup;\n  smooth -> create;\n  topproc -> setup;\n  bottomproc -> go;\n  assignpc -> create;\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>We can see that <code>assign-path-cost</code> has a somewhat ambiguous position: it is clearly related to route calculation, but it is actually called in <code>map</code>, inside <code>create-map</code>, not in another procedure in <code>routes</code> or directly in <code>setup</code>.</p>
@@ -662,69 +665,36 @@ end</code></pre>
 
 end</code></pre>
 <p>Refactoring is a process that never finishes. Do you see any other improvements to our implementation of the model so far? If so, please try them and if successful, create a pull request with your changes to our course-guide repository.</p>
-</section>
-<section id="alternative-organisation-options" class="level2" data-number="22.5">
-<h2 data-number="22.5" class="anchored" data-anchor-id="alternative-organisation-options"><span class="header-section-number">22.5</span> 🔹 Alternative Organisation Options</h2>
-<p>While <code>__includes</code> is the standard and simplest way to modularise code <em>within</em> NetLogo, larger or data-intensive projects can also benefit from:</p>
-<ul>
-<li><strong>Extensions:</strong> Custom primitives written in Java or Scala for reusable functionality across models.</li>
-<li><strong>External scripting:</strong> Coordinating model runs from R (via <em>RNetLogo</em>) or Python (via <em>pyNetLogo</em>), keeping analysis and simulation control outside NetLogo.</li>
-<li><strong>Versioned templates:</strong> Using Git and folders (e.g., <code>/modules/</code>, <code>/data/</code>, <code>/docs/</code>) for collaborative development and reproducibility.</li>
-</ul>
 <hr>
 </section>
-<section id="activity-refactor-the-artificial-anasazi-model-using-__includes" class="level2" data-number="22.6">
-<h2 data-number="22.6" class="anchored" data-anchor-id="activity-refactor-the-artificial-anasazi-model-using-__includes"><span class="header-section-number">22.6</span> 🧠 Activity: Refactor the <em>Artificial Anasazi</em> Model Using <code>__includes</code></h2>
-<section id="learning-objective" class="level3" data-number="22.6.1">
-<h3 data-number="22.6.1" class="anchored" data-anchor-id="learning-objective"><span class="header-section-number">22.6.1</span> 🎯 <strong>Learning Objective</strong></h3>
-<p>By the end of this exercise, students will:</p>
-<ul>
-<li>Understand how to break a NetLogo model into functional modules.</li>
-<li>Learn how to organise model code for clarity, maintenance, and reuse.</li>
-<li>Recognise how modularisation supports reproducible archaeological modelling.</li>
-</ul>
-<hr>
-</section>
-<section id="background" class="level3" data-number="22.6.2">
-<h3 data-number="22.6.2" class="anchored" data-anchor-id="background"><span class="header-section-number">22.6.2</span> 🪣 <strong>Background</strong></h3>
-<p>You have been working with the <strong>PondTrade</strong> model as a single <code>.nlogo</code> file containing setup, agent behaviour, environment rules, and data collection. In this activity, you will restructure it into a modular design using NetLogo’s <code>__includes</code> feature.</p>
-<hr>
-</section>
-<section id="step-1-create-the-folder-structure" class="level3" data-number="22.6.3">
-<h3 data-number="22.6.3" class="anchored" data-anchor-id="step-1-create-the-folder-structure"><span class="header-section-number">22.6.3</span> 🧩 <strong>Step 1 — Create the Folder Structure</strong></h3>
+<section id="activity" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="activity"><span class="header-section-number">22.5</span> 🧠 Activity</h2>
+<p>Refactor another model using <code>__includes</code>. The <em>Artificial Anasazi</em> model offers a good case, but feel free to try another model.</p>
+<p>Here is short summary of the steps you should follow:</p>
+<section id="step-1-create-the-folder-structure" class="level3" data-number="22.5.1">
+<h3 data-number="22.5.1" class="anchored" data-anchor-id="step-1-create-the-folder-structure"><span class="header-section-number">22.5.1</span> 🧩 <strong>Step 1 — Create the Folder Structure</strong></h3>
 <ol type="1">
-<li><p>Make a new directory called <code>PondTrade_Modular/</code>.</p></li>
-<li><p>Inside it, create the following subfolders:</p>
-<pre><code>PondTrade_Modular/
-├── PondTrade.nlogo
-└── modules/
-    ├── setup.nls
-    ├── turtles.nls
-    ├── environment.nls
-    ├── trade.nls
-    ├── data.nls
-    └── utils.nls</code></pre></li>
-<li><p>Copy your original model interface (sliders, plots, switches) into <code>PondTrade.nlogo</code>.</p></li>
+<li>Make a new directory.</li>
+<li>Inside it, create a <code>modules</code> subdirectory.</li>
+<li>Copy your original model <code>.nlogo</code> file.</li>
 </ol>
-<hr>
+<pre><code>newModelDirectory/
+├── modelCopy.nlogo
+└── modules/</code></pre>
 </section>
-<section id="step-2-add-the-__includes-statement" class="level3" data-number="22.6.4">
-<h3 data-number="22.6.4" class="anchored" data-anchor-id="step-2-add-the-__includes-statement"><span class="header-section-number">22.6.4</span> ⚙️ <strong>Step 2 — Add the <code>__includes</code> Statement</strong></h3>
-<p>At the very top of <code>PondTrade.nlogo</code>, add:</p>
+<section id="step-2-add-the-__includes-statement" class="level3" data-number="22.5.2">
+<h3 data-number="22.5.2" class="anchored" data-anchor-id="step-2-add-the-__includes-statement"><span class="header-section-number">22.5.2</span> ⚙️ <strong>Step 2 — Add the <code>__includes</code> Statement</strong></h3>
+<p>At the very top of <code>modelCopy.nlogo</code>, add:</p>
 <pre class="netlogo"><code>__includes [
   "modules/setup.nls"
-  "modules/turtles.nls"
-  "modules/environment.nls"
-  "modules/trade.nls"
-  "modules/data.nls"
-  "modules/utils.nls"
+  ...
 ]</code></pre>
 <p>This tells NetLogo to merge all these modules into one program when the model is loaded.</p>
-<hr>
 </section>
-<section id="step-3-split-the-code" class="level3" data-number="22.6.5">
-<h3 data-number="22.6.5" class="anchored" data-anchor-id="step-3-split-the-code"><span class="header-section-number">22.6.5</span> ✂️ <strong>Step 3 — Split the Code</strong></h3>
-<p>Now open your original single-file model and <strong>move procedures</strong> into the appropriate module files.</p>
+<section id="step-3-split-the-code" class="level3" data-number="22.5.3">
+<h3 data-number="22.5.3" class="anchored" data-anchor-id="step-3-split-the-code"><span class="header-section-number">22.5.3</span> ✂️ <strong>Step 3 — Split the Code</strong></h3>
+<p>Now open <code>modelCopy.nlogo</code> and <strong>move procedures</strong>, one at a time, to new <code>.nls</code> files in <code>modules/</code> (create these as txt files, then change the file extension; opening the entire folder in an IDE will make this easier). With the <code>.nlogo</code> file always open, save and check for error every time a module is separated.</p>
+<p>Here are a few examples of modules:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -742,7 +712,7 @@ end</code></pre>
 <tr class="odd">
 <td>World setup and initialization</td>
 <td><code>setup.nls</code></td>
-<td><code>to setup</code>, <code>to create-turtles</code></td>
+<td><code>to setup</code></td>
 </tr>
 <tr class="even">
 <td>Agent behaviour (movement, decisions)</td>
@@ -772,46 +742,14 @@ end</code></pre>
 </tbody>
 </table>
 <p>Remember — <strong>you do not need to re-declare globals</strong> or interface variables in every file. All modules share the same namespace once included.</p>
-<hr>
+<p>To go fully modular, the final version of the new <code>.nlogo</code> file should contain only the <code>__includes</code> directive and all <code>breed</code> and variable declarations.</p>
 </section>
-<section id="step-4-test-the-modular-model" class="level3" data-number="22.6.6">
-<h3 data-number="22.6.6" class="anchored" data-anchor-id="step-4-test-the-modular-model"><span class="header-section-number">22.6.6</span> 🧪 <strong>Step 4 — Test the Modular Model</strong></h3>
+<section id="step-4-test-the-modular-model" class="level3" data-number="22.5.4">
+<h3 data-number="22.5.4" class="anchored" data-anchor-id="step-4-test-the-modular-model"><span class="header-section-number">22.5.4</span> 🧪 <strong>Step 4 — Test the Modular Model</strong></h3>
 <ol type="1">
-<li>Open <code>PondTrade.nlogo</code> in NetLogo.</li>
 <li>Check that it runs exactly like the original version.</li>
 <li>If an error appears such as <em>“Nothing named CLAMP01”</em>, ensure that the file containing that procedure (<code>utils.nls</code>) is listed in the <code>__includes</code>.</li>
 </ol>
-<hr>
-</section>
-<section id="step-5-reflect-and-discuss" class="level3" data-number="22.6.7">
-<h3 data-number="22.6.7" class="anchored" data-anchor-id="step-5-reflect-and-discuss"><span class="header-section-number">22.6.7</span> 💬 <strong>Step 5 — Reflect and Discuss</strong></h3>
-<p>Consider these questions:</p>
-<ul>
-<li>How does splitting the model help you identify its components conceptually (e.g.&nbsp;agents, environment, data)?</li>
-<li>Which part of the model would you expect to change most often during an archaeological experiment?</li>
-<li>How does modular organisation support collaboration between researchers (e.g.&nbsp;environmental scientist, archaeologist, and programmer)?</li>
-<li>How might this approach make the model easier to archive, cite, or share for reproducibility?</li>
-</ul>
-<hr>
-</section>
-<section id="optional-extension" class="level3" data-number="22.6.8">
-<h3 data-number="22.6.8" class="anchored" data-anchor-id="optional-extension"><span class="header-section-number">22.6.8</span> 📚 <strong>Optional Extension</strong></h3>
-<p>Explore alternative code organisation options:</p>
-<ul>
-<li>Create a reusable <code>utils</code> folder shared by multiple models.</li>
-<li>Call NetLogo models externally from R or Python using <strong>RNetLogo</strong> or <strong>pyNetLogo</strong> for automated experiments.</li>
-<li>Package frequently used model components as <strong>NetLogo extensions</strong> (Java/Scala).</li>
-</ul>
-<hr>
-</section>
-<section id="summary" class="level3" data-number="22.6.9">
-<h3 data-number="22.6.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">22.6.9</span> 🏺 <strong>Summary</strong></h3>
-<p>By modularising your model, you have:</p>
-<ul>
-<li>Improved <strong>readability</strong> and <strong>traceability</strong> of the code.</li>
-<li>Created a structure that supports <strong>collaboration</strong> and <strong>replication</strong>.</li>
-<li>Taken an important step toward <strong>professional-level model documentation</strong> in computational archaeology.</li>
-</ul>
 
 
 </section>
