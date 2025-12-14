@@ -522,6 +522,12 @@ div.csl-indent {
   <ul>
   <li><a href="#second-tier-model-pond-trade-with-cultural-evolution" id="toc-second-tier-model-pond-trade-with-cultural-evolution" class="nav-link active" data-scroll-target="#second-tier-model-pond-trade-with-cultural-evolution"><span class="header-section-number">20.1</span> Second-tier model: Pond Trade with cultural evolution</a></li>
   <li><a href="#implementing-cultural-transmission" id="toc-implementing-cultural-transmission" class="nav-link" data-scroll-target="#implementing-cultural-transmission"><span class="header-section-number">20.2</span> Implementing Cultural transmission 🤔</a></li>
+  <li><a href="#checking-the-milestone-file-step-10" id="toc-checking-the-milestone-file-step-10" class="nav-link" data-scroll-target="#checking-the-milestone-file-step-10"><span class="header-section-number">20.3</span> Checking the milestone File (step 10)</a></li>
+  <li><a href="#converting-parameters-into-functional-agent-traits" id="toc-converting-parameters-into-functional-agent-traits" class="nav-link" data-scroll-target="#converting-parameters-into-functional-agent-traits"><span class="header-section-number">20.4</span> Converting parameters into functional agent traits</a></li>
+  <li><a href="#implementing-new-settlement-traits" id="toc-implementing-new-settlement-traits" class="nav-link" data-scroll-target="#implementing-new-settlement-traits"><span class="header-section-number">20.5</span> Implementing new settlement traits 🤔</a></li>
+  <li><a href="#implementing-undirected-variation" id="toc-implementing-undirected-variation" class="nav-link" data-scroll-target="#implementing-undirected-variation"><span class="header-section-number">20.6</span> Implementing undirected variation 🤔</a></li>
+  <li><a href="#adding-a-stop-condition" id="toc-adding-a-stop-condition" class="nav-link" data-scroll-target="#adding-a-stop-condition"><span class="header-section-number">20.7</span> Adding a stop condition</a></li>
+  <li><a href="#checking-the-milestone-file-step-11" id="toc-checking-the-milestone-file-step-11" class="nav-link" data-scroll-target="#checking-the-milestone-file-step-11"><span class="header-section-number">20.8</span> Checking the milestone File (step 11)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/pond-trade-cultural-vectors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -554,7 +560,7 @@ div.csl-indent {
 <p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
 <p>We will now extend the Pond Trade model to include a simple mechanism of cultural evolution.</p>
-<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called “vector model” of cultural transmission [<span class="citation" data-cites="axelrod_dissemination_1997">Axelrod (<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">1997</a>)</span>; <span class="citation" data-cites="lipo_mapping_2017">Lipo (<a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">2017</a>)</span>; <span class="citation" data-cites="shennan_pattern_2009">Shennan (<a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">2009</a>)</span>; bentley_random_2004; battiston_layered_2017].</p>
+<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called “vector model” of cultural transmission <span class="citation" data-cites="axelrod_dissemination_1997 lipo_mapping_2017 shennan_pattern_2009 bentley_random_2004 battiston_layered_2017">(<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">Axelrod 1997</a>; <a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">Lipo 2017</a>; <a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">Shennan 2009</a>; <a href="references.html#ref-bentley_random_2004" role="doc-biblioref">Bentley, Hahn, and Shennan 2004</a>; <a href="references.html#ref-battiston_layered_2017" role="doc-biblioref">Battiston et al. 2017</a>)</span>.</p>
 <p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-017-02040-4/MediaObjects/41598_2017_2040_Fig1_HTML.jpg?as=webp" alt="Battiston et al. 2017, Fig. 1"></p>
 <p><em>Illustration of the idea of cultural vectors (Battiston et al.&nbsp;2017, Fig. 1)</em></p>
 <p>Following this model, each settlement has a “cultural vector”, which is a list of cultural traits (e.g., pottery styles, architectural styles, etc.) that represent the aggregated culture of the population of the settlement. These cultural vectors can be modified through the movement of trade goods between settlements, according to a “cultural permeability” that defines how easily cultural traits are transmitted between settlements. In addition, cultural vectors can be modified randomly through time, according to a intrinsic cultural variation (undirected variation) and a mechanism of selection, where certain cultural traits are more likely to be transmitted or retained based on their “fitness” in the environment.</p>
@@ -583,7 +589,7 @@ div.csl-indent {
 </ul>
 <p><strong>Solution (creating cultural vectors)</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -592,7 +598,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Let us start with implementing the settlements’ cultural vector (<code>culturalVector</code>). Since there is, for now, no meaning of traits, we can use this new variable to hold the values of the three numbers defining an RGB colour (<em>i.e.</em>, red, green, blue; values between 0 and 255) that will then be shown as the icon colour of the settlement.</p>
 <pre class="netlogo"><code>settlements-own
@@ -658,9 +664,12 @@ to update-display
 end</code></pre>
 <p><img src="assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png" class="img-fluid" alt="Settlement with cultural vector"><br>
 <em>Settlement with cultural vector</em></p>
+</div>
+</div>
+</div>
 <p><strong>Solution (transmission)</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -669,7 +678,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Next, we add a mechanism for traders to record the state of their base <code>culturalVector</code> while loading their cargo and to pass this vector as an influence on another settlement’s <code>culturalVector</code> when unloading. More specifically, this influence will decrease the difference between values in each trait to a value determined by the parameter <code>traitTransmissionRate</code> (slider, from 0 to 25, by 0.01, default value = 1).</p>
 <pre class="netlogo"><code>traders-own
@@ -715,6 +724,7 @@ end</code></pre>
 </div>
 </div>
 </div>
+</section>
 <section id="checking-the-milestone-file-step-10" class="level2" data-number="20.3">
 <h2 data-number="20.3" class="anchored" data-anchor-id="checking-the-milestone-file-step-10"><span class="header-section-number">20.3</span> Checking the milestone File (step 10)</h2>
 <p>With these changes, the model dynamics will now include a general cultural convergence whenever trade partners become stable, especially when trade hubs emerge. After a few thousand simulation steps, the visual result is that all settlements hold the same colour.</p>
@@ -778,7 +788,7 @@ end</code></pre>
 </ul>
 <p><strong>Solution</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -787,7 +797,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We change the code for initialising settlements so that each trait within <code>culturalVector</code> is sampled randomly according to the hyperparameters above:</p>
 <pre class="netlogo"><code>to create-coastal-settlements
@@ -957,7 +967,7 @@ end</code></pre>
 </ul>
 <p><strong>Solution</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -966,7 +976,7 @@ Note
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We add a new procedure that apply random (normally-distributed) mutations to all traits separately and call it in the <code>update-settlements</code> procedure:</p>
 <pre class="netlogo"><code>to update-settlements
@@ -1046,13 +1056,15 @@ end</code></pre>
 <em>Pond Trade step 11</em></p>
 
 
-</section>
-</div>
-</div>
-</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-axelrod_dissemination_1997" class="csl-entry" role="listitem">
 Axelrod, Robert. 1997. <span>“The <span>Dissemination</span> of <span>Culture</span>: <span>A</span> <span>Model</span> with <span>Local</span> <span>COnvergence</span> and <span>Global</span> <span>Polarization</span>.”</span> <em>The Journal of Conflict Resolution</em> 41 (2): 203–26. <a href="https://public.websites.umich.edu/~axe/research/Dissemination.pdf">https://public.websites.umich.edu/~axe/research/Dissemination.pdf</a>.
+</div>
+<div id="ref-battiston_layered_2017" class="csl-entry" role="listitem">
+Battiston, Federico, Vincenzo Nicosia, Vito Latora, and Maxi San Miguel. 2017. <span>“Layered Social Influence Promotes Multiculturality in the <span>Axelrod</span> Model.”</span> <em>Scientific Reports</em> 7 (1): 1809. <a href="https://doi.org/10.1038/s41598-017-02040-4">https://doi.org/10.1038/s41598-017-02040-4</a>.
+</div>
+<div id="ref-bentley_random_2004" class="csl-entry" role="listitem">
+Bentley, R. Alexander, Matthew W. Hahn, and Stephen J. Shennan. 2004. <span>“Random Drift and Culture Change.”</span> <em>Proceedings of the Royal Society B: Biological Sciences</em> 271 (1547): 1443–50. <a href="https://doi.org/10.1098/rspb.2004.2746">https://doi.org/10.1098/rspb.2004.2746</a>.
 </div>
 <div id="ref-lipo_mapping_2017" class="csl-entry" role="listitem">
 Lipo, Carl P. 2017. <em>Mapping <span>Our</span> <span>Ancestors</span>: <span>Phylogenetic</span> <span>Approaches</span> in <span>Anthropology</span> and <span>Prehistory</span></em>. Transaction Publishers.
