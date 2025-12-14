@@ -11,7 +11,7 @@ Remember the conceptual model for this tier we defined at the beginning.
 
 We will now extend the Pond Trade model to include a simple mechanism of cultural evolution.
 
-First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called "vector model" of cultural transmission [@axelrod_dissemination_1997; @lipo_mapping_2017; @shennan_pattern_2009; bentley_random_2004; battiston_layered_2017]. 
+First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called "vector model" of cultural transmission [@axelrod_dissemination_1997; @lipo_mapping_2017; @shennan_pattern_2009; @bentley_random_2004; @battiston_layered_2017]. 
 
 <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-017-02040-4/MediaObjects/41598_2017_2040_Fig1_HTML.jpg?as=webp" alt="Battiston et al. 2017, Fig. 1">
 
@@ -107,6 +107,8 @@ end
 
 ![Settlement with cultural vector](assets/screenshots/BlockB_PondTrade_step10_cultural-vectors-interface-culturalVectorDetail.png)  
 *Settlement with cultural vector*
+
+:::
 
 **Solution (transmission)**:
 
