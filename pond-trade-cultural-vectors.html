@@ -571,9 +571,7 @@ div.csl-indent {
 <ul>
 <li>a cultural “vector” of settlements, representing a series of cultural traits of the aggregated population of the settlements<br>
 </li>
-<li>a mechanism to modify these cultural vectors through the movement of trade goods, according to a global measure of what we call here “cultural permeability”<br>
-</li>
-<li>a mechanism that modifies cultural vectors randomly through time (undirected variation)</li>
+<li>a mechanism to modify these cultural vectors through the movement of trade goods, according to a global measure of what we call here “cultural permeability”</li>
 </ul>
 <p>Before looking at the solution, could you try to write the code yourself?</p>
 <p>Things to consider:</p>
@@ -581,8 +579,6 @@ div.csl-indent {
 <li>How to represent the cultural vectors?<br>
 </li>
 <li>How to represent the cultural permeability?<br>
-</li>
-<li>How to represent the undirected variation?<br>
 </li>
 <li>How do trade goods modify cultural vectors?<br>
 </li>
@@ -954,6 +950,7 @@ end</code></pre>
 </section>
 <section id="implementing-undirected-variation" class="level2" data-number="20.6">
 <h2 data-number="20.6" class="anchored" data-anchor-id="implementing-undirected-variation"><span class="header-section-number">20.6</span> Implementing undirected variation 🤔</h2>
+<p>To have proper cultural evolution, we need to include another mechanism that modifies cultural vectors randomly through time (undirected variation).</p>
 <p>Our goal here will be to implement the following:</p>
 <ul>
 <li>A mechanism that adds random variation to the cultural traits of settlements at each time step</li>
