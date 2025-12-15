@@ -25,15 +25,13 @@ Our goal here will be to implement the following:
 
 - a cultural "vector" of settlements, representing a series of cultural traits of the aggregated population of the settlements  
 - a mechanism to modify these cultural vectors through the movement of trade goods, according to a global measure of what we call here "cultural permeability"  
-- a mechanism that modifies cultural vectors randomly through time (undirected variation) 
 
 Before looking at the solution, could you try to write the code yourself? 
 
 Things to consider:
 
 - How to represent the cultural vectors?  
-- How to represent the cultural permeability?  
-- How to represent the undirected variation?  
+- How to represent the cultural permeability?    
 - How do trade goods modify cultural vectors?  
 - How to visualise the cultural vectors?  
 
@@ -365,6 +363,8 @@ end
 :::
 
 ## Implementing undirected variation 🤔
+
+To have proper cultural evolution, we need to include another mechanism that modifies cultural vectors randomly through time (undirected variation).
 
 Our goal here will be to implement the following:
 
