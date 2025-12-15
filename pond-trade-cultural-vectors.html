@@ -555,15 +555,15 @@ div.csl-indent {
 
 <section id="second-tier-model-pond-trade-with-cultural-evolution" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="second-tier-model-pond-trade-with-cultural-evolution"><span class="header-section-number">20.1</span> Second-tier model: Pond Trade with cultural evolution</h2>
-<p>We will now go over the implementation of the second-tier Pond Trade model (steps 10-13). The pace in this section will be significantly faster. I ask you to focus only on the main aspects added at each step and to concern yourself with the files already in the root directory.</p>
-<p>Remember the conceptual model for this tier we defined at the beginning.</p>
+<p>We will now go over the implementation of the second-tier Pond Trade model (steps 10-13). The pace in this section will be significantly faster. I would like you to focus only on the main aspects added at each step, and not worry about the files already in the root directory.</p>
+<p>Could you remember the conceptual model for this tier that we defined at the beginning?</p>
 <p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
 <p>We will now extend the Pond Trade model to include a simple mechanism of cultural evolution.</p>
-<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this we will use the so-called “vector model” of cultural transmission <span class="citation" data-cites="axelrod_dissemination_1997 lipo_mapping_2017 shennan_pattern_2009 bentley_random_2004 battiston_layered_2017">(<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">Axelrod 1997</a>; <a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">Lipo 2017</a>; <a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">Shennan 2009</a>; <a href="references.html#ref-bentley_random_2004" role="doc-biblioref">Bentley, Hahn, and Shennan 2004</a>; <a href="references.html#ref-battiston_layered_2017" role="doc-biblioref">Battiston et al. 2017</a>)</span>.</p>
+<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this, we will use the so-called “vector model” of cultural transmission <span class="citation" data-cites="axelrod_dissemination_1997 lipo_mapping_2017 shennan_pattern_2009 bentley_random_2004 battiston_layered_2017">(<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">Axelrod 1997</a>; <a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">Lipo 2017</a>; <a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">Shennan 2009</a>; <a href="references.html#ref-bentley_random_2004" role="doc-biblioref">Bentley, Hahn, and Shennan 2004</a>; <a href="references.html#ref-battiston_layered_2017" role="doc-biblioref">Battiston et al. 2017</a>)</span>.</p>
 <p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-017-02040-4/MediaObjects/41598_2017_2040_Fig1_HTML.jpg?as=webp" alt="Battiston et al. 2017, Fig. 1"></p>
 <p><em>Illustration of the idea of cultural vectors (Battiston et al.&nbsp;2017, Fig. 1)</em></p>
-<p>Following this model, each settlement has a “cultural vector”, which is a list of cultural traits (e.g., pottery styles, architectural styles, etc.) that represent the aggregated culture of the population of the settlement. These cultural vectors can be modified through the movement of trade goods between settlements, according to a “cultural permeability” that defines how easily cultural traits are transmitted between settlements. In addition, cultural vectors can be modified randomly through time, according to a intrinsic cultural variation (undirected variation) and a mechanism of selection, where certain cultural traits are more likely to be transmitted or retained based on their “fitness” in the environment.</p>
+<p>Following this model, each settlement has a “cultural vector”, which is a list of cultural traits (e.g., pottery styles, architectural styles, etc.) that represent the aggregated culture of the population of the settlement. These cultural vectors can be modified through the movement of trade goods between settlements, according to a “cultural permeability” that defines how easily cultural traits are transmitted between settlements. In addition, cultural vectors can be modified randomly over time through intrinsic cultural variation (undirected variation) and selection, in which specific cultural traits are more likely to be transmitted or retained based on their “fitness” in the environment.</p>
 </section>
 <section id="implementing-cultural-transmission" class="level2" data-number="20.2">
 <h2 data-number="20.2" class="anchored" data-anchor-id="implementing-cultural-transmission"><span class="header-section-number">20.2</span> Implementing Cultural transmission 🤔</h2>
@@ -575,17 +575,18 @@ div.csl-indent {
 </li>
 <li>a mechanism that modifies cultural vectors randomly through time (undirected variation)</li>
 </ul>
-<p>Before looking at the solution, try to write the code yourself. Things to consider:</p>
+<p>Before looking at the solution, could you try to write the code yourself?</p>
+<p>Things to consider:</p>
 <ul>
-<li>how to represent the cultural vectors?<br>
+<li>How to represent the cultural vectors?<br>
 </li>
-<li>how to represent the cultural permeability?<br>
+<li>How to represent the cultural permeability?<br>
 </li>
-<li>how to represent the undirected variation?<br>
+<li>How to represent the undirected variation?<br>
 </li>
-<li>how cultural vectors are modified by trade goods?<br>
+<li>How do trade goods modify cultural vectors?<br>
 </li>
-<li>how to visualise the cultural vectors?</li>
+<li>How to visualise the cultural vectors?</li>
 </ul>
 <p><strong>Solution (creating cultural vectors)</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -733,7 +734,7 @@ end</code></pre>
 </section>
 <section id="converting-parameters-into-functional-agent-traits" class="level2" data-number="20.4">
 <h2 data-number="20.4" class="anchored" data-anchor-id="converting-parameters-into-functional-agent-traits"><span class="header-section-number">20.4</span> Converting parameters into functional agent traits</h2>
-<p>According to our initial conceptual model, the logical next step would be to implement a mechanism for undirected variation. We can easily include this by adding noise to each trait’s value at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, it may already feel that we have too many global parameters, which we can easily conceive as varying widely across settlements. Thus, we move forward by breaking our plan and exploring the idea emerging during implementation, back when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters about settlements were implemented instead as traits in <code>culturalVector</code> and allowed to evolve? 🤯</p>
+<p>According to our initial conceptual model, the logical next step would be to implement a mechanism for undirected variation. We can easily include this by adding noise to each trait’s value at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, we may already have too many global parameters, which we can easily conceive as varying widely across settlements. Thus, we break our plan once again to explore an idea emerging during implementation, like when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters regulating settlement and trader properties were implemented as traits at the settlement level, recorded in <code>culturalVector</code>, and allowed to evolve? 🤯 Doing this would enable us to represent a more realistic diversity among settlements (i.e.&nbsp;<em>traditions</em>), as well as explore the implications of cultural transmission in trade when traits are <em>not</em> neutral. Will any kind of selection process be observable?</p>
 <p>To internalise most parameters as trait values in <code>culturalVector</code>, we must convert all former parameters into <em>hyperparameters</em>, <em>i.e.</em> those values that will be used only to set a range of variation of the settlement-specific values.</p>
 <table class="caption-top table">
 <thead>
@@ -779,7 +780,7 @@ end</code></pre>
 </li>
 <li>Visualise the new traits using histograms</li>
 </ul>
-<p>Before looking at the solution, try to write the code yourself. Things to consider:</p>
+<p>Before looking at the solution, could you try to write the code yourself?</p>
 <p>Things to consider:</p>
 <ul>
 <li>Knowing how to implement the previous cultural vector, how would you implement the new traits?<br>
@@ -963,7 +964,7 @@ end</code></pre>
 </li>
 <li>How to implement the variation mechanism?<br>
 </li>
-<li>Do these traits need to be bounded to a certain range?</li>
+<li>Do these traits need to be bound to a specific range?</li>
 </ul>
 <p><strong>Solution</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -978,7 +979,7 @@ Note
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>We add a new procedure that apply random (normally-distributed) mutations to all traits separately and call it in the <code>update-settlements</code> procedure:</p>
+<p>We add a new procedure that applies random (normally-distributed) mutations to all traits separately and call it in the <code>update-settlements</code> procedure:</p>
 <pre class="netlogo"><code>to update-settlements
 
   ask settlements
