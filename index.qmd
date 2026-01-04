@@ -15,7 +15,6 @@ dates <- as.Date(
     "2025.12.01",
     "2025.12.08",
     "2025.12.15",
-    "2026.01.05",
     "2026.01.12",
     "2026.01.19",
     "2026.01.26",
@@ -42,8 +41,7 @@ session_data <- cbind.data.frame(
             "Messara Trade (I): case, design and spatial input data",
             "Messara Trade (II): time-series input data and plugging modules",
             "Messara Trade (III): verification, optimisation, refactoring and extension",
-            "Designing and running Simulation experiments",
-            "Analysis of simulation results"
+            "Designing and running Simulation experiments and Analysis of simulation results"
             )
 )
 session_data$Date <- factor(session_data$Date, unique(session_data$Date))
