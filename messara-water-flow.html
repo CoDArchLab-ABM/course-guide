@@ -502,7 +502,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#water-flow-algorithm" id="toc-water-flow-algorithm" class="nav-link active" data-scroll-target="#water-flow-algorithm"><span class="header-section-number">25.1</span> Water flow algorithm</a></li>
   <li><a href="#adding-the-main-procedures" id="toc-adding-the-main-procedures" class="nav-link" data-scroll-target="#adding-the-main-procedures"><span class="header-section-number">25.2</span> Adding the main procedures</a></li>
-  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">25.3</span> Visualisation</a></li>
+  <li><a href="#visualising-flow-accumulation" id="toc-visualising-flow-accumulation" class="nav-link" data-scroll-target="#visualising-flow-accumulation"><span class="header-section-number">25.3</span> Visualising flow accumulation</a></li>
   <li><a href="#assessing-fit" id="toc-assessing-fit" class="nav-link" data-scroll-target="#assessing-fit"><span class="header-section-number">25.4</span> Assessing fit</a></li>
   <li><a href="#improving-fit-with-fill-sink" id="toc-improving-fit-with-fill-sink" class="nav-link" data-scroll-target="#improving-fit-with-fill-sink"><span class="header-section-number">25.5</span> Improving fit with <code>fill-sink</code></a></li>
   <li><a href="#implementing-a-feature-to-export-and-import-world" id="toc-implementing-a-feature-to-export-and-import-world" class="nav-link" data-scroll-target="#implementing-a-feature-to-export-and-import-world"><span class="header-section-number">25.6</span> Implementing a feature to export and import <code>world</code></a></li>
@@ -797,8 +797,8 @@ end
 end</code></pre>
 <p>We add a last step to get <code>maxFlowAccumulation</code>, which we will need for scaling purposes.</p>
 </section>
-<section id="visualisation" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">25.3</span> Visualisation</h2>
+<section id="visualising-flow-accumulation" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="visualising-flow-accumulation"><span class="header-section-number">25.3</span> Visualising flow accumulation</h2>
 <p>As usual, we need to implement some extra code to be able to visualise the outcome. In this case, however, we would like to observe simultaneously flow direction, flow accumulation <em>and</em> elevation. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.</p>
 <pre class="netlogo"><code>breed [ flowHolders flowHolder ]
 
@@ -877,6 +877,7 @@ to-report get-angle-in-flow-direction [ neighborEncoding ]
   report nobody
 
 end</code></pre>
+<p>Flow accumulation is visualized using links between <code>flowHolder</code> agents that are created on patches. The thickness and color of the links represent the flow accumulation values.</p>
 <p>Now, press “setup”. The calculation of variables is made relatively fast, but displaying all flowHolders will take some time.</p>
 <p><img src="assets/screenshots/BlockC_module2_flows.png" class="img-fluid" alt="View of flow direction and accumulation, calculated with ‘flows’ module"><br>
 <em>View of flow direction and accumulation, calculated with ‘flows’ module</em></p>
@@ -887,8 +888,45 @@ end</code></pre>
 <pre class="netlogo"><code>ask patches with [flow_accumulation &gt; 10] [ set pcolor red ]</code></pre>
 <p><img src="assets/screenshots/BlockC_module2_flows-accumulation-more-than-10.png" class="img-fluid" alt="Highlight of patches with flow accumulation greater than 10"><br>
 <em>Highlight of patches with flow accumulation greater than 10</em></p>
-<p><em>Focus view on a sample of patches:</em><br>
-| | | | — | — | | patch 70 145 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"> | | patch 179 69 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-179-69.png" width="200"> | | patch 70 145 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"> | | patch 201 108 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-201-108.png" width="200"> | | patch 125 99 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-125-99.png" width="200"> | | patch 54 76 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-54-106.png" width="200"> |</p>
+<p><em>Focus view on a sample of patches:</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>patch</th>
+<th>view</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>patch 70 145</td>
+<td><img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"></td>
+</tr>
+<tr class="even">
+<td>patch 179 69</td>
+<td><img src="assets/screenshots/BlockC_module2_flows-detail-patch-179-69.png" width="200"></td>
+</tr>
+<tr class="odd">
+<td>patch 70 145</td>
+<td><img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"></td>
+</tr>
+<tr class="even">
+<td>patch 201 108</td>
+<td><img src="assets/screenshots/BlockC_module2_flows-detail-patch-201-108.png" width="200"></td>
+</tr>
+<tr class="odd">
+<td>patch 125 99</td>
+<td><img src="assets/screenshots/BlockC_module2_flows-detail-patch-125-99.png" width="200"></td>
+</tr>
+<tr class="even">
+<td>patch 54 76</td>
+<td><img src="assets/screenshots/BlockC_module2_flows-detail-patch-54-106.png" width="200"></td>
+</tr>
+</tbody>
+</table>
 <p>Our approximation of the region’s hydrological system is definitely not perfect. As a minimum, we want the main river, Lithaíos, to emerge, even if following an approximated path. The problem is most likely generated by our previous step: reducing the resolution of the original DEM. The height map we are using has many “sinks” in it (<em>i.e.</em>, patches not at the edge with the lowest elevation among its neighbours).</p>
 <p>Worse, it might be that the roughness of the terrain escapes even the lowest of the resolutions treatable at this scale, to a point where the pathways of rivers cannot be retraced using height maps. Let us work with the first hypothesis and address the sinks in our processed height map.</p>
 </section>

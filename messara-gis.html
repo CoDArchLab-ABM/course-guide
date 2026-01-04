@@ -501,13 +501,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#the-gisextension" id="toc-the-gisextension" class="nav-link active" data-scroll-target="#the-gisextension"><span class="header-section-number">24.1</span> The <code>gis</code>extension</a></li>
-  <li><a href="#loading-gis-data" id="toc-loading-gis-data" class="nav-link" data-scroll-target="#loading-gis-data"><span class="header-section-number">24.2</span> Loading GIS data</a></li>
-  <li><a href="#readjusting-world-settings" id="toc-readjusting-world-settings" class="nav-link" data-scroll-target="#readjusting-world-settings"><span class="header-section-number">24.3</span> Readjusting <code>world</code> settings</a></li>
-  <li><a href="#calculating-patch-dimensions-based-on-gis" id="toc-calculating-patch-dimensions-based-on-gis" class="nav-link" data-scroll-target="#calculating-patch-dimensions-based-on-gis"><span class="header-section-number">24.4</span> Calculating patch dimensions based on GIS</a></li>
-  <li><a href="#applying-gis-data-to-patches" id="toc-applying-gis-data-to-patches" class="nav-link" data-scroll-target="#applying-gis-data-to-patches"><span class="header-section-number">24.5</span> Applying GIS data to patches</a></li>
-  <li><a href="#higher-level-procedure-create-map" id="toc-higher-level-procedure-create-map" class="nav-link" data-scroll-target="#higher-level-procedure-create-map"><span class="header-section-number">24.6</span> Higher level procedure: <code>create-map</code></a></li>
-  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">24.7</span> Visualisation</a></li>
-  <li><a href="#set-up-procedure-and-testing" id="toc-set-up-procedure-and-testing" class="nav-link" data-scroll-target="#set-up-procedure-and-testing"><span class="header-section-number">24.8</span> Set up procedure and testing</a></li>
+  <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets"><span class="header-section-number">24.2</span> Datasets</a></li>
+  <li><a href="#loading-gis-data" id="toc-loading-gis-data" class="nav-link" data-scroll-target="#loading-gis-data"><span class="header-section-number">24.3</span> Loading GIS data</a></li>
+  <li><a href="#readjusting-world-settings" id="toc-readjusting-world-settings" class="nav-link" data-scroll-target="#readjusting-world-settings"><span class="header-section-number">24.4</span> Readjusting <code>world</code> settings</a></li>
+  <li><a href="#calculating-patch-dimensions-based-on-gis-data" id="toc-calculating-patch-dimensions-based-on-gis-data" class="nav-link" data-scroll-target="#calculating-patch-dimensions-based-on-gis-data"><span class="header-section-number">24.5</span> Calculating patch dimensions based on GIS data</a></li>
+  <li><a href="#applying-gis-data-to-patches" id="toc-applying-gis-data-to-patches" class="nav-link" data-scroll-target="#applying-gis-data-to-patches"><span class="header-section-number">24.6</span> Applying GIS data to patches</a></li>
+  <li><a href="#higher-level-procedure-create-map" id="toc-higher-level-procedure-create-map" class="nav-link" data-scroll-target="#higher-level-procedure-create-map"><span class="header-section-number">24.7</span> Higher level procedure: <code>create-map</code></a></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">24.8</span> Visualisation</a></li>
+  <li><a href="#set-up-procedure-and-testing" id="toc-set-up-procedure-and-testing" class="nav-link" data-scroll-target="#set-up-procedure-and-testing"><span class="header-section-number">24.9</span> Set up procedure and testing</a></li>
+  <li><a href="#checking-the-milestone-file-module-1" id="toc-checking-the-milestone-file-module-1" class="nav-link" data-scroll-target="#checking-the-milestone-file-module-1"><span class="header-section-number">24.10</span> Checking the milestone File (module 1)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-gis.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -540,8 +542,25 @@ ul.task-list li input[type="checkbox"] {
 <p>This extension allows you to perform a variety of GIS operations and to connect patch and turtle behaviour to data expressed in GIS files, supporting both vector and raster. The description of its contents can be found here: https://ccl.northwestern.edu/netlogo/docs/gis.html</p>
 <p>We will only reference a few aspects of GIS in NetLogo. You will find useful examples in NetLogo’s Models Library (<em>e.g.</em>, Sample Models &gt; Code Examples &gt; Extensions Examples &gt; gis &gt; GIS General Examples).</p>
 </section>
-<section id="loading-gis-data" class="level2" data-number="24.2">
-<h2 data-number="24.2" class="anchored" data-anchor-id="loading-gis-data"><span class="header-section-number">24.2</span> Loading GIS data</h2>
+<section id="datasets" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="datasets"><span class="header-section-number">24.2</span> Datasets</h2>
+<p>The files in “data/Cretedata/” were distributed during our in-person session, courtesy of Prof.&nbsp;Eleftheria Paliou (University of Cologne). Site coordinates were randomly shifted in QGIS to be published online after the session.</p>
+<p>We are using:</p>
+<ul>
+<li>Two shape files containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see <a href="https://en.wikipedia.org/wiki/Minoan_chronology">Minoan Chronology</a>):
+<ul>
+<li><code>EMIII_MMIAsites.shp</code>: Prepalatial sites (Early Minoan III to Middle Minoan IA)
+<ul>
+<li><code>MMIBsites.shp</code>: Middle Minoan IB sites<br>
+</li>
+</ul></li>
+</ul></li>
+<li><code>dem15.asc</code>: Elevation data (Digital Elevation Model) at 15m resolution</li>
+<li><code>rivers.shp</code>: Major rivers and streams in Messara Valley</li>
+</ul>
+</section>
+<section id="loading-gis-data" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="loading-gis-data"><span class="header-section-number">24.3</span> Loading GIS data</h2>
 <p>We start by loading all GIS data into separate NetLogo variables. To know about the formats this extension accepts, see here: https://ccl.northwestern.edu/netlogo/docs/gis.html#gis:load-dataset.</p>
 <pre class="netlogo"><code>globals
 [
@@ -567,20 +586,9 @@ to load-gis
   gis:set-world-envelope (gis:envelope-of elevationData)
 
 end</code></pre>
-<p>The files in “data/Cretedata/” were distributed during our in-person session, courtesy of Dr Eleftheria Paliou (University of Cologne). Site coordinates were randomly shifted in QGIS to be published online after the session.</p>
-<p>We are using:</p>
-<ul>
-<li>Two shape files containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see <a href="https://en.wikipedia.org/wiki/Minoan_chronology">Minoan Chronology</a>):
-<ul>
-<li><code>EMIII_MMIAsites.shp</code>: sites dating from the Prepalatial Period, specifically the Early Minoan III (EMIII) and Middle Minoan IA (MMIA) Periods</li>
-<li><code>MMIBsites.shp</code>: sites dating from the Protopalatial Period, specifically the Middle Minoan IB (MMIB) Period</li>
-</ul></li>
-<li>A DEM raster file: <code>dem15.asc</code> (elevation of the terrain with a 15m resolution)</li>
-<li>A third shape file, <code>rivers.shp</code>, contains line data with the rivers within the region.</li>
-</ul>
 </section>
-<section id="readjusting-world-settings" class="level2" data-number="24.3">
-<h2 data-number="24.3" class="anchored" data-anchor-id="readjusting-world-settings"><span class="header-section-number">24.3</span> Readjusting <code>world</code> settings</h2>
+<section id="readjusting-world-settings" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="readjusting-world-settings"><span class="header-section-number">24.4</span> Readjusting <code>world</code> settings</h2>
 <p>The second step is ensuring that our world and world view in NetLogo fits the data we want to feed into them. In this case, we need to reduce the DEM resolution to handle all patch processes in a reasonable computation time.</p>
 <pre class="netlogo"><code>globals
 [
@@ -611,8 +619,8 @@ to set-world-dimensions
 
 end</code></pre>
 </section>
-<section id="calculating-patch-dimensions-based-on-gis" class="level2" data-number="24.4">
-<h2 data-number="24.4" class="anchored" data-anchor-id="calculating-patch-dimensions-based-on-gis"><span class="header-section-number">24.4</span> Calculating patch dimensions based on GIS</h2>
+<section id="calculating-patch-dimensions-based-on-gis-data" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="calculating-patch-dimensions-based-on-gis-data"><span class="header-section-number">24.5</span> Calculating patch dimensions based on GIS data</h2>
 <p>Before applying the GIS data to NetLogo’s entities, we should try to already calculate and keep an important information about the real-world scale of our model: the dimensions of a patch according to the GIS projections.</p>
 <p>We can extend the code above:</p>
 <pre><code>globals
@@ -714,8 +722,8 @@ to-report calculate-patch-area-meters [ gisData ]
 end</code></pre>
 <p>When in doubt about the projection of your file, the values obtained for <code>areaPerPatch</code> (ha) and <code>patchWidth</code> (m) when running both solutions will give you a quick hint. In our case, the calculation should be done in metres and, with this code, we will have patches of approximately 145 x 145 metres.</p>
 </section>
-<section id="applying-gis-data-to-patches" class="level2" data-number="24.5">
-<h2 data-number="24.5" class="anchored" data-anchor-id="applying-gis-data-to-patches"><span class="header-section-number">24.5</span> Applying GIS data to patches</h2>
+<section id="applying-gis-data-to-patches" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="applying-gis-data-to-patches"><span class="header-section-number">24.6</span> Applying GIS data to patches</h2>
 <p>Next, we effectively apply the data to patches using the gis extension primitives:</p>
 <pre class="netlogo"><code>globals
 [
@@ -828,8 +836,8 @@ to create-site-from-feature [ vectorFeature datasetPeriod ]
 end</code></pre>
 <p>Notice that the gis extension generates NaN values on those patches outside the raster data. NetLogo does not handle NaNs, which can become a problem later. To solve this, we create a patch-set variable to filter patches with elevation data (<code>patchesWithElevationData</code>) and use a constant <code>noElevationDataTag</code> with an impossible elevation value to mark those outside the heightmap. From now on, we need to be careful not to use the <code>patches</code> primitive, which will call both kinds of patches.</p>
 </section>
-<section id="higher-level-procedure-create-map" class="level2" data-number="24.6">
-<h2 data-number="24.6" class="anchored" data-anchor-id="higher-level-procedure-create-map"><span class="header-section-number">24.6</span> Higher level procedure: <code>create-map</code></h2>
+<section id="higher-level-procedure-create-map" class="level2" data-number="24.7">
+<h2 data-number="24.7" class="anchored" data-anchor-id="higher-level-procedure-create-map"><span class="header-section-number">24.7</span> Higher level procedure: <code>create-map</code></h2>
 <p>We wrap up everything in a procedure <code>create-map</code>:</p>
 <pre class="netlogo"><code>to create-map
 
@@ -843,8 +851,8 @@ end</code></pre>
 
 end</code></pre>
 </section>
-<section id="visualisation" class="level2" data-number="24.7">
-<h2 data-number="24.7" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">24.7</span> Visualisation</h2>
+<section id="visualisation" class="level2" data-number="24.8">
+<h2 data-number="24.8" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">24.8</span> Visualisation</h2>
 <p>Finally, we need to add some extra code in order to display our data:</p>
 <pre class="netlogo"><code>to update-display
 
@@ -888,9 +896,10 @@ to paint-elevation
   ]
 
 end</code></pre>
+<p>Sites from different periods are visualized in different colours. Patches are coloured according to their elevation (from green to brown). Rivers are drawn in blue.</p>
 </section>
-<section id="set-up-procedure-and-testing" class="level2" data-number="24.8">
-<h2 data-number="24.8" class="anchored" data-anchor-id="set-up-procedure-and-testing"><span class="header-section-number">24.8</span> Set up procedure and testing</h2>
+<section id="set-up-procedure-and-testing" class="level2" data-number="24.9">
+<h2 data-number="24.9" class="anchored" data-anchor-id="set-up-procedure-and-testing"><span class="header-section-number">24.9</span> Set up procedure and testing</h2>
 <p>We then we place both in a higher-level procedure, using the conventional <code>setup</code> (and adding its button):</p>
 <pre class="netlogo"><code>to setup
 
@@ -901,6 +910,9 @@ end</code></pre>
   update-display
 
 end</code></pre>
+</section>
+<section id="checking-the-milestone-file-module-1" class="level2" data-number="24.10">
+<h2 data-number="24.10" class="anchored" data-anchor-id="checking-the-milestone-file-module-1"><span class="header-section-number">24.10</span> Checking the milestone File (module 1)</h2>
 <p><img src="assets/screenshots/BlockC_module1_load-gis-data interface.png" class="img-fluid" alt="Screenshot of the ‘load-gis-data’ module"><br>
 <em>Screenshot of the ‘load-gis-data’ module</em></p>
 <p>See the fully implemented version of this module: <code>BlockC_module1_load-gis-data.nlogo</code>.</p>
