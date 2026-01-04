@@ -12,6 +12,18 @@ This extension allows you to perform a variety of GIS operations and to connect 
 
 We will only reference a few aspects of GIS in NetLogo. You will find useful examples in NetLogo's Models Library (*e.g.*, Sample Models > Code Examples > Extensions Examples > gis > GIS General Examples).
 
+## Datasets
+
+The files in "data/Cretedata/" were distributed during our in-person session, courtesy of Prof. Eleftheria Paliou (University of Cologne). Site coordinates were randomly shifted in QGIS to be published online after the session.
+
+We are using:
+
+- Two shape files containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see [Minoan Chronology](https://en.wikipedia.org/wiki/Minoan_chronology)):  
+  - `EMIII_MMIAsites.shp`: Prepalatial sites (Early Minoan III to Middle Minoan IA)  
+	- `MMIBsites.shp`: Middle Minoan IB sites  
+- `dem15.asc`: Elevation data (Digital Elevation Model) at 15m resolution
+- `rivers.shp`: Major rivers and streams in Messara Valley
+
 ## Loading GIS data
 
 We start by loading all GIS data into separate NetLogo variables. To know about the formats this extension accepts, see here: https://ccl.northwestern.edu/netlogo/docs/gis.html#gis:load-dataset. 
@@ -42,16 +54,6 @@ to load-gis
 
 end
 ```
-
-The files in "data/Cretedata/" were distributed during our in-person session, courtesy of Dr Eleftheria Paliou (University of Cologne). Site coordinates were randomly shifted in QGIS to be published online after the session.
-
-We are using:
-
-- Two shape files containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see [Minoan Chronology](https://en.wikipedia.org/wiki/Minoan_chronology)):  
-  - `EMIII_MMIAsites.shp`: sites dating from the Prepalatial Period, specifically the Early Minoan III (EMIII) and Middle Minoan IA (MMIA) Periods
-  - `MMIBsites.shp`: sites dating from the Protopalatial Period, specifically the Middle Minoan IB (MMIB) Period
-- A DEM raster file: `dem15.asc` (elevation of the terrain with a 15m resolution)
-- A third shape file, `rivers.shp`, contains line data with the rivers within the region.
 
 ## Readjusting `world` settings
 
@@ -88,7 +90,7 @@ to set-world-dimensions
 end
 ```
 
-## Calculating patch dimensions based on GIS
+## Calculating patch dimensions based on GIS data
 
 Before applying the GIS data to NetLogo's entities, we should try to already calculate and keep an important information about the real-world scale of our model: the dimensions of a patch according to the GIS projections.
 
@@ -385,6 +387,8 @@ to paint-elevation
 end
 ```
 
+Sites from different periods are visualized in different colours. Patches are coloured according to their elevation (from green to brown). Rivers are drawn in blue.
+
 ## Set up procedure and testing
 
 We then we place both in a higher-level procedure, using the conventional `setup` (and adding its button):
@@ -400,6 +404,8 @@ to setup
 
 end
 ```
+
+## Checking the milestone File (module 1)
 
 ![Screenshot of the 'load-gis-data' module](assets/screenshots/BlockC_module1_load-gis-data interface.png)  
 *Screenshot of the 'load-gis-data' module*

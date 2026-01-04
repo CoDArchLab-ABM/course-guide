@@ -273,7 +273,7 @@ end
 
 We add a last step to get `maxFlowAccumulation`, which we will need for scaling purposes.
 
-## Visualisation
+## Visualising flow accumulation
 
 As usual, we need to implement some extra code to be able to visualise the outcome. In this case, however, we would like to observe simultaneously flow direction, flow accumulation *and* elevation. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.
 
@@ -357,6 +357,8 @@ to-report get-angle-in-flow-direction [ neighborEncoding ]
 end
 ```
 
+Flow accumulation is visualized using links between `flowHolder` agents that are created on patches. The thickness and color of the links represent the flow accumulation values.
+
 Now, press "setup". The calculation of variables is made relatively fast, but displaying all flowHolders will take some time. 
 
 ![View of flow direction and accumulation, calculated with 'flows' module](assets/screenshots/BlockC_module2_flows.png)  
@@ -374,8 +376,9 @@ ask patches with [flow_accumulation > 10] [ set pcolor red ]
 *Highlight of patches with flow accumulation greater than 10*
 
 
-*Focus view on a sample of patches:*  
-|  |  |
+*Focus view on a sample of patches:*
+
+| patch | view |
 | --- | --- |
 | patch 70 145 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-70-145.png" width="200"> |
 | patch 179 69 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-179-69.png" width="200"> |
