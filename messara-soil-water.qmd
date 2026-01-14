@@ -1,8 +1,8 @@
-# Integrating a submodel {#messara-soil-water}
+# Calculating ARID {#messara-soil-water}
 
 Let us build the next module, `ARID`, over what we just implemented in the `load-weather-data` module.
 
-## Module variables
+## Module variables and parameters
 
 Besides the weather variables we have on our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al. 2019).
 
@@ -57,7 +57,7 @@ patches-own
 ]
 ```
 
-## Module parameters
+## Setting module parameters
 
 We will use a randomised configuration of most of these patch variables using hyperparameters giving the envelope of variation. The Indus Village eventually escapes this initial solution by calculating these variables based on various datasets and submodels. We will, however, use it for the sake of simplicity. As Wallach et al. (2019), we will use two global variables as constants (`MUF` and `WP`) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (`parameters-check` and `parameters-to-default`).
 
@@ -164,7 +164,7 @@ to setup-soil-water-properties
 end
 ```
 
-## Connector variables and procedures
+## Calculating Reference Evapotranspiration (ETr)
 
 In our previous implementation of `set-day-weather-from-input-data`, we must now add a new final step, where `netSolarRadiation` and `ETr` (reference evapotranspiration) are set for each patch. We also need to implement a procedure to estimate `ETr` based on an FAO standard (Allen et al. 1998).
 
@@ -610,7 +610,7 @@ to modify-ARID
 end
 ```
 
-## Test
+## Checking the milestone File (module 4)
 
 Our solution to link `flow_accumulation` and `ARID` is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we are good enough to go forward.
 
