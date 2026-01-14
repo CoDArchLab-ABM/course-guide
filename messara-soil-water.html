@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>27&nbsp; Integrating a submodel – Agent-based modelling for archaeologists. From concept to application and publication</title>
+<title>27&nbsp; Calculating ARID – Agent-based modelling for archaeologists. From concept to application and publication</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-soil-water.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-soil-water.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Calculating ARID</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -380,13 +380,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./messara-weather.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Time series data input: Weather data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./messara-soil-water.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Calculating ARID</span></span></a>
   </div>
 </li>
       </ul>
@@ -500,23 +500,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#module-variables" id="toc-module-variables" class="nav-link active" data-scroll-target="#module-variables"><span class="header-section-number">27.1</span> Module variables</a></li>
-  <li><a href="#module-parameters" id="toc-module-parameters" class="nav-link" data-scroll-target="#module-parameters"><span class="header-section-number">27.2</span> Module parameters</a></li>
-  <li><a href="#connector-variables-and-procedures" id="toc-connector-variables-and-procedures" class="nav-link" data-scroll-target="#connector-variables-and-procedures"><span class="header-section-number">27.3</span> Connector variables and procedures</a></li>
+  <li><a href="#module-variables-and-parameters" id="toc-module-variables-and-parameters" class="nav-link active" data-scroll-target="#module-variables-and-parameters"><span class="header-section-number">27.1</span> Module variables and parameters</a></li>
+  <li><a href="#setting-module-parameters" id="toc-setting-module-parameters" class="nav-link" data-scroll-target="#setting-module-parameters"><span class="header-section-number">27.2</span> Setting module parameters</a></li>
+  <li><a href="#calculating-reference-evapotranspiration-etr" id="toc-calculating-reference-evapotranspiration-etr" class="nav-link" data-scroll-target="#calculating-reference-evapotranspiration-etr"><span class="header-section-number">27.3</span> Calculating Reference Evapotranspiration (ETr)</a></li>
   <li><a href="#implementing-the-main-algorithm" id="toc-implementing-the-main-algorithm" class="nav-link" data-scroll-target="#implementing-the-main-algorithm"><span class="header-section-number">27.4</span> Implementing the main algorithm</a></li>
   <li><a href="#merging-with-spatial-data-module" id="toc-merging-with-spatial-data-module" class="nav-link" data-scroll-target="#merging-with-spatial-data-module"><span class="header-section-number">27.5</span> Merging with spatial data module</a></li>
   <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><span class="header-section-number">27.6</span> Visualisation</a></li>
   <li><a href="#combining-with-flow-accumulation-algorithm" id="toc-combining-with-flow-accumulation-algorithm" class="nav-link" data-scroll-target="#combining-with-flow-accumulation-algorithm"><span class="header-section-number">27.7</span> Combining with flow accumulation algorithm</a></li>
-  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><span class="header-section-number">27.8</span> Test</a></li>
+  <li><a href="#checking-the-milestone-file-module-4" id="toc-checking-the-milestone-file-module-4" class="nav-link" data-scroll-target="#checking-the-milestone-file-module-4"><span class="header-section-number">27.8</span> Checking the milestone File (module 4)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-soil-water.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-soil-water.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-soil-water.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Calculating ARID</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="messara-soil-water" class="quarto-section-identifier"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></h1>
+<h1 class="title"><span id="messara-soil-water" class="quarto-section-identifier"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Calculating ARID</span></span></h1>
 </div>
 
 
@@ -534,8 +534,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Let us build the next module, <code>ARID</code>, over what we just implemented in the <code>load-weather-data</code> module.</p>
-<section id="module-variables" class="level2" data-number="27.1">
-<h2 data-number="27.1" class="anchored" data-anchor-id="module-variables"><span class="header-section-number">27.1</span> Module variables</h2>
+<section id="module-variables-and-parameters" class="level2" data-number="27.1">
+<h2 data-number="27.1" class="anchored" data-anchor-id="module-variables-and-parameters"><span class="header-section-number">27.1</span> Module variables and parameters</h2>
 <p>Besides the weather variables we have on our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al.&nbsp;2019).</p>
 <pre class="netlogo"><code>globals
 [
@@ -586,8 +586,8 @@ patches-own
   ETr ; reference evapotranspiration
 ]</code></pre>
 </section>
-<section id="module-parameters" class="level2" data-number="27.2">
-<h2 data-number="27.2" class="anchored" data-anchor-id="module-parameters"><span class="header-section-number">27.2</span> Module parameters</h2>
+<section id="setting-module-parameters" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="setting-module-parameters"><span class="header-section-number">27.2</span> Setting module parameters</h2>
 <p>We will use a randomised configuration of most of these patch variables using hyperparameters giving the envelope of variation. The Indus Village eventually escapes this initial solution by calculating these variables based on various datasets and submodels. We will, however, use it for the sake of simplicity. As Wallach et al.&nbsp;(2019), we will use two global variables as constants (<code>MUF</code> and <code>WP</code>) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (<code>parameters-check</code> and <code>parameters-to-default</code>).</p>
 <pre class="netlogo"><code>to set-constants
 
@@ -690,8 +690,8 @@ to setup-soil-water-properties
 
 end</code></pre>
 </section>
-<section id="connector-variables-and-procedures" class="level2" data-number="27.3">
-<h2 data-number="27.3" class="anchored" data-anchor-id="connector-variables-and-procedures"><span class="header-section-number">27.3</span> Connector variables and procedures</h2>
+<section id="calculating-reference-evapotranspiration-etr" class="level2" data-number="27.3">
+<h2 data-number="27.3" class="anchored" data-anchor-id="calculating-reference-evapotranspiration-etr"><span class="header-section-number">27.3</span> Calculating Reference Evapotranspiration (ETr)</h2>
 <p>In our previous implementation of <code>set-day-weather-from-input-data</code>, we must now add a new final step, where <code>netSolarRadiation</code> and <code>ETr</code> (reference evapotranspiration) are set for each patch. We also need to implement a procedure to estimate <code>ETr</code> based on an FAO standard (Allen et al.&nbsp;1998).</p>
 <blockquote class="blockquote">
 <p>Allen, Richard G., Luis S. Pereira, Dirk Raes, and Martin Smith. 1998. Crop Evapotranspiration - FAO Irrigation and Drainage Paper No.&nbsp;56. Rome: FAO. http://www.fao.org/3/X0490E/x0490e00.htm.</p>
@@ -1122,8 +1122,8 @@ to modify-ARID
 
 end</code></pre>
 </section>
-<section id="test" class="level2" data-number="27.8">
-<h2 data-number="27.8" class="anchored" data-anchor-id="test"><span class="header-section-number">27.8</span> Test</h2>
+<section id="checking-the-milestone-file-module-4" class="level2" data-number="27.8">
+<h2 data-number="27.8" class="anchored" data-anchor-id="checking-the-milestone-file-module-4"><span class="header-section-number">27.8</span> Checking the milestone File (module 4)</h2>
 <p>Our solution to link <code>flow_accumulation</code> and <code>ARID</code> is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we are good enough to go forward.</p>
 <p><img src="assets/screenshots/BlockC_module4_ARID interface_tick100.png" class="img-fluid" alt="Screenshot of the ‘ARID’ module (tick 100)"><br>
 <em>Screenshot of the ‘ARID’ module (tick 100)</em></p>
@@ -1539,8 +1539,8 @@ end</code></pre>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./messara-weather.html" class="pagination-link" aria-label="Importing time series: weather data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span>
+      <a href="./messara-weather.html" class="pagination-link" aria-label="Time series data input: Weather data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Time series data input: Weather data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

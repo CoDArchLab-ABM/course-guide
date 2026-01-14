@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>26&nbsp; Importing time series: weather data – Agent-based modelling for archaeologists. From concept to application and publication</title>
+<title>26&nbsp; Time series data input: Weather data – Agent-based modelling for archaeologists. From concept to application and publication</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-weather.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-weather.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Time series data input: Weather data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -380,13 +380,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./messara-weather.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Time series data input: Weather data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./messara-soil-water.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Calculating ARID</span></span></a>
   </div>
 </li>
       </ul>
@@ -495,15 +495,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#calculating-arid-using-weather-data" id="toc-calculating-arid-using-weather-data" class="nav-link active" data-scroll-target="#calculating-arid-using-weather-data"><span class="header-section-number">26.1</span> Calculating ARID using weather data</a></li>
+  <li><a href="#the-input-dataset" id="toc-the-input-dataset" class="nav-link" data-scroll-target="#the-input-dataset"><span class="header-section-number">26.2</span> The input dataset</a></li>
+  <li><a href="#loading-the-input-dataset" id="toc-loading-the-input-dataset" class="nav-link" data-scroll-target="#loading-the-input-dataset"><span class="header-section-number">26.3</span> Loading the input dataset</a></li>
+  <li><a href="#keeping-tract-of-time-in-cycles" id="toc-keeping-tract-of-time-in-cycles" class="nav-link" data-scroll-target="#keeping-tract-of-time-in-cycles"><span class="header-section-number">26.4</span> Keeping tract of time in cycles</a></li>
+  <li><a href="#setting-daily-weather-values" id="toc-setting-daily-weather-values" class="nav-link" data-scroll-target="#setting-daily-weather-values"><span class="header-section-number">26.5</span> Setting daily weather values</a></li>
+  <li><a href="#wrapping-everying-together" id="toc-wrapping-everying-together" class="nav-link" data-scroll-target="#wrapping-everying-together"><span class="header-section-number">26.6</span> Wrapping everying together</a></li>
+  <li><a href="#checking-the-milestone-file-module-3" id="toc-checking-the-milestone-file-module-3" class="nav-link" data-scroll-target="#checking-the-milestone-file-module-3"><span class="header-section-number">26.7</span> Checking the milestone File (module 3)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-weather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-weather.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./messara-weather.html">Messara Trade (II): time-series input data and plugging modules</a></li><li class="breadcrumb-item"><a href="./messara-weather.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Time series data input: Weather data</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="messara-weather" class="quarto-section-identifier"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Importing time series: weather data</span></span></h1>
+<h1 class="title"><span id="messara-weather" class="quarto-section-identifier"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Time series data input: Weather data</span></span></h1>
 </div>
 
 
@@ -520,6 +532,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="calculating-arid-using-weather-data" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="calculating-arid-using-weather-data"><span class="header-section-number">26.1</span> Calculating ARID using weather data</h2>
 <p>To compromise model complexity and precision, we will regulate land productivity by combining flow accumulation with the Agricultural reference index of drought (ARID). We will calculate a time-series of ARID for each day-of-year and patch using a modified version of the Soil Water (sub)model, again in the <a href="https://github.com/Andros-Spica/indus-village-model">Indus Village model</a> (Angourakis 2021). This submodel is a NetLogo implementation of the model defined by Wallach et al.&nbsp;2019, which is based on Woli et al.&nbsp;2012.</p>
 <blockquote class="blockquote">
 <p>Wallach, Daniel, David Makowski, James W. Jones, and Francois Brun. 2019. Working with Dynamic Crop Models (Third Edition). Academic Press. https://doi.org/10.1016/C2016-0-01552-8.</p>
@@ -527,7 +541,12 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Woli, Prem, James W. Jones, Keith T. Ingram, and Clyde W. Fraisse. 2012. ‘Agricultural Reference Index for Drought (ARID)’. Agronomy Journal 104 (2): 287. https://doi.org/10.2134/agronj2011.0286.</p>
 </blockquote>
-<p>To calculate ARID, we will use a point sample of daily weather variables. The dataset metadata is as follows:</p>
+<p>We will introduce here a way to import daily weather data (solar radiation, temperature, precipitation) from an external dataset, and use it to calculate ARID, which we will cover in the next chapter.</p>
+</section>
+<section id="the-input-dataset" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="the-input-dataset"><span class="header-section-number">26.2</span> The input dataset</h2>
+<p>To calculate ARID, we will use a point sample of daily weather variables.</p>
+<p>The dataset metadata is as follows:</p>
 <p><em>File name</em>: POWER_Point_Daily_19840101_20201231_035d0309N_024d8335E_LST.csv</p>
 <p><em>Source</em>: NASA POWER (https://power.larc.nasa.gov/data-access-viewer/; see their sources and methodology at https://power.larc.nasa.gov/docs/methodology/)</p>
 <p><em>Point location</em>: Petrokefali (LAT: 35.0309; LON: 24.8335)</p>
@@ -535,7 +554,10 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Variables</em>: - YEAR, MO, DY: year (number), month (index in year) and day (index in month) of observation/row - PRECTOTCORR: The bias corrected average of total precipitation at the surface of the earth in water mass (includes water content in snow).<br>
 - T2M_MIN, T2M_MAX: The maximum/minimum/average hourly air (dry bulb) temperature at 2 meters above the surface of the earth.<br>
 - ALLSKY_SFC_SW_DWN: The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the earth under all sky conditions. An alternative term for the total solar irradiance is the “Global Horizontal Irradiance” or GHI.</p>
-<p>Based on code from the Indus Village, we implement the first module only for loading, running, and displaying the dataset as simulation input data.</p>
+</section>
+<section id="loading-the-input-dataset" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="loading-the-input-dataset"><span class="header-section-number">26.3</span> Loading the input dataset</h2>
+<p>The original implementation in the Indus Village repository includes a procedure only for loading, running, and displaying the dataset as simulation input data.</p>
 <p>This module uses the data structure <code>list</code> to hold and process the data. The dataset is loaded from the original CSV file into several global variables (using the CSV NetLogo extension). You may need to look at NetLogo’s Dictionary several times to understand every step in this procedure.</p>
 <pre class="netlogo"><code>extensions [ csv ]
 
@@ -653,6 +675,9 @@ to load-weather-input-data-table
 
 end</code></pre>
 <p>There are other ways of doing this in NetLogo and many possible variations within this specific approach. The most important things here are to make sure that variable names are intelligible and all references to the internal structure of the CSV file are kept updated if any changes are made directly to the file. Abundant comments are also welcomed in this type of procedure.</p>
+</section>
+<section id="keeping-tract-of-time-in-cycles" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="keeping-tract-of-time-in-cycles"><span class="header-section-number">26.4</span> Keeping tract of time in cycles</h2>
 <p>This module also introduces an aspect that may be relevant when inputting or generating time series: calendar time keeping. This may seem trivial, but it has often been a weak point in models relying on input data.</p>
 <pre class="netlogo"><code>to advance-time
 
@@ -665,6 +690,53 @@ end</code></pre>
   ]
 
 end</code></pre>
+</section>
+<section id="setting-daily-weather-values" class="level2" data-number="26.5">
+<h2 data-number="26.5" class="anchored" data-anchor-id="setting-daily-weather-values"><span class="header-section-number">26.5</span> Setting daily weather values</h2>
+<p>The module than allows us to update the value of weather variables according to the synchronised calendar and simulation times, using <code>year</code> and <code>dayOfYear</code> as index:</p>
+<pre class="netlogo"><code>to set-day-weather-from-input-data [ dayOfYear year ]
+
+  ;;; find corresponding index to year-dayOfYear pair
+
+  let yearAndDoyIndex position (word year "-" dayOfYear) weatherInputData_YEAR-DOY
+
+  ;;; get values from weather input data
+
+  set solarRadiation item yearAndDoyIndex weatherInputData_solarRadiation
+
+  set T item yearAndDoyIndex weatherInputData_temperature
+
+  set T_min item yearAndDoyIndex weatherInputData_minTemperature
+
+  set T_max item yearAndDoyIndex weatherInputData_maxTemperature
+
+  set RAIN item yearAndDoyIndex weatherInputData_precipitation
+
+  if (dayOfYear = 1)
+  [
+    ;;; fill values of precipitation_yearSeries and precipitation_cumYearSeries, used here only for visualisation
+
+    let yearLengthInDays item (currentYear - weatherInputData_firstYear) weatherInputData_yearLengthInDays
+    let yearAndLastDoyIndex position (word year "-" yearLengthInDays) weatherInputData_YEAR-DOY
+
+    set precipitation_yearSeries sublist weatherInputData_precipitation yearAndDoyIndex (yearAndLastDoyIndex + 1)
+
+    let yearTotal sum precipitation_yearSeries
+    set precipitation_cumYearSeries (list)
+    let cumulativeSum 0
+    foreach precipitation_yearSeries
+    [
+      i -&gt;
+      set cumulativeSum cumulativeSum + i
+      set precipitation_cumYearSeries lput cumulativeSum precipitation_cumYearSeries
+    ]
+    set precipitation_cumYearSeries map [i -&gt; i / yearTotal] precipitation_cumYearSeries
+  ]
+
+end</code></pre>
+</section>
+<section id="wrapping-everying-together" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="wrapping-everying-together"><span class="header-section-number">26.6</span> Wrapping everying together</h2>
 <p>Press “setup” and then “go” (continuous run). NetLogo will run until it reaches the last day of the last year included in the dataset. This is because we have added in <code>go</code> a stop condition.</p>
 <pre class="netlogo"><code>to go
 
@@ -680,11 +752,15 @@ end</code></pre>
   if (currentYear = weatherInputData_lastYear and currentDayOfYear = last weatherInputData_yearLengthInDays) [stop]
 
 end</code></pre>
+</section>
+<section id="checking-the-milestone-file-module-3" class="level2" data-number="26.7">
+<h2 data-number="26.7" class="anchored" data-anchor-id="checking-the-milestone-file-module-3"><span class="header-section-number">26.7</span> Checking the milestone File (module 3)</h2>
 <p><img src="assets/screenshots/BlockC_module3_load-weather-data interface.png" class="img-fluid" alt="Screenshot of the ‘load-weather-data’ module"><br>
 <em>Screenshot of the ‘load-weather-data’ module</em></p>
-<p>See the fully implemented version of this module: <code>BlockC_module3_load-weather-data.nlogo</code>.</p>
+<p>See the fully implemented version of this module: <code>BlockC_module3_load-weather-data.nlogo</code>. Check the widgets in the interface for how to reproduce the plots.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1094,8 +1170,8 @@ end</code></pre>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./messara-soil-water.html" class="pagination-link" aria-label="Integrating a submodel">
-        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Integrating a submodel</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./messara-soil-water.html" class="pagination-link" aria-label="Calculating ARID">
+        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Calculating ARID</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1104,4 +1180,4 @@ end</code></pre>
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-weather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-weather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
