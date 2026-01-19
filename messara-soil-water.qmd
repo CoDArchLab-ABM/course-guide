@@ -6,6 +6,8 @@ Let us build the next module, `ARID`, over what we just implemented in the `load
 
 Besides the weather variables we have on our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al. 2019).
 
+Notice that we are also introducing one way of dealing with multiple approaches to parameter setting. We create a chooser named `experiment-type` in the interface and use it to activate one of two approaches: "user-defined", which takes the values of sliders in the interface, and "random", which samples these values randomly within a predetermined range. We also introduce two useful procedures, `parameters-check` and `parameters-to-default`, to help us define and return to an specific "default" parameter configuration used as a point of reference.
+
 ```Netlogo
 globals
 [
@@ -90,15 +92,36 @@ to set-parameters
   set albedo_min 1E-6 + random-float 0.3
   set albedo_max albedo_min + random-float 0.3
 
-  ;;; Soil Water Balance model
-  set WHC_min random-float 0.1
-  set WHC_max WHC_min + random-float 0.1
-  set DC_min 1E-6 + random-float 0.45
-  set DC_max DC_min + random-float 0.45
-  set z_min random-float 1000
-  set z_max z_min + random-float 1000
-  set CN_min random-float 40
-  set CN_max CN_min + random-float 50
+  if (experiment-type = "user-defined")
+  [
+    set albedo_min par_albedo_min
+    set albedo_max par_albedo_max
+  
+    ;;; Soil Water Balance model
+    set WHC_min water-holding-capacity_min
+    set WHC_max water-holding-capacity_max
+    set DC_min drainage-coefficient_min
+    set DC_max drainage-coefficient_max
+    set z_min root-zone-depth_min
+    set z_max root-zone-depth_max
+    set CN_min runoff-curve_min
+    set CN_max runoff-curve_max
+  ]
+  if (experiment-type = "random")
+  [
+    set albedo_min 1E-6 + random-float 0.3
+    set albedo_max albedo_min + random-float 0.3
+  
+    ;;; Soil Water Balance model
+    set WHC_min random-float 0.1
+    set WHC_max WHC_min + random-float 0.1
+    set DC_min 1E-6 + random-float 0.45
+    set DC_max DC_min + random-float 0.45
+    set z_min random-float 1000
+    set z_max z_min + random-float 1000
+    set CN_min random-float 40
+    set CN_max CN_min + random-float 50
+  ]
 
 end
 

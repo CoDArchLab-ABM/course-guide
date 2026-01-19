@@ -222,18 +222,36 @@ to set-parameters
 
   ;;; weather parameters are left with default values, but effectively ignored given that input weather is used.
 
-  set albedo_min 1E-6 + random-float 0.3
-  set albedo_max albedo_min + random-float 0.3
-
-  ;;; Soil Water Balance model
-  set WHC_min random-float 0.1
-  set WHC_max WHC_min + random-float 0.1
-  set DC_min 1E-6 + random-float 0.45
-  set DC_max DC_min + random-float 0.45
-  set z_min random-float 1000
-  set z_max z_min + random-float 1000
-  set CN_min random-float 40
-  set CN_max CN_min + random-float 50
+  if (experiment-type = "user-defined")
+  [
+    set albedo_min par_albedo_min
+    set albedo_max par_albedo_max
+  
+    ;;; Soil Water Balance model
+    set WHC_min water-holding-capacity_min
+    set WHC_max water-holding-capacity_max
+    set DC_min drainage-coefficient_min
+    set DC_max drainage-coefficient_max
+    set z_min root-zone-depth_min
+    set z_max root-zone-depth_max
+    set CN_min runoff-curve_min
+    set CN_max runoff-curve_max
+  ]
+  if (experiment-type = "random")
+  [
+    set albedo_min 1E-6 + random-float 0.3
+    set albedo_max albedo_min + random-float 0.3
+  
+    ;;; Soil Water Balance model
+    set WHC_min random-float 0.1
+    set WHC_max WHC_min + random-float 0.1
+    set DC_min 1E-6 + random-float 0.45
+    set DC_max DC_min + random-float 0.45
+    set z_min random-float 1000
+    set z_max z_min + random-float 1000
+    set CN_min random-float 40
+    set CN_max CN_min + random-float 50
+  ]
 
 end
 
@@ -779,24 +797,8 @@ end]]></code>
     <button x="212" actionKey="4" y="25" height="40" disableUntilTicks="false" forever="true" kind="Observer" width="55">go</button>
     <input x="35" multiline="false" y="81" height="60" variable="seed" type="number" width="100">0.0</input>
     <button x="94" actionKey="2" y="26" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">go</button>
-    <monitor x="29" precision="0" y="165" height="60" fontSize="11" width="100">currentYear</monitor>
-    <monitor x="134" precision="0" y="165" height="60" fontSize="11" width="114">currentDayOfYear</monitor>
-    <chooser x="18" y="238" height="60" variable="display-mode" current="9" width="246" display="display-mode">
-      <choice type="string" value="elevation"></choice>
-      <choice type="string" value="albedo"></choice>
-      <choice type="string" value="ETr"></choice>
-      <choice type="string" value="drainage coefficient (DC)"></choice>
-      <choice type="string" value="root zone depth (z)"></choice>
-      <choice type="string" value="runoff curve number (CN)"></choice>
-      <choice type="string" value="water content at field capacity (FC)"></choice>
-      <choice type="string" value="water holding Capacity (WHC)"></choice>
-      <choice type="string" value="soil water content (WATp)"></choice>
-      <choice type="string" value="ARID coefficient"></choice>
-    </chooser>
     <button x="151" actionKey="3" y="25" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="60" display="+ year">repeat 365 [ go ]</button>
     <button x="170" y="97" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="154">parameters-to-default</button>
-    <switch x="259" y="175" height="40" on="true" variable="show-flows" width="118" display="show-flows"></switch>
-    <button x="273" y="250" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="98" display="refresh view">refresh-view</button>
     <plot x="1154" autoPlotX="true" yMax="10.0" autoPlotY="true" y="11" xMin="0.0" height="191" legend="true" xMax="10.0" yMin="0.0" width="663" xAxis="days" display="Soil water content &amp; ARID">
       <setup>set-plot-y-range -0.1 1.1</setup>
       <update></update>
@@ -874,13 +876,33 @@ set-plot-x-range 0 (yearLengthInDays + 1)</setup>
     <slider x="269" step="0.01" y="689" max="1" width="258" display="par_albedo_max" height="50" min="par_albedo_min" direction="Horizontal" default="0.5" variable="par_albedo_max"></slider>
     <slider x="269" step="1" y="854" max="2000" width="258" display="root-zone-depth_max" height="50" min="root-zone-depth_min" direction="Horizontal" default="2000.0" variable="root-zone-depth_max" units="mm"></slider>
     <slider x="269" step="1" y="799" max="1" width="258" display="drainage-coefficient_max" height="50" min="drainage-coefficient_min" direction="Horizontal" default="36.0" variable="drainage-coefficient_max"></slider>
-    <slider x="269" step="1" y="744" max="0.2" width="258" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.25" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
+    <slider x="269" step="1" y="744" max="0.2" width="258" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.0" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
     <slider x="269" step="1" y="909" max="100" width="258" display="runoff-curve_max" height="50" min="runoff-curve_min" direction="Horizontal" default="80.0" variable="runoff-curve_max"></slider>
     <slider x="8" step="0.01" y="744" max="water-holding-capacity_max" width="258" display="water-holding-capacity_min" height="50" min="0.01" direction="Horizontal" default="0.05" variable="water-holding-capacity_min" units="cm3/cm3"></slider>
     <slider x="8" step="0.01" y="689" max="par_albedo_max" width="258" display="par_albedo_min" height="50" min="0" direction="Horizontal" default="0.2" variable="par_albedo_min"></slider>
     <slider x="8" step="1" y="909" max="runoff-curve_max" width="258" display="runoff-curve_min" height="50" min="0" direction="Horizontal" default="25.0" variable="runoff-curve_min"></slider>
     <slider x="8" step="1" y="854" max="root-zone-depth_max" width="258" display="root-zone-depth_min" height="50" min="0" direction="Horizontal" default="200.0" variable="root-zone-depth_min" units="mm"></slider>
     <slider x="8" step="0.01" y="799" max="drainage-coefficient_max" width="258" display="drainage-coefficient_min" height="50" min="0" direction="Horizontal" default="0.2" variable="drainage-coefficient_min"></slider>
+    <chooser x="34" y="147" height="60" variable="experiment-type" current="0" width="250" display="experiment-type">
+      <choice type="string" value="user-defined"></choice>
+      <choice type="string" value="random"></choice>
+    </chooser>
+    <monitor x="34" precision="0" y="214" height="60" fontSize="11" width="100">currentYear</monitor>
+    <monitor x="139" precision="0" y="214" height="60" fontSize="11" width="114">currentDayOfYear</monitor>
+    <chooser x="23" y="287" height="60" variable="display-mode" current="9" width="246" display="display-mode">
+      <choice type="string" value="elevation"></choice>
+      <choice type="string" value="albedo"></choice>
+      <choice type="string" value="ETr"></choice>
+      <choice type="string" value="drainage coefficient (DC)"></choice>
+      <choice type="string" value="root zone depth (z)"></choice>
+      <choice type="string" value="runoff curve number (CN)"></choice>
+      <choice type="string" value="water content at field capacity (FC)"></choice>
+      <choice type="string" value="water holding Capacity (WHC)"></choice>
+      <choice type="string" value="soil water content (WATp)"></choice>
+      <choice type="string" value="ARID coefficient"></choice>
+    </chooser>
+    <switch x="264" y="224" height="40" on="true" variable="show-flows" width="118" display="show-flows"></switch>
+    <button x="278" y="299" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="98" display="refresh view">refresh-view</button>
   </widgets>
   <info>## WHAT IS IT?
 
