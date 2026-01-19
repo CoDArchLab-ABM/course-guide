@@ -1399,7 +1399,7 @@ to load-weather-input-data-table
   set weatherInputData_lastYear last weatherInputData_YEARS
 
   ;;; extract parameter values from the given column
-  ;;; NOTE: read-from-string is required because the original file is formated in a way that NetLogo interprets values as strings.
+  ;;; NOTE: read-from-string might be required if the original file is formated in a way that NetLogo interprets values as strings.
 
   set weatherInputData_solarRadiation map [row -> item solarRadiationColumn row ] weatherData
 
