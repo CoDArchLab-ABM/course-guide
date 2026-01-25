@@ -502,7 +502,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#integrating-module-4-arid-and-5-routes" id="toc-integrating-module-4-arid-and-5-routes" class="nav-link active" data-scroll-target="#integrating-module-4-arid-and-5-routes"><span class="header-section-number">29.1</span> Integrating module 4 (ARID) and 5 (routes)</a></li>
   <li><a href="#integrating-pond-trade-step-13" id="toc-integrating-pond-trade-step-13" class="nav-link" data-scroll-target="#integrating-pond-trade-step-13"><span class="header-section-number">29.2</span> Integrating Pond Trade (step 13)</a></li>
-  <li><a href="#extension-arid-as-a-factor-of-settlement-productivity" id="toc-extension-arid-as-a-factor-of-settlement-productivity" class="nav-link" data-scroll-target="#extension-arid-as-a-factor-of-settlement-productivity"><span class="header-section-number">29.3</span> Extension: ARID as a factor of settlement productivity</a></li>
+  <li><a href="#arid-as-a-factor-of-settlement-productivity" id="toc-arid-as-a-factor-of-settlement-productivity" class="nav-link" data-scroll-target="#arid-as-a-factor-of-settlement-productivity"><span class="header-section-number">29.3</span> ARID as a factor of settlement productivity</a></li>
+  <li><a href="#checking-the-milestone-file-module-6" id="toc-checking-the-milestone-file-module-6" class="nav-link" data-scroll-target="#checking-the-milestone-file-module-6"><span class="header-section-number">29.4</span> Checking the milestone File (module 6)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-integrations.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -713,8 +714,8 @@ to go
 
 end</code></pre>
 </section>
-<section id="extension-arid-as-a-factor-of-settlement-productivity" class="level2" data-number="29.3">
-<h2 data-number="29.3" class="anchored" data-anchor-id="extension-arid-as-a-factor-of-settlement-productivity"><span class="header-section-number">29.3</span> Extension: ARID as a factor of settlement productivity</h2>
+<section id="arid-as-a-factor-of-settlement-productivity" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="arid-as-a-factor-of-settlement-productivity"><span class="header-section-number">29.3</span> ARID as a factor of settlement productivity</h2>
 <p>Last, we need to connect ARID to settlement productivity.</p>
 <p>We first calculate the value of two new settlement variables, <code>catchmentArea</code> and <code>ARIDinCatchmentArea</code>. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on <code>sizeLevel</code> and two parameters, <code>catchmentSlope</code> and <code>catchmentRadiusMaximum</code>. This is a <em>very</em> preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.</p>
 <pre class="netlogo"><code>settlements-own
@@ -770,11 +771,15 @@ to-report get-value-in-gradient [ input gradient maximum ]
 
 end</code></pre>
 <p>And <em>voilà</em>! We can now run our boosted Pond Trade model within the context of our case study.</p>
+</section>
+<section id="checking-the-milestone-file-module-6" class="level2" data-number="29.4">
+<h2 data-number="29.4" class="anchored" data-anchor-id="checking-the-milestone-file-module-6"><span class="header-section-number">29.4</span> Checking the milestone File (module 6)</h2>
 <p><img src="assets/screenshots/BlockC_module6_MesaraTrade view.png" class="img-fluid" alt="View of MesaraTrade after set up"><br>
 <em>View of MesaraTrade after set up</em></p>
 <p><img src="assets/screenshots/BlockC_module6_MesaraTrade interface.png" class="img-fluid" alt="View of MesaraTrade interface"><br>
 <em>View of MesaraTrade interface</em></p>
-<p>But WAIT! Is there something off about how the new version is running?</p>
+<p>Run the model for a few years using the default configuration. Observe the behaviour of traders and the overall dynamics of settlements’ economical size and the trade between them. Is there something off about how the new version is running?</p>
+<p>Think about the case study and the mechanisms targeted by the original Pond Trade model. What aspects do you find problematic?</p>
 
 
 </section>

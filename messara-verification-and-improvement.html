@@ -500,7 +500,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#margins-to-improve-and-explore" id="toc-margins-to-improve-and-explore" class="nav-link active" data-scroll-target="#margins-to-improve-and-explore"><span class="header-section-number">30.1</span> Margins to improve and explore</a></li>
+  <li><a href="#basic-challenges" id="toc-basic-challenges" class="nav-link active" data-scroll-target="#basic-challenges"><span class="header-section-number">30.1</span> Basic challenges</a></li>
+  <li><a href="#advance-challenge" id="toc-advance-challenge" class="nav-link" data-scroll-target="#advance-challenge"><span class="header-section-number">30.2</span> Advance challenge</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-verification-and-improvement.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -526,12 +527,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="margins-to-improve-and-explore" class="level2" data-number="30.1">
-<h2 data-number="30.1" class="anchored" data-anchor-id="margins-to-improve-and-explore"><span class="header-section-number">30.1</span> Margins to improve and explore</h2>
 <p>There are many other points to refactor, explore alternatives and expand. Just remember to first give it a think and then start writing code.</p>
-<p>For example:<br>
-- Can we visualise <code>catchmentArea</code> of settlements in the NetLogo View, instead of <code>sizeLevel</code>? - Could we find a way to calibrate the speed of traders to the same daily rhythm of the weather variables?<br>
-- Could rivers also affect <code>patchCost</code>?</p>
+<p>Do consider making any changes and improvements in the version that was already broken down into modules (“submodelled”): <code>BlockC_module6_MesaraTrade_submodelled.nlogox</code>.</p>
+<p>Here are a few examples, in order of difficulty:</p>
+<section id="basic-challenges" class="level2" data-number="30.1">
+<h2 data-number="30.1" class="anchored" data-anchor-id="basic-challenges"><span class="header-section-number">30.1</span> Basic challenges</h2>
+<ul>
+<li><p>Customise the shapes of turtles to something else than “circle 2” and “person”.</p></li>
+<li><p>Visualise <code>catchmentArea</code> as the pixel size of settlements in the NetLogo View, instead of <code>sizeLevel</code><br>
+</p></li>
+<li><p>Implement an effect of rivers in <code>patchCost</code> values. Feel free to experiment with both positive and negative effects.<br>
+## Intermediate challenges</p></li>
+<li><p>Extend the map so that the patches beyond the coastline are explicitly representing the sea and making travelling by water an attractive option for traders. When considering potential solutions, remember the computational cost of recalculating land routes.<br>
+</p></li>
+<li><p>Modify the trade mechanism so that <code>catchmentArea</code> serves also has a proxy of political sphere and <code>sizeLevel</code> as political influence or power, having an additional effect on trade attractiveness. Do such addition to the model design have any impact on the dynamics?</p></li>
+</ul>
+</section>
+<section id="advance-challenge" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="advance-challenge"><span class="header-section-number">30.2</span> Advance challenge</h2>
+<p>One <code>tick</code> in the weather data corresponds to one day, but most sites of the Messara region could be travelled within one or two days walking. Therefore, the step-by-step movement of traders used in the Pond Trade model make traders unrealistically slow in this setting. Find a way to calibrate the speed of traders to the same daily rhythm of the weather variables.</p>
+<p>(Consider that there are many potential solutions to this problem. One solution is already present in <code>BlockC_module6_MesaraTrade_submodelled_mod.nlogox</code>.)</p>
+<p>With your own solution or the one present in the repository, run the model again using the default setting and observe whether and how the change affected the dynamics.</p>
 
 
 </section>

@@ -523,7 +523,7 @@ div.csl-indent {
   <li><a href="#adapting-a-to-use-a-path-cost-gradient" id="toc-adapting-a-to-use-a-path-cost-gradient" class="nav-link active" data-scroll-target="#adapting-a-to-use-a-path-cost-gradient"><span class="header-section-number">28.1</span> Adapting A* to use a path cost gradient</a></li>
   <li><a href="#implementing-file-export-import-procedures-a-solution-to-handle-a-larger-grid" id="toc-implementing-file-export-import-procedures-a-solution-to-handle-a-larger-grid" class="nav-link" data-scroll-target="#implementing-file-export-import-procedures-a-solution-to-handle-a-larger-grid"><span class="header-section-number">28.2</span> Implementing file export-import procedures: a solution to handle a larger grid</a></li>
   <li><a href="#run-and-export-routes" id="toc-run-and-export-routes" class="nav-link" data-scroll-target="#run-and-export-routes"><span class="header-section-number">28.3</span> Run and export routes</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">28.4</span> Conclusion</a></li>
+  <li><a href="#pause-for-interpretation" id="toc-pause-for-interpretation" class="nav-link" data-scroll-target="#pause-for-interpretation"><span class="header-section-number">28.4</span> Pause for interpretation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-routes.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -578,11 +578,7 @@ end</code></pre>
 <h2 data-number="28.2" class="anchored" data-anchor-id="implementing-file-export-import-procedures-a-solution-to-handle-a-larger-grid"><span class="header-section-number">28.2</span> Implementing file export-import procedures: a solution to handle a larger grid</h2>
 <p>With the large size of the map and the higher number of settlements, we expect A* calculation of routes to take significant computation time. For this reason, we are highly motivated to make of route calculation the subject of a module, which is able to export the variable <code>routes</code> to a file that can be stored and imported later.</p>
 <p>As we are already using <code>export-world</code> to save our height map with flows, we implement procedures that can manage the export and import of the <code>routes</code> variable specifically.</p>
-<pre><code>;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;; DATA LOAD AND PREPARATION ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-to export-routes-to-file
+<pre><code>to export-routes-to-file
 
   ;;; build a unique file name to identify current setting
   let filePath (word "data/routes/routes_" simulation-period "_w=" world-width "_h=" world-height "_randomSeed=" randomSeed ".txt")
@@ -637,8 +633,8 @@ end</code></pre>
 <em>Screenshot of the ‘routes’ module displaying routes between MMIB sites</em></p>
 <p>Relying on the tint of routes, we can immediately see that most paths are used by more than one route (bright red), which could be hinting a relatively stable road structure. A more interesting, but less obvious insight is that</p>
 </section>
-<section id="conclusion" class="level2" data-number="28.4">
-<h2 data-number="28.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">28.4</span> Conclusion</h2>
+<section id="pause-for-interpretation" class="level2" data-number="28.4">
+<h2 data-number="28.4" class="anchored" data-anchor-id="pause-for-interpretation"><span class="header-section-number">28.4</span> Pause for interpretation</h2>
 <p>Note that the routes calculated with our implementation of A* generally agrees with Paliou and Bevan <span class="citation" data-cites="paliou_evolving_2016">(<a href="references.html#ref-paliou_evolving_2016" role="doc-biblioref">Paliou and Bevan 2016</a>)</span> analysis using other techniques. Routes are distinctively different between periods, with a minimal overlap during the Prepalatial (EMIII-MMIA) period and the Protopalatial (MMIB) period marked with a much higher centrality in the lower valley, where Phaistos is located.</p>
 <p>However, do remember that this result is obtained only by combining elevation and site distributions using a least path cost algorithm. A* is a procedural algorithm, which contains explicative elements, but is not a simulation in the strict sense (i.e.&nbsp;the aim is finding an optimal path, not the representation of real instance of path walking). We are yet to observe what effects the Pond Trade mechanism have over the economical size of each site, given the routes available in each period.</p>
 
