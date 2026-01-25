@@ -38,10 +38,6 @@ With the large size of the map and the higher number of settlements, we expect A
 As we are already using `export-world` to save our height map with flows, we implement procedures that can manage the export and import of the `routes` variable specifically.
 
 ```
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;; DATA LOAD AND PREPARATION ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 to export-routes-to-file
 
   ;;; build a unique file name to identify current setting
@@ -102,7 +98,7 @@ Alternatively, you may simply execute `setup` with `import-routes` switched on, 
 
 Relying on the tint of routes, we can immediately see that most paths are used by more than one route (bright red), which could be hinting a relatively stable road structure. A more interesting, but less obvious insight is that 
 
-## Conclusion
+## Pause for interpretation
 
 Note that the routes calculated with our implementation of A* generally agrees with Paliou and Bevan [@paliou_evolving_2016] analysis using other techniques. Routes are distinctively different between periods, with a minimal overlap during the Prepalatial (EMIII-MMIA) period and the Protopalatial (MMIB) period marked with a much higher centrality in the lower valley, where Phaistos is located.
 

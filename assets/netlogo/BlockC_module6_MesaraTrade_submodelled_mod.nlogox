@@ -488,17 +488,17 @@ histogram [relativePathCostInPort + item 4 culturalVector] of settlements</updat
     <monitor x="1140" precision="2" y="1222" height="60" fontSize="9" width="100" display="mean">meanLandTechTrait</monitor>
     <monitor x="1245" precision="2" y="1222" height="60" fontSize="9" width="100" display="std. dev">stdDevLandTechTrait</monitor>
     <monitor x="1350" precision="2" y="1222" height="60" fontSize="9" width="104" display="modes">(word (length modesLandTechTrait) " " modesLandTechTrait)</monitor>
-    <slider x="33" step="0.01" y="849" max="par_albedo_max" width="261" display="par_albedo_min" height="50" min="0" direction="Horizontal" default="0.2" variable="par_albedo_min"></slider>
-    <slider x="33" step="0.01" y="961" max="drainage-coefficient_max" width="261" display="drainage-coefficient_min" height="50" min="0" direction="Horizontal" default="0.2" variable="drainage-coefficient_min"></slider>
+    <slider x="33" step="0.01" y="849" max="par_albedo_max" width="261" display="par_albedo_min" height="50" min="0" direction="Horizontal" default="0.1" variable="par_albedo_min"></slider>
+    <slider x="33" step="0.01" y="961" max="drainage-coefficient_max" width="261" display="drainage-coefficient_min" height="50" min="0" direction="Horizontal" default="0.3" variable="drainage-coefficient_min"></slider>
     <slider x="33" step="1" y="1017" max="root-zone-depth_max" width="261" display="root-zone-depth_min" height="50" min="0" direction="Horizontal" default="200.0" variable="root-zone-depth_min" units="mm"></slider>
-    <slider x="33" step="1" y="1073" max="runoff-curve_max" width="261" display="runoff-curve_min" height="50" min="0" direction="Horizontal" default="5.0" variable="runoff-curve_min"></slider>
+    <slider x="33" step="1" y="1073" max="runoff-curve_max" width="261" display="runoff-curve_min" height="50" min="0" direction="Horizontal" default="30.0" variable="runoff-curve_min"></slider>
     <slider x="33" step="0.01" y="905" max="water-holding-capacity_max" width="261" display="water-holding-capacity_min" height="50" min="0.01" direction="Horizontal" default="0.05" variable="water-holding-capacity_min" units="cm3/cm3"></slider>
     <monitor x="558" precision="2" y="954" height="60" fontSize="9" width="100" display="DC [min, max]">(list (precision DC_min 2) (precision DC_max 2))</monitor>
     <monitor x="558" precision="2" y="1010" height="60" fontSize="9" width="100" display="z [min, max]">(list (precision z_min 2) (precision z_max 2))</monitor>
     <slider x="300" step="1" y="1068" max="100" width="257" display="runoff-curve_max" height="50" min="runoff-curve_min" direction="Horizontal" default="80.0" variable="runoff-curve_max"></slider>
     <slider x="300" step="0.01" y="848" max="1" width="257" display="par_albedo_max" height="50" min="par_albedo_min" direction="Horizontal" default="0.5" variable="par_albedo_max"></slider>
-    <slider x="300" step="1" y="903" max="0.2" width="257" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.0" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
-    <slider x="300" step="1" y="958" max="1" width="257" display="drainage-coefficient_max" height="50" min="drainage-coefficient_min" direction="Horizontal" default="2000.0" variable="drainage-coefficient_max"></slider>
+    <slider x="300" step="1" y="903" max="0.2" width="257" display="water-holding-capacity_max" height="50" min="water-holding-capacity_min" direction="Horizontal" default="0.25" variable="water-holding-capacity_max" units="cm3/cm3"></slider>
+    <slider x="300" step="1" y="958" max="1" width="257" display="drainage-coefficient_max" height="50" min="drainage-coefficient_min" direction="Horizontal" default="0.7" variable="drainage-coefficient_max"></slider>
     <slider x="300" step="1" y="1013" max="2000" width="257" display="root-zone-depth_max" height="50" min="root-zone-depth_min" direction="Horizontal" default="2000.0" variable="root-zone-depth_max" units="mm"></slider>
     <monitor x="558" precision="2" y="842" height="60" fontSize="9" width="100" display="albedo [min, max]">(list (precision albedo_min 2) (precision albedo_max 2))</monitor>
     <monitor x="558" precision="2" y="898" height="60" fontSize="9" width="100" display="WHC [min, max]">(list (precision WHC_min 2) (precision WHC_max 2))</monitor>

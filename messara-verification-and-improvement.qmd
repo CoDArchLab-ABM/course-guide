@@ -1,11 +1,25 @@
 # Verifying and improving {#messara-verification-and-improvement}
 
-
-## Margins to improve and explore
-
 There are many other points to refactor, explore alternatives and expand. Just remember to first give it a think and then start writing code.
 
-For example:  
-- Can we visualise `catchmentArea` of settlements in the NetLogo View, instead of `sizeLevel`?
-- Could we find a way to calibrate the speed of traders to the same daily rhythm of the weather variables?  
-- Could rivers also affect `patchCost`?  
+Do consider making any changes and improvements in the version that was already broken down into modules ("submodelled"): `BlockC_module6_MesaraTrade_submodelled.nlogox`. 
+
+Here are a few examples, in order of difficulty:  
+
+## Basic challenges
+
+- Customise the shapes of turtles to something else than "circle 2" and "person".
+- Visualise `catchmentArea` as the pixel size of settlements in the NetLogo View, instead of `sizeLevel`  
+- Implement an effect of rivers in `patchCost` values. Feel free to experiment with both positive and negative effects.  
+## Intermediate challenges
+
+- Extend the map so that the patches beyond the coastline are explicitly representing the sea and making travelling by water an attractive option for traders. When considering potential solutions, remember the computational cost of recalculating land routes.  
+- Modify the trade mechanism so that `catchmentArea` serves also has a proxy of political sphere and `sizeLevel` as political influence or power, having an additional effect on trade attractiveness. Do such addition to the model design have any impact on the dynamics?
+
+## Advance challenge
+
+One `tick` in the weather data corresponds to one day, but most sites of the Messara region could be travelled within one or two days walking. Therefore, the step-by-step movement of traders used in the Pond Trade model make traders unrealistically slow in this setting. Find a way to calibrate the speed of traders to the same daily rhythm of the weather variables.
+
+(Consider that there are many potential solutions to this problem. One solution is already present in `BlockC_module6_MesaraTrade_submodelled_mod.nlogox`.)
+
+With your own solution or the one present in the repository, run the model again using the default setting and observe whether and how the change affected the dynamics.

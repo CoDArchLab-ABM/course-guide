@@ -192,7 +192,7 @@ to go
 end
 ```
 
-## Extension: ARID as a factor of settlement productivity
+## ARID as a factor of settlement productivity
 
 Last, we need to connect ARID to settlement productivity.
 
@@ -255,10 +255,14 @@ end
 
 And *voilà*! We can now run our boosted Pond Trade model within the context of our case study.
 
+## Checking the milestone File (module 6)
+
 ![View of MesaraTrade after set up](assets/screenshots/BlockC_module6_MesaraTrade view.png)  
 *View of MesaraTrade after set up*
 
 ![View of MesaraTrade interface](assets/screenshots/BlockC_module6_MesaraTrade interface.png)  
 *View of MesaraTrade interface*
 
-But WAIT! Is there something off about how the new version is running?
+Run the model for a few years using the default configuration. Observe the behaviour of traders and the overall dynamics of settlements' economical size and the trade between them. Is there something off about how the new version is running? 
+
+Think about the case study and the mechanisms targeted by the original Pond Trade model. What aspects do you find problematic?
