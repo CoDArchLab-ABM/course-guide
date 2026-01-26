@@ -92,9 +92,10 @@ ggplot(importance_df, aes(x = reorder(Parameter, -MDA), y = MDA)) +
 **4. Interpret the Results**
 
 After analysing feature importance:
-- **Key parameters** can be identified for further refinement.
-- **Unimportant parameters** can be removed to simplify the model.
-- **Interactions between parameters** can be explored.
+
+- **Key parameters** can be identified for further refinement.  
+- **Unimportant parameters** can be removed to simplify the model.  
+- **Interactions between parameters** can be explored.  
 
 ---
 
