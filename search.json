@@ -2176,7 +2176,18 @@
     "href": "messara-verification-and-improvement.html#basic-challenges",
     "title": "30  Verifying and improving",
     "section": "",
-    "text": "Customise the shapes of turtles to something else than “circle 2” and “person”.\nVisualise catchmentArea as the pixel size of settlements in the NetLogo View, instead of sizeLevel\n\nImplement an effect of rivers in patchCost values. Feel free to experiment with both positive and negative effects.\n## Intermediate challenges\nExtend the map so that the patches beyond the coastline are explicitly representing the sea and making travelling by water an attractive option for traders. When considering potential solutions, remember the computational cost of recalculating land routes.\n\nModify the trade mechanism so that catchmentArea serves also has a proxy of political sphere and sizeLevel as political influence or power, having an additional effect on trade attractiveness. Do such addition to the model design have any impact on the dynamics?",
+    "text": "Customise the shapes of turtles to something else than “circle 2” and “person”.\nVisualise catchmentArea as the pixel size of settlements in the NetLogo View, instead of sizeLevel\n\nImplement an effect of rivers in patchCost values. Feel free to experiment with both positive and negative effects.",
+    "crumbs": [
+      "Messara Trade (III): integrating complex parts",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Verifying and improving</span>"
+    ]
+  },
+  {
+    "objectID": "messara-verification-and-improvement.html#intermediate-challenges",
+    "href": "messara-verification-and-improvement.html#intermediate-challenges",
+    "title": "30  Verifying and improving",
+    "section": "30.2 Intermediate challenges",
+    "text": "30.2 Intermediate challenges\n\nExtend the map so that the patches beyond the coastline are explicitly representing the sea and making travelling by water an attractive option for traders. When considering potential solutions, remember the computational cost of recalculating land routes.\n\nModify the trade mechanism so that catchmentArea serves also has a proxy of political sphere and sizeLevel as political influence or power, having an additional effect on trade attractiveness. Do such addition to the model design have any impact on the dynamics?",
     "crumbs": [
       "Messara Trade (III): integrating complex parts",
       "<span class='chapter-number'>30</span>  <span class='chapter-title'>Verifying and improving</span>"
@@ -2186,8 +2197,8 @@
     "objectID": "messara-verification-and-improvement.html#advance-challenge",
     "href": "messara-verification-and-improvement.html#advance-challenge",
     "title": "30  Verifying and improving",
-    "section": "30.2 Advance challenge",
-    "text": "30.2 Advance challenge\nOne tick in the weather data corresponds to one day, but most sites of the Messara region could be travelled within one or two days walking. Therefore, the step-by-step movement of traders used in the Pond Trade model make traders unrealistically slow in this setting. Find a way to calibrate the speed of traders to the same daily rhythm of the weather variables.\n(Consider that there are many potential solutions to this problem. One solution is already present in BlockC_module6_MesaraTrade_submodelled_mod.nlogox.)\nWith your own solution or the one present in the repository, run the model again using the default setting and observe whether and how the change affected the dynamics.",
+    "section": "30.3 Advance challenge",
+    "text": "30.3 Advance challenge\nOne tick in the weather data corresponds to one day, but most sites of the Messara region could be travelled within one or two days walking. Therefore, the step-by-step movement of traders used in the Pond Trade model make traders unrealistically slow in this setting. Find a way to calibrate the speed of traders to the same daily rhythm of the weather variables.\n(Consider that there are many potential solutions to this problem. One solution is already present in BlockC_module6_MesaraTrade_submodelled_mod.nlogox.)\nWith your own solution or the one present in the repository, run the model again using the default setting and observe whether and how the change affected the dynamics.",
     "crumbs": [
       "Messara Trade (III): integrating complex parts",
       "<span class='chapter-number'>30</span>  <span class='chapter-title'>Verifying and improving</span>"
