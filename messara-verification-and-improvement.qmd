@@ -11,6 +11,7 @@ Here are a few examples, in order of difficulty:
 - Customise the shapes of turtles to something else than "circle 2" and "person".
 - Visualise `catchmentArea` as the pixel size of settlements in the NetLogo View, instead of `sizeLevel`  
 - Implement an effect of rivers in `patchCost` values. Feel free to experiment with both positive and negative effects.  
+
 ## Intermediate challenges
 
 - Extend the map so that the patches beyond the coastline are explicitly representing the sea and making travelling by water an attractive option for traders. When considering potential solutions, remember the computational cost of recalculating land routes.  
