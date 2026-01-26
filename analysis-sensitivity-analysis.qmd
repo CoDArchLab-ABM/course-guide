@@ -99,8 +99,9 @@ After analysing feature importance:
 ---
 
 **Summary**
+
 | Step | Action |
-|------|--------|
+|---|---|
 | **1** | Generate parameter samples using LHS, Sobol, or Random Sampling |
 | **2** | Run simulations to obtain output values |
 | **3** | Train a Random Forest model using `randomForest` |
