@@ -82,7 +82,7 @@ head(samples_sobol)
 ### Comparison of Methods
 
 | Sampling Method | Uniform Coverage | Computational Efficiency | Best Use Case |
-|----------------|------------------|-------------------------|---------------|
+|---|---|---|---|
 | **Random** | Poor | Fast | Basic sensitivity analysis |
 | **Latin Hypercube (LHS)** | Good | Moderate | Optimized space-filling with no interaction control |
 | **Sobol** | Excellent | Moderate | Global sensitivity analysis |
