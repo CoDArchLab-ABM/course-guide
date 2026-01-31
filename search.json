@@ -2209,15 +2209,15 @@
     "href": "sim-behavior-space.html",
     "title": "31  Using NetLogo’s Behaviour Space",
     "section": "",
-    "text": "31.1 Introduction",
+    "text": "31.1 Workflow\nIn this chapter, we will learn the basics about how to set up and run simulation experiments using NetLogo’s Behavior Space. We will go from “playing with a model” to doing systematic computational experiments.\nFirst of all, you should know that “experiments” within this context mean a batch of simulations (a.k.a. simulation runs) that contains a certain pattern of variation for parameter configurations or model design alternatives. The main goal of an simulation experiment is the exploration of a part of the model’s parameter space, that is, to observe the effects of varying parameters (or design aspects regulated as parameters) on the selected output or observation variables.\nWe can technically perform such experiments by varying and running each configuration at a time using the model interface, exporting the variables we wish to analyse after each run. However, this task is greatly automatised by Behavior Space. This tool allows us to configure multiple simulations with multiple parameter configurations within the same place, which can be edited and saved to the same model file. Once we give the order one time, the simulations of an experiment will be run consecutively using parallel computation, and saving all predefined output variables to the same dataset file.\nWe will see in this chapter how to proceed for different types of experiment. However, keep in mind NetLogo’s own documentation and tutorials on Behavior Space.\nIn sake of simplicity, in this and following chapters, we will refer to the Artifical Anasazi model, included in NetLogo’s model library.\nBefore you start, always keep in mind the general workflow when doing simulation experiments this way:",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
     ]
   },
   {
-    "objectID": "sim-behavior-space.html#introduction",
-    "href": "sim-behavior-space.html#introduction",
+    "objectID": "sim-behavior-space.html#workflow",
+    "href": "sim-behavior-space.html#workflow",
     "title": "31  Using NetLogo’s Behaviour Space",
     "section": "",
     "text": "⚙️ Model setup: NetLogo model ready\n        ↓\n🎛️ Define experiment: BehaviorSpace parameters & setting\n        ↓\n▶️ Run experiments: Multiple model runs with varied parameters\n        ↓\n💾 Export results: CSV output files\n        ↓\n📊 Analyse results: R scripts for plots & statistics\n        ↓\n🧩 Interpret results: Compare to hypotheses or data\n        ↺\n🔁 Refine model or experiment: Adjust parameters, mechanisms",
@@ -2227,11 +2227,22 @@
     ]
   },
   {
+    "objectID": "sim-behavior-space.html#creating-a-new-experiment",
+    "href": "sim-behavior-space.html#creating-a-new-experiment",
+    "title": "31  Using NetLogo’s Behaviour Space",
+    "section": "31.2 Creating a new experiment",
+    "text": "31.2 Creating a new experiment\nYou can access it in the top bar menu at “Tools &gt; BehaviorSpace” or pressing Crtl+Shif+B. If you now open it in a fresh version of the model, you should see no experiments. Press “New” and you will see a pop-up window:\n\n\n\nExperiment window\n\n\nFrom top to bottom, a few points are worth clarifying:\n\nExperiment name: name your experiment according to its pattern of configuration, e.g. “experiment-fertility”. Notice that this name will be used in the name of the file.\n\nVariables to vary and how: in the second text box, you will specify the variables to explore (i.e. parameters) using a specific syntax:\n\n[\"variable-name\" value] (fixed value); e.g., [\"death-age\" 38]\n\n[\"variable-name\" value1 value2 value3] (multiple values); e.g. [\"harvest-variance\" 0.2 0.4 0.41 0.45 0.5 0.8]\n\n[\"variable-name\" minValue maxValue step] (multiple values with regular steps); e.g. [\"harvest-variance\" [0.2 0.8 0.2]]\n\n\nRepetitions: number of simulations to be run with each configuration. Only use a value greater than one if your model does not control the random seed number; if you do control it, repetitions will yield the same results.\n\nReporters: in the fourth text box, you should specify the names of all the variables or calculations you wish to record in the output dataset, always within the observer scope. Write them in separate lines. By default, NetLogo includes a count turtles command as an example, but to keep the link between model code and simulation results, you should always report variables already declared in your code. For this, it is easier and recommended to copy and paste their names from inside the globals [ ... ] declaration.\n\nRun metrics every step: Whether you want NetLogo to print all the reporters every time step (✅) or only at the end of the simulation (⬜).\n\nPre and post experiment commands, post run commands: Here you can add small scripts specifying extra procedures to be executed in different moments before and after simulations. To see the instructions of each field, with the window selected, move your cursor on top of the field’s title. The instruction text should appear briefly.\n\nStop condition and Time limit: if your model does not have a stop condition specified in the code, you may add it here or set an arbitrary number of steps as a limit. Note that it is essential to have a stop condition; if not, your experiment will end only with your machine being out of memory or not at all!",
+    "crumbs": [
+      "Designing and running Simulation experiments",
+      "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
+    ]
+  },
+  {
     "objectID": "sim-behavior-space.html#single-simulation-run",
     "href": "sim-behavior-space.html#single-simulation-run",
     "title": "31  Using NetLogo’s Behaviour Space",
-    "section": "31.2 Single simulation run",
-    "text": "31.2 Single simulation run",
+    "section": "31.3 Single simulation run",
+    "text": "31.3 Single simulation run\nIn the Artificial Anasazi model, a single simulation run corresponds to one possible history of household settlement, farming, movement, and abandonment under a fixed set of assumptions (e.g. fertility, harvest variability, maize productivity).\nRunning a single configuration in BehaviorSpace is useful for:\n\nchecking that the model behaves plausibly (e.g. households farm, move, and sometimes disappear),\nverifying that the chosen reporters (e.g. population size, number of settlements) are correctly recorded,\nestablishing a baseline scenario that can later be compared against alternative parameter settings.\n\nTo do this, all parameters in the experiment are assigned fixed values and the number of repetitions is set to 1. The resulting output mirrors what you would observe from a single manual run, but in a form that is consistent with later experiments and external analysis.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nGiven “typical” values for fertility and harvest variability, does the model produce a broadly stable population, or an eventual decline?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nCreate a BehaviorSpace experiment with no varying parameters and 1 repetition.\n\nRun the experiment once.\nInspect the output file.\nIdentify which reported variables describe population, settlements, and time.\n\nWhat does this single run suggest about the overall behaviour of the system?",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
@@ -2241,8 +2252,8 @@
     "objectID": "sim-behavior-space.html#repetitions-under-the-same-parameter-configuration",
     "href": "sim-behavior-space.html#repetitions-under-the-same-parameter-configuration",
     "title": "31  Using NetLogo’s Behaviour Space",
-    "section": "31.3 Repetitions under the same parameter configuration",
-    "text": "31.3 Repetitions under the same parameter configuration",
+    "section": "31.4 Repetitions under the same parameter configuration",
+    "text": "31.4 Repetitions under the same parameter configuration\nThe Artificial Anasazi model includes several stochastic elements, such as variation in harvest success and demographic events. This means that even with identical parameters, two runs may lead to different settlement trajectories or population outcomes.\nRunning multiple repetitions under the same parameter configuration allows us to:\n\nquantify the range of possible outcomes (e.g. early collapse vs. long-term persistence),\nestimate average trends in population size or settlement count,\nassess whether observed patterns are robust or driven by chance.\n\nIn BehaviorSpace, this is done by increasing the Repetitions value. Each repetition represents a different random realisation of the same underlying assumptions. In archaeological terms, this can be interpreted as exploring multiple plausible histories consistent with the same environmental and behavioural constraints.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nUnder the same climatic conditions, how variable are population trajectories? Are collapse outcomes rare events or common ones?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nUsing the same parameter values as before:\n\nSet the number of repetitions to at least 10.\nRun the experiment.\nPlot or inspect the distribution of final population sizes.\n\nDo all runs behave similarly, or do they diverge substantially?",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
@@ -2252,8 +2263,8 @@
     "objectID": "sim-behavior-space.html#varying-parameters",
     "href": "sim-behavior-space.html#varying-parameters",
     "title": "31  Using NetLogo’s Behaviour Space",
-    "section": "31.4 Varying parameters",
-    "text": "31.4 Varying parameters",
+    "section": "31.5 Varying parameters",
+    "text": "31.5 Varying parameters\nVarying parameters in the Artificial Anasazi model allows us to explore how assumptions about environment and behaviour affect long-term settlement dynamics.\nTypical parameters of interest include:\n\nharvest-variance, representing climatic unpredictability,\ndeath-age or fertility-related parameters, affecting demographic turnover,\nproductivity or carrying-capacity-related variables.\n\nBehaviorSpace automatically generates all combinations of parameter values. For example, varying harvest variability across several levels allows us to examine how increasing environmental risk influences population stability, mobility, and collapse.\nWhen working with the Anasazi model, parameter variation is often used to:\n\ntest hypotheses about environmental stress,\nexplore sensitivity to poorly constrained demographic parameters,\ncompare alternative explanations for population decline.\n\nAs a rule, parameter ranges should be meaningful rather than exhaustive.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nAt what level of harvest variability does the simulated population become unstable or collapse?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nCreate an experiment where harvest-variance takes at least 4 different values.\n\nKeep all other parameters fixed.\nUse multiple repetitions per value.\nCompare average population trajectories across values.\n\nIs there a clear threshold where behaviour changes qualitatively?",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
@@ -2263,8 +2274,8 @@
     "objectID": "sim-behavior-space.html#selecting-output-variables",
     "href": "sim-behavior-space.html#selecting-output-variables",
     "title": "31  Using NetLogo’s Behaviour Space",
-    "section": "31.5 selecting output variables",
-    "text": "31.5 selecting output variables",
+    "section": "31.6 Selecting output variables",
+    "text": "31.6 Selecting output variables\nIn the Artificial Anasazi model, output variables should be chosen to reflect archaeological observables or theoretical constructs, rather than internal implementation details.\nCommonly reported variables include:\n\ntotal population size,\nnumber of households,\nnumber of occupied settlements,\naggregated measures of land use or farming success.\n\nThese variables are typically declared as globals in the model code and can be directly reported in BehaviorSpace. Reporting such variables makes it easier to link simulation outcomes to archaeological data or interpretive narratives.\nYou must also decide whether to record outputs:\n\nonly at the end of each run, to compare final states (e.g. persistence vs. collapse), or\nat every time step, to analyse trajectories such as population growth and decline.\n\nThe second option is particularly useful when comparing simulated dynamics to diachronic archaeological records.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nDo population declines occur gradually or abruptly in the model, and how does this compare to archaeological reconstructions?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nRun the same experiment twice:\n\nrecording outputs only at the end of each run;\nrecording outputs at every time step.\n\nWhat kinds of questions can you answer with the second dataset that are impossible with the first?",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
@@ -2274,8 +2285,8 @@
     "objectID": "sim-behavior-space.html#advanced-workflows",
     "href": "sim-behavior-space.html#advanced-workflows",
     "title": "31  Using NetLogo’s Behaviour Space",
-    "section": "31.6 Advanced workflows",
-    "text": "31.6 Advanced workflows\n\n31.6.1 Using special procedures\n\n\n31.6.2 output extra files\n\n\n31.6.3 Running settings from file",
+    "section": "31.7 Advanced workflows",
+    "text": "31.7 Advanced workflows\n\n31.7.1 Using special procedures\nIn more advanced uses of the Artificial Anasazi model, BehaviorSpace-specific primitives can be used to track or label simulation runs. For example, run numbers can be stored to distinguish between different repetitions of the same parameter set.\nThis is useful when:\n\nlinking simulation runs to external visualisations,\ndebugging unexpected outcomes,\ncombining BehaviorSpace results with spatial or temporal exports.\n\nSuch procedures should be clearly documented, as they introduce experiment-specific logic into the model.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nCan we trace which specific runs (rather than average behaviour) produce extreme outcomes such as rapid abandonment?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nInspect the output data and identify runs with extreme outcomes (e.g. earliest collapse).\n\nHow many such runs are there?\nDo they share the same parameter values?\n\nWhat does this tell you about determinism and contingency in the model?\n\n\n\n\n31.7.2 Output extra files\nSome analyses of the Artificial Anasazi model require more detailed outputs than a single CSV file can provide—for example, spatial snapshots of settlement locations or land-use patterns.\nUsing NetLogo’s file output primitives, it is possible to export:\n\nsettlement locations at specific time steps,\nspatial grids of resource availability,\nintermediate states before collapse or abandonment.\n\nWhen doing so, filenames should include the run number or parameter values to ensure traceability between files and BehaviorSpace results.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nWhere in the landscape does abandonment begin, and does it spread spatially or occur everywhere at once?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nIf spatial outputs are available:\n\nExtract settlement locations from two different runs.\nCompare their spatial patterns at the same simulation time.\n\nDo similar outcomes arise from similar spatial processes?\n\n\n\n\n31.7.3 Running settings from file\nFor large experimental designs, parameter values for the Artificial Anasazi model can be defined externally (e.g. in CSV files) and read by the model at runtime. This approach supports:\n\ntransparent and reproducible experimental designs,\nintegration with statistical tools that generate parameter sets,\ncomparison between NetLogo experiments and other modelling approaches.\n\nAlthough this goes beyond introductory use of BehaviorSpace, it reflects common practice in archaeological simulation studies and prepares students for more advanced workflows.\n\n\n\n\n\n\nNoteResearch question example\n\n\n\nHow do results change when parameter combinations are sampled systematically rather than chosen manually?\n\n\n\n\n\n\n\n\nTipExercise\n\n\n\nDesign a hypothetical experiment with many parameters.\n\nWhich parameters would you prioritise?\nWhich would you keep fixed, and why?\n\nDiscuss your choices in terms of archaeological uncertainty and interpretability.",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
