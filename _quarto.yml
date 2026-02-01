@@ -90,7 +90,6 @@ book:
       chapters:
         - analysis-visualisation.qmd
         - analysis-sensitivity-analysis.qmd
-    - conclusion.qmd
     - references.qmd
 
 bibliography: references.bib

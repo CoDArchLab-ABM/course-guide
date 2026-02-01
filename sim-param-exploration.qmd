@@ -16,9 +16,9 @@ Each parameter in a model defines one dimension of a multidimensional space. A s
 
 In the Artificial Anasazi model, parameters such as:
 
-* `harvest-variance`
+* harvest-related parameters
 * fertility or death-related parameters
-* maize productivity or environmental constraints
+* maize productivity or environmental constraints (data input)
 
 together define a parameter space in which different combinations may lead to:
 
@@ -106,9 +106,9 @@ Random sampling is particularly useful when:
 
 Rather than varying only `harvest-variance`, we might simultaneously sample:
 
-* harvest variability,
-* fertility-related parameters,
-* mortality thresholds,
+* `harvest-adjustment` (the fraction of the harvest that is actually usable)
+* fertility-related parameters
+* mortality thresholds
 
 to ask which combinations tend to produce persistence versus collapse.
 :::

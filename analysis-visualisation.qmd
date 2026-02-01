@@ -378,7 +378,9 @@ Modify the histogram code to plot:
 * or number of occupied settlements.
 
 What changes in the shape of the distribution?
+
 :::
+
 
 ::: {.callout-tip}
 
@@ -387,7 +389,9 @@ What changes in the shape of the distribution?
 Perform an experiment varying another parameter and compare with the results exploring `harvest-adjustment` and `harvest_variance`.
 
 Does this parameter show a stronger or weaker association with outcomes?
+
 :::
+
 
 ::: {.callout-tip}
 
@@ -396,4 +400,5 @@ Does this parameter show a stronger or weaker association with outcomes?
 Increase the number of sampled runs to 10.
 
 At what point does overplotting begin to obscure interpretation?
+
 :::
