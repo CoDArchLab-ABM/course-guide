@@ -166,12 +166,12 @@ Each row of this table represents **one plausible Anasazi world**.
 These configurations can then be:
 
 * read from file during BehaviorSpace setups,
-* read from file in a specific procedure in NetLogo, or
+* read from a file in a specific procedure in NetLogo, or
 * looped over using RNetLogo or nlrx, to execute simulations from R.
 
 ### Interpreting sampled results
 
-Unlike structured sweeps, random sampling does not produce neatly ordered results. Interpretation therefore relies on:
+Unlike structured sweeps, random sampling does not produce neatly ordered results. Interpretation therefore, relies on:
 
 * visualisation (scatter plots, density plots),
 * summary statistics,
@@ -179,7 +179,7 @@ Unlike structured sweeps, random sampling does not produce neatly ordered result
 
 For the Artificial Anasazi model, typical analyses might include:
 
-* relating final population size to sampled parameters,
+* relating the final population size to sampled parameters,
 * identifying parameter regions associated with early abandonment,
 * comparing distributions of outcomes rather than single trajectories.
 
@@ -214,10 +214,11 @@ This iterative process reflects how agent-based models are used as **theoretical
 
 List three parameters of the Artificial Anasazi model.
 
-* Which are well constrained archaeologically?
+* Which are well-constrained archaeologically?
 * Which are highly uncertain?
 * Which would you prioritise for exploration, and why?
-  :::
+
+:::
 
 ::: {.callout-tip}
 
@@ -227,7 +228,8 @@ Define plausible ranges for two parameters of the model.
 
 * Justify your choices in archaeological terms.
 * Discuss what kinds of outcomes you expect at the extremes.
-  :::
+
+:::
 
 ::: {.callout-tip}
 
@@ -237,4 +239,5 @@ Assume you can only afford **200 simulation runs**.
 
 * Would you prefer a structured grid or random sampling?
 * What questions would each approach allow (or prevent) you from answering?
-  :::
+
+:::
