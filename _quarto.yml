@@ -86,7 +86,6 @@ book:
       chapters:
         - sim-behavior-space.qmd
         - sim-param-exploration.qmd
-        - sim-hypothesis-test.qmd
     - part: "Analysis of simulation results"
       chapters:
         - analysis-preprocessing.qmd

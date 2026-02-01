@@ -1,95 +1,240 @@
-# Simulation experiments for parameter exploration {#sim-param-exploration}
+# Exploring parameter space {#sim-param-exploration}
 
-## Different parameter configurations
+In the previous chapter, we used BehaviorSpace to run structured simulation experiments. In this chapter, we step back and ask a broader methodological question: **how should we explore a model’s parameter space, and why?**
 
+Agent-based models such as *Artificial Anasazi* typically contain multiple parameters that are:
 
+* uncertain or weakly constrained by archaeological data,
+* interacting in non-linear ways,
+* capable of producing qualitatively different outcomes.
 
-## Alternative designs
+Parameter exploration is therefore not about “finding the right value”, but about **understanding the space of plausible behaviours** the model can generate.
 
+## What is parameter space?
 
+Each parameter in a model defines one dimension of a multidimensional space. A single simulation run corresponds to **one point** in that space.
 
-## Stochastic exploration for sensitivity analysis
+In the Artificial Anasazi model, parameters such as:
 
-To perform sensitivity analysis in a simulation model, we need to sample parameter values more efficiently than using regular intervals. There are three common sampling methods: **Random Sampling**, **Latin Hypercube Sampling (LHS)**, and **Sobol Sampling**. Below is an explanation of how to obtain parameter samples using each method in **R**.
+* `harvest-variance`
+* fertility or death-related parameters
+* maize productivity or environmental constraints
 
-### Random Sampling
-Random sampling is the simplest method, where parameter values are drawn independently from a given probability distribution (e.g., uniform, normal). This method may not cover the parameter space as efficiently as structured sampling methods.
+together define a parameter space in which different combinations may lead to:
 
-**Implementation in R**
+* long-term persistence,
+* oscillating population sizes,
+* rapid collapse and abandonment.
+
+Even with only a handful of parameters, the number of possible combinations grows very quickly.
+
+::: {.callout-note}
+
+## Artificial Anasazi example
+
+If we explore only three parameters, each with 10 possible values, this already produces
+**10 × 10 × 10 = 1,000 configurations**, before accounting for repetitions.
+:::
+
+## Why not explore everything?
+
+An exhaustive exploration of parameter space is almost never feasible:
+
+* the number of combinations explodes combinatorially,
+* many combinations are implausible,
+* simulation time and data storage become limiting factors.
+
+More importantly, **exhaustive exploration is rarely conceptually useful**. The goal is not to catalogue all possible outcomes, but to identify:
+
+* sensitive parameters,
+* thresholds and regime shifts,
+* regions of stability and instability.
+
+This motivates different **sampling strategies**.
+
+## Structured parameter exploration (grids and sweeps)
+
+BehaviorSpace is particularly well suited for **structured exploration**, where parameters are varied systematically across fixed values or ranges.
+
+Typical strategies include:
+
+* varying one parameter while keeping others fixed,
+* exploring small grids of two or three parameters,
+* increasing resolution around interesting regions.
+
+In the Artificial Anasazi model, this might involve:
+
+* sweeping `harvest-variance` from low to high values,
+* comparing population trajectories across these levels,
+* identifying values beyond which collapse becomes common.
+
+::: {.callout-note}
+
+## Artificial Anasazi example
+
+A one-dimensional sweep of `harvest-variance` allows us to ask:
+*How much environmental unpredictability can the system tolerate before settlement patterns break down?*
+:::
+
+Structured exploration is intuitive and easy to interpret, but it scales poorly as the number of parameters increases.
+
+## Alternative designs or input data
+
+Some times existing alternative design or "competing" versions of the model can be worth exploring. for this we can use the mediation of nominal parameters, which in NetLogo would typically reside in the interface as switches and choosers widgets. This is not available in the Artificial Anasazi, but the chooser `simulation-period` in the Mesara Trade could be considered in this way.
+
+## Random and quasi-random sampling
+
+When the parameter space becomes too large for structured sweeps, an alternative approach is to **sample** it.
+
+Instead of testing all combinations, we:
+
+* define plausible ranges for each parameter,
+* draw parameter values randomly (or quasi-randomly),
+* run the model for each sampled configuration.
+
+This approach treats the model as a **generator of outcomes**, which we probe statistically.
+
+Random sampling is particularly useful when:
+
+* interactions between parameters are expected,
+* we are interested in global patterns rather than fine-grained tuning,
+* we plan to analyse results in R.
+
+::: {.callout-note}
+
+## Artificial Anasazi example
+
+Rather than varying only `harvest-variance`, we might simultaneously sample:
+
+* harvest variability,
+* fertility-related parameters,
+* mortality thresholds,
+
+to ask which combinations tend to produce persistence versus collapse.
+:::
+
+## Defining plausible parameter ranges
+
+Before sampling, parameter ranges must be defined carefully.
+
+For archaeological models, this step is *theoretical*, not technical. Ranges should reflect:
+
+* archaeological estimates,
+* ethnographic analogies,
+* exploratory uncertainty rather than extremes.
+
+For example, in the Artificial Anasazi model:
+
+* `harvest-variance` might reasonably vary between low and moderate unpredictability,
+* demographic parameters should avoid biologically implausible values,
+* environmental productivity should reflect the known limits of maize agriculture.
+
+::: {.callout-warning}
+
+## Important
+
+Wide parameter ranges increase coverage, but also increase the risk of generating meaningless or misleading outcomes.
+:::
+
+## Systematic random sampling in R
+
+Once parameter ranges are defined, R can be used to generate a **design of experiments** that is then passed to NetLogo.
+
+A simple random sampling workflow in R involves:
+
+1. defining parameter ranges,
+2. drawing random samples,
+3. exporting them as a table,
+4. running NetLogo for each row.
+
+### Conceptual example (R)
+
 ```r
-set.seed(123)  # For reproducibility
-n <- 100  # Number of samples
-param1 <- runif(n, min = 0, max = 1)  # Uniform distribution
-param2 <- rnorm(n, mean = 0, sd = 1)  # Normal distribution
-
-# Combine into a data frame
-samples_random <- data.frame(param1, param2)
-head(samples_random)
-```
-📌 **Pros:** Simple and easy to implement  
-📌 **Cons:** Potential clustering of samples, leading to inefficient coverage of the parameter space.
-
-### Latin Hypercube Sampling (LHS)
-Latin Hypercube Sampling ensures that each parameter is sampled more uniformly across its range. It divides the range of each parameter into equal intervals and ensures that each interval is sampled exactly once [@chalom_parameter_2015].
-
-**Implementation in R**
-Using the **lhs** package:
-```r
-library(lhs)
 set.seed(123)
-n <- 100  # Number of samples
-k <- 2  # Number of parameters
 
-# Generate LHS sample in [0,1] range
-samples_lhs <- randomLHS(n, k)
+n <- 200  # number of sampled configurations
 
-# Transform to specific distributions
-param1 <- qunif(samples_lhs[,1], min = 0, max = 1)  # Uniform
-param2 <- qnorm(samples_lhs[,2], mean = 0, sd = 1)  # Normal
-
-# Combine into a data frame
-samples_lhs <- data.frame(param1, param2)
-head(samples_lhs)
+params <- data.frame(
+  harvest_variance = runif(n, min = 0.2, max = 0.8),
+  fertility_rate   = runif(n, min = 0.02, max = 0.06),
+  death_age        = sample(35:45, n, replace = TRUE)
+)
 ```
-📌 **Pros:** More uniform coverage of the space than random sampling  
-📌 **Cons:** Does not account for interactions between parameters explicitly
 
-### Sobol Sampling
-Sobol sampling is a **quasi-random** low-discrepancy sequence designed for global sensitivity analysis. It provides better uniformity across the space than both random and LHS methods [@renardy_sobol_2021].
+Each row of this table represents **one plausible Anasazi world**.
 
-**Implementation in R**
-Using the **randtoolbox** package:
-```r
-library(randtoolbox)
-set.seed(123)
-n <- 100  # Number of samples
-k <- 2  # Number of parameters
+These configurations can then be:
 
-# Generate Sobol sequence
-samples_sobol <- sobol(n, dim = k, scrambling = 3)
+* read from file during BehaviorSpace setups,
+* read from file in a specific procedure in NetLogo, or
+* looped over using RNetLogo or nlrx, to execute simulations from R.
 
-# Transform to specific distributions
-param1 <- qunif(samples_sobol[,1], min = 0, max = 1)  # Uniform
-param2 <- qnorm(samples_sobol[,2], mean = 0, sd = 1)  # Normal
+### Interpreting sampled results
 
-# Combine into a data frame
-samples_sobol <- data.frame(param1, param2)
-head(samples_sobol)
-```
-📌 **Pros:** Highly efficient, low-discrepancy sequence for sensitivity analysis  
-📌 **Cons:** Requires specialized libraries, and might not be ideal for small sample sizes
+Unlike structured sweeps, random sampling does not produce neatly ordered results. Interpretation therefore relies on:
 
-### Comparison of Methods
+* visualisation (scatter plots, density plots),
+* summary statistics,
+* comparisons between outcome categories (e.g. persistence vs. collapse).
 
-| Sampling Method | Uniform Coverage | Computational Efficiency | Best Use Case |
-|---|---|---|---|
-| **Random** | Poor | Fast | Basic sensitivity analysis |
-| **Latin Hypercube (LHS)** | Good | Moderate | Optimized space-filling with no interaction control |
-| **Sobol** | Excellent | Moderate | Global sensitivity analysis |
+For the Artificial Anasazi model, typical analyses might include:
 
-### Conclusion
+* relating final population size to sampled parameters,
+* identifying parameter regions associated with early abandonment,
+* comparing distributions of outcomes rather than single trajectories.
 
-- **Use random sampling** when simplicity is preferred.  
-- **Use LHS** when uniform coverage of individual parameters is important.  
-- **Use Sobol sampling** for high-dimensional sensitivity analysis.  
+::: {.callout-note}
 
+## Artificial Anasazi example
+
+Instead of asking *“What happens when harvest variability is 0.6?”*,
+we ask *“Under which combinations of parameters does collapse become likely?”*
+:::
+
+### Complementarity with BehaviorSpace
+
+BehaviorSpace and R-based sampling are not competing approaches.
+
+* **BehaviorSpace** excels at structured, transparent experiments.
+* **R-based sampling** excels at large-scale, flexible exploration.
+
+In practice, a common workflow is:
+
+1. structured exploration to build intuition,
+2. random sampling to explore interactions,
+3. refined sweeps around interesting regions.
+
+This iterative process reflects how agent-based models are used as **theoretical laboratories**, not predictive machines.
+
+## Exercises
+
+::: {.callout-tip}
+
+## Exercise 1: Conceptual
+
+List three parameters of the Artificial Anasazi model.
+
+* Which are well constrained archaeologically?
+* Which are highly uncertain?
+* Which would you prioritise for exploration, and why?
+  :::
+
+::: {.callout-tip}
+
+## Exercise 2: Design
+
+Define plausible ranges for two parameters of the model.
+
+* Justify your choices in archaeological terms.
+* Discuss what kinds of outcomes you expect at the extremes.
+  :::
+
+::: {.callout-tip}
+
+## Exercise 3: Sampling logic
+
+Assume you can only afford **200 simulation runs**.
+
+* Would you prefer a structured grid or random sampling?
+* What questions would each approach allow (or prevent) you from answering?
+  :::

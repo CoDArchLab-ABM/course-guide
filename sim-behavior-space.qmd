@@ -15,13 +15,14 @@ A simple model of health deterioration after developing lung cancer could includ
 
 In this case, we would want to explore each quadrant of the parameter space (i.e., each combination of sex and smoker/non-smoker status) seeking to detect the effect of these two parameters in the individual health (dependent variable). We might find, for example, that both being not smoker and female have a positive effect on health, yet quantify that not smoking has a greater impact.
 
+We will see more concrete examples of this in the next chapter.
 :::
 
 We can technically perform such experiments by varying and running each configuration at a time using the model interface, exporting the variables we wish to analyse after each run. However, this task is greatly automatised by Behavior Space. This tool allows us to configure multiple simulations with multiple parameter configurations within the same place, which can be edited and saved to the same model file. Once we give the order one time, the simulations of an experiment will be run consecutively using parallel computation, and saving all predefined output variables to the same dataset file.
 
 We will see in this chapter how to proceed for different types of experiment. However, keep in mind NetLogo's own documentation and tutorials on [Behavior Space](https://docs.netlogo.org/7.0.3/behaviorspace).
 
-In sake of simplicity, in this and following chapters, we will refer to the Artifical Anasazi model, included in NetLogo's model library.
+In sake of simplicity, in this and following chapters, we will refer to the Artifical Anasazi model, included in NetLogo's model library. For reference, a version of this model with a few experiments already created is stored at: [https://github.com/CoDArchLab-ABM/course-guide/blob/main/assets/netlogo/Artificial%20Anasazi_experiments.nlogox](https://github.com/CoDArchLab-ABM/course-guide/blob/main/assets/netlogo/Artificial%20Anasazi_experiments.nlogox)
 
 ## Workflow
 
