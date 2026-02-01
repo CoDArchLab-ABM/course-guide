@@ -2308,7 +2308,7 @@
     "href": "sim-param-exploration.html#what-is-parameter-space",
     "title": "32  Exploring parameter space",
     "section": "",
-    "text": "harvest-variance\nfertility or death-related parameters\nmaize productivity or environmental constraints\n\n\n\nlong-term persistence,\noscillating population sizes,\nrapid collapse and abandonment.\n\n\n\n\n\n\n\n\nNoteArtificial Anasazi example\n\n\n\nIf we explore only three parameters, each with 10 possible values, this already produces 10 × 10 × 10 = 1,000 configurations, before accounting for repetitions.",
+    "text": "harvest-related parameters\nfertility or death-related parameters\nmaize productivity or environmental constraints (data input)\n\n\n\nlong-term persistence,\noscillating population sizes,\nrapid collapse and abandonment.\n\n\n\n\n\n\n\n\nNoteArtificial Anasazi example\n\n\n\nIf we explore only three parameters, each with 10 possible values, this already produces 10 × 10 × 10 = 1,000 configurations, before accounting for repetitions.",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>32</span>  <span class='chapter-title'>Exploring parameter space</span>"
@@ -2352,7 +2352,7 @@
     "href": "sim-param-exploration.html#random-and-quasi-random-sampling",
     "title": "32  Exploring parameter space",
     "section": "32.5 Random and quasi-random sampling",
-    "text": "32.5 Random and quasi-random sampling\nWhen the parameter space becomes too large for structured sweeps, an alternative approach is to sample it.\nInstead of testing all combinations, we:\n\ndefine plausible ranges for each parameter,\ndraw parameter values randomly (or quasi-randomly),\nrun the model for each sampled configuration.\n\nThis approach treats the model as a generator of outcomes, which we probe statistically.\nRandom sampling is particularly useful when:\n\ninteractions between parameters are expected,\nwe are interested in global patterns rather than fine-grained tuning,\nwe plan to analyse results in R.\n\n\n\n\n\n\n\nNoteArtificial Anasazi example\n\n\n\nRather than varying only harvest-variance, we might simultaneously sample:\n\nharvest variability,\nfertility-related parameters,\nmortality thresholds,\n\nto ask which combinations tend to produce persistence versus collapse.",
+    "text": "32.5 Random and quasi-random sampling\nWhen the parameter space becomes too large for structured sweeps, an alternative approach is to sample it.\nInstead of testing all combinations, we:\n\ndefine plausible ranges for each parameter,\ndraw parameter values randomly (or quasi-randomly),\nrun the model for each sampled configuration.\n\nThis approach treats the model as a generator of outcomes, which we probe statistically.\nRandom sampling is particularly useful when:\n\ninteractions between parameters are expected,\nwe are interested in global patterns rather than fine-grained tuning,\nwe plan to analyse results in R.\n\n\n\n\n\n\n\nNoteArtificial Anasazi example\n\n\n\nRather than varying only harvest-variance, we might simultaneously sample:\n\nharvest-adjustment (the fraction of the harvest that is actually usable)\nfertility-related parameters\nmortality thresholds\n\nto ask which combinations tend to produce persistence versus collapse.",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>32</span>  <span class='chapter-title'>Exploring parameter space</span>"

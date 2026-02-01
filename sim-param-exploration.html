@@ -503,12 +503,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Conclusion and free practice</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -574,9 +568,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Each parameter in a model defines one dimension of a multidimensional space. A single simulation run corresponds to <strong>one point</strong> in that space.</p>
 <p>In the Artificial Anasazi model, parameters such as:</p>
 <ul>
-<li><code>harvest-variance</code></li>
+<li>harvest-related parameters</li>
 <li>fertility or death-related parameters</li>
-<li>maize productivity or environmental constraints</li>
+<li>maize productivity or environmental constraints (data input)</li>
 </ul>
 <p>together define a parameter space in which different combinations may lead to:</p>
 <ul>
@@ -677,9 +671,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>Rather than varying only <code>harvest-variance</code>, we might simultaneously sample:</p>
 <ul>
-<li>harvest variability,</li>
-<li>fertility-related parameters,</li>
-<li>mortality thresholds,</li>
+<li><code>harvest-adjustment</code> (the fraction of the harvest that is actually usable)</li>
+<li>fertility-related parameters</li>
+<li>mortality thresholds</li>
 </ul>
 <p>to ask which combinations tend to produce persistence versus collapse.</p>
 </div>
