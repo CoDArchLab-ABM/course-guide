@@ -1,11 +1,34 @@
 # Visualisation of simulation results {#analysis-visualisation}
 
-```{r}
-library(ggplot2)
-library(readr)
+## 📊 Analysis Pipeline for Simulation Results
+
+```
+💾 Simulation outputs: BehaviorSpace CSV files
+        ↓
+📥 Import data: R, tidyverse
+        ↓
+🧹 Clean & prepare: Data wrangling, filtering, reshaping
+        ↓
+📈 Explore: Descriptive plots, distributions, correlations
+        ↓
+📊 Analyse: Statistical models, sensitivity analysis
+        ↓
+🖼️ Visualise: Publication-ready plots, dashboard
+        ↓
+🧩 Interpret: Compare with hypotheses, archaeological data
+        ↓
+📘 Report & share: RMarkdown, GitHub, Zenodo DOI
+        ↺
+🔁 Refine model or experiment design
 ```
 
+## Set up R environment
+
+To start, we should load and define all necessary elements in R that will be used through out our script:
+
 ```{r}
+library(tidyverse)
+
 experiments_path <- "assets/netlogo/experiments/Artificial Anasazi_experiments "
 ```
 
@@ -14,18 +37,164 @@ color_mapping <- c("historical households" = "blue",
                    "simulation households" = "darkred")
 ```
 
-## Single run
+## Loading datasets
+
+**Single run**
 
 ```{r}
-expname <- "experiment single run"
+expname_single <- "experiment single run"
+
+results_single <- readr::read_csv(paste0(experiments_path, expname_single, "-table.csv"), skip = 6)
 ```
 
-Read output:
+**Repetitions in single configuration**
+
 ```{r}
-results_single <- readr::read_csv(paste0(experiments_path, expname, "-table.csv"), skip = 6)
+expname_multiple <- "experiment multiple runs"
+
+results_multiple <- readr::read_csv(paste0(experiments_path, expname_multiple, "-table.csv"), skip = 6)
 ```
 
-Plot trajectories of metrics:
+**Parameter exploration - harvest adjustment**
+
+```{r}
+expname_harvest_adj <- "experiment harvest adjustment"
+
+results_harvest_adj <- readr::read_csv(paste0(experiments_path, expname_harvest_adj, "-table.csv"), skip = 6)
+```
+
+**Parameter exploration - harvest adjustment vs. harvest-variance**
+
+```{r}
+expname_harvest_adj_var <- "experiment harvest adjustment variance"
+
+results_harvest_adj_var <- readr::read_csv(paste0(experiments_path, expname_harvest_adj_var, "-table.csv"), skip = 6)
+```
+
+## First overview
+
+In R, there are many ways of having our first look at the data. An useful function from the `tidyverse` family is `glimpse`.
+
+```{r}
+glimpse(results_single)
+```
+
+```{r}
+glimpse(results_multiple)
+```
+
+```{r}
+glimpse(results_harvest_adj)
+```
+
+```{r}
+glimpse(results_harvest_adj_var)
+```
+
+This initial inspection confirms:
+
+* how many runs were executed,
+* was every time step recorded,
+* whether repetitions are present,
+* which parameters and outputs are available.
+
+## Distributions of outcomes
+
+A first visualisation focuses on **distributions of final outcomes**, ignoring internal dynamics.
+
+```{r}
+final_results <- results_multiple |>
+  filter(`[step]` == max(`[step]`))
+
+ggplot(final_results, aes(x = `total-households`)) +
+  geom_histogram(bins = 30) +
+  labs(
+    x = "Final population size",
+    y = "Number of runs"
+  )
+```
+
+This plot answers questions such as:
+
+* Are most runs clustered around similar outcomes?
+* Are extreme collapses common or rare?
+* Does the distribution suggest multiple regimes or attractors?
+
+::: {.callout-note}
+
+## Artificial Anasazi interpretation
+
+A long left tail or bimodal distribution often indicates
+coexistence of persistence and collapse trajectories.
+:::
+
+## Comparing parameter settings
+
+When parameters were varied systematically, we can compare outcomes across settings.
+
+```{r}
+final_results <- results_harvest_adj |>
+  filter(`[step]` == max(`[step]`))
+
+ggplot(final_results,
+       aes(x = `harvest-adjustment`, y = `total-households`, group = `harvest-adjustment`)) +
+  geom_boxplot() +
+  labs(
+    x = "Harvest adjustment",
+    y = "Final population size"
+  )
+```
+
+Boxplots highlight:
+
+* median outcomes,
+* variability across repetitions,
+* possible threshold effects.
+
+::: {.callout-warning}
+
+## Interpretation caution
+
+Do not over-interpret smooth trends:
+BehaviorSpace grids can create visual regularities.
+:::
+
+## Repetitions and variability
+
+To visualise **mean behaviour and uncertainty**, we summarise repetitions.
+
+```{r}
+summary_results <- final_results |>
+  group_by(`harvest-adjustment`) |>
+  summarise(
+    mean_pop = mean(`total-households`),
+    sd_pop   = sd(`total-households`),
+    .groups = "drop"
+  )
+
+ggplot(summary_results,
+       aes(x = `harvest-adjustment`, y = mean_pop)) +
+  geom_line() +
+  geom_point() +
+  geom_errorbar(
+    aes(ymin = mean_pop - sd_pop,
+        ymax = mean_pop + sd_pop),
+    width = 0.02
+  ) +
+  labs(
+    x = "Harvest adjustment",
+    y = "Mean final population size"
+  )
+```
+
+This shifts attention from *individual histories* to *typical outcomes and robustness*.
+
+## Time series and trajectories
+
+When metrics are recorded at every time step, trajectories become central.
+
+To plot a single run:
+
 ```{r}
 plot_name <- paste0(experiments_path, expname, "-trajectories.png")
 
@@ -47,24 +216,32 @@ dev.off()
 knitr::include_graphics(plot_name)
 ```
 
-## Multiple runs in single configuration
+We may also sample a few runs from a multiple-run set and plot them together:
 
 ```{r}
-expname <- "experiment multiple runs"
+sample_runs <- results_multiple |>
+  distinct(`[run number]`) |>
+  slice_sample(n = 5)
+
+results_multiple |>
+  filter(`[run number]` %in% sample_runs$`[run number]`) |>
+  ggplot(aes(x = `[step]`, y = `total-households`,
+             group = `[run number]`)) +
+  geom_line(alpha = 0.7) +
+  labs(
+    x = "Time step",
+    y = "Population size"
+  )
 ```
 
-Read output:
-```{r}
-results_single <- readr::read_csv(paste0(experiments_path, expname, "-table.csv"), skip = 6)
-```
+Alternatively, we may want to plot all repetitions under a parameter configuration. Here is an example using a slightly more complex plot that includes the historical trajectory and saves the plot to a file:
 
-Plot trajectories of metrics:
 ```{r}
-plot_name <- paste0(experiments_path, expname, "-trajectories.png")
+plot_name <- paste0(experiments_path, expname_multiple, "-trajectories.png")
 
 png(plot_name, width = 840, height = 540)
 
-ggplot(results_single) +  
+ggplot(results_multiple) +  
   geom_line(aes(x = `[step]`, y = `total-households`, color = `[run number]`, group = `[run number]`),
             linewidth = 1.2) +
   geom_line(aes(x = `[step]`, y = `historical-total-households`), 
@@ -80,22 +257,47 @@ dev.off()
 knitr::include_graphics(plot_name)
 ```
 
-## Parameter exploration - regular intervals
+Plotting a **small sample of runs** avoids overplotting while revealing:
 
-### One parameter
+* divergence between histories,
+* timing of collapse,
+* early-warning patterns.
+
+## Linking parameters and outcomes
+
+For randomly sampled parameter sets, scatter plots are particularly useful (see chapter on sensitivity analysis). However, it might still offer some insight when applied to regularly sampled parameters; unlike boxplots, scatter plots exposes the true variation of data points.
 
 ```{r}
-expname <- "experiment harvest adjustment"
+final_results <- results_harvest_adj_var |>
+  filter(`[step]` == max(`[step]`))
+
+ggplot(final_results,
+       aes(x = `harvest-variance`, y = `total-households`)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    x = "Harvest variability",
+    y = "Final population size"
+  )
 ```
 
-Read output:
-```{r}
-results_harvest_adj <- readr::read_csv(paste0(experiments_path, expname, "-table.csv"), skip = 6)
-```
+This allows us to ask:
 
-Plot trajectories of metrics:
+* Is there a clear relationship between parameter value (x-axis) and the output variable (y-axis)?
+* Are there large outcome ranges for similar inputs?
+* Do interactions between parameters seem likely?
+
+::: {.callout-note}
+
+## Artificial Anasazi interpretation
+
+Wide vertical spread suggests strong stochastic effects or interactions with other parameters.
+
+:::
+
+We may also want to detect effects that are only visible in the full trajectory of simulations. For this, we can use line plots as before, but there will be strong limits to how many runs can be included so that the plot is legible.
+
 ```{r}
-plot_name <- paste0(experiments_path, expname, "-trajectories.png")
+plot_name <- paste0(experiments_path, expname_harvest_adj, "-trajectories.png")
 
 png(plot_name, width = 840, height = 540)
 
@@ -114,24 +316,12 @@ dev.off()
 knitr::include_graphics(plot_name)
 ```
 
-### Two parameter
-
 ```{r}
-expname <- "experiment harvest adjustment variance"
-```
-
-Read output:
-```{r}
-results_harvest_adj <- readr::read_csv(paste0(experiments_path, expname, "-table.csv"), skip = 6)
-```
-
-Plot trajectories of metrics:
-```{r}
-plot_name <- paste0(experiments_path, expname, "-trajectories.png")
+plot_name <- paste0(experiments_path, expname_harvest_adj_var, "-trajectories.png")
 
 png(plot_name, width = 840, height = 540)
 
-ggplot(results_harvest_adj) +  
+ggplot(results_harvest_adj_var) +  
   geom_line(aes(x = `[step]`, y = `total-households`, group = `[run number]`),
             color = color_mapping["simulation households"],
             linewidth = 1.2) +
@@ -139,7 +329,7 @@ ggplot(results_harvest_adj) +
             color = color_mapping["historical households"],
             linewidth = 1.2, linetype = 2) +
   facet_grid(`harvest-adjustment` ~ `harvest-variance`) +
-  labs(x = "steps", y = "households") +
+  labs(x = "steps", y = "households", title = "harvest-adjustment (rows) vs harvest-variance (columns)") +
   theme(legend.position = "right")
 
 dev.off()
@@ -148,3 +338,62 @@ dev.off()
 ```{r}
 knitr::include_graphics(plot_name)
 ```
+
+## Identifying extreme and representative runs
+
+We can isolate extreme cases for closer inspection.
+
+```{r}
+final_results <- results_harvest_adj_var |>
+  filter(`[step]` == max(`[step]`))
+
+extremes <- final_results |>
+  arrange(`total-households`) |>
+  slice(c(1, n()))
+
+results_harvest_adj_var |>
+  filter(`[run number]` %in% extremes$`[run number]`) |>
+  ggplot(aes(x = `[step]`, y = `total-households`,
+             group = `[run number]`,
+             colour = factor(`[run number]`))) +
+  geom_line() +
+  labs(
+    x = "Time step",
+    y = "Population size",
+    colour = "Run"
+  )
+```
+
+This reconnects **aggregate statistics** with **individual simulated histories**.
+
+## Exercises (with code reuse)
+
+::: {.callout-tip}
+
+## Exercise 1: Distribution
+
+Modify the histogram code to plot:
+
+* time to collapse (if available),
+* or number of occupied settlements.
+
+What changes in the shape of the distribution?
+:::
+
+::: {.callout-tip}
+
+## Exercise 2: Parameter comparison
+
+Perform an experiment varying another parameter and compare with the results exploring `harvest-adjustment` and `harvest_variance`.
+
+Does this parameter show a stronger or weaker association with outcomes?
+:::
+
+::: {.callout-tip}
+
+## Exercise 3: Trajectories
+
+Increase the number of sampled runs to 10.
+
+At what point does overplotting begin to obscure interpretation?
+:::
