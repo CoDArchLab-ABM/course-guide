@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>35&nbsp; Visualisation of simulation results – Agent-based modelling for archaeologists. From concept to application and publication</title>
+<title>33&nbsp; Visualisation of simulation results – Agent-based modelling for archaeologists. From concept to application and publication</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./analysis-sensitivity-analysis.html" rel="next">
-<link href="./analysis-preprocessing.html" rel="prev">
+<link href="./sim-param-exploration.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analysis-preprocessing.html">Analysis of simulation results</a></li><li class="breadcrumb-item"><a href="./analysis-visualisation.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analysis-visualisation.html">Analysis of simulation results</a></li><li class="breadcrumb-item"><a href="./analysis-visualisation.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -473,13 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sim-param-exploration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Simulation experiments for parameter exploration</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./sim-hypothesis-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Simulation experiments for hypothesis testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Exploring parameter space</span></span></a>
   </div>
 </li>
       </ul>
@@ -495,20 +489,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./analysis-preprocessing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Loading and preparing simulation results</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./analysis-visualisation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./analysis-sensitivity-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sensitivity analysis of simulation models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Sensitivity analysis of simulation models</span></span></a>
   </div>
 </li>
       </ul>
@@ -535,22 +523,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#single-run" id="toc-single-run" class="nav-link active" data-scroll-target="#single-run"><span class="header-section-number">35.1</span> Single run</a></li>
-  <li><a href="#multiple-runs-in-single-configuration" id="toc-multiple-runs-in-single-configuration" class="nav-link" data-scroll-target="#multiple-runs-in-single-configuration"><span class="header-section-number">35.2</span> Multiple runs in single configuration</a></li>
-  <li><a href="#parameter-exploration---regular-intervals" id="toc-parameter-exploration---regular-intervals" class="nav-link" data-scroll-target="#parameter-exploration---regular-intervals"><span class="header-section-number">35.3</span> Parameter exploration - regular intervals</a>
-  <ul class="collapse">
-  <li><a href="#one-parameter" id="toc-one-parameter" class="nav-link" data-scroll-target="#one-parameter"><span class="header-section-number">35.3.1</span> One parameter</a></li>
-  <li><a href="#two-parameter" id="toc-two-parameter" class="nav-link" data-scroll-target="#two-parameter"><span class="header-section-number">35.3.2</span> Two parameter</a></li>
-  </ul></li>
+  <li><a href="#analysis-pipeline-for-simulation-results" id="toc-analysis-pipeline-for-simulation-results" class="nav-link active" data-scroll-target="#analysis-pipeline-for-simulation-results"><span class="header-section-number">33.1</span> 📊 Analysis Pipeline for Simulation Results</a></li>
+  <li><a href="#set-up-r-environment" id="toc-set-up-r-environment" class="nav-link" data-scroll-target="#set-up-r-environment"><span class="header-section-number">33.2</span> Set up R environment</a></li>
+  <li><a href="#loading-datasets" id="toc-loading-datasets" class="nav-link" data-scroll-target="#loading-datasets"><span class="header-section-number">33.3</span> Loading datasets</a></li>
+  <li><a href="#first-overview" id="toc-first-overview" class="nav-link" data-scroll-target="#first-overview"><span class="header-section-number">33.4</span> First overview</a></li>
+  <li><a href="#distributions-of-outcomes" id="toc-distributions-of-outcomes" class="nav-link" data-scroll-target="#distributions-of-outcomes"><span class="header-section-number">33.5</span> Distributions of outcomes</a></li>
+  <li><a href="#comparing-parameter-settings" id="toc-comparing-parameter-settings" class="nav-link" data-scroll-target="#comparing-parameter-settings"><span class="header-section-number">33.6</span> Comparing parameter settings</a></li>
+  <li><a href="#repetitions-and-variability" id="toc-repetitions-and-variability" class="nav-link" data-scroll-target="#repetitions-and-variability"><span class="header-section-number">33.7</span> Repetitions and variability</a></li>
+  <li><a href="#time-series-and-trajectories" id="toc-time-series-and-trajectories" class="nav-link" data-scroll-target="#time-series-and-trajectories"><span class="header-section-number">33.8</span> Time series and trajectories</a></li>
+  <li><a href="#linking-parameters-and-outcomes" id="toc-linking-parameters-and-outcomes" class="nav-link" data-scroll-target="#linking-parameters-and-outcomes"><span class="header-section-number">33.9</span> Linking parameters and outcomes</a></li>
+  <li><a href="#identifying-extreme-and-representative-runs" id="toc-identifying-extreme-and-representative-runs" class="nav-link" data-scroll-target="#identifying-extreme-and-representative-runs"><span class="header-section-number">33.10</span> Identifying extreme and representative runs</a></li>
+  <li><a href="#exercises-with-code-reuse" id="toc-exercises-with-code-reuse" class="nav-link" data-scroll-target="#exercises-with-code-reuse"><span class="header-section-number">33.11</span> Exercises (with code reuse)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/analysis-visualisation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analysis-preprocessing.html">Analysis of simulation results</a></li><li class="breadcrumb-item"><a href="./analysis-visualisation.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./analysis-visualisation.html">Analysis of simulation results</a></li><li class="breadcrumb-item"><a href="./analysis-visualisation.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="analysis-visualisation" class="quarto-section-identifier"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></span></h1>
+<h1 class="title"><span id="analysis-visualisation" class="quarto-section-identifier"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Visualisation of simulation results</span></span></h1>
 </div>
 
 
@@ -567,25 +559,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="analysis-pipeline-for-simulation-results" class="level2" data-number="33.1">
+<h2 data-number="33.1" class="anchored" data-anchor-id="analysis-pipeline-for-simulation-results"><span class="header-section-number">33.1</span> 📊 Analysis Pipeline for Simulation Results</h2>
+<pre><code>💾 Simulation outputs: BehaviorSpace CSV files
+        ↓
+📥 Import data: R, tidyverse
+        ↓
+🧹 Clean &amp; prepare: Data wrangling, filtering, reshaping
+        ↓
+📈 Explore: Descriptive plots, distributions, correlations
+        ↓
+📊 Analyse: Statistical models, sensitivity analysis
+        ↓
+🖼️ Visualise: Publication-ready plots, dashboard
+        ↓
+🧩 Interpret: Compare with hypotheses, archaeological data
+        ↓
+📘 Report &amp; share: RMarkdown, GitHub, Zenodo DOI
+        ↺
+🔁 Refine model or experiment design</code></pre>
+</section>
+<section id="set-up-r-environment" class="level2" data-number="33.2">
+<h2 data-number="33.2" class="anchored" data-anchor-id="set-up-r-environment"><span class="header-section-number">33.2</span> Set up R environment</h2>
+<p>To start, we should load and define all necessary elements in R that will be used through out our script:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>experiments_path <span class="ot">&lt;-</span> <span class="st">"assets/netlogo/experiments/Artificial Anasazi_experiments "</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>experiments_path <span class="ot">&lt;-</span> <span class="st">"assets/netlogo/experiments/Artificial Anasazi_experiments "</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>color_mapping <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"historical households"</span> <span class="ot">=</span> <span class="st">"blue"</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"simulation households"</span> <span class="ot">=</span> <span class="st">"darkred"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="loading-datasets" class="level2" data-number="33.3">
+<h2 data-number="33.3" class="anchored" data-anchor-id="loading-datasets"><span class="header-section-number">33.3</span> Loading datasets</h2>
+<p><strong>Single run</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>color_mapping <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"historical households"</span> <span class="ot">=</span> <span class="st">"blue"</span>, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"simulation households"</span> <span class="ot">=</span> <span class="st">"darkred"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<section id="single-run" class="level2" data-number="35.1">
-<h2 data-number="35.1" class="anchored" data-anchor-id="single-run"><span class="header-section-number">35.1</span> Single run</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment single run"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Read output:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results_single <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>expname_single <span class="ot">&lt;-</span> <span class="st">"experiment single run"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>results_single <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname_single, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 552 Columns: 11
 ── Column specification ────────────────────────────────────────────────────────
@@ -598,46 +622,11 @@ lgl (1): historic-view?
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Plot trajectories of metrics:</p>
+<p><strong>Repetitions in single configuration</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_single) <span class="sc">+</span>  </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">"historical data"</span>),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">"simulation households"</span>),</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">""</span>, <span class="at">values =</span> color_mapping) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>svg 
-  2 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment single run-trajectories.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="multiple-runs-in-single-configuration" class="level2" data-number="35.2">
-<h2 data-number="35.2" class="anchored" data-anchor-id="multiple-runs-in-single-configuration"><span class="header-section-number">35.2</span> Multiple runs in single configuration</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment multiple runs"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Read output:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results_single <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>expname_multiple <span class="ot">&lt;-</span> <span class="st">"experiment multiple runs"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>results_multiple <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname_multiple, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 5520 Columns: 11
 ── Column specification ────────────────────────────────────────────────────────
@@ -650,48 +639,11 @@ lgl (1): historic-view?
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Plot trajectories of metrics:</p>
+<p><strong>Parameter exploration - harvest adjustment</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_single) <span class="sc">+</span>  </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"historical households"</span>],</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>svg 
-  2 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment multiple runs-trajectories.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="parameter-exploration---regular-intervals" class="level2" data-number="35.3">
-<h2 data-number="35.3" class="anchored" data-anchor-id="parameter-exploration---regular-intervals"><span class="header-section-number">35.3</span> Parameter exploration - regular intervals</h2>
-<section id="one-parameter" class="level3" data-number="35.3.1">
-<h3 data-number="35.3.1" class="anchored" data-anchor-id="one-parameter"><span class="header-section-number">35.3.1</span> One parameter</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment harvest adjustment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Read output:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>results_harvest_adj <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>expname_harvest_adj <span class="ot">&lt;-</span> <span class="st">"experiment harvest adjustment"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>results_harvest_adj <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname_harvest_adj, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 104880 Columns: 11
 ── Column specification ────────────────────────────────────────────────────────
@@ -704,45 +656,11 @@ lgl (1): historic-view?
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Plot trajectories of metrics:</p>
+<p><strong>Parameter exploration - harvest adjustment vs.&nbsp;harvest-variance</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_harvest_adj) <span class="sc">+</span>  </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>svg 
-  2 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment harvest adjustment-trajectories.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="two-parameter" class="level3" data-number="35.3.2">
-<h3 data-number="35.3.2" class="anchored" data-anchor-id="two-parameter"><span class="header-section-number">35.3.2</span> Two parameter</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>expname <span class="ot">&lt;-</span> <span class="st">"experiment harvest adjustment variance"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Read output:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>results_harvest_adj <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>expname_harvest_adj_var <span class="ot">&lt;-</span> <span class="st">"experiment harvest adjustment variance"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>results_harvest_adj_var <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="fu">paste0</span>(experiments_path, expname_harvest_adj_var, <span class="st">"-table.csv"</span>), <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 441600 Columns: 11
 ── Column specification ────────────────────────────────────────────────────────
@@ -755,24 +673,227 @@ lgl (1): historic-view?
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Plot trajectories of metrics:</p>
+</section>
+<section id="first-overview" class="level2" data-number="33.4">
+<h2 data-number="33.4" class="anchored" data-anchor-id="first-overview"><span class="header-section-number">33.4</span> First overview</h2>
+<p>In R, there are many ways of having our first look at the data. An useful function from the <code>tidyverse</code> family is <code>glimpse</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname, <span class="st">"-trajectories.png"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(results_single)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 552
+Columns: 11
+$ `[run number]`                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ fertility                     &lt;dbl&gt; 0.155, 0.155, 0.155, 0.155, 0.155, 0.155…
+$ `death-age`                   &lt;dbl&gt; 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, …
+$ `harvest-variance`            &lt;dbl&gt; 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, …
+$ `fertility-ends-age`          &lt;dbl&gt; 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, …
+$ `harvest-adjustment`          &lt;dbl&gt; 0.54, 0.54, 0.54, 0.54, 0.54, 0.54, 0.54…
+$ `map-view`                    &lt;chr&gt; "zones", "zones", "zones", "zones", "zon…
+$ `historic-view?`              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+$ `[step]`                      &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12…
+$ `total-households`            &lt;dbl&gt; 0, 14, 16, 17, 16, 16, 16, 16, 16, 17, 1…
+$ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(results_multiple)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 5,520
+Columns: 11
+$ `[run number]`                &lt;dbl&gt; 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 5…
+$ fertility                     &lt;dbl&gt; 0.155, 0.155, 0.155, 0.155, 0.155, 0.155…
+$ `death-age`                   &lt;dbl&gt; 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, …
+$ `harvest-variance`            &lt;dbl&gt; 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, …
+$ `fertility-ends-age`          &lt;dbl&gt; 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, …
+$ `harvest-adjustment`          &lt;dbl&gt; 0.54, 0.54, 0.54, 0.54, 0.54, 0.54, 0.54…
+$ `map-view`                    &lt;chr&gt; "zones", "zones", "zones", "zones", "zon…
+$ `historic-view?`              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+$ `[step]`                      &lt;dbl&gt; 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 0…
+$ `total-households`            &lt;dbl&gt; 0, 0, 14, 15, 16, 17, 17, 18, 16, 19, 16…
+$ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(results_harvest_adj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 104,880
+Columns: 11
+$ `[run number]`                &lt;dbl&gt; 3, 4, 1, 5, 4, 3, 5, 6, 2, 1, 6, 3, 2, 4…
+$ fertility                     &lt;dbl&gt; 0.155, 0.155, 0.155, 0.155, 0.155, 0.155…
+$ `death-age`                   &lt;dbl&gt; 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, …
+$ `harvest-variance`            &lt;dbl&gt; 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, …
+$ `fertility-ends-age`          &lt;dbl&gt; 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, …
+$ `harvest-adjustment`          &lt;dbl&gt; 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, …
+$ `map-view`                    &lt;chr&gt; "zones", "zones", "zones", "zones", "zon…
+$ `historic-view?`              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+$ `[step]`                      &lt;dbl&gt; 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 2, 1, 2…
+$ `total-households`            &lt;dbl&gt; 0, 0, 0, 0, 14, 14, 13, 0, 0, 14, 14, 0,…
+$ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(results_harvest_adj_var)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 441,600
+Columns: 11
+$ `[run number]`                &lt;dbl&gt; 3, 6, 3, 6, 3, 6, 3, 5, 4, 5, 4, 3, 1, 3…
+$ fertility                     &lt;dbl&gt; 0.155, 0.155, 0.155, 0.155, 0.155, 0.155…
+$ `death-age`                   &lt;dbl&gt; 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, …
+$ `harvest-variance`            &lt;dbl&gt; 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, …
+$ `fertility-ends-age`          &lt;dbl&gt; 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, …
+$ `harvest-adjustment`          &lt;dbl&gt; 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, …
+$ `map-view`                    &lt;chr&gt; "zones", "zones", "zones", "zones", "zon…
+$ `historic-view?`              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…
+$ `[step]`                      &lt;dbl&gt; 0, 0, 1, 1, 2, 2, 3, 0, 0, 1, 1, 4, 0, 5…
+$ `total-households`            &lt;dbl&gt; 0, 0, 14, 14, 0, 0, 0, 0, 0, 14, 14, 0, …
+$ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, …</code></pre>
+</div>
+</div>
+<p>This initial inspection confirms:</p>
+<ul>
+<li>how many runs were executed,</li>
+<li>was every time step recorded,</li>
+<li>whether repetitions are present,</li>
+<li>which parameters and outputs are available.</li>
+</ul>
+</section>
+<section id="distributions-of-outcomes" class="level2" data-number="33.5">
+<h2 data-number="33.5" class="anchored" data-anchor-id="distributions-of-outcomes"><span class="header-section-number">33.5</span> Distributions of outcomes</h2>
+<p>A first visualisation focuses on <strong>distributions of final outcomes</strong>, ignoring internal dynamics.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> results_multiple <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(final_results, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Final population size"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of runs"</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis-visualisation_files/figure-html/unnamed-chunk-11-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot answers questions such as:</p>
+<ul>
+<li>Are most runs clustered around similar outcomes?</li>
+<li>Are extreme collapses common or rare?</li>
+<li>Does the distribution suggest multiple regimes or attractors?</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Artificial Anasazi interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A long left tail or bimodal distribution often indicates coexistence of persistence and collapse trajectories.</p>
+</div>
+</div>
+</section>
+<section id="comparing-parameter-settings" class="level2" data-number="33.6">
+<h2 data-number="33.6" class="anchored" data-anchor-id="comparing-parameter-settings"><span class="header-section-number">33.6</span> Comparing parameter settings</h2>
+<p>When parameters were varied systematically, we can compare outcomes across settings.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> results_harvest_adj <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(final_results,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Harvest adjustment"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Final population size"</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis-visualisation_files/figure-html/unnamed-chunk-12-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Boxplots highlight:</p>
+<ul>
+<li>median outcomes,</li>
+<li>variability across repetitions,</li>
+<li>possible threshold effects.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Interpretation caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do not over-interpret smooth trends: BehaviorSpace grids can create visual regularities.</p>
+</div>
+</div>
+</section>
+<section id="repetitions-and-variability" class="level2" data-number="33.7">
+<h2 data-number="33.7" class="anchored" data-anchor-id="repetitions-and-variability"><span class="header-section-number">33.7</span> Repetitions and variability</h2>
+<p>To visualise <strong>mean behaviour and uncertainty</strong>, we summarise repetitions.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>summary_results <span class="ot">&lt;-</span> final_results <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_pop =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">total-households</span><span class="st">`</span>),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_pop   =</span> <span class="fu">sd</span>(<span class="st">`</span><span class="at">total-households</span><span class="st">`</span>),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summary_results,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>, <span class="at">y =</span> mean_pop)) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> mean_pop <span class="sc">-</span> sd_pop,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> mean_pop <span class="sc">+</span> sd_pop),</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.02</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Harvest adjustment"</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean final population size"</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis-visualisation_files/figure-html/unnamed-chunk-13-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This shifts attention from <em>individual histories</em> to <em>typical outcomes and robustness</em>.</p>
+</section>
+<section id="time-series-and-trajectories" class="level2" data-number="33.8">
+<h2 data-number="33.8" class="anchored" data-anchor-id="time-series-and-trajectories"><span class="header-section-number">33.8</span> Time series and trajectories</h2>
+<p>When metrics are recorded at every time step, trajectories become central.</p>
+<p>To plot a single run:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname_single, <span class="st">"-trajectories.png"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_harvest_adj) <span class="sc">+</span>  </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"simulation households"</span>],</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), </span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"historical households"</span>],</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span> <span class="sc">~</span> <span class="st">`</span><span class="at">harvest-variance</span><span class="st">`</span>) <span class="sc">+</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_single) <span class="sc">+</span>  </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">"historical data"</span>),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">"simulation households"</span>),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">""</span>, <span class="at">values =</span> color_mapping) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>svg 
   2 </code></pre>
@@ -783,14 +904,258 @@ lgl (1): historic-view?
 <div class="cell-output-display">
 <div>
 <figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment single run-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We may also sample a few runs from a multiple-run set and plot them together:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sample_runs <span class="ot">&lt;-</span> results_multiple <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(<span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>results_multiple <span class="sc">|&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[run number]</span><span class="st">`</span> <span class="sc">%in%</span> sample_runs<span class="sc">$</span><span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Time step"</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Population size"</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis-visualisation_files/figure-html/unnamed-chunk-16-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Alternatively, we may want to plot all repetitions under a parameter configuration. Here is an example using a slightly more complex plot that includes the historical trajectory and saves the plot to a file:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname_multiple, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_multiple) <span class="sc">+</span>  </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"historical households"</span>],</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment multiple runs-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Plotting a <strong>small sample of runs</strong> avoids overplotting while revealing:</p>
+<ul>
+<li>divergence between histories,</li>
+<li>timing of collapse,</li>
+<li>early-warning patterns.</li>
+</ul>
+</section>
+<section id="linking-parameters-and-outcomes" class="level2" data-number="33.9">
+<h2 data-number="33.9" class="anchored" data-anchor-id="linking-parameters-and-outcomes"><span class="header-section-number">33.9</span> Linking parameters and outcomes</h2>
+<p>For randomly sampled parameter sets, scatter plots are particularly useful (see chapter on sensitivity analysis). However, it might still offer some insight when applied to regularly sampled parameters; unlike boxplots, scatter plots exposes the true variation of data points.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> results_harvest_adj_var <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span>))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(final_results,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">harvest-variance</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Harvest variability"</span>,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Final population size"</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis-visualisation_files/figure-html/unnamed-chunk-19-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This allows us to ask:</p>
+<ul>
+<li>Is there a clear relationship between parameter value (x-axis) and the output variable (y-axis)?</li>
+<li>Are there large outcome ranges for similar inputs?</li>
+<li>Do interactions between parameters seem likely?</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Artificial Anasazi interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wide vertical spread suggests strong stochastic effects or interactions with other parameters.</p>
+</div>
+</div>
+<p>We may also want to detect effects that are only visible in the full trajectory of simulations. For this, we can use line plots as before, but there will be strong limits to how many runs can be included so that the plot is legible.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname_harvest_adj, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_harvest_adj) <span class="sc">+</span>  </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">color =</span> <span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>) <span class="sc">+</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment harvest adjustment-trajectories.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname_harvest_adj_var, <span class="st">"-trajectories.png"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(plot_name, <span class="at">width =</span> <span class="dv">840</span>, <span class="at">height =</span> <span class="dv">540</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results_harvest_adj_var) <span class="sc">+</span>  </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>),</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"simulation households"</span>],</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">historical-total-households</span><span class="st">`</span>), </span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> color_mapping[<span class="st">"historical households"</span>],</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="st">`</span><span class="at">harvest-adjustment</span><span class="st">`</span> <span class="sc">~</span> <span class="st">`</span><span class="at">harvest-variance</span><span class="st">`</span>) <span class="sc">+</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"steps"</span>, <span class="at">y =</span> <span class="st">"households"</span>, <span class="at">title =</span> <span class="st">"harvest-adjustment (rows) vs harvest-variance (columns)"</span>) <span class="sc">+</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>svg 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(plot_name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
 <p><img src="assets/netlogo/experiments/Artificial Anasazi_experiments experiment harvest adjustment variance-trajectories.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-
-
 </section>
+<section id="identifying-extreme-and-representative-runs" class="level2" data-number="33.10">
+<h2 data-number="33.10" class="anchored" data-anchor-id="identifying-extreme-and-representative-runs"><span class="header-section-number">33.10</span> Identifying extreme and representative runs</h2>
+<p>We can isolate extreme cases for closer inspection.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> results_harvest_adj_var <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span>))</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>extremes <span class="ot">&lt;-</span> final_results <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="st">`</span><span class="at">total-households</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">n</span>()))</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>results_harvest_adj_var <span class="sc">|&gt;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[run number]</span><span class="st">`</span> <span class="sc">%in%</span> extremes<span class="sc">$</span><span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">[step]</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">total-households</span><span class="st">`</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">group =</span> <span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="fu">factor</span>(<span class="st">`</span><span class="at">[run number]</span><span class="st">`</span>))) <span class="sc">+</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Time step"</span>,</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Population size"</span>,</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Run"</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis-visualisation_files/figure-html/unnamed-chunk-24-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This reconnects <strong>aggregate statistics</strong> with <strong>individual simulated histories</strong>.</p>
+</section>
+<section id="exercises-with-code-reuse" class="level2" data-number="33.11">
+<h2 data-number="33.11" class="anchored" data-anchor-id="exercises-with-code-reuse"><span class="header-section-number">33.11</span> Exercises (with code reuse)</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 1: Distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Modify the histogram code to plot:</p>
+<ul>
+<li>time to collapse (if available),</li>
+<li>or number of occupied settlements.</li>
+</ul>
+<p>What changes in the shape of the distribution?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 2: Parameter comparison
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Perform an experiment varying another parameter and compare with the results exploring <code>harvest-adjustment</code> and <code>harvest_variance</code>.</p>
+<p>Does this parameter show a stronger or weaker association with outcomes?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 3: Trajectories
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Increase the number of sampled runs to 10.</p>
+<p>At what point does overplotting begin to obscure interpretation?</p>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1196,13 +1561,13 @@ lgl (1): historic-view?
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./analysis-preprocessing.html" class="pagination-link" aria-label="Loading and preparing simulation results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Loading and preparing simulation results</span></span>
+      <a href="./sim-param-exploration.html" class="pagination-link" aria-label="Exploring parameter space">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Exploring parameter space</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./analysis-sensitivity-analysis.html" class="pagination-link" aria-label="Sensitivity analysis of simulation models">
-        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sensitivity analysis of simulation models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Sensitivity analysis of simulation models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
