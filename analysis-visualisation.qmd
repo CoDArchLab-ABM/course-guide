@@ -196,7 +196,7 @@ When metrics are recorded at every time step, trajectories become central.
 To plot a single run:
 
 ```{r}
-plot_name <- paste0(experiments_path, expname, "-trajectories.png")
+plot_name <- paste0(experiments_path, expname_single, "-trajectories.png")
 
 png(plot_name, width = 840, height = 540)
 
