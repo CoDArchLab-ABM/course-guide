@@ -6,7 +6,9 @@ First of all, you should know that "experiments" within this context mean a batc
 
 ::: {.callout-note}
 **Parameter space**
+
 >the space of all possible parameter values that define a particular mathematical model
+
 >[Wikipedia](https://en.wikipedia.org/wiki/Parameter_space)
 
 Example:
