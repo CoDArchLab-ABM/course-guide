@@ -520,7 +520,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>In this chapter, we will learn the basics about how to set up and run simulation experiments using NetLogo’s Behavior Space. We will go from “playing with a model” to doing systematic computational experiments.</p>
-<p>First of all, you should know that “experiments” within this context mean a batch of simulations (a.k.a. simulation runs) that contains a certain pattern of variation for parameter configurations or model design alternatives. The main goal of an simulation experiment is the exploration of a part of the model’s <strong>parameter space</strong>, that is, to observe the effects of varying parameters (or design aspects regulated as parameters) on the selected output or observation variables.</p>
+<p>First of all, you should know that “experiments” within this context mean a batch of simulations (a.k.a. simulation runs) that contains a certain pattern of variation for parameter configurations or model design alternatives. The main goal of a simulation experiment is the exploration of a part of the model’s <strong>parameter space</strong>, that is, to observe the effects of varying parameters (or design aspects regulated as parameters) on the selected output or observation variables.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -540,19 +540,19 @@ Note
 </blockquote>
 <p>Example:</p>
 <p>A simple model of health deterioration after developing lung cancer could include the two parameters, sex and smoker/non-smoker, in which case the parameter space is the following set of four possibilities: {(Male, Smoker), (Male, Non-smoker), (Female, Smoker), (Female, Non-smoker)}.</p>
-<p>In this case, we would want to explore each quadrant of the parameter space (i.e., each combination of sex and smoker/non-smoker status) seeking to detect the effect of these two parameters in the individual health (dependent variable). We might find, for example, that both being not smoker and female have a positive effect on health, yet quantify that not smoking has a greater impact.</p>
+<p>In this case, we would explore each quadrant of the parameter space (i.e., each combination of sex and smoker/non-smoker status) to detect the effects of these two parameters on individual health (dependent variable). We might find, for example, that not being a smoker and being female have a positive effect on health, yet quantify that not smoking has a greater impact.</p>
 <p>We will see more concrete examples of this in the next chapter.</p>
 </div>
 </div>
-<p>We can technically perform such experiments by varying and running each configuration at a time using the model interface, exporting the variables we wish to analyse after each run. However, this task is greatly automatised by Behavior Space. This tool allows us to configure multiple simulations with multiple parameter configurations within the same place, which can be edited and saved to the same model file. Once we give the order one time, the simulations of an experiment will be run consecutively using parallel computation, and saving all predefined output variables to the same dataset file.</p>
+<p>We can technically perform such experiments by varying and running each configuration at a time using the model interface, exporting the variables we wish to analyse after each run. However, this task is greatly automatised by Behavior Space. This tool allows us to configure multiple simulations with different parameter configurations in one place, which can be edited and saved to the same model file. Once we place the order, the experiment simulations will be run consecutively in parallel and saved to the same dataset file.</p>
 <p>We will see in this chapter how to proceed for different types of experiment. However, keep in mind NetLogo’s own documentation and tutorials on <a href="https://docs.netlogo.org/7.0.3/behaviorspace">Behavior Space</a>.</p>
-<p>In sake of simplicity, in this and following chapters, we will refer to the Artifical Anasazi model, included in NetLogo’s model library. For reference, a version of this model with a few experiments already created is stored at: <a href="https://github.com/CoDArchLab-ABM/course-guide/blob/main/assets/netlogo/Artificial%20Anasazi_experiments.nlogox">https://github.com/CoDArchLab-ABM/course-guide/blob/main/assets/netlogo/Artificial%20Anasazi_experiments.nlogox</a></p>
+<p>In the sake of simplicity, in this and the following chapters, we will refer to the Artificial Anasazi model, included in NetLogo’s model library. For reference, a version of this model with a few experiments already created is stored at: <a href="https://github.com/CoDArchLab-ABM/course-guide/blob/main/assets/netlogo/Artificial%20Anasazi_experiments.nlogox">https://github.com/CoDArchLab-ABM/course-guide/blob/main/assets/netlogo/Artificial%20Anasazi_experiments.nlogox</a></p>
 <section id="workflow" class="level2" data-number="31.1">
 <h2 data-number="31.1" class="anchored" data-anchor-id="workflow"><span class="header-section-number">31.1</span> Workflow</h2>
 <p>Before you start, always keep in mind the general workflow when doing simulation experiments with NetLogo’s Behavior Space:</p>
 <pre><code>⚙️ Model setup: NetLogo model ready
         ↓
-🎛️ Define experiment: BehaviorSpace parameters &amp; setting
+🎛️ Define experiment: BehaviorSpace parameters &amp; settings
         ↓
 ▶️ Run experiments: Multiple model runs with varied parameters
         ↓
@@ -566,7 +566,7 @@ Note
 </section>
 <section id="creating-a-new-experiment" class="level2" data-number="31.2">
 <h2 data-number="31.2" class="anchored" data-anchor-id="creating-a-new-experiment"><span class="header-section-number">31.2</span> Creating a new experiment</h2>
-<p>You can access it in the top bar menu at “Tools &gt; BehaviorSpace” or pressing Crtl+Shif+B. If you now open it in a fresh version of the model, you should see no experiments. Press “New” and you will see a pop-up window:</p>
+<p>You can access it in the top bar menu at “Tools &gt; BehaviorSpace” or by pressing Ctrl+Shift+B. If you now open it in a fresh version of the model, you should see no experiments. Press “New” and you will see a pop-up window:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/screenshots/BehaviorSpace_new-experiment.png" class="img-fluid figure-img"></p>
@@ -583,7 +583,7 @@ Note
 </li>
 <li><code>["variable-name" value1 value2 value3]</code> (multiple values); e.g.&nbsp;<code>["harvest-variance" 0.2 0.4 0.41 0.45 0.5 0.8]</code><br>
 </li>
-<li><code>["variable-name" minValue maxValue step]</code> (multiple values with regular steps); e.g.&nbsp;<code>["harvest-variance" [0.2 0.8 0.2]]</code><br>
+<li><code>["variable-name" minValue step maxValue]</code> (multiple values with regular steps); e.g.&nbsp;<code>["harvest-variance" [0.2 0.2 0.8]]</code><br>
 </li>
 </ul></li>
 <li><strong>Repetitions</strong>: number of simulations to be run with each configuration. Only use a value greater than one if your model does not control the random seed number; if you do control it, repetitions will yield the same results.<br>
@@ -592,22 +592,22 @@ Note
 </li>
 <li><strong>Run metrics every step</strong>: Whether you want NetLogo to print all the reporters every time step (✅) or only at the end of the simulation (⬜).<br>
 </li>
-<li><strong>Pre and post experiment commands, post run commands</strong>: Here you can add small scripts specifying extra procedures to be executed in different moments before and after simulations. To see the instructions of each field, with the window selected, move your cursor on top of the field’s title. The instruction text should appear briefly.<br>
+<li><strong>Pre and post experiment commands, post run commands</strong>: Here you can add small scripts specifying extra procedures to be executed at different moments before and after simulations. To see the instructions of each field, with the window selected, move your cursor on top of the field’s title. The instruction text should appear briefly.<br>
 </li>
 <li><strong>Stop condition and Time limit</strong>: if your model does not have a stop condition specified in the code, you may add it here or set an arbitrary number of steps as a limit. Note that it is essential to have a stop condition; if not, your experiment will end only with your machine being out of memory or not at all!</li>
 </ul>
 </section>
 <section id="single-simulation-run" class="level2" data-number="31.3">
 <h2 data-number="31.3" class="anchored" data-anchor-id="single-simulation-run"><span class="header-section-number">31.3</span> Single simulation run</h2>
-<p>Up until now, we have been working with single simulation experiments every time we have executed simulations through a model interface (i.e., every time we run <code>setup</code> and <code>go</code>). This is plenty useful to observe certain aspects of the model dynamics, particularly, the changes we can directly observe in the interface view space and plots.</p>
+<p>Up until now, we have been running a single simulation experiment each time we execute simulations through a model interface (i.e., every time we run <code>setup</code> and <code>go</code>). This is very useful for observing certain aspects of the model dynamics, particularly the changes we can directly see in the interface view space and plots.</p>
 <p>In the Artificial Anasazi model, a single simulation run corresponds to one possible history of household settlement, farming, movement, and abandonment under a fixed set of assumptions (e.g.&nbsp;fertility, harvest variability, maize productivity).</p>
-<p>Running a single configuration in Behavior Space is useful whenever we are outputting values every time step. This kind of data, a “trajectory”, can be analised for:</p>
+<p>Running a single configuration in Behavior Space is useful whenever we are outputting values every time step. This kind of data, a “trajectory”, can be analysed for:</p>
 <ul>
 <li>checking that the model behaves plausibly (e.g.&nbsp;households farm, move, and sometimes disappear),</li>
 <li>verifying that the chosen reporters (e.g.&nbsp;population size, number of settlements) are correctly recorded,</li>
 <li>establishing a <strong>baseline scenario</strong> that can later be compared against alternative parameter settings.</li>
 </ul>
-<p>To do this, all parameters in the experiment are assigned fixed values and the number of repetitions is set to 1. The resulting output mirrors what you would observe from a single manual run, but in a form that is consistent with later experiments and external analysis.</p>
+<p>To do this, all parameters in the experiment are assigned fixed values, and the number of repetitions is set to 1. The resulting output mirrors what you would observe from a single manual run, but in a form that is consistent with later experiments and external analysis.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -687,7 +687,7 @@ Note
 </section>
 <section id="varying-parameters" class="level2" data-number="31.5">
 <h2 data-number="31.5" class="anchored" data-anchor-id="varying-parameters"><span class="header-section-number">31.5</span> Varying parameters</h2>
-<p>Varying parameters in the Artificial Anasazi model allows us to explore how assumptions about environment and behaviour affect long-term settlement dynamics.</p>
+<p>Varying parameters in the Artificial Anasazi model allow us to explore how assumptions about environment and behaviour affect long-term settlement dynamics.</p>
 <p>Typical parameters of interest include:</p>
 <ul>
 <li><strong>harvest-variance</strong>, representing climatic unpredictability,</li>
@@ -826,8 +826,8 @@ Note
 </section>
 <section id="output-extra-files" class="level3" data-number="31.7.2">
 <h3 data-number="31.7.2" class="anchored" data-anchor-id="output-extra-files"><span class="header-section-number">31.7.2</span> Output extra files</h3>
-<p>Some analyses might require we save outputs in separate CSV files.We have already seen an example of this when exporting the routes calculated in the Messara Trade model. In other occasions, we might need more detailed outputs than a CSV file can provide—for example, spatial snapshots of settlement locations or land-use patterns.</p>
-<p>Using NetLogo’s file output primitives, such as <code>export-world</code> or <code>export-view</code>, we can easily save complex spatial or distributed data. In the Artifical Anasazi, for example, it is possible to export:</p>
+<p>Some analyses might require we save outputs in separate CSV files. We have already seen an example of this when exporting the routes calculated in the Messara Trade model. On other occasions, we might need more detailed outputs than a CSV file can provide—for example, spatial snapshots of settlement locations or land-use patterns.</p>
+<p>Using NetLogo’s file output primitives, such as <code>export-world</code> or <code>export-view</code>, we can easily save complex spatial or distributed data. In the Artificial Anasazi, for example, it is possible to export:</p>
 <ul>
 <li>settlement locations at specific time steps,</li>
 <li>spatial grids of resource availability,</li>
@@ -883,7 +883,7 @@ file-close</code></pre>
 <li>integration with statistical tools that generate parameter sets,</li>
 <li>comparison between NetLogo experiments and other modelling approaches.</li>
 </ul>
-<p>Although this goes beyond introductory use of Behavior Space, it reflects common practice in archaeological simulation studies. We will see an example of this in the next chapter.</p>
+<p>Although this goes beyond the introductory use of Behavior Space, it reflects common practice in archaeological simulation studies. We will see an example of this in the next chapter.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
