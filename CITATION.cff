@@ -1,0 +1,17 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: Andreas
+  given-names: Angourakis
+  orcid: https://orcid.org/0000-0002-9946-8142
+title: CoDArchLab-ABM/course-guide: Agent-based modelling for archaeologists. From concept to application and publication
+abstract: Materials for the MA course "Agent-based modelling for archaeologists. From concept to application and publication" part of the MA Digital and Computational Archaeology, hosted in the CoDArchLab at the Institute of Archaeology, University of Cologne.
+version: v1.0.0
+date-released: 2026-02-12
+identifiers:
+  - description: This is the collection of archived snapshots of all versions
+    type: doi
+    value: "10.5281/zenodo.18622251"
+  - description: This is the archived snapshot of version 1.0.0
+    type: doi
+    value: "10.5281/zenodo.18622252"
