@@ -517,7 +517,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Apart from minor refactoring, the last implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are essentially aggregate measurements about the state of the simulation at a given time step.</p>
+<p>Beyond minor refactoring, the final implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are aggregate measurements of the simulation state at a given time step.</p>
 <section id="displaying-outputs-in-the-interface" class="level2" data-number="21.1">
 <h2 data-number="21.1" class="anchored" data-anchor-id="displaying-outputs-in-the-interface"><span class="header-section-number">21.1</span> Displaying outputs in the interface 🤔</h2>
 <p>Try out creating a new interface element to display:</p>
@@ -540,7 +540,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="recording-outputs-in-variables" class="level2" data-number="21.3">
 <h2 data-number="21.3" class="anchored" data-anchor-id="recording-outputs-in-variables"><span class="header-section-number">21.3</span> Recording outputs in variables</h2>
-<p>The statistics serve as indicators for monitoring complex results while manually running simulations in the interface. Most importantly, they can be used more systematically as data that can be exported for further use in other software, <em>e.g.</em>, to perform advanced statistical analyses and more sophisticated graphs.</p>
+<p>The statistics serve as indicators for monitoring complex results while manually running simulations in the interface. Most importantly, you can use them more systematically as data you can export for further use in other software, <em>e.g.</em>, to perform advanced statistical analyses and more sophisticated graphs.</p>
 <p>Here is how step 13 implements those statistics:</p>
 <pre class="netlogo"><code>globals
 [
@@ -651,7 +651,7 @@ end
 <h2 data-number="21.4" class="anchored" data-anchor-id="checking-the-milestone-file-step-13"><span class="header-section-number">21.4</span> Checking the milestone File (step 13)</h2>
 <p><img src="assets/screenshots/BlockB_PondTrade_step13_output-statistics-interface.png" class="img-fluid" alt="Pond Trade step 13"><br>
 <em>Pond Trade step 13</em></p>
-<p>We could further implement a procedure to export these and more variables at a specific time of simulations. We will see an example of this in Block C. However, in most cases, we want to use <a href="https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html">NetLogo Behavioral Space</a>. Find it in Tools &gt; Behavior Space. This built-in tool allows you to configure experiments to be run in parallel, within a specific parameter space, and perform a series of commands before, during, or after a simulation run. It includes functionality for exporting simulation data as a CSV file (you will be prompt with a File Explorer window once you press “run” in an experiment).</p>
+<p>We could further implement a procedure to export these and more variables at a specific time in the simulation. We will see an example of this in Block C. However, in most cases, we want to use <a href="https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html">NetLogo Behavior Space</a>. Find it in Tools &gt; Behavior Space. This built-in tool lets you configure experiments to run in parallel within a specific parameter space and run a series of commands before, during, or after a simulation. It includes functionality to export simulation data as a CSV file (you will be prompted with a File Explorer window when you press “run” in an experiment).</p>
 </section>
 <section id="updating-the-conceptual-model" class="level2" data-number="21.5">
 <h2 data-number="21.5" class="anchored" data-anchor-id="updating-the-conceptual-model"><span class="header-section-number">21.5</span> Updating the conceptual model</h2>
