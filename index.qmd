@@ -61,7 +61,7 @@ This course introduces the basic concepts and workflow of simulation and agent-b
 
 More specifically, we will cover the prototyping of a conceptual model into a working simulation model, the 'refactoring' of code (cleaning, restructuring, optimising), the re-use of published model parts and algorithms, the exploration of alternative designs, and the use of geographic, climatic and archaeological data to frame the model in a specific case study.
 
-This tutorial uses [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible, well-established modelling platform known for its relatively low entry requirements in programming experience. It is widely used in social sciences and ecology for research and educational purposes.
+We will use [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible, well-established modelling platform known for its relatively low programming-experience requirements. It is widely used in social sciences and ecology for research and educational purposes.
 
 The course includes implementation examples of least-path-cost algorithms, hydrological and land productivity modelling, network dynamics, and cultural evolution. We also cover the basics of Git and GitHub for version control, which will help us organise, maintain, and share models and related materials.
 
@@ -87,7 +87,7 @@ There are mainly three types of activities to address:
 
 ## Acknowledgements
 
-The conception of the course structure, as well as the short summaries, exercises, and images shown in each chapter, greatly benefited from [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) used as companion writer and programmer, as well as language corrector. As such, we owe much to the current richness of reference information freely available on the Internet.
+The conception of the course structure, as well as the short summaries, exercises, and images shown in each chapter, greatly benefited from [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) used as companion writer and programmer, as well as language corrector. As such, we owe much to the rich reference information freely available on the Internet.
 
 The models and services used are:
 
