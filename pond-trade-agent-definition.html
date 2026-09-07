@@ -487,7 +487,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#refresing-the-specificacions-of-the-conceptual-model" id="toc-refresing-the-specificacions-of-the-conceptual-model" class="nav-link active" data-scroll-target="#refresing-the-specificacions-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refresing the specificacions of the conceptual model</a></li>
+  <li><a href="#refining-the-specifications-of-the-conceptual-model" id="toc-refining-the-specifications-of-the-conceptual-model" class="nav-link active" data-scroll-target="#refining-the-specifications-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refining the specifications of the conceptual model</a></li>
   <li><a href="#agent-declaration" id="toc-agent-declaration" class="nav-link" data-scroll-target="#agent-declaration"><span class="header-section-number">17.2</span> Agent declaration</a></li>
   <li><a href="#creating-settlements" id="toc-creating-settlements" class="nav-link" data-scroll-target="#creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code> 🤔</a></li>
   <li><a href="#creating-traders" id="toc-creating-traders" class="nav-link" data-scroll-target="#creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code> 🤔</a></li>
@@ -519,11 +519,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>In the following chapters, we will finally build a version of Pond Trade through steps that will introduce you to more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.</p>
-<p>So that we can cover all the steps at a good pace, we will not be delving into the same details as in chapter 16. I recommend you follow the steps in this block using the copy-and-paste functionality to update your script. If your version at the end of each step does not work as expected, you may want to compare it to the corresponding script (.nlogo) included in the repository (use tools like <a href="https://text-compare.com/">Text Compare!</a>). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu.</p>
+<p>In the following chapters, we will build a version of Pond Trade through steps that introduce more advanced algorithms that bring us closer to our conceptual model, such as path cost calculation, feedback loops, and evolution through vector variables.</p>
+<p>To cover all the steps at a good pace, we will not delve into the same details as in chapter 16. I recommend following the steps in this block and using the copy-and-paste functionality to update your script. If your version at the end of each step doesn’t work as expected, compare it to the corresponding script (.nlogo) in the repository (use tools like <a href="https://text-compare.com/">Text Compare!</a>). If there are any doubts about NetLogo primitives, for example, remember to consult the NetLogo Dictionary from the Help menu.</p>
 <p>Here is a recommended workflow (outside the class):</p>
 <ol type="1">
-<li>Read section in the guide<br>
+<li>Read the section in the guide<br>
 </li>
 <li>Extend the code in your own file (test procedures separately if needed), preferably doing the coding challenges<br>
 </li>
@@ -531,12 +531,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li><strong>Repeat</strong></li>
 </ol>
-<section id="refresing-the-specificacions-of-the-conceptual-model" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="refresing-the-specificacions-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refresing the specificacions of the conceptual model</h2>
-<p>Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original Pond Trade repository, this will cover the development steps 6 to 9.</p>
+<section id="refining-the-specifications-of-the-conceptual-model" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="refining-the-specifications-of-the-conceptual-model"><span class="header-section-number">17.1</span> Refining the specifications of the conceptual model</h2>
+<p>Our first aim is to reach a consolidated version corresponding to the first-tier conceptual model. In the original Pond Trade repository, this covers development steps 6 to 9.</p>
 <p><img src="assets/images/0_conceptAtStart_firstTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (first tier)"><br>
 <em>Pond Trade conceptual model at start (first tier)</em></p>
-<p>One of the necessary first steps in implementing and ABM model is to define the types of agents we plan to have, based on our initial conceptual model. We must emphasise the <em>plan</em> part here. There is always the possibility that we will revise the conceptual model up to the point that we will require more or fewer specifications about the agents.</p>
+<p>One necessary first step in implementing an ABM model is to define the types of agents we plan to have, based on our initial conceptual model. We must emphasise the <em>plan</em> part here. We may revise the conceptual model to the point that we need more or fewer agent specifications.</p>
 </section>
 <section id="agent-declaration" class="level2" data-number="17.2">
 <h2 data-number="17.2" class="anchored" data-anchor-id="agent-declaration"><span class="header-section-number">17.2</span> Agent declaration</h2>
@@ -561,13 +561,13 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Notice that we intentionally avoid naming the size of settlements as <code>size</code>, since it is a NetLogo primitive used to scale the pixel size turtles in the view screen.</p>
+<p>Notice that we intentionally avoid naming the size of settlements as <code>size</code>, since it is a NetLogo primitive used to scale the pixel size of turtles in the view screen.</p>
 </div>
 </div>
 </section>
 <section id="creating-settlements" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="creating-settlements"><span class="header-section-number">17.3</span> Creating <code>settlements</code> 🤔</h2>
-<p>We then write a procedure to handle the creation of all settlements, which under the PondTrade specifications, should always be placed in an empty land patch adjacent to at least one water patch (<em>i.e.</em>, coastal settlements).</p>
+<p>We then write a procedure to create all settlements, which, under the PondTrade specifications, should always be placed in an empty land patch adjacent to at least one water patch (<em>i.e.</em>, coastal settlements).</p>
 <p>Before looking at the solution, try to write the code yourself:</p>
 <ul>
 <li>Number of <code>settlements</code> set by user via a slider (<code>numberOfSettlements</code>)<br>
@@ -582,7 +582,7 @@ Caution
 </li>
 <li>size: 1 + <code>sizeLevel</code> / 3 (to visualise size differences)</li>
 </ul>
-<p>Work the code as a onion, layer by layer (start with the easier parts):</p>
+<p>Work the code like an onion, layer by layer (start with the easier parts):</p>
 <ul>
 <li>How should a <code>settlement</code> be initialised? (internal variable settings)<br>
 </li>
@@ -629,21 +629,21 @@ Note
   ]
 
 end</code></pre>
-<p>We are introducing the parameter <code>numberOfSettlements</code>, which we add to the interface tab as a slider (<em>e.g.</em>, spanning from 0 to 100 by increments of 1). We randomise <code>sizeLevel</code> to get a sense of how we will visualise these agents.</p>
+<p>We introduce the parameter <code>numberOfSettlements</code>, which we add to the interface tab as a slider (<em>e.g.</em>, spanning from 0 to 100 in increments of 1). We randomise <code>sizeLevel</code> to get a sense of how we will visualise these agents.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="creating-traders" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="creating-traders"><span class="header-section-number">17.4</span> Creating <code>traders</code> 🤔</h2>
-<p>We implement the procedure for creating <code>traders</code>, which is a call to all settlements to generate several traders proportional to its <code>sizelevel</code>. We give them a nice sail boat shape and place them randomly inside the pond.</p>
+<p>We implement the procedure for creating <code>traders</code>, which calls all settlements to generate several traders proportional to their <code>sizeLevel</code>. We give them a nice sailboat shape and place them randomly inside the pond.</p>
 <p>Before looking at the solution, try to write the code yourself:</p>
 <ul>
 <li>Number of <code>traders</code> set by the <code>sizeLevel</code> of each <code>settlement</code> (i.e.&nbsp;bigger settlements have more traders)<br>
 </li>
 <li>Each <code>trader</code> has a fixed <code>base</code> settlement<br>
 </li>
-<li>color: same as the <code>base</code> settlement<br>
+<li>colour: same as the <code>base</code> settlement<br>
 </li>
 <li>shape: “sailboat side” (arbitrary)<br>
 </li>
@@ -739,7 +739,7 @@ Note
 
 end</code></pre>
 <p>Press the Set up button and observe the outcome.</p>
-<p>Given the appearance of the view screen so far, we might foresee it becoming too populated by agent icons later. As a precaution, let us enable a simple visualisation option, to switch on and off the settlement icons:</p>
+<p>Given how the view screen looks so far, we may end up with too many agent icons later. As a precaution, let us enable a simple visualisation option to switch on and off the settlement icons:</p>
 <pre class="netlogo"><code>to setup
 
   clear-all
@@ -781,8 +781,8 @@ end</code></pre>
 <figcaption>Pond Trade step 6 - “View” right-click context menu</figcaption>
 </figure>
 </div>
-<p>You now get a focus pop-up context menu where the values of each agent variable are shown. Do the same to check the information about this trader <code>base</code>. This time, however, write the <code>inspect settlement &lt;WHO NUMBER&gt;</code> directly into the console.</p>
-<p>However, with our current code, there are no margin for inheritance: all variables with shared names between the two breeds (<code>xcor</code>, <code>ycor</code>, <code>color</code>, etc.) were set explicitly during initialisation (overwriting the inherited values). Go back to <code>create-traders-per-settlement</code>, comment-out the line <code>set color [color] of base</code>:</p>
+<p>You now get a focus pop-up context menu that shows the values of each agent variable. Do the same to check the information about this trader <code>base</code>. This time, however, write the <code>inspect settlement &lt;WHO NUMBER&gt;</code> directly into the console.</p>
+<p>However, with our current code, there is no margin for inheritance: all variables with shared names between the two breeds (<code>xcor</code>, <code>ycor</code>, <code>color</code>, etc.) were set explicitly during initialisation (overwriting the inherited values). Go back to <code>create-traders-per-settlement</code>, comment out the line <code>set color [color] of base</code>:</p>
 <pre class="netlogo"><code>to create-traders-per-settlement
       ...
 
@@ -794,7 +794,7 @@ end</code></pre>
       ...
 
 end</code></pre>
-<p>Run <code>setup</code> again. You can now verify that, even without this line, any trader will have the exact same colour than its base settlement. This small line might be useful though, so let us keep it for now.</p>
+<p>Run <code>setup</code> again. You can now verify that, even without this line, any trader will have the exact same colour as its base settlement. This small line might be useful though, so let us keep it for now.</p>
 <p><img src="assets/screenshots/BlockB_PondTrade_step06_agent-types-interface_agentDetail.png" class="img-fluid" alt="Pond Trade step 6 - agent detail"><br>
 <em>Pond Trade step 6 - agent detail</em></p>
 
