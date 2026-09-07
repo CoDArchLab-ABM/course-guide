@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>20&nbsp; Implementing complex agents – Agent-based modelling for archaeologists. From concept to application and publication</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -24,7 +30,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -54,15 +59,14 @@ div.csl-indent {
 <link href="./pond-trade-mechanism.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-46385b24d3fde8766d5335a75c40e237.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8b395ed4b7512c0723d9a89b264d3f52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -542,7 +546,7 @@ div.csl-indent {
 <p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
 <p>We will now extend the Pond Trade model to include a simple mechanism of cultural evolution.</p>
-<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this, we will use the so-called “vector model” of cultural transmission <span class="citation" data-cites="axelrod_dissemination_1997 lipo_mapping_2017 shennan_pattern_2009 bentley_random_2004 battiston_layered_2017">(<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">Axelrod 1997</a>; <a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">Lipo 2017</a>; <a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">Shennan 2009</a>; <a href="references.html#ref-bentley_random_2004" role="doc-biblioref">Bentley, Hahn, and Shennan 2004</a>; <a href="references.html#ref-battiston_layered_2017" role="doc-biblioref">Battiston et al. 2017</a>)</span>.</p>
+<p>First, we will implement a simple model of cultural transmission, integrated with the Pond Trade model. For this, we will use the so-called “vector model” of cultural transmission <span class="citation" data-cites="axelrod_dissemination_1997 lipo_mapping_2017 shennan_pattern_2009 bentley_random_2004 battiston_layered_2017">(<a href="references.html#ref-axelrod_dissemination_1997" role="doc-biblioref">Axelrod 1997</a>; <a href="references.html#ref-lipo_mapping_2017" role="doc-biblioref">Lipo 2017</a>; <a href="references.html#ref-shennan_pattern_2009" role="doc-biblioref">Shennan 2009</a>; <a href="references.html#ref-bentley_random_2004" role="doc-biblioref">Bentley et al. 2004</a>; <a href="references.html#ref-battiston_layered_2017" role="doc-biblioref">Battiston et al. 2017</a>)</span>.</p>
 <p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-017-02040-4/MediaObjects/41598_2017_2040_Fig1_HTML.jpg?as=webp" alt="Battiston et al. 2017, Fig. 1"></p>
 <p><em>Illustration of the idea of cultural vectors (Battiston et al.&nbsp;2017, Fig. 1)</em></p>
 <p>Following this model, each settlement has a “cultural vector”, which is a list of cultural traits (e.g., pottery styles, architectural styles, etc.) that represent the aggregated culture of the population of the settlement. These cultural vectors can be modified through the movement of trade goods between settlements, according to a “cultural permeability” that defines how easily cultural traits are transmitted between settlements. In addition, cultural vectors can be modified randomly over time through intrinsic cultural variation (undirected variation) and selection, in which specific cultural traits are more likely to be transmitted or retained based on their “fitness” in the environment.</p>
@@ -1036,7 +1040,7 @@ end</code></pre>
 <em>Pond Trade step 11</em></p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-axelrod_dissemination_1997" class="csl-entry" role="listitem">
 Axelrod, Robert. 1997. <span>“The <span>Dissemination</span> of <span>Culture</span>: <span>A</span> <span>Model</span> with <span>Local</span> <span>COnvergence</span> and <span>Global</span> <span>Polarization</span>.”</span> <em>The Journal of Conflict Resolution</em> 41 (2): 203–26. <a href="https://public.websites.umich.edu/~axe/research/Dissemination.pdf">https://public.websites.umich.edu/~axe/research/Dissemination.pdf</a>.
 </div>
@@ -1050,7 +1054,7 @@ Bentley, R. Alexander, Matthew W. Hahn, and Stephen J. Shennan. 2004. <span>“R
 Lipo, Carl P. 2017. <em>Mapping <span>Our</span> <span>Ancestors</span>: <span>Phylogenetic</span> <span>Approaches</span> in <span>Anthropology</span> and <span>Prehistory</span></em>. Transaction Publishers.
 </div>
 <div id="ref-shennan_pattern_2009" class="csl-entry" role="listitem">
-Shennan, Stephen. 2009. <em>Pattern and Process in Cultural Evolution</em>. Origins of Human Behavior and Culture 2. Los Angeles: University of California press.
+Shennan, Stephen. 2009. <em>Pattern and Process in Cultural Evolution</em>. Origins of Human Behavior and Culture 2. University of California press.
 </div>
 </div>
 </section>
