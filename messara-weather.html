@@ -490,9 +490,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#calculating-arid-using-weather-data" id="toc-calculating-arid-using-weather-data" class="nav-link active" data-scroll-target="#calculating-arid-using-weather-data"><span class="header-section-number">26.1</span> Calculating ARID using weather data</a></li>
   <li><a href="#the-input-dataset" id="toc-the-input-dataset" class="nav-link" data-scroll-target="#the-input-dataset"><span class="header-section-number">26.2</span> The input dataset</a></li>
   <li><a href="#loading-the-input-dataset" id="toc-loading-the-input-dataset" class="nav-link" data-scroll-target="#loading-the-input-dataset"><span class="header-section-number">26.3</span> Loading the input dataset</a></li>
-  <li><a href="#keeping-tract-of-time-in-cycles" id="toc-keeping-tract-of-time-in-cycles" class="nav-link" data-scroll-target="#keeping-tract-of-time-in-cycles"><span class="header-section-number">26.4</span> Keeping tract of time in cycles</a></li>
+  <li><a href="#keeping-track-of-time-in-cycles" id="toc-keeping-track-of-time-in-cycles" class="nav-link" data-scroll-target="#keeping-track-of-time-in-cycles"><span class="header-section-number">26.4</span> Keeping track of time in cycles</a></li>
   <li><a href="#setting-daily-weather-values" id="toc-setting-daily-weather-values" class="nav-link" data-scroll-target="#setting-daily-weather-values"><span class="header-section-number">26.5</span> Setting daily weather values</a></li>
-  <li><a href="#wrapping-everying-together" id="toc-wrapping-everying-together" class="nav-link" data-scroll-target="#wrapping-everying-together"><span class="header-section-number">26.6</span> Wrapping everying together</a></li>
+  <li><a href="#wrapping-everything-together" id="toc-wrapping-everything-together" class="nav-link" data-scroll-target="#wrapping-everything-together"><span class="header-section-number">26.6</span> Wrapping everything together</a></li>
   <li><a href="#checking-the-milestone-file-module-3" id="toc-checking-the-milestone-file-module-3" class="nav-link" data-scroll-target="#checking-the-milestone-file-module-3"><span class="header-section-number">26.7</span> Checking the milestone File (module 3)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/CoDArchLab-ABM/course-guide/edit/main/messara-weather.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -521,14 +521,14 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="calculating-arid-using-weather-data" class="level2" data-number="26.1">
 <h2 data-number="26.1" class="anchored" data-anchor-id="calculating-arid-using-weather-data"><span class="header-section-number">26.1</span> Calculating ARID using weather data</h2>
-<p>To compromise model complexity and precision, we will regulate land productivity by combining flow accumulation with the Agricultural reference index of drought (ARID). We will calculate a time-series of ARID for each day-of-year and patch using a modified version of the Soil Water (sub)model, again in the <a href="https://github.com/Andros-Spica/indus-village-model">Indus Village model</a> (Angourakis 2021). This submodel is a NetLogo implementation of the model defined by Wallach et al.&nbsp;2019, which is based on Woli et al.&nbsp;2012.</p>
+<p>To compromise model complexity and precision, we will regulate land productivity by combining flow accumulation with the Agricultural Reference Index of Drought (ARID). We will calculate a time series of ARID for each day-of-year and patch using a modified version of the Soil Water (sub)model, again in the <a href="https://github.com/Andros-Spica/indus-village-model">Indus Village model</a> (Angourakis 2021). This submodel is a NetLogo implementation of the model defined by Wallach et al.&nbsp;(2019), based on Woli et al.&nbsp;(2012).</p>
 <blockquote class="blockquote">
 <p>Wallach, Daniel, David Makowski, James W. Jones, and Francois Brun. 2019. Working with Dynamic Crop Models (Third Edition). Academic Press. https://doi.org/10.1016/C2016-0-01552-8.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p>Woli, Prem, James W. Jones, Keith T. Ingram, and Clyde W. Fraisse. 2012. ‘Agricultural Reference Index for Drought (ARID)’. Agronomy Journal 104 (2): 287. https://doi.org/10.2134/agronj2011.0286.</p>
 </blockquote>
-<p>We will introduce here a way to import daily weather data (solar radiation, temperature, precipitation) from an external dataset, and use it to calculate ARID, which we will cover in the next chapter.</p>
+<p>We will introduce here a way to import daily weather data (solar radiation, temperature, precipitation) from an external dataset and use it to calculate ARID, which we will cover in the next chapter.</p>
 </section>
 <section id="the-input-dataset" class="level2" data-number="26.2">
 <h2 data-number="26.2" class="anchored" data-anchor-id="the-input-dataset"><span class="header-section-number">26.2</span> The input dataset</h2>
@@ -538,13 +538,13 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Source</em>: NASA POWER (https://power.larc.nasa.gov/data-access-viewer/; see their sources and methodology at https://power.larc.nasa.gov/docs/methodology/)</p>
 <p><em>Point location</em>: Petrokefali (LAT: 35.0309; LON: 24.8335)</p>
 <p><em>Time extent</em>: 01/01/1984 - 31/12/2020</p>
-<p><em>Variables</em>: - YEAR, MO, DY: year (number), month (index in year) and day (index in month) of observation/row - PRECTOTCORR: The bias corrected average of total precipitation at the surface of the earth in water mass (includes water content in snow).<br>
+<p><em>Variables</em>: - YEAR, MO, DY: year (number), month (index in year) and day (index in month) of observation/row - PRECTOTCORR: The bias-corrected average of total precipitation at the surface of the Earth in water mass (includes water content in snow).<br>
 - T2M_MIN, T2M_MAX: The maximum/minimum/average hourly air (dry bulb) temperature at 2 meters above the surface of the earth.<br>
-- ALLSKY_SFC_SW_DWN: The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the earth under all sky conditions. An alternative term for the total solar irradiance is the “Global Horizontal Irradiance” or GHI.</p>
+- ALLSKY_SFC_SW_DWN: The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the Earth under all sky conditions. An alternative term for total solar irradiance is “Global Horizontal Irradiance” (GHI).</p>
 </section>
 <section id="loading-the-input-dataset" class="level2" data-number="26.3">
 <h2 data-number="26.3" class="anchored" data-anchor-id="loading-the-input-dataset"><span class="header-section-number">26.3</span> Loading the input dataset</h2>
-<p>The original implementation in the Indus Village repository includes a procedure only for loading, running, and displaying the dataset as simulation input data.</p>
+<p>The original implementation in the Indus Village repository includes a procedure only to load, run, and display the dataset as simulation input data.</p>
 <p>This module uses the data structure <code>list</code> to hold and process the data. The dataset is loaded from the original CSV file into several global variables (using the CSV NetLogo extension). You may need to look at NetLogo’s Dictionary several times to understand every step in this procedure.</p>
 <pre class="netlogo"><code>extensions [ csv ]
 
@@ -648,7 +648,7 @@ to load-weather-input-data-table
   set weatherInputData_lastYear last weatherInputData_YEARS
 
   ;;; extract parameter values from the given column
-  ;;; NOTE: read-from-string might be required if the original file is formated in a way that NetLogo interprets values as strings.
+  ;;; NOTE: read-from-string might be required if the original file is formatted in a way that NetLogo interprets values as strings.
 
   set weatherInputData_solarRadiation map [row -&gt; item solarRadiationColumn row ] weatherData
 
@@ -661,11 +661,11 @@ to load-weather-input-data-table
   set weatherInputData_minTemperature map [row -&gt; item temperatureMinColumn row ] weatherData
 
 end</code></pre>
-<p>There are other ways of doing this in NetLogo and many possible variations within this specific approach. The most important things here are to make sure that variable names are intelligible and all references to the internal structure of the CSV file are kept updated if any changes are made directly to the file. Abundant comments are also welcomed in this type of procedure.</p>
+<p>There are other ways to do this in NetLogo, and many possible variations within this approach. The most important things are to keep variable names intelligible and to keep references to the CSV file’s internal structure updated if you change the file directly. Abundant comments are also welcome in this type of procedure.</p>
 </section>
-<section id="keeping-tract-of-time-in-cycles" class="level2" data-number="26.4">
-<h2 data-number="26.4" class="anchored" data-anchor-id="keeping-tract-of-time-in-cycles"><span class="header-section-number">26.4</span> Keeping tract of time in cycles</h2>
-<p>This module also introduces an aspect that may be relevant when inputting or generating time series: calendar time keeping. This may seem trivial, but it has often been a weak point in models relying on input data.</p>
+<section id="keeping-track-of-time-in-cycles" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="keeping-track-of-time-in-cycles"><span class="header-section-number">26.4</span> Keeping track of time in cycles</h2>
+<p>This module also introduces an aspect that may be relevant when inputting or generating time series: calendar timekeeping. This may seem trivial, but it has often been a weak point in models relying on input data.</p>
 <pre class="netlogo"><code>to advance-time
 
   set currentDayOfYear currentDayOfYear + 1
@@ -680,7 +680,7 @@ end</code></pre>
 </section>
 <section id="setting-daily-weather-values" class="level2" data-number="26.5">
 <h2 data-number="26.5" class="anchored" data-anchor-id="setting-daily-weather-values"><span class="header-section-number">26.5</span> Setting daily weather values</h2>
-<p>The module than allows us to update the value of weather variables according to the synchronised calendar and simulation times, using <code>year</code> and <code>dayOfYear</code> as index:</p>
+<p>The module then allows us to update the value of weather variables according to the synchronised calendar and simulation times, using <code>year</code> and <code>dayOfYear</code> as index:</p>
 <pre class="netlogo"><code>to set-day-weather-from-input-data [ dayOfYear year ]
 
   ;;; find corresponding index to year-dayOfYear pair
@@ -722,9 +722,9 @@ end</code></pre>
 
 end</code></pre>
 </section>
-<section id="wrapping-everying-together" class="level2" data-number="26.6">
-<h2 data-number="26.6" class="anchored" data-anchor-id="wrapping-everying-together"><span class="header-section-number">26.6</span> Wrapping everying together</h2>
-<p>Press “setup” and then “go” (continuous run). NetLogo will run until it reaches the last day of the last year included in the dataset. This is because we have added in <code>go</code> a stop condition.</p>
+<section id="wrapping-everything-together" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="wrapping-everything-together"><span class="header-section-number">26.6</span> Wrapping everything together</h2>
+<p>Press “setup” and then “go” (continuous run). NetLogo will run until it reaches the last day of the last year included in the dataset. This is because we have added a stop condition to <code>go</code>.</p>
 <pre class="netlogo"><code>to go
 
   advance-time
@@ -744,7 +744,7 @@ end</code></pre>
 <h2 data-number="26.7" class="anchored" data-anchor-id="checking-the-milestone-file-module-3"><span class="header-section-number">26.7</span> Checking the milestone File (module 3)</h2>
 <p><img src="assets/screenshots/BlockC_module3_load-weather-data interface.png" class="img-fluid" alt="Screenshot of the ‘load-weather-data’ module"><br>
 <em>Screenshot of the ‘load-weather-data’ module</em></p>
-<p>See the fully implemented version of this module: <code>BlockC_module3_load-weather-data.nlogo</code>. Check the widgets in the interface for how to reproduce the plots.</p>
+<p>See the fully implemented version of this module: <code>BlockC_module3_load-weather-data.nlogo</code>. Check the interface widgets to reproduce the plots.</p>
 
 
 </section>
