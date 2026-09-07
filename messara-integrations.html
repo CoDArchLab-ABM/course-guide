@@ -519,7 +519,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Finally, after much of the modelling equivalent of <em>blood and sweat</em>, we reach the point where we can combine the contribution of all our modules with the full implementation of the Pond Trade model (step 13).</p>
 <section id="integrating-module-4-arid-and-5-routes" class="level2" data-number="29.1">
 <h2 data-number="29.1" class="anchored" data-anchor-id="integrating-module-4-arid-and-5-routes"><span class="header-section-number">29.1</span> Integrating module 4 (ARID) and 5 (routes)</h2>
-<p>We use module 4 - ARID as the starting template and add <code>import-routes-from-file</code> and all route related procedures. We should be able to import the routes data saved before and load it during set up, as the last step before <code>setup-patches</code>:</p>
+<p>We use module 4 (ARID) as the starting template and add <code>import-routes-from-file</code> and all route-related procedures. We should be able to import the route data saved before and load it during setup, as the last step before <code>setup-patches</code>:</p>
 <pre class="netlogo"><code>globals
 [
   ...
@@ -585,7 +585,7 @@ to paint-routes
 
   ;;; define list of shades of red in NetLogo
   let redShades (list 11 12 13 14 15 16 17 18 19)
-  ;;; NOTE: this is needed because rgb colors based on elevation are a list
+  ;;; NOTE: this is needed because RGB colours based on elevation are a list
   ;;; while NetLogo color are numbers
 
   ; resets route patches to the terrain color
@@ -610,7 +610,7 @@ to paint-routes
       [
         if (showRoutes)
         [
-          ifelse (not member? pcolor redShades) ; if its the first route crossing the patch
+          ifelse (not member? pcolor redShades) ; if it's the first route crossing the patch
           [
             set pcolor 11
           ]
@@ -652,10 +652,10 @@ end
 </section>
 <section id="integrating-pond-trade-step-13" class="level2" data-number="29.2">
 <h2 data-number="29.2" class="anchored" data-anchor-id="integrating-pond-trade-step-13"><span class="header-section-number">29.2</span> Integrating Pond Trade (step 13)</h2>
-<p>Next, we bring all the extra code and interface objects present in Pond Trade (step 13). Most procedures require no modifications. The exceptions are:</p>
+<p>Next, bring in all the extra code and interface objects from Pond Trade (step 13). Most procedures require no modifications. The exceptions are:</p>
 <ul>
-<li>There is no <code>isLand</code> variable here and, given that there is no water patches, we should simply erase the code that distinguishes it.</li>
-<li>Since there is only land patches and we are using the standard deviation of elevations to assign <code>pathCost</code>, there are no <code>relativePathCostInLand</code> or <code>relativePathCostInPort</code>. We can erase all reference to these two parameters, which will leave the corresponding cultural traits of transport technology as the sole modifiers of <code>pathCost</code>.</li>
+<li>There is no <code>isLand</code> variable here and, given that there are no water patches, we should simply erase the code that distinguishes it.</li>
+<li>Since there are only land patches and we are using the standard deviation of elevations to assign <code>pathCost</code>, there are no <code>relativePathCostInLand</code> or <code>relativePathCostInPort</code>. We can remove all references to these two parameters, leaving the corresponding cultural traits of transport technology as the sole modifiers of <code>pathCost</code>.</li>
 </ul>
 <p>We carefully organise the scheduling of calls in <code>setup</code> and <code>go</code>:</p>
 <pre class="netlogo"><code>to setup
@@ -703,8 +703,8 @@ end</code></pre>
 </section>
 <section id="arid-as-a-factor-of-settlement-productivity" class="level2" data-number="29.3">
 <h2 data-number="29.3" class="anchored" data-anchor-id="arid-as-a-factor-of-settlement-productivity"><span class="header-section-number">29.3</span> ARID as a factor of settlement productivity</h2>
-<p>Last, we need to connect ARID to settlement productivity.</p>
-<p>We first calculate the value of two new settlement variables, <code>catchmentArea</code> and <code>ARIDinCatchmentArea</code>. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on <code>sizeLevel</code> and two parameters, <code>catchmentSlope</code> and <code>catchmentRadiusMaximum</code>. This is a <em>very</em> preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.</p>
+<p>Finally, we connect ARID to settlement productivity.</p>
+<p>First, we calculate two new settlement variables: <code>catchmentArea</code> and <code>ARIDinCatchmentArea</code>. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on <code>sizeLevel</code> and two parameters, <code>catchmentSlope</code> and <code>catchmentRadiusMaximum</code>. This is a <em>very</em> preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.</p>
 <pre class="netlogo"><code>settlements-own
 [
   ...
@@ -720,11 +720,11 @@ to update-settlements
   [
     let thisSettlement self
 
-    ; the sizeLevel of settlements decays with a constant rate, up to 1 (minimum)
+    ; the sizeLevel of settlements decays at a constant rate, up to 1 (minimum)
     set sizeLevel max (list 1 (sizeLevel * (1 - ((item 5 culturalVector) / 100)) ) )
-    ; production in stock also decays with a constant rate
+    ; production in stock also decays at a constant rate
     set stock stock * (1 - ((item 6 culturalVector) / 100))
-    ; prodution is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
+    ; production is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
     update-ARIDinCatchmentArea
     update-catchmentArea
     set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * ARIDinCatchmentArea
@@ -762,10 +762,10 @@ end</code></pre>
 <section id="checking-the-milestone-file-module-6" class="level2" data-number="29.4">
 <h2 data-number="29.4" class="anchored" data-anchor-id="checking-the-milestone-file-module-6"><span class="header-section-number">29.4</span> Checking the milestone File (module 6)</h2>
 <p><img src="assets/screenshots/BlockC_module6_MesaraTrade view.png" class="img-fluid" alt="View of MesaraTrade after set up"><br>
-<em>View of MesaraTrade after set up</em></p>
+<em>View of MesaraTrade after setup</em></p>
 <p><img src="assets/screenshots/BlockC_module6_MesaraTrade interface.png" class="img-fluid" alt="View of MesaraTrade interface"><br>
 <em>View of MesaraTrade interface</em></p>
-<p>Run the model for a few years using the default configuration. Observe the behaviour of traders and the overall dynamics of settlements’ economical size and the trade between them. Is there something off about how the new version is running?</p>
+<p>Run the model for a few years using the default configuration. Observe trader behaviour and the overall dynamics of settlement size and trade between them. Is there something off about how the new version is running?</p>
 <p>Think about the case study and the mechanisms targeted by the original Pond Trade model. What aspects do you find problematic?</p>
 
 
