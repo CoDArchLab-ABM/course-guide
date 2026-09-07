@@ -587,8 +587,8 @@ div.csl-indent {
 <h2 data-number="9.1" class="anchored" data-anchor-id="version-control-and-git"><span class="header-section-number">9.1</span> Version control and Git</h2>
 <section id="version-control-general-concept-and-its-usefulness" class="level3" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="version-control-general-concept-and-its-usefulness"><span class="header-section-number">9.1.1</span> Version control: general concept and its usefulness</h3>
-<p>Version control is a system that helps track and manage file changes over time. It’s widely used in software development, but its applications extend to any field where file management is essential, including document editing, research, and project management. At its core, version control provides a historical record of changes. It allows users to revert to previous versions, identify when and why changes were made, and work collaboratively without the risk of overwriting each other’s work.</p>
-<p>There are two main types of version control: centralized and distributed. Centralized version control systems, such as Subversion (SVN), store files in a central repository. Users check out files, make changes, and then commit them back to the central repository. While effective, centralized systems can be vulnerable if the central server fails. Distributed version control systems, like Git, address this by allowing every user to have a complete copy of the repository on their local machine. This setup enhances collaboration and provides redundancy, as users can work offline and synchronize changes with others when connected.</p>
+<p>Version control is a system that tracks and manages file changes over time. It’s widely used in software development, but it also applies to any field where file management is essential, including document editing, research, and project management. At its core, version control provides a historical record of changes. It lets users revert to previous versions, see when and why changes were made, and collaborate without risking overwriting each other’s work.</p>
+<p>There are two main types of version control: centralised and distributed. Centralised version control systems, such as Subversion (SVN), store files in a central repository. Users check out files, make changes, and then commit them back to the central repository. While effective, centralised systems can be vulnerable if the central server fails. Distributed version control systems, like Git, address this by letting every user keep a complete copy of the repository on their local machine. This setup enhances collaboration and provides redundancy, as users can work offline and synchronise changes with others when connected.</p>
 <figure class="figure">
 <a title="Jason Long, CC BY 3.0 <https://creativecommons.org/licenses/by/3.0>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Git_icon.svg"><img width="64" alt="Git icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/64px-Git_icon.svg.png?20220905010122" class="figure-img"></a> <fig-caption>Git icon</fig-caption>
 </figure>
@@ -596,11 +596,11 @@ div.csl-indent {
 <section id="benefits-of-version-control" class="level3" data-number="9.1.2">
 <h3 data-number="9.1.2" class="anchored" data-anchor-id="benefits-of-version-control"><span class="header-section-number">9.1.2</span> Benefits of Version Control</h3>
 <ul>
-<li><p><em>Collaboration</em>: Version control systems make collaboration easier and more efficient by allowing multiple users to simultaneously work on the same project. With distributed systems like Git, branches can be created for different features or tasks, and changes can later be seamlessly merged into the main project. This enables teams to work independently and minimize conflicts.</p></li>
-<li><p><em>Historical Tracking</em>: Version control systems keep a detailed history of all changes made to the files. This allows users to see who made changes, when, and why. If an issue arises, it’s possible to revert to a previous state without losing any data, making debugging easier.</p></li>
-<li><p><em>Backup and Redundancy</em>: In distributed systems, each user’s local copy is a backup of the entire project. This redundancy reduces the risk of data loss due to server failures or other issues and allows users to work offline and sync changes later.</p></li>
-<li><p><em>Version Management</em>: Version control systems assign unique identifiers to each change, per commit and file changed, usually called “Git hash” or “commit hash”. A Git hash a 40-character hexadecimal string, such as 2d3acf90f35989df8f262dc50beadc4ee3ae1560, derived from the contents of the commit, including its parent commit(s), timestamp, and author details [REF]. These identifiers allow users to switch between different versions of the project easily. It’s also possible to create branches for experimental features and merge them with the main project once they’re stable, facilitating smoother integration of new features.</p></li>
-<li><p><em>Enhanced Workflow</em>: Many version control systems support automated processes such as Continuous Integration (CI) and Continuous Deployment (CD), which streamline development and testing. These systems can automatically test changes before they are merged, ensuring higher code quality and reducing the risk of introducing bugs.</p></li>
+<li><p><em>Collaboration</em>: Version control systems make collaboration easier and more efficient by allowing multiple users to simultaneously work on the same project. With distributed systems like Git, you can create branches for different features or tasks and later merge changes seamlessly into the main project. This enables teams to work independently and minimise conflicts.</p></li>
+<li><p><em>Historical Tracking</em>: Version control systems keep a detailed history of all changes made to the files. This allows users to see who made changes, when, and why. If an issue arises, you can revert to a previous state without losing data, making debugging easier.</p></li>
+<li><p><em>Backup and Redundancy</em>: In distributed systems, each user’s local copy is a backup of the entire project. This redundancy reduces the risk of data loss from server failures or other issues and lets users work offline and sync changes later.</p></li>
+<li><p><em>Version Management</em>: Version control systems assign unique identifiers to each change, per commit and file changed, usually called a “Git hash” or “commit hash”. A Git hash is a 40-character hexadecimal string, such as 2d3acf90f35989df8f262dc50beadc4ee3ae1560, derived from the commit’s contents, including its parent commit(s), timestamp, and author details [REF]. These identifiers allow users to switch between different versions of the project easily. You can also create branches for experimental features and merge them into the main project once they’re stable, which helps integrate new features more smoothly.</p></li>
+<li><p><em>Enhanced Workflow</em>: Many version control systems support automated processes such as Continuous Integration (CI) and Continuous Deployment (CD), which streamline development and testing. These systems can automatically test changes before merging, ensuring higher code quality and reducing the risk of introducing bugs.</p></li>
 </ul>
 <p>Overall, version control systems are crucial tools in modern project management and development workflows. They enable collaboration, ensure data integrity, and improve productivity by providing a structured approach to managing changes in any type of project.</p>
 <p>Get a short introduction to Git by watching the official Git Documentation videos <a href="https://git-scm.com/videos">here</a>.</p>
@@ -615,7 +615,7 @@ div.csl-indent {
 <ul>
 <li><p><strong>Repository</strong>: A storage space for your project files and their history. Repositories can be local (on your computer) or remote (on platforms like GitHub).</p></li>
 <li><p><strong>Initialise</strong>: configure a specific local directory (your “working directory”) as a local repository by creating all necessary files for Git to work.</p></li>
-<li><p><strong>Add</strong>/<strong>Stage</strong>: adds a change in the working directory to the staging area, telling Git to include updates to a particular file in the next commit. However, adding or staging doesn’t really affect the repository since changes are not actually recorded until they are committed (see below).</p></li>
+<li><p><strong>Add</strong>/<strong>Stage</strong>: adds a change in the working directory to the staging area, telling Git to include updates to a particular file in the next commit. However, adding or staging doesn’t affect the repository because changes aren’t recorded until they are committed (see below).</p></li>
 </ul>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
@@ -632,7 +632,7 @@ div.csl-indent {
 <div class="quarto-layout-cell" style="flex-basis: 66.7%;justify-content: flex-start;">
 <ul>
 <li><p><strong>Commit</strong>: A snapshot of changes in the repository. Each commit has a unique ID, allowing you to track and revert changes as needed [<a href="https://git-scm.com/docs/gitglossary">1</a>].</p></li>
-<li><p><strong>Branch</strong>: A separate line of development. The default branch is usually called <code>main</code> or <code>master</code>. Branches allow you to work on features independently before merging them into the main project [<a href="https://www.pluralsight.com/resources/blog/cloud/git-terms-explained">2</a>]. A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches are used for development or testing. Branches are typically merged into the main branch once they are finalized.</p></li>
+<li><p><strong>Branch</strong>: A separate line of development. The default branch is usually called <code>main</code> or <code>master</code>. Branches allow you to work on features independently before merging them into the main project [<a href="https://www.pluralsight.com/resources/blog/cloud/git-terms-explained">2</a>]. A branch is a parallel version of the repository within the same repository structure. By branching, developers can isolate work on different features or fixes without altering the main project files. For example, many projects have a main or master branch for the official release version, while other branches support development or testing. Branches are typically merged into the main branch once they are finalised.</p></li>
 </ul>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
@@ -690,7 +690,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <li><p>In the Command Prompt window, type the following command and press Enter:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>If Git is installed, you will see the installed version, e.g., <code>git version 2.34.1</code>.</p></li>
-<li><p>If Git is not installed, you will receive an error message or see that the command is unrecognized. You can download the installer from <a href="https://git-scm.com">git-scm.com</a> and follow the installation instructions.</p></li>
+<li><p>If Git is not installed, you will receive an error message or see that the command is unrecognised. You can download the installer from <a href="https://git-scm.com">git-scm.com</a> and follow the installation instructions.</p></li>
 </ul></li>
 </ol>
 </div>
@@ -701,8 +701,8 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <h2 data-number="9.3" class="anchored" data-anchor-id="github"><span class="header-section-number">9.3</span> GitHub</h2>
 <section id="what-is-github" class="level3" data-number="9.3.1">
 <h3 data-number="9.3.1" class="anchored" data-anchor-id="what-is-github"><span class="header-section-number">9.3.1</span> What is GitHub?</h3>
-<p>GitHub is a cloud-based platform that enables developers to store, manage, and collaborate on code repositories. It builds on Git functionalities by adding collaborative features like pull requests, issue tracking, and discussions, which make it easier for teams to work together on software projects.</p>
-<p>GitHub also offers hosting for open-source projects, allowing anyone to contribute or review code. With integrations for CI/CD, project management tools, and documentation, GitHub is a popular choice for developers worldwide to manage both personal and professional projects.</p>
+<p>GitHub is a cloud-based platform that enables developers to store, manage, and collaborate on code repositories. It builds on Git by adding collaborative features like pull requests, issue tracking, and discussions, making it easier for teams to work together on software projects.</p>
+<p>GitHub also hosts open-source projects, allowing anyone to contribute or review code. With integrations for CI/CD, project management tools, and documentation, GitHub is a popular choice for developers worldwide to manage both personal and professional projects.</p>
 <figure class="figure">
 <a title="GitHub Inc., MIT <http://opensource.org/licenses/mit-license.php>, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg"><img width="64" alt="Octicons-mark-github" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/512px-Octicons-mark-github.svg.png?20180806170715" class="figure-img"></a> <fig-caption>GitHub icon</fig-caption>
 </figure>
@@ -739,7 +739,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 </section>
 <section id="bookmark-your-github-user-profile-page" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="bookmark-your-github-user-profile-page">Bookmark your GitHub user profile page</h3>
-<p>In your Internet browser, make sure that your own GitHub user profile page is saved in Bookmarks for easy access later.</p>
+<p>In your browser, make sure your GitHub user profile page is saved in Bookmarks for easy access later.</p>
 </section>
 </div>
 </div>
@@ -747,14 +747,14 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 </section>
 <section id="github-terminology" class="level3" data-number="9.3.2">
 <h3 data-number="9.3.2" class="anchored" data-anchor-id="github-terminology"><span class="header-section-number">9.3.2</span> GitHub terminology</h3>
-<p>Understanding the core vocabulary associated with GitHub operations can help users make the most of this platform, especially for collaborative or open-source projects. Here are some key concepts to keep in mind:</p>
+<p>Understanding the core vocabulary of GitHub operations can help users make the most of the platform, especially for collaborative or open-source projects. Here are some key concepts to keep in mind:</p>
 <ul>
-<li><p><strong>Cloning</strong>: Cloning involves creating a local copy of a repository on your machine. By cloning a repository, users can work offline and change files that can later be pushed back to the GitHub repository. This process is essential for local development, allowing users to commit changes and manage their workflow effectively with Git commands.</p></li>
-<li><p><strong>Forking</strong>: Forking creates a personal copy of someone else’s GitHub repository in your account. It allows users to experiment with changes without affecting the original repository, and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.</p></li>
-<li><p><strong>Pull Requests</strong>: A pull request (PR) is a way to propose changes in a repository. After modifying a forked or branched version of a repository, a developer can open a pull request, which initiates a review process. This feature is central to collaboration on GitHub, allowing others to review, discuss, and approve proposed changes before they are merged into the main branch.</p></li>
-<li><p><strong>Commits and Push</strong>: A commit is a snapshot of changes in the repository. Every commit includes a message describing the changes, and each commit builds upon previous ones, creating a history of the repository’s development. Pushing is uploading these commits to GitHub from a local repository. After a series of commits on a local branch, a user can push these changes to the corresponding branch on GitHub to keep the remote repository up-to-date.</p></li>
-<li><p><strong>Gists</strong>: A gist is a simple way to share code snippets or single files. Gists can be public or secret, and they are particularly useful for sharing configuration files or code examples. Users can fork and edit Gists, making them a lightweight collaboration and code-sharing tool.</p></li>
-<li><p><strong>Issues and Discussions</strong>: Issues are GitHub’s built-in tracking system for bugs, tasks, and feature requests. They allow users to report problems, suggest new features, and engage in conversations related to the project. Discussions provide a more open forum-style setting for broader conversation, enabling users to share ideas, ask questions, and contribute knowledge that might not directly relate to specific code changes.</p></li>
+<li><p><strong>Cloning</strong>: Cloning involves creating a local copy of a repository on your machine. By cloning a repository, users can work offline and change files, then push those changes back to the GitHub repository. This process is essential for local development, allowing users to commit changes and manage their workflow effectively with Git commands.</p></li>
+<li><p><strong>Forking</strong>: Forking creates a personal copy of someone else’s GitHub repository in your account. It lets users experiment with changes without affecting the original repository and is often used to contribute to open-source projects. After forking, developers can freely modify their own versions and submit a pull request to propose these changes to the original repository if they have improvements or fixes to offer.</p></li>
+<li><p><strong>Pull Requests</strong>: A pull request (PR) is a way to propose changes in a repository. After modifying a forked or branched version of a repository, a developer can open a pull request, which initiates a review process. This feature is central to collaboration on GitHub, letting others review, discuss, and approve proposed changes before merging them into the main branch.</p></li>
+<li><p><strong>Commits and Push</strong>: A commit is a snapshot of changes in the repository. Every commit includes a message describing the changes, and each commit builds upon previous ones, creating a history of the repository’s development. Pushing is uploading these commits to GitHub from a local repository. After a series of commits on a local branch, a user can push those changes to the corresponding branch on GitHub to keep the remote repository up to date.</p></li>
+<li><p><strong>Gists</strong>: A gist is a simple way to share code snippets or single files. Gists can be public or secret, and they are particularly useful for sharing configuration files or code examples. Users can fork and edit Gists, making them a lightweight tool for collaboration and code sharing.</p></li>
+<li><p><strong>Issues and Discussions</strong>: Issues are GitHub’s built-in tracking system for bugs, tasks, and feature requests. They let users report problems, suggest new features, and engage in project-related conversations. Discussions provide a more open, forum-style setting for broader conversation, enabling users to share ideas, ask questions, and contribute knowledge that might not directly relate to specific code changes.</p></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -783,7 +783,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 </section>
 <section id="working-with-github" class="level3" data-number="9.3.3">
 <h3 data-number="9.3.3" class="anchored" data-anchor-id="working-with-github"><span class="header-section-number">9.3.3</span> Working with GitHub</h3>
-<p>GitHub offers various workflows to manage repositories. Here are three common methods:</p>
+<p>GitHub offers several workflows for managing repositories. Here are three common methods:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -848,7 +848,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <li>Go to the repository page.</li>
 <li>Click on the Fork button in the top-right corner of the page.<br>
 </li>
-<li>Choose an owner (user or organisation), a name and description for the new fork repository. The default will always be a exact copy of the original repository. Select whether to copy only the main branch. Click “Create fork”.</li>
+<li>Choose an owner (user or organisation), a name and a description for the new fork repository. The default will always be an exact copy of the original repository. Select whether to copy only the main branch. Click “Create fork”.</li>
 </ul>
 <p><strong>Cloning a Repository</strong></p>
 <ul>
@@ -900,7 +900,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/username/repository.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Creating a New Branch</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> new-branch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Making Changes</strong> Edit files in your favorite text editor or IDE.</p>
+<p><strong>Making Changes</strong> Edit files in your favourite text editor or IDE.</p>
 <p><strong>Committing Changes</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Describe your changes"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -913,12 +913,12 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 </section>
 <section id="markdown-github-flavoured" class="level3" data-number="9.3.4">
 <h3 data-number="9.3.4" class="anchored" data-anchor-id="markdown-github-flavoured"><span class="header-section-number">9.3.4</span> Markdown (GitHub-flavoured)</h3>
-<p>When Markdown files (.md) are placed in a GitHub repository, they will be automatically rendered within GitHub web interface by default, while the raw code can still be seen and edited in Markdown.</p>
-<p>There are some particularities about how Markdown files will be rendered in GitHub through Internet browsers. Consult <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub Docs</a> for knowing more about them.</p>
+<p>When you place Markdown files (.md) in a GitHub repository, GitHub automatically renders them in the web interface by default, while you can still view and edit the raw Markdown.</p>
+<p>GitHub renders Markdown files in browsers in specific ways. Consult <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub Docs</a> for knowing more about them.</p>
 </section>
 <section id="how-to-organise-repositories" class="level3" data-number="9.3.5">
 <h3 data-number="9.3.5" class="anchored" data-anchor-id="how-to-organise-repositories"><span class="header-section-number">9.3.5</span> How to organise repositories</h3>
-<p>When structuring your repositories, following some common conventions for organizing files in subdirectories is helpful. This makes projects more readable and more accessible for others to navigate. Here are some commonly used subdirectories:</p>
+<p>When structuring your repositories, follow common conventions for organising files in subdirectories. This makes projects more readable and more accessible for others to navigate. Here are some commonly used subdirectories:</p>
 <p>When software development is a significant part:<br>
 * <code>source/</code> or <code>src/</code>: Contains the main source code for the project.<br>
 * <code>documentation/</code>, <code>docs/</code>, or <code>doc/</code>: Stores documentation, such as guides or API references.<br>
@@ -929,9 +929,9 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 * <code>assets</code>: to hold files and subdirectories with closed content and functionality files.<br>
 * <code>assets/images/</code>, <code>assets/media/</code>, etc.: Holds all images or other media files generated externally (not by the repository’s source code).<br>
 * <code>assets/styles.css</code> or <code>assets/css/</code>: all CSS code for formatting HTML objects.<br>
-* <code>assets/js/</code>: JavaScript source code enabling interactive functionalities (it would also apply for other programming languages in similar position). Source code of this kind might also be placed inside the source code folder, if present.</p>
+* <code>assets/js/</code>: JavaScript source code enabling interactive functionalities (it would also apply to other programming languages in a similar position). Source code like this might also go in the source code folder, if present.</p>
 <p>These folder structures are conventions and not strict rules. You can adapt or modify them based on your project’s needs.</p>
-<p>There are several community-based proposals for standards, including tools that can help automate the creation of a new project directory with conventional files. For example, for a typical Data Science project using Python see <a href="https://github.com/drivendataorg/cookiecutter-data-science">Cookiecutter Data Science</a>.</p>
+<p>Several community-based proposals for standards exist, including tools that can help automate creating a new project directory with conventional files. For example, for a typical Data Science project using Python, see <a href="https://github.com/drivendataorg/cookiecutter-data-science">Cookiecutter Data Science</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -961,7 +961,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <section id="conventional-files" class="level3" data-number="9.3.6">
 <h3 data-number="9.3.6" class="anchored" data-anchor-id="conventional-files"><span class="header-section-number">9.3.6</span> Conventional files</h3>
 <ul>
-<li><code>README.md</code>: Provides an overview of the project, including what it does, how to set it up, and how to contribute. A few sections examples are:
+<li><code>README.md</code>: Provides an overview of the project, including what it does, how to set it up, and how to contribute. A few example sections are:
 <ul>
 <li>General description<br>
 </li>
@@ -976,14 +976,14 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <li>Contributing<br>
 </li>
 </ul></li>
-<li><code>LICENSE</code>: Specifies the terms under which the content of the repository can be used, modified, and distributed. There are many licenses, varying in <em>permissiveness</em> and <em>type of content</em>. Generally, for projects involving both code and other kinds of content, we recommend CC0-1.0 or MIT. See <a href="https://choosealicense.com/">https://choosealicense.com/</a> and <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository">GitHub Docs</a>).</li>
+<li><code>LICENSE</code>: Specifies the terms under which the content of the repository can be used, modified, and distributed. Many licenses vary in <em>permissiveness</em> and <em>type of content</em>. Generally, for projects involving both code and other kinds of content, we recommend CC0-1.0 or MIT. See <a href="https://choosealicense.com/">https://choosealicense.com/</a> and <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository">GitHub Docs</a>).</li>
 <li><code>CITATION.cff</code>: human- and machine-readable citation information for software (and datasets). See example <a href="https://citation-file-format.github.io/#:~:text=cff%20file%3F-,CITATION.,to%20correctly%20cite%20their%20software.">here</a>.<br>
 </li>
 <li><code>.gitignore</code>: Lists files and directories that Git should ignore, such as build outputs and temporary files.<br>
 </li>
 <li><code>CHANGELOG.md</code>: This file logs a chronological record of all notable changes made to the project, often following conventions like Conventional Commits.<br>
 </li>
-<li><code>references.bib</code>: a file containing references in BibTex format, which can be cited within the markdown files of the repository.</li>
+<li><code>references.bib</code>: A file containing references in BibTeX format, which can be cited within the Markdown files of the repository.</li>
 </ul>
 </section>
 <section id="version-tags-and-releases-on-github" class="level3" data-number="9.3.7">
@@ -1021,15 +1021,15 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <blockquote class="blockquote">
 <p>Given a version number MAJOR.MINOR.PATCH, increment the:<br>
 1. MAJOR version when you make incompatible API changes<br>
-2. MINOR version when you add functionality in a backward compatible manner<br>
-3. PATCH version when you make backward compatible bug fixes</p>
+2. MINOR version when you add functionality in a backwards-compatible manner<br>
+3. PATCH version when you make backwards-compatible bug fixes</p>
 </blockquote>
 <p>However, if your repository is not about creating software products and services, we can do well by simply obeying a few general conventions:</p>
 <ul>
 <li>Add a PATCH version <strong>discretionally</strong> when correcting bugs, typos, tuning aesthetics, etc, or <em>refactoring</em> code (explained in <span class="quarto-unresolved-ref">?sec-r-programming</span>).</li>
 <li>Add a MINOR version when expanding code functionality or adding new content (text sections, images)</li>
 <li>Add a new PATCH or MINOR version every time the repository reaches a natural stable point (i.e., there are no changes planned any time soon).</li>
-<li>Make sure that every new MAJOR version is released (GitHub) and published (Zenodo, see below).</li>
+<li>Make sure that every new MAJOR version is released (GitHub) and published (Zenodo; see below).</li>
 </ul>
 </div>
 </div>
@@ -1066,7 +1066,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <ul>
 <li>Click on your profile in Zenodo and select <strong>Linked accounts</strong>.</li>
 <li>Choose <strong>Connect</strong> next to GitHub.</li>
-<li>You will be redirected to GitHub to authorize Zenodo’s access. Approve the request to complete the connection.</li>
+<li>You will be redirected to GitHub to authorise Zenodo’s access. Approve the request to complete the connection.</li>
 </ul></li>
 <li><strong>Select Repository for DOI Generation</strong>:
 <ul>
@@ -1074,7 +1074,7 @@ derivative work: Echion2, CC BY-SA 3.0 <http://creativecommons.org/licenses/by-s
 <li>Enable DOI generation for the desired repository. Zenodo will automatically mint DOIs for any new release you publish.</li>
 </ul></li>
 </ol>
-<p>This connection allows you to generate and manage DOIs for GitHub repositories, enhancing your project’s citation and research accessibility.</p>
+<p>This connection lets you generate and manage DOIs for GitHub repositories, improving your project’s citation and research accessibility.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
