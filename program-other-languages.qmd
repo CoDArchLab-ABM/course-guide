@@ -1,14 +1,14 @@
 # Sneak-peak at other languages {#program-other-languages}
 
-Consider yourself introduced to NetLogo! However, please remember that ABM is not limited to this language and platform. It is highly recommended that you learn and practice with other programming languages to experience how ABM models can be implemented in different ways, with different goals and trade-offs.
+Consider yourself introduced to NetLogo! However, remember that ABM isn't limited to this language and platform. We highly recommend learning and practising with other programming languages to see how ABM models can be implemented in different ways, with different goals and trade-offs.
 
 ## ABM beyond NetLogo
 
-Potentially, any programming language can be used to implement an ABM model. After all, an ABM is “just code” describing the state and behaviour of multiple interacting agents over time. However, ABM modellers typically rely on specialised **frameworks** or **libraries** that provide ready-made functions for creating agents, scheduling their actions, managing environments, and recording outputs.
+In theory, you can use any programming language to implement an ABM model. After all, an ABM is “just code” describing the state and behaviour of multiple interacting agents over time. However, ABM modellers typically rely on specialised **frameworks** or **libraries** that provide ready-made functions for creating agents, scheduling their actions, managing environments, and recording outputs.
 
 These frameworks help standardise model structure, improve reproducibility, and often support integration with data analysis or visualisation tools.
 
-Below are some of the most relevant ABM platforms and libraries beyond NetLogo. Each of them offers different strengths and target audiences.
+Below are some of the most relevant ABM platforms and libraries beyond NetLogo. Each offers different strengths and targets different audiences.
 
 ## Major ABM platforms and libraries
 
@@ -23,7 +23,7 @@ Below are some of the most relevant ABM platforms and libraries beyond NetLogo. 
 
 * **Language:** Java-based, with a graphical modelling interface.
 * **Highlights:** Commercial and widely used in industry (logistics, epidemiology, economics). Combines ABM, system dynamics, and discrete-event simulation.
-* **Why it matters:** Demonstrates how ABM concepts are applied in professional and business contexts, often for decision-support.
+* **Why it matters:** Demonstrates how ABM concepts are applied in professional and business contexts, often for decision support.
 * **Learn more:** [https://www.anylogic.com](https://www.anylogic.com)
 
 ### 🗼 **GAMA**
@@ -71,7 +71,7 @@ Below are some of the most relevant ABM platforms and libraries beyond NetLogo. 
 
 ## Other frameworks and resources
 
-There are many more ABM frameworks across different domains and programming languages.
+Many more ABM frameworks exist across different domains and programming languages.
 The **SWARM.org** community maintains an updated list of simulation platforms, including older but historically significant systems such as **Swarm**.
 
 ➡️ Explore: [https://www.swarm.org/wiki/ABM_Resources](https://www.swarm.org/wiki/ABM_Resources)
