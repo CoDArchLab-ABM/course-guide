@@ -2,9 +2,9 @@
 
 ## Water flow algorithm
 
-Towards our calculation of land productivity, we advance using our GIS data in combination with parts of the Land submodel in the [Indus Village model](https://github.com/Andros-Spica/indus-village-model) (Angourakis 2021). Our objective in this step is to reach a flow accumulation value for each patch according to their relative elevation within the terrain. This will serve as a proxy of the region hydrology beyond the data we have on rivers.
+To calculate land productivity, we use our GIS data combined with parts of the Land submodel in the [Indus Village model](https://github.com/Andros-Spica/indus-village-model) (Angourakis 2021). In this step, we aim to assign a flow accumulation value to each patch based on its relative elevation within the terrain. This serves as a proxy for the region's hydrology beyond the river data we have.
 
-The submodel is based on the algorithm described in Jenson & Domingue (1988) through the implementation used by Huang & Lee (2015).
+The submodel is based on the algorithm described in Jenson & Domingue (1988), as implemented by Huang & Lee (2015).
 
 > Jenson, S. K., and J. O. Domingue. 1988. ‘Extracting Topographic Structure from Digital Elevation Data for Geographic Information System Analysis’. Photogrammetric Engineering and Remote Sensing 54 (11): 1593–1600.
 
@@ -12,7 +12,7 @@ The submodel is based on the algorithm described in Jenson & Domingue (1988) thr
 
 ## Adding the main procedures
 
-The algorithm uses a numeric codification of the eight neighbour directions and a tag that classifies patches as "start", "pending", "done", progressively converting the formers into the latter. Patches on the edge of the map are directed automatically towards the outside. Because this is an significant piece of code based on a specific reference, we will enclose all related procedures within a especial commentary note:
+The algorithm uses a numeric codification of the eight neighbour directions and a tag that classifies patches as "start", "pending", "done", progressively converting the former into the latter. Patches on the edge of the map are automatically directed toward the outside. Because this is a significant piece of code based on a specific reference, we will enclose all related procedures within a special commentary note:
 
 ```NetLogo
 globals
@@ -254,7 +254,7 @@ end
 ;=======================================================================================================
 ```
 
-Outside this enclosed section, we add the two main procedures `set-flow-directions` and `set-flow-accumulations` inside a higher level `setup-flows`:
+Outside this enclosed section, we add the two main procedures `set-flow-directions` and `set-flow-accumulations` inside a higher-level `setup-flows`:
 
 ```NetLogo
 to setup-flows
@@ -271,11 +271,11 @@ to setup-flows
 end
 ```
 
-We add a last step to get `maxFlowAccumulation`, which we will need for scaling purposes.
+We add a final step to get `maxFlowAccumulation`, which we need for scaling.
 
 ## Visualising flow accumulation
 
-As usual, we need to implement some extra code to be able to visualise the outcome. In this case, however, we would like to observe simultaneously flow direction, flow accumulation *and* elevation. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.
+As usual, we need to add some extra code to visualise the outcome. In this case, however, we want to observe flow direction, flow accumulation, and elevation simultaneously. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.
 
 ```NetLogo
 breed [ flowHolders flowHolder ]
@@ -357,16 +357,16 @@ to-report get-angle-in-flow-direction [ neighborEncoding ]
 end
 ```
 
-Flow accumulation is visualized using links between `flowHolder` agents that are created on patches. The thickness and color of the links represent the flow accumulation values.
+Flow accumulation is visualised as links between `flowHolder` agents created on patches. The links' thickness and colour represent the flow accumulation values.
 
-Now, press "setup". The calculation of variables is made relatively fast, but displaying all flowHolders will take some time. 
+Now, press "setup". Calculating the variables is relatively fast, but displaying all flowHolders takes some time. 
 
 ![View of flow direction and accumulation, calculated with 'flows' module](assets/screenshots/BlockC_module2_flows.png)  
 *View of flow direction and accumulation, calculated with 'flows' module*
 
 ## Assessing fit
 
-To better visualise how much `flow_accumulation` actually gets accumulated, let us run the following "highlight" command directly in the console:
+To better visualise how much `flow_accumulation` actually accumulates, let us run the following "highlight" command directly in the console:
 
 ```NetLogo
 ask patches with [flow_accumulation > 10] [ set pcolor red ]
@@ -387,15 +387,15 @@ ask patches with [flow_accumulation > 10] [ set pcolor red ]
 | patch 125 99 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-125-99.png" width="200"> |
 | patch 54 76 | <img src="assets/screenshots/BlockC_module2_flows-detail-patch-54-106.png" width="200"> |
 
-Our approximation of the region's hydrological system is definitely not perfect. As a minimum, we want the main river, Lithaíos, to emerge, even if following an approximated path. The problem is most likely generated by our previous step: reducing the resolution of the original DEM. The height map we are using has many "sinks" in it (*i.e.*, patches not at the edge with the lowest elevation among its neighbours).
+Our approximation of the region's hydrological system is definitely not perfect. At a minimum, we want the main river, Lithaíos, to emerge, even if following an approximated path. The problem likely comes from our previous step: reducing the resolution of the original DEM. The height map we are using has many "sinks" (*i.e.*, patches not at the edge with the lowest elevation among their neighbours).
 
 Worse, it might be that the roughness of the terrain escapes even the lowest of the resolutions treatable at this scale, to a point where the pathways of rivers cannot be retraced using height maps. Let us work with the first hypothesis and address the sinks in our processed height map.
 
 ## Improving fit with `fill-sink`
 
-Our result could be improved by using the `fill-sink` procedure in the original Land model implementation (see code in the [Indus Village repository](https://github.com/Andros-Spica/indus-village-model/tree/master/03-land-model)), which is based on Huang & Lee (2015).
+We can improve our results by using the `fill-sink` procedure in the original Land model implementation (see code in the [Indus Village repository](https://github.com/Andros-Spica/indus-village-model/tree/master/03-land-model)), based on Huang & Lee (2015).
 
-This procedure fills up the elevation of "sink" patches so flow can continue moving, until it reaches the edge of the map.
+This procedure fills up the elevation of "sink" patches so flow can continue moving until it reaches the edge of the map.
 
 First, we can identify sink patches with the following procedure:
 
@@ -434,7 +434,7 @@ to fill-sinks
 end
 ```
 
-After running `setup` again, we obtain a much better result. We can now clearly identify what should be the Lithaíos river and its path is not too far from our original river data.
+After running `setup` again, we obtain a much better result. We can now clearly identify what should be the Lithaíos River, and its path is close to our original river data.
 
 ![View of flow direction and accumulation, calculated with 'flows' module with the `fill-sinks` procedure](assets/screenshots/BlockC_module2_flows_withFillSinks.png)  
 *View of flow direction and accumulation, calculated with 'flows' module with the `fill-sinks` procedure*
@@ -442,11 +442,11 @@ After running `setup` again, we obtain a much better result. We can now clearly 
 ![Highlight of patches with flow accumulation greater than 10](assets/screenshots/BlockC_module2_flows_withFillSinks_accumulation-more-than-10.png)  
 *Highlight of patches with flow accumulation greater than 10, after we include the `fill-sinks` procedure*
 
-We should remember that this algorithm modifies our original DEM heightmap and costs more computation resources/time.
+We should remember that this algorithm modifies our original DEM heightmap and costs more computational resources/time.
 
 ## Implementing a feature to export and import `world`
 
-We do not want to repeat this every time we initialise a simulation run. Therefore, we will export the entire map configuration to a file for later use. We do this quickly with "File > Export... > Export World" and selecting the data folder. We could write procedures specific for exporting (and importing) a subset of data. Still, this option is much faster, given that this is the initial spatial data we want for all further versions.
+We do not want to repeat this every time we initialise a simulation run. Therefore, we will export the entire map configuration to a file for later use. We do this quickly with "File > Export... > Export World" and selecting the data folder. We could write procedures to export (and import) a subset of data. Still, this option is much faster, since this is the initial spatial data we want for all future versions.
 
 Still, if you need to do this several times and want to keep track of the directory and file you are using, you can add a button to the interface with the following code, which is equivalent to the built-in option in the menu:
 
@@ -454,15 +454,15 @@ Still, if you need to do this several times and want to keep track of the direct
 export-world "data/terrainWithFlows/BlockC_module2_flows world.csv"
 ```
 
-The same can be done to import the same file. Inside a new button, add:
+You can do the same to import the file. Inside a new button, add:
 
 ```Netlogo
 clear-all
 import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"
 ```
 
-Now, you should be able to export and import your map with flows.
+Now you can export and import your map with flows.
 
 See the fully implemented version of this module: `BlockC_module2_flows.nlogo`.
 
-For the sake of this example, we will assume our approximation to be sufficient. Still, tackling this kind of problem exploring other solutions in your own time could be an excellent exercise for improving your skills.
+For the sake of this example, we will assume our approximation is sufficient. Still, tackling this kind of problem and exploring other solutions in your own time could be an excellent exercise for improving your skills.
