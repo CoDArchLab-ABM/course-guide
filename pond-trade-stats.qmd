@@ -1,6 +1,6 @@
 # Implementing output statistics {#pond-trade-stats}
 
-Apart from minor refactoring, the last implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are essentially aggregate measurements about the state of the simulation at a given time step.
+Beyond minor refactoring, the final implementation steps involve displaying (step 12) and recording (step 13) output statistics. These are aggregate measurements of the simulation state at a given time step.
 
 ## Displaying outputs in the interface 🤔
 
@@ -23,7 +23,7 @@ Try out creating a new interface element to display:
 
 ## Recording outputs in variables
 
-The statistics serve as indicators for monitoring complex results while manually running simulations in the interface. Most importantly, they can be used more systematically as data that can be exported for further use in other software, *e.g.*, to perform advanced statistical analyses and more sophisticated graphs.
+The statistics serve as indicators for monitoring complex results while manually running simulations in the interface. Most importantly, you can use them more systematically as data you can export for further use in other software, *e.g.*, to perform advanced statistical analyses and more sophisticated graphs.
 
 Here is how step 13 implements those statistics:
 
@@ -139,7 +139,7 @@ end
 ![Pond Trade step 13](assets/screenshots/BlockB_PondTrade_step13_output-statistics-interface.png)  
 *Pond Trade step 13*
 
-We could further implement a procedure to export these and more variables at a specific time of simulations. We will see an example of this in Block C. However, in most cases, we want to use [NetLogo Behavioral Space](https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html). Find it in Tools > Behavior Space. This built-in tool allows you to configure experiments to be run in parallel, within a specific parameter space, and perform a series of commands before, during, or after a simulation run. It includes functionality for exporting simulation data as a CSV file (you will be prompt with a File Explorer window once you press "run" in an experiment).
+We could further implement a procedure to export these and more variables at a specific time in the simulation. We will see an example of this in Block C. However, in most cases, we want to use [NetLogo Behavior Space](https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html). Find it in Tools > Behavior Space. This built-in tool lets you configure experiments to run in parallel within a specific parameter space and run a series of commands before, during, or after a simulation. It includes functionality to export simulation data as a CSV file (you will be prompted with a File Explorer window when you press "run" in an experiment).
 
 ## Updating the conceptual model
 
