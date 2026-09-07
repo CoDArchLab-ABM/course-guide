@@ -524,7 +524,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>In this session, we will learn more about NetLogo’s programming language. We will start with the very basics to ease you into it, in case you are not familiar with any type of programming.</p>
+<p>In this session, we will learn more about NetLogo’s programming language. We will start with the basics to ease you in, in case you are not familiar with programming.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -536,26 +536,26 @@ Caution
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>NOTE</strong></p>
-<p>In the explanation below I’m using <code>&lt;UPPERCASE_TEXT&gt;</code> to express the positions in the code to be filled by the name of entities, variables, and other elements, depending on the context. For instance, <code>&lt;COLOR&gt; &lt;FRUIT&gt;</code> would represent many possible phrases, such as “red apple”, “brown kiwi”, etc. Beware that these fragments are only place holders and are not NetLogo code.</p>
-<p>For now, we will interact freely with the program, without a particular file or model. The code snippets shown here can sometimes be executed directly, but will often not run without a proper context in code.</p>
+<p>In the explanation below, I use <code>&lt;UPPERCASE_TEXT&gt;</code> to represent positions in the code to be filled with the names of entities, variables, and other elements, depending on the context. For instance, <code>&lt;COLOR&gt; &lt;FRUIT&gt;</code> would represent many possible phrases, such as “red apple”, “brown kiwi”, etc. Beware that these fragments are only placeholders and are not NetLogo code.</p>
+<p>For now, we will interact freely with the program, without a particular file or model. The code snippets shown here can sometimes be executed directly, but often won’t run without proper context.</p>
 </div>
 </div>
 <section id="console-interaction" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="console-interaction"><span class="header-section-number">12.1</span> Console interaction</h2>
-<p>As a preamble, important to anyone without previous experiences with programming languages, the very first thing one can do in NetLogo is give oneself a bit of encouragement. In the <strong>NetLogo interface</strong>, go to the bottom area named <strong>‘Command Center’</strong> and type the following in the empty field on the right of <strong>‘observer&gt;’</strong> and press Enter:</p>
+<p>As a preamble for anyone without previous experience with programming languages, the first thing you can do in NetLogo is give yourself a bit of encouragement. In the <strong>NetLogo interface</strong>, go to the bottom area named <strong>‘Command Center’</strong> and type the following in the empty field on the right of <strong>‘observer&gt;’</strong> and press Enter:</p>
 <pre class="netlogo"><code>You can do it!</code></pre>
 <p>The console prints:</p>
 <pre><code>ERROR: Nothing named YOU has been defined. </code></pre>
-<p>Oops! NetLogo still doesn’t know “you”. Or is it that it cannot <em>understand</em> you? Well let us get you two properly introduced…</p>
+<p>Oops! NetLogo still doesn’t know “you”. Or is it that it cannot <em>understand</em> you? Well, let us get you two properly introduced…</p>
 <p>Before continuing, we should note: NetLogo does have its own vocabulary, containing what we will call <strong>“primitives”</strong>, to which we can add many more “words”, as long as we define them first using what NetLogo <em>can</em> understand. Without going into details now, just keep in mind that, in NetLogo language, special kinds of “words” are <strong>reporters</strong>, which are practical equivalents to <strong>values</strong>, and <strong>commands</strong>, which wrap the necessary steps to <strong>do</strong> something.</p>
 </section>
 <section id="entities" class="level2" data-number="12.2">
 <h2 data-number="12.2" class="anchored" data-anchor-id="entities"><span class="header-section-number">12.2</span> Entities</h2>
-<p>The (real) first thing one should learn about NetLogo, and most agent-based modelling systems, is that it handles <em>mainly</em> two types of entities/agents: <code>patches</code>, cells of a square grid, and <code>turtles</code>, which are proper “agents” (i.e., mobile, autonomous entities). Both entities have primitives (built-in, default properties), some of which can be modified by processes in your model. For example, you can’t modify the position of a patch, but you can change its filling colour.</p>
+<p>The (real) first thing one should learn about NetLogo, and most agent-based modelling systems, is that it handles <em>mainly</em> two types of entities/agents: <code>patches</code>, cells of a square grid, and <code>turtles</code>, which are proper “agents” (i.e., mobile, autonomous entities). Both entities have primitives (built-in, default properties), some of which processes in your model can modify. For example, you can’t change a patch’s position, but you can change its filling colour.</p>
 <p style="text-align: center;">
 <a title="NetLogo world and entities (Figure 2 in Izquierdo et al. 2019)" href="https://wisc.pb.unizin.org/agent-based-evolutionary-game-dynamics/"><img width="400" style="background-color: white" alt="NetLogo entities" src="https://wisc.pb.unizin.org/app/uploads/sites/28/2018/09/the-netlogo-world.png"></a> <br> <i style="color: grey;">NetLogo world and entities (Figure 2 in Izquierdo et al.&nbsp;2019)</i>
 </p>
-<p>As seen in the figure above, NetLogo also includes a third type of entity, <code>links</code>, which has the particularity of describing a connection between two <code>turtles</code> and thus not having specific spatial coordinates of their own. We will deal with links later on, but for now we focus on the other entities, which are more commonly used in models.</p>
+<p>As shown in the figure above, NetLogo also includes a third type of entity, <code>links</code>, which describes a connection between two <code>turtles</code> and thus has no specific spatial coordinates of its own. We will deal with links later on, but for now we focus on the other entities, which are more commonly used in models.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -568,7 +568,7 @@ Note
 <div class="callout-body-container callout-body">
 <div class="grid">
 <div class="g-col-6">
-<p>The term “turtle” comes from the base language from which NetLogo was developed from, called “Logo” (in turn, an adaptation of another language, <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>, where instructions can be given to one agent or robot (“turtle”) to move and draw a line graph. It was conceived to teach programming concepts – in fact, I had the opportunity of participating in one Logo session back in my school!</p>
+<p>The term “turtle” comes from the base language from which NetLogo was developed, called “Logo” (in turn, an adaptation of another language, <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a>, where instructions can be given to one agent or robot (“turtle”) to move and draw a line graph. It was conceived to teach programming concepts – in fact, I had the opportunity to participate in a Logo session back in my school!</p>
 </div>
 <div class="g-col-6">
 <p><a title="NightElfik, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:KochTurtleAnim.gif"><img width="256" alt="KochTurtleAnim" src="https://upload.wikimedia.org/wikipedia/commons/0/09/KochTurtleAnim.gif?20110330124613"></a></p>
@@ -576,11 +576,11 @@ Note
 </div>
 </div>
 </div>
-<p>All <code>patches</code> and <code>turtles</code> can be identified individually through primitives. Turtles have a unique numerical identifier (<code>who</code>) that is assigned automatically upon the creation of the turtle. Patches, in turn, have an unique combination of x and y integer coordinates in 2D space (<code>pxcor</code> and <code>pycor</code>), as they occupy each a single position in a grid (see <strong>Grid</strong>). To reference a specific turtle, patch or link:</p>
+<p>You can identify all <code>patches</code> and <code>turtles</code> individually through primitives. Turtles have a unique numerical identifier (<code>who</code>) assigned automatically when the turtle is created. Patches, in turn, have a unique combination of integer x and y coordinates in 2D space (<code>pxcor</code> and <code>pycor</code>), since they occupy a single position on a grid (see <strong>Grid</strong>). To reference a specific turtle, patch or link:</p>
 <pre class="netlogo"><code>turtle &lt;WHO_NUMBER&gt;
 patch &lt;PXCOR&gt; &lt;PYCOR&gt;
 link &lt;WHO_NUMBER&gt; &lt;WHO_NUMBER&gt;</code></pre>
-<p>NetLogo allows you to define types of <code>turtles</code> as if it where a primitive, declaring its name as a <code>breed</code>:</p>
+<p>NetLogo allows you to define types of <code>turtles</code> as if it were a primitive, declaring its name as a <code>breed</code>:</p>
 <pre class="netlogo"><code>breed [&lt;BREED_1_NAME_PLURAL&gt; &lt;BREED_1_NAME_SINGULAR&gt;]
 
 breed [&lt;BREED_2_NAME_PLURAL&gt; &lt;BREED_2_NAME_SINGULAR&gt;]</code></pre>
@@ -592,20 +592,20 @@ breed [pears pear]</code></pre>
 <pre class="netlogo"><code>&lt;BREED_1_NAME_SINGULAR&gt; &lt;WHO_NUMBER&gt;</code></pre>
 <p>Or:</p>
 <pre class="netlogo"><code>pear 2</code></pre>
-<p>This is useful, of course, when there are more the one <code>breed</code> to be defined, so that they are easily distinguished and intelligible in the code.</p>
+<p>This is useful, of course, when there is more than one <code>breed</code> to be defined, so that they are easily distinguished and intelligible in the code.</p>
 <p>We can also refer to agents collectively as:</p>
 <pre class="netlogo"><code>&lt;BREED_1_NAME_PLURAL&gt;</code></pre>
 <pre class="netlogo"><code>pears</code></pre>
 <p>or randomly as:</p>
 <pre class="netlogo"><code>one-of apples
 one-of patches</code></pre>
-<p>The <code>one-of</code> primitive offers a easy way to randomly select one agent (<code>turtles</code> and <code>patches</code>) from all (or a subset of all) agents of a given type.</p>
-<p>Last, we should keep in mind that <code>turtles</code> can be created and destroyed on-the-fly during simulations, while <code>patches</code> are created in the background upon initialisation, according to the model settings (<em>e.g.</em> grid dimensions), but never destroyed during simulation runs.</p>
+<p>The <code>one-of</code> primitive offers an easy way to randomly select one agent (<code>turtles</code> and <code>patches</code>) from all (or a subset of all) agents of a given type.</p>
+<p>Last, keep in mind that <code>turtles</code> can be created and destroyed on the fly during simulations, while <code>patches</code> are created in the background upon initialisation, according to the model settings (<em>e.g.</em> grid dimensions), but never destroyed during simulation runs.</p>
 <p>See NetLogo’s documentation on agents for further details (https://ccl.northwestern.edu/netlogo/docs/programming.html#agents).</p>
 </section>
 <section id="variables" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="variables"><span class="header-section-number">12.3</span> Variables</h2>
-<p>The most fundamental elements of NetLogo, as in any programming language, is variables. To assign a value to a variable we use the general syntax or code structure:</p>
+<p>The most fundamental elements of NetLogo, as in any programming language, are variables. To assign a value to a variable, we use the general syntax or code structure:</p>
 <pre class="netlogo"><code>set &lt;VARIABLE_NAME&gt; &lt;VALUE&gt;</code></pre>
 <p>For example:</p>
 <pre class="netlogo"><code>set x 123</code></pre>
@@ -617,9 +617,9 @@ one-of patches</code></pre>
 <li>String (effectively text, but enclosed by quote marks: <em>e.g.</em>, <code>"1"</code>, <code>"my value"</code>)</li>
 <li><code>turtles</code>, <code>patches</code> (<em>i.e.</em>, NetLogo’s computation entities; see <strong>Entities</strong>)</li>
 <li>AgentSet (a set of either <code>turtles</code> or <code>patches</code>; see <strong>Entities</strong>)</li>
-<li>List (a list enclosed in squared brakets with values of any kind separated by spaces: <em>e.g.</em>, <code>[ "1" 1 false my-agents-bunch ["my value" true 4.5] ]</code>)</li>
+<li>List (a list enclosed in square brackets with values of any kind separated by spaces: <em>e.g.</em>, <code>[ "1" 1 false my-agents-bunch ["my value" true 4.5] ]</code>)</li>
 </ul>
-<p>Before we assign a value to a variable, we must declare its scope and name, though not its data type, which is only defined when assigning an specific value. Variable declaration is typically done at the first section of a model script and its exact position will depend on if it is stored globally or inside entities. These types of declarations follow their own structures:</p>
+<p>Before we assign a value to a variable, we must declare its scope and name, but not its data type, which is defined only when we assign a specific value. Variable declaration typically happens at the start of a model script, and its exact position depends on whether it is stored globally or inside entities. These types of declarations follow their own structures:</p>
 <pre class="netlogo"><code>globals [ &lt;GLOBAL_VARIABLE_NAME&gt; ]
 
 turtles-own [ &lt;TURTLE_VARIABLE_NAME&gt; ]
@@ -637,18 +637,18 @@ patches-own [ &lt;PATCHES_VARIABLE_NAME&gt; ]</code></pre>
 turtles-own [ weight ]
 
 apples-own [ redness ]</code></pre>
-<p>As an exception to this general rule, variables can also be declared “locally” using the following syntaxes:</p>
+<p>As an exception to this general rule, variables can also be declared “locally” using the following syntax:</p>
 <pre class="netlogo"><code>let &lt;VARIABLE_NAME&gt; &lt;VALUE&gt;</code></pre>
 <p>For example:</p>
 <pre class="netlogo"><code>let freshness 100</code></pre>
-<p>As in other programming languages, having a variable declared locally means it is inside a temporary computation environment, such as a procedure (see below). Once the environment is closed, the variable is automatically discarded in the background.</p>
+<p>As in other programming languages, a locally declared variable lives inside a temporary computation environment, such as a procedure (see below). Once the environment is closed, the variable is automatically discarded in the background.</p>
 </section>
 <section id="expressing-equations" class="level2" data-number="12.4">
 <h2 data-number="12.4" class="anchored" data-anchor-id="expressing-equations"><span class="header-section-number">12.4</span> Expressing equations</h2>
-<p>As we will see examples further on, the values of variables can be transformed in different ways, using different syntaxes, depending on their type. Possibly the most straightforward case is to perform basic arithmetic operations over numerical variables, expressing equations. These can be written using the special characters normally used in most programming languages (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>(</code>, etc.):</p>
+<p>As we will see later, you can transform variable values in different ways, using different syntax depending on their type. The most straightforward case is performing basic arithmetic operations on numerical variables to express equations. These can be written using the special characters normally used in most programming languages (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>(</code>, etc.):</p>
 <pre class="netlogo"><code>set myVariable (2 + 2) * 10 / ((2 + 2) * 10)</code></pre>
 <p>Notice that arithmetic symbols and numbers must be separated by spaces and that the order of operations can be structured using parentheses.</p>
-<p>NetLogo allow line breaks, which can help you read expressions that are too long because they hold several operations. However, too many operation at a time can become hard to read and verify, even with line breaks. The best and safer practice to overcome this is to use parentheses abundantly to ensure the right sequence of operations is performed:</p>
+<p>NetLogo allow line breaks, which can help you read expressions that are too long because they hold several operations. However, too many operations at a time can become hard to read and verify, even with line breaks. The best and safest practice to overcome this is to use parentheses abundantly to ensure the right sequence of operations is performed:</p>
 <p>Valid</p>
 <pre class="netlogo"><code>set myVariable (
   (
@@ -659,7 +659,7 @@ apples-own [ redness ]</code></pre>
     10
   )
 )</code></pre>
-<p>Additionally, as proper equations, such expressions in NetLogo will also accept variables names representing their current value. Equations can then serve to create far reaching dependencies between different parts of the model code:</p>
+<p>Additionally, as proper equations, such expressions in NetLogo will also accept variable names representing their current value. Equations can then serve to create far-reaching dependencies between different parts of the model code:</p>
 <pre class="netlogo"><code>set myVariable 2
 set myOtherVariable 10
 
@@ -668,13 +668,13 @@ set myOtherVariable 10
 let myTemporaryVariable 2 * myVariable * myOtherVariable
 
 set myVariable myTemporaryVariable / myTemporaryVariable</code></pre>
-<p>It will normally be better to keep operations in separate lines. However, be aware that NetLogo accepts sequential commands in the same line, as long as their syntax is correct:</p>
+<p>It’s usually better to keep operations on separate lines. However, be aware that NetLogo accepts sequential commands on the same line, as long as their syntax is correct:</p>
 <pre class="netlogo"><code>set myVariable 2 set myOtherVariable 10 let myTemporaryVariable 2 * myVariable * myOtherVariable set myVariable myTemporaryVariable / myTemporaryVariable</code></pre>
-<p>Knowing this, is particularly useful whenever you want to test the outcome of a longer command sequence in NetLogo’s console (“Command Center”).</p>
+<p>Knowing this is particularly useful whenever you want to test the outcome of a longer command sequence in NetLogo’s console (“Command Center”).</p>
 </section>
 <section id="logical-operators" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="logical-operators"><span class="header-section-number">12.5</span> Logical operators</h2>
-<p>As most programming languages, NetLogo can evaluate equalities and inequalities and return a Boolean value (<code>true</code> or <code>false</code>). The related logical operators are:</p>
+<p>As with most programming languages, NetLogo can evaluate equalities and inequalities and return a Boolean value (<code>true</code> or <code>false</code>). The related logical operators are:</p>
 <ul>
 <li><code>=</code>: “equals”.<br>
 </li>
@@ -691,7 +691,7 @@ set myVariable myTemporaryVariable / myTemporaryVariable</code></pre>
 <p>For example, try:</p>
 <pre class="netlogo"><code>1 &gt;= 0</code></pre>
 <pre class="netlogo"><code>100 &gt;= 100 + 1</code></pre>
-<p>Equality and inequality operators can also be used with other data types, though beware of the different implications. Some operations will return an error.</p>
+<p>You can also use equality and inequality operators with other data types, but be aware of the different implications. Some operations will return an error.</p>
 <p>For example, you can compare Boolean values with <code>=</code> or <code>!=</code>:</p>
 <pre class="netlogo"><code>true = false</code></pre>
 <p>but not with quantitative comparisons:</p>
@@ -701,43 +701,43 @@ set myVariable myTemporaryVariable / myTemporaryVariable</code></pre>
 <pre class="netlogo"><code>[1 2 3] = [ 1 ]</code></pre>
 <p>Invalid: a quantitative comparison between lists is not interpreted from this.</p>
 <pre class="netlogo"><code>[1 2 3] &gt; [ 1 ]</code></pre>
-<p>Valid: check if strings are exactly the same.</p>
+<p>Valid: checks if strings are exactly the same.</p>
 <pre class="netlogo"><code>"apple" = "banana"</code></pre>
 <p>Valid: compares the length of the strings.</p>
 <pre class="netlogo"><code>"apple" &gt;= "banana"</code></pre>
 <p>Valid: checks if entities are the same (useful when entities are referenced indirectly by variables)</p>
 <pre class="netlogo"><code>patch 0 0 != patch 1 1</code></pre>
-<p>Valid, but not recommended: compares the internal ID of entities, which express the creation order, which is often arbitrary.</p>
+<p>Valid, but not recommended: compares the internal IDs of entities, which express the creation order, which is often arbitrary.</p>
 <pre class="netlogo"><code>turtle 0 &lt; turtle 1
 patch 0 0 &gt; patch 1 1</code></pre>
-<p>Note that in other programming languages the equal sign might be reserved to setting the value of a variable. For example, <code>"a" = "b"</code> will return <code>false</code> in NetLogo, while in R it will assign a value “b” to an variable named “a”. By the way, to achieve the same in R, we should write <code>"a" == "b"</code>.</p>
+<p>Note that in other programming languages the equal sign might be reserved for setting the value of a variable. For example, <code>"a" = "b"</code> will return <code>false</code> in NetLogo, while in R it will assign the value “b” to a variable named “a”. By the way, to achieve the same in R, we should write <code>"a" == "b"</code>.</p>
 </section>
 <section id="procedures" class="level2" data-number="12.6">
 <h2 data-number="12.6" class="anchored" data-anchor-id="procedures"><span class="header-section-number">12.6</span> Procedures</h2>
-<p>In NetLogo, any action we want to perform, that is not manually typed in the console, must be enclosed within a procedure that is declared in the model script (the text in <strong>‘Code’</strong> tab in the user interface). Similarly to ‘functions’ or ‘methods’ in other programming languages, a procedure is the code scripted inside the following structure:</p>
+<p>In NetLogo, any action we want to perform that is not manually typed in the console must be enclosed within a procedure that is declared in the model script (the text in the <strong>‘Code’</strong> tab in the user interface). Similar to ‘functions’ or ‘methods’ in other programming languages, a procedure is the code scripted inside the following structure:</p>
 <pre class="netlogo"><code>to &lt;PROCEDURE_NAME&gt;
   &lt;PROCEDURE_CODE&gt;
 end</code></pre>
-<p>Any procedure can be executed by typing <code>&lt;PROCEDURE_NAME&gt;</code> + Enter in the NetLogo’s console at the bottom of the ‘Interface’ tab. The “Hello World” program, a typical minimum exercise when learning a programming language, correspond to the following procedure <code>hello-world</code>:</p>
+<p>Any procedure can be executed by typing <code>&lt;PROCEDURE_NAME&gt;</code> + Enter in the NetLogo console at the bottom of the ‘Interface’ tab. The “Hello World” program, a typical minimum exercise when learning a programming language, corresponds to the following procedure <code>hello-world</code>:</p>
 <pre class="netlogo"><code>to hello-world
   print "Hello World!"
 end</code></pre>
 <p>which generates the following “prints” in the console:</p>
 <pre><code>observer&gt; hello-world
 Hello World!</code></pre>
-<p>Procedures are particularly useful to group and enclose a sequence of commands that are semantically connected for the programmer. For example, the following procedure declares a temporary (local) variable, assigns to it a number as value, and prints it in the console:</p>
+<p>Procedures are particularly useful for grouping and enclosing a sequence of commands that are semantically connected for the programmer. For example, the following procedure declares a temporary (local) variable, assigns to it a number as a value, and prints it in the console:</p>
 <pre class="netlogo"><code>to set-it-and-show-me
   let thisVariableOfMine 42
   print thisVariableOfMine
 end</code></pre>
-<p>Procedures can then be used elsewhere by writing its name (more complications to come). A procedure can be included as a step in another procedure:</p>
+<p>You can then use procedures elsewhere by writing their name (more complications to come). A procedure can be included as a step in another procedure:</p>
 <pre class="netlogo"><code>to &lt;PROCEDURE NAME&gt;
   &lt;PROCEDURE_1&gt;
   &lt;PROCEDURE_2&gt;
   &lt;PROCEDURE_3&gt;
   ...
 end</code></pre>
-<p>NetLogo’s interface editor allows us to create buttons that can execute one or multiple procedures (or even a snippet of <em>ad hoc</em> code). The interface system is quite straightforward. First, at the top of the interface tab, click “Add” and select a type of element in the drop-down list. Click anywhere in the window below to place it. Select it with click-dragging or using the “Select” option in the right-click pop-up menu. You can edit the element by selecting “Edit”, also in the right-click pop-up menu. For any doubts on how to edit the interface tab, please refer to NetLogo’s documentation (https://ccl.northwestern.edu/netlogo/docs/interfacetab.html).</p>
+<p>NetLogo’s interface editor lets us create buttons that execute one or more procedures (or even a snippet of <em>ad hoc</em> code). The interface system is quite straightforward. First, at the top of the interface tab, click “Add” and select an element type from the drop-down list. Click anywhere in the window below to place it. Select it with click-dragging or using the “Select” option in the right-click pop-up menu. You can edit the element by selecting “Edit”, also in the right-click pop-up menu. For questions about editing the interface tab, refer to NetLogo’s documentation (https://ccl.northwestern.edu/netlogo/docs/interfacetab.html).</p>
 </section>
 <section id="logic-bifurcations-if-and-ifelse" class="level2" data-number="12.7">
 <h2 data-number="12.7" class="anchored" data-anchor-id="logic-bifurcations-if-and-ifelse"><span class="header-section-number">12.7</span> Logic bifurcations: <code>if</code> and <code>ifelse</code></h2>
@@ -759,13 +759,13 @@ ifelse (&lt;CONDITION_2_IS_TRUE&gt;)
 </section>
 <section id="iterators-loops" class="level2" data-number="12.8">
 <h2 data-number="12.8" class="anchored" data-anchor-id="iterators-loops"><span class="header-section-number">12.8</span> Iterators (<em>loops</em>)</h2>
-<p>Using <code>while</code>, we can use a structure similar to bifurcations, to reiterate over the same code a number of times as long as a logical condition is true:</p>
+<p>Using <code>while</code>, we can use a structure similar to bifurcations to iterate over the same code a number of times as long as a logical condition is true:</p>
 <pre class="netlogo"><code>while [&lt;CONDITION_1_IS_TRUE&gt;]
 [
   &lt;DO_ACTION&gt;
 ]</code></pre>
 <p>Notice the use of square brackets to surround the condition (<code>[&lt;CONDITION_1_IS_TRUE&gt;]</code>).</p>
-<p>A variant of this is the primitive <code>loop</code>, where there is no condition, meaning that the action within will be repeated forever until the code inside stop the flow explicitly (<code>stop</code> or <code>report</code>), or the user interrupts NetLogo.</p>
+<p>A variant is the primitive <code>loop</code>, which has no condition, meaning the action repeats forever until the code inside stops the flow explicitly (<code>stop</code> or <code>report</code>) or the user interrupts NetLogo.</p>
 <pre class="netlogo"><code>loop
 [
   &lt;DO_SOMETHING&gt;
@@ -781,7 +781,7 @@ Caution
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>ALERT</strong></p>
-<p>Avoid using <code>while</code> or <code>loop</code> until you are confident with you code. A loop hidden inside you code, that might go forever in a few cases, can become a headache when performing simulation experiments in batches.</p>
+<p>Avoid using <code>while</code> or <code>loop</code> until you are confident in your code. A loop hidden inside your code that might go forever in a few cases can become a headache when performing simulation experiments in batches.</p>
 </div>
 </div>
 <p>A more useful iterator is <code>repeat</code>, which will reiterate code a certain number of times:</p>
@@ -791,12 +791,12 @@ Caution
 ]</code></pre>
 <p>You may quickly test it in the console with:</p>
 <pre class="netlogo"><code>let counter 0 repeat 10 [  set counter counter + 1 ] print counter</code></pre>
-<p>A especial type of iterator abundantly used in NetLogo is <code>ask</code>. You can <code>ask</code> all or any subset of entities to perform specific commands by following the structure:</p>
+<p>A special iterator commonly used in NetLogo is <code>ask</code>. You can <code>ask</code> all or any subset of entities to perform specific commands by following the structure:</p>
 <pre class="netlogo"><code>ask &lt;ENTITIES&gt;
 [ 
   &lt;DO_SOMETHING&gt;
 ]</code></pre>
-<p>Try this out in the command center:</p>
+<p>Try this out in the Command Center:</p>
 <pre class="netlogo"><code>ask patches [ set pcolor blue ]</code></pre>
 </section>
 <section id="entities-with-variables-logic-operations-and-procedures" class="level2" data-number="12.9">
@@ -809,14 +809,14 @@ Caution
   &lt;PROCEDURE_2&gt;
   &lt;PROCEDURE_3&gt;
 ]</code></pre>
-<p>However, all variables referenced inside these structures must be properly related to their scope, following NetLogo’s syntax. For example, an agent is only able to access the variable in another agent if it we use the following kind of structure:</p>
+<p>However, all variables referenced inside these structures must be properly scoped, following NetLogo’s syntax. For example, an agent is only able to access a variable in another agent if it uses the following kind of structure:</p>
 <pre class="netlogo"><code>ask &lt;BREED_1_NAME_PLURAL&gt;
 [ 
   print [&lt;BREED_1_VARIABLE_2&gt;] of &lt;BREED_2_NAME_SINGULAR&gt; &lt;WHO_NUMBER&gt;
 ]</code></pre>
-<p>It is possible to select a subset of any set of entities through logic clauses to be checked separately for each individual entity. For example, to get all agents with a certain numeric property greater than a given threshold:</p>
+<p>You can select a subset of any set of entities with logic clauses checked separately for each entity. For example, to get all agents with a certain numeric property greater than a given threshold:</p>
 <pre class="netlogo"><code>&lt;TYPE_NAME_PLURAL&gt; with [ &lt;VARIABLE_NAME_1&gt; &gt; &lt;THRESHOLD&gt; ]</code></pre>
-<p>When operating from the inside an <code>ask</code> command, we can also make sure to filter-out the agent currently performing the call, by using the primitive <code>other</code>:</p>
+<p>When operating from inside an <code>ask</code> command, we can also make sure to filter out the agent currently performing the call by using the primitive <code>other</code>:</p>
 <pre class="netlogo"><code>ask &lt;BREED_1_NAME_PLURAL&gt;
 [
   ask other &lt;BREED_1_NAME_PLURAL&gt;
@@ -842,13 +842,13 @@ end</code></pre>
 </section>
 <section id="grid-world" class="level2" data-number="12.10">
 <h2 data-number="12.10" class="anchored" data-anchor-id="grid-world"><span class="header-section-number">12.10</span> Grid (world)</h2>
-<p>One should spend some time understanding the grid structure and associated syntax. It is recommendable to consult the “settings” pop-up window in the “interface tab”:</p>
+<p>Spend some time understanding the grid structure and associated syntax. It is recommended to consult the “settings” pop-up window in the “interface tab”:</p>
 <p><img src="https://ccl.northwestern.edu/netlogo/5.3.1/docs/images/interface/settings.png" class="img-fluid" alt="The settings pop-up window in NetLogo"><br>
 <em>The settings pop-up window in NetLogo</em></p>
-<p>The default configuration is a 33x33 grid with the position (0,0) at the centre. Both dimensions and centre can be easily edited for each particular model. Moreover, we can specify agents behaviour at the borders by ticking the “wrap” options. Wrapping the world limits means that, for instance, under the default setting mentioned above, the position (-16,0) is adjacent to (16,0). In the console, we can “ask” the patch at (-16,0) to print its distance to the patch at (16,0), using the primitive function <code>distance</code> (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#distance):</p>
+<p>The default configuration is a 33x33 grid with the position (0,0) at the centre. You can easily edit both dimensions and the centre for each model. You can also specify agents’ behaviour at the borders by ticking the “wrap” options. Wrapping the world limits means that, for instance, under the default setting mentioned above, the position (-16,0) is adjacent to (16,0). In the console, we can “ask” the patch at (-16,0) to print its distance to the patch at (16,0), using the primitive function <code>distance</code> (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#distance):</p>
 <pre><code>observer&gt; ask patch -16 0 [ print distance patch 16 0 ]
 1</code></pre>
-<p>Wrapping one dimension represents a cylindrical surface while wrapping two depicts a strange toroidal object (Doughnut!). Although this aspect is relatively hidden among the options, it can have great importance if spatial relations play any part in a model. So if you want your grid to represent a geographical map, make sure to unpick the wrapping features.</p>
+<p>Wrapping one dimension represents a cylindrical surface while wrapping two depicts a strange toroidal object (Doughnut!). Although this aspect is relatively hidden among the options, it can matter if spatial relations play any part in a model. So if you want your grid to represent a geographical map, make sure to unpick the wrapping features.</p>
 </section>
 <section id="commenting-code" class="level2" data-number="12.11">
 <h2 data-number="12.11" class="anchored" data-anchor-id="commenting-code"><span class="header-section-number">12.11</span> Commenting code</h2>
@@ -861,9 +861,9 @@ end</code></pre>
 </section>
 <section id="dictionary" class="level2" data-number="12.12">
 <h2 data-number="12.12" class="anchored" data-anchor-id="dictionary"><span class="header-section-number">12.12</span> Dictionary</h2>
-<p>One of the most useful resources of NetLogo’s documentation is the <em>dictionary</em> that can be accessed in the “Help” menu. This is true at any moment throughout your learning curve; even when you know all <em>primitives</em> and built-in functions by heart. Moreover, all documentation is present with any copy of NetLogo, so it is fully available offline.</p>
-<p>The dictionary is particularly useful whenever you are learning by example, as in our case. For instance, regarding the earlier mention of <code>distance</code>, you could have searched it in the dictionary directly. Whenever you find yourself reading NetLogo code with violet or blue words that you do not understand, take the habit of searching them in NetLogo’s <em>dictionary</em>.</p>
-<p>For <strong>more information</strong> consult <a href="https://ccl.northwestern.edu/netlogo/docs/programming.html">NetLogo Programming Guide</a>.</p>
+<p>One of the most useful resources in NetLogo’s documentation is the <em>dictionary</em>, which you can access from the “Help” menu. This is true at any moment throughout your learning curve, even when you know all <em>primitives</em> and built-in functions by heart. Moreover, all documentation comes with every copy of NetLogo, so it is fully available offline.</p>
+<p>The dictionary is particularly useful whenever you are learning by example, as in our case. For instance, regarding the earlier mention of <code>distance</code>, you could have searched it in the dictionary directly. Whenever you find yourself reading NetLogo code with violet or blue words that you do not understand, make it a habit to search them in NetLogo’s <em>dictionary</em>.</p>
+<p>For <strong>more information</strong>, consult <a href="https://ccl.northwestern.edu/netlogo/docs/programming.html">NetLogo Programming Guide</a>.</p>
 
 
 </section>
