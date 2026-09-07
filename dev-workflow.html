@@ -548,15 +548,15 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-293cd3ed26c729e8799c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-293cd3ed26c729e8799c">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-cc9ef65fc54d8896e4c9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-cc9ef65fc54d8896e4c9">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-d2e49f8db86d40516093" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-d2e49f8db86d40516093">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-1e86b27b9631c6b9e2e9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1e86b27b9631c6b9e2e9">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>The goal is <em>incremental improvement</em>, not perfection at once. Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
