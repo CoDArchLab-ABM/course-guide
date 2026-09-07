@@ -2,7 +2,7 @@
 
 ## Stochastic exploration for sensitivity analysis
 
-To perform sensitivity analysis in a simulation model, we need to sample parameter values more efficiently than using regular intervals. There are three common sampling methods: **Random Sampling**, **Latin Hypercube Sampling (LHS)**, and **Sobol Sampling**. Below is an explanation of how to obtain parameter samples using each method in **R**.
+To perform sensitivity analysis in a simulation model, we need to sample parameter values more efficiently than using regular intervals. Three common sampling methods are **Random Sampling**, **Latin Hypercube Sampling (LHS)**, and **Sobol Sampling**. Below is an explanation of how to obtain parameter samples using each method in **R**.
 
 ### Random Sampling
 Random sampling is the simplest method, where parameter values are drawn independently from a given probability distribution (e.g., uniform, normal). This method may not cover the parameter space as efficiently as structured sampling methods.
@@ -22,7 +22,7 @@ head(samples_random)
 📌 **Cons:** Potential clustering of samples, leading to inefficient coverage of the parameter space.
 
 ### Latin Hypercube Sampling (LHS)
-Latin Hypercube Sampling ensures that each parameter is sampled more uniformly across its range. It divides the range of each parameter into equal intervals and ensures that each interval is sampled exactly once [@chalom_parameter_2015].
+Latin Hypercube Sampling ensures that each parameter is sampled more uniformly across its range. It divides each parameter's range into equal intervals and ensures each interval is sampled exactly once [@chalom_parameter_2015].
 
 **Implementation in R**
 Using the **lhs** package:
@@ -69,7 +69,7 @@ samples_sobol <- data.frame(param1, param2)
 head(samples_sobol)
 ```
 📌 **Pros:** Highly efficient, low-discrepancy sequence for sensitivity analysis  
-📌 **Cons:** Requires specialized libraries, and might not be ideal for small sample sizes
+📌 **Cons:** Requires specialised libraries and might not be ideal for small sample sizes
 
 ### Comparison of Methods
 
@@ -85,12 +85,12 @@ head(samples_sobol)
 
 ## Use of machine learning for sensitivity analysis
 
-To evaluate the importance of each parameter in a simulation model, **Random Forest (RF)** can be used as a feature importance estimator. This involves training an RF model on simulation results and then analyzing the impact of each input parameter on the output.
+To evaluate each parameter's importance in a simulation model, **Random Forest (RF)** can serve as a feature-importance estimator. This involves training an RF model on simulation results and then analysing each input parameter's impact on the output.
 
 ### Step-by-Step Guide to Using Random Forest for Parameter Importance
 
 **1. Generate Simulation Data**
-The first step is to generate simulation results by systematically sampling multiple parameters using methods like **Random Sampling, Latin Hypercube Sampling (LHS), or Sobol Sampling**.
+First, generate simulation results by systematically sampling multiple parameters using methods like **Random Sampling, Latin Hypercube Sampling (LHS), or Sobol Sampling**.
 
 **Example: Generating Simulation Data in R**
 ```r
@@ -118,7 +118,7 @@ head(sim_data)
 
 **2. Train a Random Forest Model**
 
-Once the data is prepared, an RF model can be trained using **randomForest** in R.
+Once the data is prepared, you can train an RF model using **randomForest** in R.
 
 **Train the RF Model**
 ```r
