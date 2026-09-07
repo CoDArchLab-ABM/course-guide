@@ -52,7 +52,7 @@ Without equations to define *f* and *g*, our causal graph actually expresses mor
 
 ## Towards a balance between representation and complexity
 
-Do you think this satisfactorily describes our explanation? Does it leave out something we implicitly assumed with our first informal explanation? Does it go too far, stating something we did not intend in the first place? Answering these questions pushes us away from informal explanations and into the realm of **logic** and broader **contextual knowledge**.
+Does this satisfactorily describe our explanation? Does it leave out something we implicitly assumed with our first informal explanation? Does it go too far, stating something we did not intend in the first place? Answering these questions pushes us away from informal explanations and into **logic** and broader **contextual knowledge**.
 
 In our example, we can immediately detect that our variables must be expressed in at least two different units (e.g., $m^{2}$ and individuals). We must add a parameter (a variable that remains constant throughout the process) to convert population into settlement size. We will call it *areaPerInhabitant*:
 
@@ -77,7 +77,7 @@ Our causal graph will be at this point considerably different, even when we assu
 
 ![Conceptual model after adding a few parameters](assets/images/conceptual-model-example-2.png)
 
-After a few iterations of this reasoning process, our formal expressions will undoubtedly become more complex. The more variables and parameters an explanatory model includes, the more realistic and rich the scenarios it will allow. However, evidence should then control variables and parameters or, at the very least, define them in a meaningful way.
+After a few iterations of this reasoning process, our formal expressions will undoubtedly become more complex. The more variables and parameters an explanatory model includes, the more realistic and rich the scenarios it will allow. However, evidence should then control variables and parameters or, at the very least, define them meaningfully.
 
 Remember, while defining a parameter adds complexity, it also marks the point in a branch of thought where modelling *stops*: where something that could certainly be described as complex and dynamic is reduced to a fixed value. 
 
@@ -151,7 +151,7 @@ The more your formal model is composed of algorithms (discontinuous operations) 
 
 ## Representing distributed and social mechanisms
 
-If we want a formal model that can account for distributed processes (occurring in parallel through the action of multiple entities) and more complex social mechanisms (i.e. multi-dimensional, non-linear), our conceptual model should move toward an **object**-based and, eventually, **agent**-based framework. We can represent distributed processes in many ways, such as formulating variables as **vectors** and **matrices**if equations remain a viable format, or drawing flowcharts to prescribe the behaviour of entities and their potential interactions.
+If we want a formal model that can account for distributed processes (occurring in parallel through the action of multiple entities) and more complex social mechanisms (i.e. multi-dimensional, non-linear), our conceptual model should move toward an **object**-based and, eventually, **agent**-based framework. We can represent distributed processes in many ways, such as formulating variables as **vectors** and **matrices**, if equations remain a viable format, or drawing flowcharts to prescribe the behaviour of entities and their potential interactions.
 
 If our population model were to be formulated as agent-based, considering households as the primary units of the process, we would need to define their behaviour in a way that, in aggregate, still represents the essence of the causal relationship we seek to formalise:
 
