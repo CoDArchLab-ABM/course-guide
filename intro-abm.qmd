@@ -18,7 +18,7 @@ To better contextualise ABM, we start by positioning this modelling approach alo
 
 Agent-based modelling (ABM) is a tool that can be used to explore phenomena through the lens of complexity science, that is, as manifestations of complex systems. [Complex systems](https://en.wikipedia.org/wiki/Complex_system) are characterised by a high number and diversity of causal relationships, non-linearity (feedback loops), self-organisation, self-similarity, and path dependence. [Complex adaptive systems](https://en.wikipedia.org/wiki/Complex_adaptive_system) are a special case of complex systems, considered able to adapt to (and learn from) their environment. Such systems are better understood through their smaller parts and their interaction.
 
-<a title="Krishnavedala, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Linear_least_squares_example2.svg"><img width="250" alt="Linear least squares example2" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Linear_least_squares_example2.svg/250px-Linear_least_squares_example2.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
+<a title="Acadac, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Complex-adaptive-system.jpg"><img width="330" alt="Complex-adaptive-system" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Complex-adaptive-system.jpg/330px-Complex-adaptive-system.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 
 ABM is a methodological framework that allows researchers to simulate the dynamics of complex systems. The approach involves:
 
@@ -53,7 +53,7 @@ The line between these categories is blurred and confounded by many models and m
 
 To clarify this distinction, consider one of the simplest and most popular descriptive models used today: the linear regression model. 
 
-<a title="Krishnavedala, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Linear_least_squares_example2.svg"><img width="256" alt="Linear least squares example2" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Linear_least_squares_example2.svg/256px-Linear_least_squares_example2.svg.png?20110610033522"></a>
+<a title="Krishnavedala, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Linear_least_squares_example2.svg"><img width="250" alt="Linear least squares example2" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Linear_least_squares_example2.svg/250px-Linear_least_squares_example2.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 
 We use these regression models to summarise the relationship between two variables in a dataset by finding a line that best fits the distribution of points. In the case of simple linear regression, we define a parametric equation that corresponds to a straight line in a Cartesian two-dimensional space:
 
@@ -67,7 +67,7 @@ A linear regression model has two variables, x and y, which define two orthogona
 The semantic emptiness of descriptive models might seem irrelevant at first. A linear regression helps us understand data and can make effective predictions. However, the meaning of these understandings and predictions comes from our explanatory models, which are only loosely connected to the equation we use. Assuming descriptive models and interpretation are directly connected can misrepresent data or, worse, lead to faulty reasoning about the underlying phenomenon.
 
 <a title="Anscombe.svg: Schutz
-(label using subscripts): Avenue, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Anscombe%27s_quartet_3.svg"><img width="512" alt="Anscombe&#039;s quartet 3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Anscombe%27s_quartet_3.svg/512px-Anscombe%27s_quartet_3.svg.png?20100326171813"></a>
+(label using subscripts): Avenue, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Anscombe%27s_quartet_3.svg"><img width="330" alt="Anscombe&#039;s quartet 3" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Anscombe%27s_quartet_3.svg/330px-Anscombe%27s_quartet_3.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 
 For an archaeological example, imagine we have two variables measured across a collection of sites: the estimated maximum area and the count of potsherds on the surface. Imagine we can define a regression model that shows a positive correlation between them. Assuming our dataset is large enough and not radically biased, we could probably interpret that built area *influences* (i.e., causes, in a weak sense) the abundance of potsherds on the surface. It would not be necessarily illogical to conclude this. Yet the relationship described in the model is ultimately a correlation (no archaeologist would think one directly causes the other).
 
@@ -78,8 +78,7 @@ For an archaeological example, imagine we have two variables measured across a c
 ::: {.g-col-6}
 
 Target reality:  
-<a title="Santeri Viinamäki, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Green_watering_can.jpg">
-<img width="256" alt="Green watering can" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Green_watering_can.jpg/512px-Green_watering_can.jpg"	style="border: none; box-shadow: none;"></a>
+<a title="Santeri Viinamäki, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Green_watering_can.jpg"><img width="330" alt="Green watering can" style="border: none; box-shadow: none;" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Green_watering_can.jpg/330px-Green_watering_can.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 
 :::
 
@@ -218,7 +217,7 @@ This simple model has become very famous for being able to express the following
 >more prey → more food ... (the cycle begins again)
 
 <p style="text-align: center;">
-<a title="AspidistraK, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lotka_Volterra_dynamics.svg"><img width="400" style="background-color: white" alt="Lotka Volterra dynamics" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Lotka_Volterra_dynamics.svg/512px-Lotka_Volterra_dynamics.svg.png"></a>
+<a title="AspidistraK, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Lotka_Volterra_dynamics.svg"><img width="330" alt="Lotka Volterra dynamics" style="background-color: white" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Lotka_Volterra_dynamics.svg/330px-Lotka_Volterra_dynamics.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 <br>
 <i style="color: grey;">Example of Lotka Volterra dynamics</i>
 </p>
@@ -226,7 +225,7 @@ This simple model has become very famous for being able to express the following
 The same model can also be implemented with ABM (see the comparison in [NetLogo's Model Library Wolf-Sheep Predation (Docked Hybrid)](http://ccl.northwestern.edu/netlogo/models/WolfSheepPredation(DockedHybrid))). The ABM implementation requires many additional specifications on how predator and prey agents should behave individually. Even though it is not strictly necessary to represent the core mechanism, ABM variations of the Lotka-Volterra model often aim to include more complexity. In the case of the Wolf-Sheep model mentioned, there is an explicit account of the base resource (*i.e.*, the prey of the prey), named `grass`, which is implemented as a property of spatial units. These additional specifications usually make the model more intuitive and realistic but also significantly complicate design and implementation, even though they generate similar aggregate dynamics as the equation-based version (*i.e.*, oscillation harmony between prey and predator populations).
 
 <p style="text-align: center;">
-<a title="SethTisue, GPL &lt;http://www.gnu.org/licenses/gpl.html&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Netlogo-ui.png"><img width="512" alt="Netlogo-ui" style="width: 450px; height: 350px; object-fit: cover; object-position: 0% 0%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Netlogo-ui.png/512px-Netlogo-ui.png"></a>
+<a title="SethTisue, GPL &lt;http://www.gnu.org/licenses/gpl.html&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Netlogo-ui.png"><img width="330" alt="Screenshot of NetLogo 5.0 running on Mac OS X running a simulation of wolf-sheep predation" style="width: 450px; height: 350px; object-fit: cover; object-position: 0% 0%;" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Netlogo-ui.png/330px-Netlogo-ui.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 <br>
 <i style="color: grey;">NetLogo user interface running the Wolf-Sheep Predation model</i>
 </p>
