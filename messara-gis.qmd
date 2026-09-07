@@ -8,17 +8,17 @@ The NetLogo default installation includes an extension to support GIS that can b
 extensions [ gis ]
 ```
 
-This extension allows you to perform a variety of GIS operations and to connect patch and turtle behaviour to data expressed in GIS files, supporting both vector and raster. The description of its contents can be found here: https://ccl.northwestern.edu/netlogo/docs/gis.html
+This extension lets you perform a variety of GIS operations and connect patch and turtle behaviour to data expressed in GIS files, supporting both vector and raster. The description of its contents can be found here: https://ccl.northwestern.edu/netlogo/docs/gis.html
 
 We will only reference a few aspects of GIS in NetLogo. You will find useful examples in NetLogo's Models Library (*e.g.*, Sample Models > Code Examples > Extensions Examples > gis > GIS General Examples).
 
 ## Datasets
 
-The files in "data/Cretedata/" were distributed during our in-person session, courtesy of Prof. Eleftheria Paliou (University of Cologne). Site coordinates were randomly shifted in QGIS to be published online after the session.
+The files in "data/Cretedata/" were distributed during our in-person session, courtesy of Prof. Eleftheria Paliou (University of Cologne). We randomly shifted site coordinates in QGIS for online publication after the session.
 
 We are using:
 
-- Two shape files containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see [Minoan Chronology](https://en.wikipedia.org/wiki/Minoan_chronology)):  
+- Two shapefiles containing point coordinates of various archaeological sites in the region, corresponding to two aggregated periods (see [Minoan Chronology](https://en.wikipedia.org/wiki/Minoan_chronology)):  
   - `EMIII_MMIAsites.shp`: Prepalatial sites (Early Minoan III to Middle Minoan IA)  
 	- `MMIBsites.shp`: Middle Minoan IB sites  
 - `dem15.asc`: Elevation data (Digital Elevation Model) at 15m resolution
@@ -57,7 +57,7 @@ end
 
 ## Readjusting `world` settings
 
-The second step is ensuring that our world and world view in NetLogo fits the data we want to feed into them. In this case, we need to reduce the DEM resolution to handle all patch processes in a reasonable computation time.
+The second step is ensuring that our world and world view in NetLogo fit the data we want to feed into them. In this case, we need to reduce the DEM resolution to keep computation time reasonable.
 
 ```Netlogo
 globals
@@ -74,7 +74,7 @@ globals
 
 to set-world-dimensions
 
-  ;;; for better performance, we take a multiple fraction of the dimensions of elevationData,
+  ;;; for better performance, we take a fraction of the dimensions of elevationData,
   ;;; so that patches will get average values or more regular sets of pixels
 
   let patchXpixelScale 0.1 ;;; keep it less than 0.25
@@ -92,7 +92,7 @@ end
 
 ## Calculating patch dimensions based on GIS data
 
-Before applying the GIS data to NetLogo's entities, we should try to already calculate and keep an important information about the real-world scale of our model: the dimensions of a patch according to the GIS projections.
+Before applying the GIS data to NetLogo's entities, we should calculate and retain key information about the real-world scale of our model: patch dimensions according to the GIS projections.
 
 We can extend the code above:
 
@@ -114,7 +114,7 @@ globals
 
 to set-world-dimensions
 
-  ;;; for better performance, we take a multiple fraction of the dimensions of elevationData,
+  ;;; for better performance, we take a fraction of the dimensions of elevationData,
   ;;; so that patches will get average values or more regular sets of pixels
 
   let patchXpixelScale 0.1 ;;; keep it less than 0.25
@@ -143,7 +143,7 @@ to set-world-dimensions
 end
 ```
 
-Where `calculate-patch-area-meters` (and `calculate-patch-area-degrees`) is a procedure enclosing this simple, yet delicate calculation. GIS files might use projections expressed either in metres or degrees, so we keep both alternative solutions, "commenting out" the one not used in this case. Notice that by defining them separately, we facilitate their use in other models. Here is the code for these procedures:
+Where `calculate-patch-area-meters` (and `calculate-patch-area-degrees`) is a procedure enclosing this simple, yet delicate calculation. GIS files might use projections expressed either in metres or degrees, so we keep both alternative solutions, "commenting out" the one not used in this case. Defining them separately also makes them easier to use in other models. Here is the code for these procedures:
 
 ```
 to-report calculate-patch-area-degrees [ rasterData ]
@@ -200,11 +200,11 @@ to-report calculate-patch-area-meters [ gisData ]
 end
 ```
 
-When in doubt about the projection of your file, the values obtained for `areaPerPatch` (ha) and `patchWidth` (m) when running both solutions will give you a quick hint. In our case, the calculation should be done in metres and, with this code, we will have patches of approximately 145 x 145 metres.
+When in doubt about the projection of your file, the values obtained for `areaPerPatch` (ha) and `patchWidth` (m) when running both solutions will give you a quick hint. In our case, the calculation should be done in metres, and with this code we will have patches of approximately 145 x 145 metres.
 
 ## Applying GIS data to patches
 
-Next, we effectively apply the data to patches using the gis extension primitives:
+Next, we effectively apply the data to patches using the GIS extension primitives:
 
 ```NetLogo
 globals
@@ -255,7 +255,7 @@ to setup-elevation
 
   set patchesWithElevationData patches with [(elevation <= 0) or (elevation >= 0)]
   
-  ;;; replace NaN values added by the gis extension with noElevationDataTag, so it does not generate problems after
+  ;;; replace NaN values added by the GIS extension with noElevationDataTag, so it does not generate problems after
   set noElevationDataTag -9999
   ask patches with [not ((elevation <= 0) or (elevation >= 0))] [ set elevation noElevationDataTag ]
 
@@ -318,9 +318,9 @@ to create-site-from-feature [ vectorFeature datasetPeriod ]
 end
 ```
 
-Notice that the gis extension generates NaN values on those patches outside the raster data. NetLogo does not handle NaNs, which can become a problem later. To solve this, we create a patch-set variable to filter patches with elevation data (`patchesWithElevationData`) and use a constant `noElevationDataTag` with an impossible elevation value to mark those outside the heightmap. From now on, we need to be careful not to use the `patches` primitive, which will call both kinds of patches.
+The GIS extension generates NaN values on patches outside the raster data. NetLogo does not handle NaNs, which can cause problems later. To solve this, we create a patch-set variable to filter patches with elevation data (`patchesWithElevationData`) and use a constant `noElevationDataTag` with an impossible elevation value to mark those outside the heightmap. From now on, we need to be careful not to use the `patches` primitive, which will call both kinds of patches.
 
-## Higher level procedure: `create-map`
+## Higher-level procedure: `create-map`
 
 We wrap up everything in a procedure `create-map`:
 
@@ -387,11 +387,11 @@ to paint-elevation
 end
 ```
 
-Sites from different periods are visualized in different colours. Patches are coloured according to their elevation (from green to brown). Rivers are drawn in blue.
+Sites from different periods are visualised in different colours. Patches are coloured by elevation (from green to brown). Rivers are drawn in blue.
 
 ## Set up procedure and testing
 
-We then we place both in a higher-level procedure, using the conventional `setup` (and adding its button):
+We then place both in a higher-level procedure, using the conventional `setup` (and adding its button):
 
 ```NetLogo
 to setup
