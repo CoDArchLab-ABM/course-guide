@@ -112,6 +112,8 @@ There are mainly three types of activities to address:
 
 **Implementing a model in NetLogo**: When working with your own model, create a minimal NetLogo version that can run simulations that represent your conceptual model. At a minimum, the implementation code should contain all the basic elements required by an ABM model: global parameters and variables, any agent variables (both patches and turtles), and the main procedures, even if unfinished. When extending a previously published model, such as the Pond Trade or Messara Trade models, propose at least one modification or extension to the original code, based on the changes proposed in the conceptual model. Implement the necessary changes and test them. Document your changes and briefly explain the reasoning behind them (images or text). To create new functionalities, you may use any code snippet or modules from the Pond Trade and Messara Trade examples (chapters 15-30), as well as any other sources of code elsewhere. Store all files in your repository according to the logic explained in Chapter 10.
 
+You pass the course by completing all assignments. You can request an exam paper linked to this course for extra credit.
+
 ## Acknowledgements
 
 The conception of the course structure, as well as the short summaries, exercises, and images shown in each chapter, greatly benefited from [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) used as companion writer and programmer, as well as language corrector. As such, we owe much to the rich reference information freely available on the Internet.
