@@ -579,7 +579,7 @@ div.csl-indent {
 
 <section id="stochastic-exploration-for-sensitivity-analysis" class="level2" data-number="34.1">
 <h2 data-number="34.1" class="anchored" data-anchor-id="stochastic-exploration-for-sensitivity-analysis"><span class="header-section-number">34.1</span> Stochastic exploration for sensitivity analysis</h2>
-<p>To perform sensitivity analysis in a simulation model, we need to sample parameter values more efficiently than using regular intervals. There are three common sampling methods: <strong>Random Sampling</strong>, <strong>Latin Hypercube Sampling (LHS)</strong>, and <strong>Sobol Sampling</strong>. Below is an explanation of how to obtain parameter samples using each method in <strong>R</strong>.</p>
+<p>To perform sensitivity analysis in a simulation model, we need to sample parameter values more efficiently than using regular intervals. Three common sampling methods are <strong>Random Sampling</strong>, <strong>Latin Hypercube Sampling (LHS)</strong>, and <strong>Sobol Sampling</strong>. Below is an explanation of how to obtain parameter samples using each method in <strong>R</strong>.</p>
 <section id="random-sampling" class="level3" data-number="34.1.1">
 <h3 data-number="34.1.1" class="anchored" data-anchor-id="random-sampling"><span class="header-section-number">34.1.1</span> Random Sampling</h3>
 <p>Random sampling is the simplest method, where parameter values are drawn independently from a given probability distribution (e.g., uniform, normal). This method may not cover the parameter space as efficiently as structured sampling methods.</p>
@@ -597,7 +597,7 @@ div.csl-indent {
 </section>
 <section id="latin-hypercube-sampling-lhs" class="level3" data-number="34.1.2">
 <h3 data-number="34.1.2" class="anchored" data-anchor-id="latin-hypercube-sampling-lhs"><span class="header-section-number">34.1.2</span> Latin Hypercube Sampling (LHS)</h3>
-<p>Latin Hypercube Sampling ensures that each parameter is sampled more uniformly across its range. It divides the range of each parameter into equal intervals and ensures that each interval is sampled exactly once <span class="citation" data-cites="chalom_parameter_2015">(<a href="references.html#ref-chalom_parameter_2015" role="doc-biblioref">Chalom and Prado 2015</a>)</span>.</p>
+<p>Latin Hypercube Sampling ensures that each parameter is sampled more uniformly across its range. It divides each parameter’s range into equal intervals and ensures each interval is sampled exactly once <span class="citation" data-cites="chalom_parameter_2015">(<a href="references.html#ref-chalom_parameter_2015" role="doc-biblioref">Chalom and Prado 2015</a>)</span>.</p>
 <p><strong>Implementation in R</strong> Using the <strong>lhs</strong> package:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lhs)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
@@ -637,7 +637,7 @@ div.csl-indent {
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>samples_sobol <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(param1, param2)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(samples_sobol)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>📌 <strong>Pros:</strong> Highly efficient, low-discrepancy sequence for sensitivity analysis<br>
-📌 <strong>Cons:</strong> Requires specialized libraries, and might not be ideal for small sample sizes</p>
+📌 <strong>Cons:</strong> Requires specialised libraries and might not be ideal for small sample sizes</p>
 </section>
 <section id="comparison-of-methods" class="level3" data-number="34.1.4">
 <h3 data-number="34.1.4" class="anchored" data-anchor-id="comparison-of-methods"><span class="header-section-number">34.1.4</span> Comparison of Methods</h3>
@@ -688,10 +688,10 @@ div.csl-indent {
 </section>
 <section id="use-of-machine-learning-for-sensitivity-analysis" class="level2" data-number="34.2">
 <h2 data-number="34.2" class="anchored" data-anchor-id="use-of-machine-learning-for-sensitivity-analysis"><span class="header-section-number">34.2</span> Use of machine learning for sensitivity analysis</h2>
-<p>To evaluate the importance of each parameter in a simulation model, <strong>Random Forest (RF)</strong> can be used as a feature importance estimator. This involves training an RF model on simulation results and then analyzing the impact of each input parameter on the output.</p>
+<p>To evaluate each parameter’s importance in a simulation model, <strong>Random Forest (RF)</strong> can serve as a feature-importance estimator. This involves training an RF model on simulation results and then analysing each input parameter’s impact on the output.</p>
 <section id="step-by-step-guide-to-using-random-forest-for-parameter-importance" class="level3" data-number="34.2.1">
 <h3 data-number="34.2.1" class="anchored" data-anchor-id="step-by-step-guide-to-using-random-forest-for-parameter-importance"><span class="header-section-number">34.2.1</span> Step-by-Step Guide to Using Random Forest for Parameter Importance</h3>
-<p><strong>1. Generate Simulation Data</strong> The first step is to generate simulation results by systematically sampling multiple parameters using methods like <strong>Random Sampling, Latin Hypercube Sampling (LHS), or Sobol Sampling</strong>.</p>
+<p><strong>1. Generate Simulation Data</strong> First, generate simulation results by systematically sampling multiple parameters using methods like <strong>Random Sampling, Latin Hypercube Sampling (LHS), or Sobol Sampling</strong>.</p>
 <p><strong>Example: Generating Simulation Data in R</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lhs)        <span class="co"># For Latin Hypercube Sampling</span></span>
@@ -714,7 +714,7 @@ div.csl-indent {
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sim_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>📌 <strong>Note:</strong> Replace <code>simulation_results</code> with the actual simulation output.</p>
 <p><strong>2. Train a Random Forest Model</strong></p>
-<p>Once the data is prepared, an RF model can be trained using <strong>randomForest</strong> in R.</p>
+<p>Once the data is prepared, you can train an RF model using <strong>randomForest</strong> in R.</p>
 <p><strong>Train the RF Model</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
