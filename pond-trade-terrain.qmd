@@ -1,6 +1,6 @@
 # Getting started with NetLogo: Creating a "pond" terrain {#pond-trade-terrain}
 
-Now, let us make a minimum working example of all elements explained above while advancing towards the Pond Trade model prototype. Let us start with implementing a minimum base for the Pond Trade model: the pond-like terrain.
+Now, let us build a minimum working example of the elements explained above while moving toward the Pond Trade model prototype. Let us start with implementing a minimum base for the Pond Trade model: the pond-like terrain.
 
 ## Step 0: Drawing a blue circle
 
@@ -30,9 +30,9 @@ to create-map
 end
 ```
 
-Notice that both `pcolor` and `blue` are 'primitives', so they are automatically understood by NetLogo. Remember to consult NetLogo's Dictionary, if in doubt about such primitives. Color primitives such as `blue` or their numeric equivalent are shown in 'Color Swatches' inside the Tools menu tab.
+Notice that both `pcolor` and `blue` are 'primitives', so they are automatically understood by NetLogo. Remember to consult NetLogo's Dictionary if in doubt about such primitives. Colour primitives such as `blue` or their numeric equivalent are shown in 'Color Swatches' inside the Tools menu tab.
 
-Since we don't want all patches to have the same colour, we need to build some structure that give different colours to patches depending on their position, so that a blue circle is draw.
+Since we don't want all patches to have the same colour, we need to build some structure that gives different colours to patches depending on their position, so that a blue circle is drawn.
 
 Considering how to draw a circle, we need two bits of information: a *centre* and a *radius* (respectively, O and R in the figure).
 
@@ -70,9 +70,9 @@ to create-map
 end
 ```
 
-However, if we are passing a single absolute numeric value to be compared to a distance, the result will be sensitive to how large is our world grid. This is not wise, given that we might want to use this procedure in grids of different dimensions. Imagine that you are interested in changing the dimensions of the grid but want the circle to cover a similar proportion of it (*e.g.*, adjusting the resolution of our map).
+However, if we pass a single absolute numeric value to compare against a distance, the result will depend on how large our world grid is. This is not wise, since we might want to use this procedure on grids of different dimensions. Imagine you want to change the grid dimensions but keep the circle covering a similar proportion of it (*e.g.*, adjusting the resolution of our map).
 
-We can easily circumvent this code fragility by stepping-up its complexity. One alternative solution is to work with proportions of one of the grid dimensions, *e.g.* width (`world-width`). For the time being, we will set it to be half of half (a quarter) of the width, since we have the circle positioned in the middle of the grid.
+We can easily avoid this fragility by increasing the code's complexity. One alternative is to work with a proportion of one grid dimension, *e.g.* width (`world-width`). For now, we will set it to half of half (a quarter) of the width, since the circle is positioned in the middle of the grid.
 
 ```NetLogo
 to create-map
@@ -89,9 +89,9 @@ to create-map
 end
 ```
 
-Running this code will still not produce a blue circle. Rather, we are asking for all patches to paint themselves blue, no matter what the values of `centralPatch` or `minDistOfLandToCenter`.
+Running this code will still not produce a blue circle. Instead, we ask all patches to paint themselves blue, no matter the values of `centralPatch` or `minDistOfLandToCenter`.
 
-To differentiate patches to be painted blue, we now use `minDistOfLandToCenter` for evaluating a criterion for a `ifelse` structure, finding out if a patch is inside or outside our circle. With this, we are ordering patches to paint themselves green or blue depending on if their distance to the centre is less than a given value, i.e. `minDistOfLandToCenter`.
+To differentiate patches to be painted blue, we now use `minDistOfLandToCenter` for evaluating a criterion for a `ifelse` structure, finding out if a patch is inside or outside our circle. With this, we are ordering patches to paint themselves green or blue depending on whether their distance to the centre is less than a given value, i.e. `minDistOfLandToCenter`.
 
 ```NetLogo
 ifelse (distance centralPatch < minDistOfLandToCenter)
@@ -136,30 +136,30 @@ Create a button in the interface for executing the `create-map` procedure and se
 
 ## Step 1a: De-composing "magic numbers"
 
-The code we just created has several fixed arbitrary values (the coordinates of the `centralPatch`, the values used to calculate `minDistOfLandToCenter`). It is good enough for us to draw a *particular* blue circle, but it is insufficient to draw other *types of blue circle*. Of course, the code will never be able to draw *anything*, if we are not programming it to do it. For instance, the colours `blue` and `green` are also magic numbers, but we are hardly interest in having them as parameters. We must generalize but also compromise, accepting that there will be possibilities that are not covered by our model.
+The code we just created has several fixed arbitrary values (the coordinates of the `centralPatch`, the values used to calculate `minDistOfLandToCenter`). It is good enough for us to draw a *particular* blue circle, but it is insufficient to draw other *types of blue circles*. Of course, the code will never be able to draw *anything*, if we are not programming it to do it. For instance, the colours `blue` and `green` are also magic numbers, but we are hardly interested in having them as parameters. We must generalise but also compromise, accepting that our model won't cover every possibility.
 
-First, is there any case where the `patch 0 0` is not the one at the centre of the grid? Imagine that you don't like to have negative coordinates in your model. Go to "Settings" and modify the "location of origin" to be at the corner. Now, test the `create-map` procedure:
+First, is there any case where the `patch 0 0` is not the one at the centre of the grid? Imagine you don't want negative coordinates in your model. Go to "Settings" and modify the "location of origin" to be at the corner. Now, test the `create-map` procedure:
 
 ![](assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-adapt-center_0.png)
 
-Not at all what we are looking for! To correct this behavior, we must calculate the center coordinates, depending on the ranges or sizes of the grid width and height, whatever its configuration. Therefore, we must replace `0` with the calculation `minimum + range / 2` for both x and y coordinates:
+This is not what we are looking for! To fix this behaviour, we must calculate the centre coordinates based on the grid's width and height, regardless of its configuration. Therefore, we must replace `0` with the calculation `minimum + range / 2` for both x and y coordinates:
 
 ```NetLogo
 let centralPatch patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))
 ```
 
-We use the `floor` function to obtain the round lower grid position when the range is an odd number. Because this calculation uses only NetLogo primitives, you can test this by printing it in the console in any NetLogo model. It will return the central patch given your grid settings:
+We use the `floor` function to get the rounded-down grid position when the range is odd. Because this calculation uses only NetLogo primitives, you can test this by printing it in the console in any NetLogo model. It will return the central patch given your grid settings:
 
 ```NetLogo
 observer> show patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))
 observer: (patch 16 16)
 ```
 
-Now, regarding `minDistOfLandToCenter`, we could simply bring it as a parameter to be set in the interface instead of hard-coded (*e.g.* as a slider). This would be a better design, but we still would have a potential problem. Maybe you do not want the grid to be squared (*e.g.*, 33x33), but rectangular (*e.g.*, 100x20) instead. This is what you would get:
+Now, regarding `minDistOfLandToCenter`, we could simply make it a parameter set in the interface instead of hard-coding it (*e.g.* as a slider). This would be a better design, but we would still have a potential problem. Maybe you do not want the grid to be square (*e.g.*, 33x33), but rectangular (*e.g.*, 100x20) instead. This is what you would get:
 
 ![](assets/screenshots/BlockA_PondTrade_step01_replacing-magic-numbers-adapt-center_1.png)
 
-Again, not what we are looking for. No matter how strange our map is shaped, we want our pond to be always fully within the grid. To do this, we must modify our calculation of `minDistOfLandToCenter` to account for both width and height. One way of doing it is to calculate the radius for both dimensions and then choose the lowest value.
+Again, not what we are looking for. No matter how strangely shaped our map is, we want our pond to always be fully within the grid. To do this, we must modify our `minDistOfLandToCenter` calculation to account for both width and height. One way is to calculate the radius for both dimensions and choose the smaller value.
 
 ```NetLogo
 let minXDistOfLandToCenter round (0.5 * world-width / 2) ; minimum distance in X
@@ -177,15 +177,15 @@ To test our solution, we can run the procedure with different extreme grid setti
 
 Success!
 
-## Step 1b: Parameterizing
+## Step 1b: Parameterising
 
-Once you defined a procedure in raw terms and tested that it does what you expect, you probably want to generalize it further. As the aim of modelling is to represent *a type of* phenomenon, it is a good practice to program all non-dynamic conditions as parameters. In NetLogo, parameters are often those variables that can be set through user input in the interface tab (*e.g.*, slides, selectors, numeric fields).
+Once you defined a procedure in raw terms and tested that it does what you expect, you probably want to generalise it further. As the aim of modelling is to represent *a type of* phenomenon, it is a good practice to program all non-dynamic conditions as parameters. In NetLogo, parameters are often variables that users can set through the interface tab (*e.g.*, sliders, selectors, numeric fields).
 
-After the later changes, we still have two magic numbers in our code. Regarding the calculation of `centralPatch` and `minDistOfLandToCenter`, we used `2` to divide `world-width` and `world-height`, so that the circle is always draw in the centre of the grid. Although it is possible, we will not replace this value with a parameter. As an exercise aside, you can test the outcome of having different numbers instead of `2`.
+After the later changes, we still have two magic numbers in our code. Regarding the calculation of `centralPatch` and `minDistOfLandToCenter`, we used `2` to divide `world-width` and `world-height`, so that the circle is always drawn in the centre of the grid. Although it is possible, we will not replace this value with a parameter. As an exercise aside, you can test the outcome of having different numbers instead of `2`.
 
-The other "magic number" is `0.5`, used to represent the relative size of the pond radius, i.e., the *half* of the *half of the smaller dimension*.  Here we have a good candidate for a parameter. It is reasonable to believe that the size of the pond will be relevant to our model's results. Mainly, we expect that larger ponds will make trade slower, assuming a fixed number of settlements, evenly distributed around the pond.
+The other "magic number" is `0.5`, used to represent the relative size of the pond radius, i.e., the *half* of the *half of the smaller dimension*.  This is a good candidate for a parameter. It is reasonable to expect that pond size will affect our model's results. Mainly, we expect larger ponds to slow trade, assuming a fixed number of settlements evenly distributed around the pond.
 
-In NetLogo, we create a parameter by adding an input element to the interface tab (*e.g.*, slider) and naming it. In this case, we create a parameter called `pondSize` that represents the pond radius as the percentage of the smallest dimension, i.e. varying between 0 and 100. 
+In NetLogo, we create a parameter by adding an input element to the interface tab (*e.g.*, a slider) and naming it. In this case, we create a parameter called `pondSize` that represents the pond radius as a percentage of the smallest dimension, i.e. varying between 0 and 100. 
 We can use it in the code to replace the two instances of `0.5` with `(pondSize / 100)`:
 
 ```NetLogo
@@ -196,9 +196,9 @@ let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minim
 let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)
 ```
 
-Note that we use percentage, instead of a proportion (from 0 to 1), for no other reason than because it can improve the intelligibility of our model. I recommend using percentages to format this kind of parameters because they are more intuitive for humans and will be more easily understood by colleagues and the general public with no background in computer science or mathematics.
+Note that we use percentages instead of proportions (0 to 1) because it improves the intelligibility of our model. I recommend using percentages for these parameters because they are more intuitive for humans and easier for colleagues and the general public to understand, even without a background in computer science or mathematics.
 
-Once you close a version of any piece of code, it is good practice to increase the spacing between the lines or even break down single lines that are particularly complicated. NetLogo language allows much flexibility in this sense: you can add spaces, tabs, line breaks, and commentary between most elements of your code. Also, enclosing parenthesis are not required but may improve readability.
+Once you close a version of any piece of code, it is good practice to increase the spacing between the lines or even break down single lines that are particularly complicated. NetLogo allows a lot of flexibility here: you can add spaces, tabs, line breaks, and commentary between most elements of your code. Also, enclosing parentheses are not required but may improve readability.
 
 ```NetLogo
 to create-map
@@ -220,7 +220,7 @@ to create-map
         floor (world-height / 2)
       )
 
-    ; find minimun distance of land pathes to the central patch, depending on the size of dimensions
+    ; find minimum distance of land patches to the central patch, depending on the size of dimensions
     
     let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
     
@@ -243,13 +243,13 @@ end
 
 ## Step 1c: Optimasing
 
-We increased significantly the `create-map` procedure, but we now have a process that is both flexible and controllable by user input. Yet, we still have a pending issue to solve.
+We increased the ' create-map ' procedure significantly, but we now have a process that is both flexible and controllable by user input. Yet, we still have a pending issue to solve.
 
-The fact that the `centralPatch` and `minDistOfLandToCenter` are local variables (`let`) and placed inside `ask patches [ <ACTIONS> ]` means that we are creating and destroying a different variable once for every patch. We cannot use these variables (plural intended) outside their enclosing brackets and patches hold no memory of their values before or after this particular action. Does anything feel wrong about this? 
+The fact that `centralPatch` and `minDistOfLandToCenter` are local variables (`let`) and are placed inside `ask patches [ <ACTIONS> ]` means that we are creating and destroying a different variable once for every patch. We cannot use these variables (plural intended) outside their enclosing brackets, and patches hold no memory of their values before or after this particular action. Does anything feel wrong about this? 
 
-Besides taking unnecessary computational resources, this design does not generete any errors and, for now, is quite inofensive. However, while it can be easily solved in a short piece of code, it might become harder to find and have odd repercussions over other parts of our model later on. 
+Besides wasting computational resources, this design doesn't generate errors and, for now, is quite inoffensive. However, while it can be easily solved in a short piece of code, it might become harder to find and have odd repercussions on other parts of our model later on. 
 
-The solution is to extract the declaration of the local variables, `centralPatch` and `minDistOfLandToCenter`, from the patches commands. They are now calculated only once at the start of the procedure and then used by every patch:
+The solution is to extract the declarations of the local variables `centralPatch` and `minDistOfLandToCenter` from the patches commands. They are now calculated only once at the start of the procedure and then used by every patch:
 
 ```NetLogo
 to create-map
@@ -269,7 +269,7 @@ to create-map
     )
   print(centralPatch) ; print central patch
 
-  ; find minimun distance of land pathes to the central patch, depending on the size of dimensions
+  ; find minimum distance of land patches to the central patch, depending on the size of dimensions
   let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
   let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minimum distance in Y
   let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)
@@ -296,16 +296,16 @@ end
 
 ## Step 2a: Pacing comments and line breaks
 
-Since our code for now is rather simple, we can downgrade the extensive commentary and line-breaking on the calculation of `centralPatch`.
+Since our code is simple for now, we can reduce the extensive comments and line breaks in the calculation of `centralPatch`.
 
-Commenting and spacing your code is generally a good practice, but do not get carried away! You must assume that your reader has to know *something* about the programming language and the context of the model. Sometimes comments and line breaks might be just too many and end up defeating the purpuse of improving the code readabiity.
+Commenting and spacing your code is generally good practice, but don't get carried away! You must assume your reader knows *something* about the programming language and the model's context. Sometimes comments and line breaks are too much and end up defeating the purpose of improving code readability.
 
 ```NetLogo
 to create-map
 
   let centralPatch patch (min-pxcor + floor (world-width / 2)) (min-pycor + floor (world-height / 2))
 
-  ; find minimun distance to center
+  ; find minimum distance to center
   let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
   let minYDistOfLandToCenter round ((pondSize / 100) * (world-height / 2)) ; minimum distance in Y
   let minDistOfLandToCenter min (list minXDistOfLandToCenter minYDistOfLandToCenter)
@@ -325,13 +325,13 @@ to create-map
 end
 ```
 
-At every step in this tutorial, we will be downgrading most commentaries added in the previous step.
+At every step in this tutorial, we will be downgrading most comments added in the previous step.
 
 ## Step 2b: Exploring alternative designs
 
-During refactoring, we should always keep in mind that there are always alternative designs that could generate the outcome we seek, some of which might be more readable or optimal.
+During refactoring, we should keep in mind that alternative designs can produce the outcome we seek, and some may be more readable or optimal.
 
-In this case, we can simplify the calculation of `minDistOfLandToCenter`. This new version initializes a local variable `halfSmallerDimension` assuming the smaller dimension is the width. Then, it checks that this is the case, and re-write this value if height is actually smaller. Finally, we calculate `minDistOfLandToCenter` as a proportion of `halfSmallerDimension`. Test alternative code fragments by "commenting-out/in" them in the code editor.
+In this case, we can simplify the calculation of `minDistOfLandToCenter`. This new version initialises a local variable `halfSmallerDimension` assuming the smaller dimension is the width. Then it checks that this is the case and updates it if the height is actually smaller. Finally, we calculate `minDistOfLandToCenter` as a proportion of `halfSmallerDimension`. Test alternative code fragments by "commenting-out/in" them in the code editor.
 
 ```NetLogo
 ;let minXDistOfLandToCenter round ((pondSize / 100) * (world-width / 2)) ; minimum distance in X
@@ -344,11 +344,11 @@ if (world-width > world-height) [ set halfSmallerDimension (world-height / 2) ]
 let minDistOfLandToCenter round ((pondSize / 100) * halfSmallerDimension)
 ```
 
-This version is less redundant, uses two instead of three local variables, and expresses more clearly that the condition is the comparison between the grid width and height.
+This version is less redundant, uses two instead of three local variables, and more clearly expresses that the condition compares grid width and height.
 
 ## Step 2c: Colors and shades
 
-Last, we replace the text reference for colours with NetLogo's numerical codes. Using this numeric system allow us to use many shades of any given colour. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the colour codes in "Tools" > "Color Picker" or in https://docs.netlogo.org/colorpicker.html:
+Last, we replace the text reference for colours with NetLogo's numerical codes. Using this numeric system allows us to use many shades of any given colour. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the colour codes in "Tools" > "Color Picker" or in https://docs.netlogo.org/colorpicker.html:
 
 ![](https://docs.netlogo.org/images/colorpicker/colorpickersimple.png)
 
@@ -362,17 +362,17 @@ Great, now we can draw a blue circle with a bulletproof piece of NetLogo code. N
 
 ## Step 3: Adding noise (*stochasticity*)
 
-Stochasticity is intrinsic in NetLogo. We were already dealing with random processes since step 0, when asking patches to paint themselves. You probably did not realize, but the command `ask patches` demands that patches are ordered somehow. Think as if you were told to ask all your friends to have a look at your new model. Well, but who exactly are you going to ask first? NetLogo solves this dilemma automatically by randomizing the order of "asking". As an exercise, you can reduce the velocity of simulation (top of the interface tab), and execute the `create-map` procedure. 
+Stochasticity is intrinsic in NetLogo. We were already dealing with random processes since step 0, when asking patches to paint themselves. You probably did not realise, but the command `ask patches` demands that patches are ordered somehow. Think of it as being told to hand out cards to the players of a card game. Who exactly will receive the first card? Who the second? NetLogo solves this dilemma automatically by randomising the order of "asking". As an exercise, you can reduce the simulation velocity (top of the interface tab) and run the `create-map` procedure. 
 
 ![](assets/screenshots/BlockA_PondTrade_step03_hidden-noise.png)
 
-You will observe each patch changing colour, one at a time. This is also a nice example of using stochasticity to assure that an aggregated outcome (*i.e.* blue circle) is not a mere artefact of any particular schedule of processes (*i.e.* the order in which patches change colours). Remember, sequences will be different every time we run our simulation, unless we pre-set the RNG using a specific 'seed' (see https://docs.netlogo.org/dict/random-seed.html).
+You will observe each patch changing colour, one at a time. This is also a nice example of using stochasticity to ensure that an aggregated outcome (*i.e.* blue circle) is not a mere artefact of any particular schedule of processes (*i.e.* the order in which patches change colours). Remember, sequences will differ every time we run our simulation unless we pre-set the RNG using a specific 'seed' (see https://docs.netlogo.org/dict/random-seed.html).
 
-But is it so important to have a random order? In our script so far, it is completely irrelevant. Our goal was to draw a blue circle; it does not matter which patch assumes the role of land or water first. However, this will became increasingly relevant as we advance in creating a proper agent-based model, because *agents' states DO normally depend on other agents' states*.
+But is a random order so important? In our script so far, it is completely irrelevant. Our goal was to draw a blue circle; it does not matter which patch assumes the role of land or water first. However, this will become increasingly relevant as we advance in creating a proper agent-based model, because *agents' states DO normally depend on other agents' states*.
 
 Imagine the scenario where you want to share some news with your friends, and that each time you explain it to one of them, she/he has the opportunity to spread it among your other friends. Considering that some of your friends are more chatty than others, can you assume that the order in which you tell your news to each friend would not affect how fast your news would spread? *'I don't think so'*, *'Who knows?!'*, *'I don't really care about it'*? If these thoughts cross your mind while addressing a process in your model, you are probably better off using stochasticity.
 
-An easy example of when stochasticity is not desirable would be having a line in a coffee house, where each person should move forward after the person in front. If the order in which people in line move is not fixed, the line would move much more slower (i.e., the person that should move would have to wait until their turn, while others that cannot move would be constantly skipping their turn) or even break the line completely (i.e. once one person move twice consecutively, a gap in the line will open).
+An easy example of when stochasticity is not desirable is a line in a coffee house, where each person should move forward after the person in front. If the order in which people in line move is not fixed, the line would move much more slowly (i.e., the person who should move would have to wait until their turn, while others who cannot move would be constantly skipping their turn) or even break the line completely (i.e. once one person moves twice consecutively, a gap in the line will open).
 
 ::: {.callout-note}
 **Stochasticity in scheduling order**
@@ -382,20 +382,20 @@ When it is desirable:
 - process might be sensitive to scheduling order, but its effect is uninteresting, trivial, or unknown  
 - there is uncertainty about the order in which agents should act  
 
-> **Example:** A group of agents moving randomly in space. The order in which agents are asked to move is not important, as long as it is different each time.
+> **Example:** A group of agents moving randomly in space. The order in which agents are asked to move is unimportant, as long as it differs each time.
 
 When it is undesirable:
 
 - the order in which agents are asked to act is important for the model outcome  
-- process should be following a fixed, known order  
+- the process should follow a fixed, known order  
 
-> **Example:** A group of agents racing towards a target in space. The order in which agents are asked to move might affect who is the winner.
+> **Example:** A group of agents racing towards a target in space. The order in which agents are asked to move might affect who wins.
 
 :::
 
-A perfect blue circle is great but it is a poor representation of a real water body. Once we implement the dynamics of the model, it will be quite difficult to explore the effect of geography solely by varying the size of the pond. The first step to creating more interesting set-ups is to add noise to the condition used to determine whether a patch is land or water. NetLogo has a family of primitive functions, `random` and alike, that can be used to generate random discrete (integer) and continuous (float) values, following different probability distributions (*e.g.*, uniform, normal, exponential).
+A perfect blue circle is great, but it poorly represents a real water body. Once we implement the model dynamics, it will be difficult to explore the effect of geography solely by varying the pond size. The first step to creating more interesting set-ups is to add noise to the condition that determines whether a patch is land or water. NetLogo has a family of primitive functions, `random` and similar, that generate random discrete (integer) and continuous (float) values, following different probability distributions (*e.g.*, uniform, normal, exponential).
 
-For each patch, we sample a random continuous number, add it to the `minDistOfLandToCenter`, and use as the threshold distance from the centre:
+For each patch, we sample a random continuous number, add it to the `minDistOfLandToCenter`, and use it as the threshold distance from the centre:
 
 ```NetLogo
 let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
@@ -409,7 +409,7 @@ ifelse (distance centralPatch < coastThreshold)
 ]
 ```
 
-The function `random-float <number>` returns a random "float" number greater or equal to 0.0 and lower than `<number>`. To push your learning skills a bit, we are jumping a few minor steps in refactoring by defining a noise that is a portion of `halfSmallerDimension` and controllable through the parameter `coastalNoiseLevel`, exposed in the interface.
+The function `random-float <number>` returns a random "float" number greater than or equal to 0.0 and less than `<number>`. To push your learning a bit, we're taking a few minor refactoring steps by defining noise as a portion of `halfSmallerDimension` and controlling it through the `coastalNoiseLevel` parameter, exposed in the interface.
 
  ```NetLogo
 to create-map
@@ -424,7 +424,7 @@ to create-map
   ask patches
   [
 
-    ; add noise to coast line
+    ; add noise to coastline
     let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
 
     ifelse (distance centralPatch < coastThreshold)
@@ -440,7 +440,7 @@ to create-map
 end
 ```
 
-We now can generate strange "spray ponds". More importantly, we made the generation process controllable through two parameters that are easily understandable. Play with the parameters and meditate on their effects on the shape of the pond.
+We can now generate strange "spray ponds". More importantly, we made the generation process controllable through two easily understandable parameters. Play with the parameters and reflect on how they affect the pond's shape.
 
 ## Checking the milestone File (step 3)
 
@@ -449,16 +449,16 @@ We now can generate strange "spray ponds". More importantly, we made the generat
 
 ## Step 4b: design alternatives 
 
-Because a "spray pond" is not exactly what we want, let us implement another alternative to add stochasticity. NetLogo offers the `random-normal` primitive, which samples a random "float-point number" given the mean and standard deviation of a normal distribution, using the structure `random-normal <MEAN> <STD.DEV>` (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#random-reporters). In this context, we can re-use the paramater `coastalNoiseLevel` for the latter and consider `minDistOfLandToCenter` as the mean.
+Because a "spray pond" is not exactly what we want, let us implement another alternative to add stochasticity. NetLogo offers the `random-normal` primitive, which samples a random "float-point number" given the mean and standard deviation of a normal distribution, using the structure `random-normal <MEAN> <STD.DEV>` (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#random-reporters). In this context, we can reuse the `coastalNoiseLevel` parameter for the latter and use `minDistOfLandToCenter` as the mean.
 
-Comment-out the line with `random-float` and add the following:
+Comment out the line with `random-float` and add the following:
 
 ```NetLogo
 ; let coastThreshold minDistOfLandToCenter + random-float (halfSmallerDimension * coastalNoiseLevel / 100)
 let coastThreshold random-normal minDistOfLandToCenter (halfSmallerDimension * coastalNoiseLevel / 100)
 ```
 
-We can now experiment running `create-map` in three different ways: without noise, with uniform-distributed noise, and with normal-distributed noise. We can run each by commenting-out the line corresponding to the other two. For example, to come back to the no noise option:
+We can now experiment running `create-map` in three different ways: without noise, with uniform-distributed noise, and with normal-distributed noise. Run each by commenting out the line for the other two. For example, to come back to the no-noise option:
 
 ```NetLogo
 ; no noise
@@ -479,14 +479,14 @@ But at this point, can we decide which option we want going forward?
 
 ## Step 4c: *keeping* design alternatives 
 
-As mentioned, stochasticity may be the only honest way of defining values that are unknown or undefined in our conceptual model, but still need specification in the model implementation. Another useful, still honest approach is to consolidate alternative solutions and expose the criterium for deciding among them as a special type of parameter. Often, these will be Booleans (`true` or `false`), which can be set with "switchers" in NetLogo interface, or String (declarative text, *e.g.* `"option A"`, `"option B"`, `"option C"`), which can be selected through "choosers" or dropdown menus.
+As mentioned, stochasticity may be the only honest way to define values that are unknown or undefined in our conceptual model but still need specification in the model implementation. Another useful, still honest approach is to consolidate alternative solutions and expose the criterion for deciding among them as a special type of parameter. Often, these will be Booleans (`true` or `false`), which can be set with "switchers" in the NetLogo interface, or strings (declarative text, *e.g.* `"option A"`, `"option B"`, `"option C"`), which can be selected through "choosers" or dropdown menus.
 
-Create a chooser by clicking at "Add" and then "chooser" in the NetLogo Interface tab. Give it the name `noiseType` and write down a name for each alternative as String values:
+Create a chooser by clicking "Add" and then "chooser" in the NetLogo Interface tab. Give it the name `noiseType` and write down a name for each alternative as String values:
 
 ![The configuration of a "chooser" for `noiseType`](assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_chooser.png)  
 *The configuration of a "chooser" for `noiseType`*
 
-Then, we use this new parameter in `if` structures containing the code specific for each alternative:
+Then, we use this new parameter in `if` structures containing the code specific to each alternative:
 
 ```NetLogo
 ; no noise stands as the default alternative
@@ -510,17 +510,17 @@ ask patches
 ]
 ```
 
-With this, we can now run `create-map` with any of the alternative designs without having to comment-out/in the code every time.
+With this, we can run `create-map` with any of the alternative designs without commenting code in and out every time.
 
 ## Step 4d: patch neighborhood
 
-Despite having all the alternative modes of stochasticity, our ponds are still not quite what we need. This kind of terrain might be valid to represent something like a swamp, but not a distinctive water body. There is no coastline, which makes PondTrade more interesting.
+Despite having all the alternative modes of stochasticity, our ponds are still not quite what we need. This kind of terrain might represent something like a swamp, but not a distinct water body. The coastline, which makes PondTrade more interesting, is missing.
 
-One generic, but very useful technique in distributed computation is "smoothing". More precisely, smoothing refers to the approximation of each point in a variable to the average of a sample of points, often taken from within the neighbourhood of the point.
+One generic, but very useful technique in distributed computation is "smoothing". More precisely, smoothing refers to approximating each point in a variable with the average of a sample of points, often taken from within the point's neighbourhood.
 
-In a two-dimensional grid such as in NetLogo, we can use the values in the immediate patch neighbourhood of each patch to adjust its value. In our present case, we want to switch the colour of a patch, depending on the colour of the adjacent patches. We can anticipate, however, that we will need to expose another parameter, one that can express how many neighbours (out of eight) of a type are enough to activate the change. We will call it `coastLineSmoothThreshold`. Notice that this step moves data in the opposite direction of our last steps, reducing stochasticity. Yet, it does not bringing us back to the original circle. Therefore, we want to smooth *after* adding noise.
+In a two-dimensional grid such as in NetLogo, we can use the values in each patch's immediate neighbourhood to adjust its value. In our case, we want to switch a patch's colour depending on the colour of adjacent patches. We can anticipate, however, that we will need to expose another parameter: one that expresses how many neighbours (out of eight) of a type are enough to activate the change. We will call it `coastLineSmoothThreshold`. Notice that this step moves data in the opposite direction of our last steps, reducing stochasticity. Yet, it does not bring us back to the original circle. Therefore, we want to smooth *after* adding noise.
 
-Remembering our mandate of modularity, we want to avoid adding the code for this operation directly in `create-map`. Rather, we can implement it in a cleaner way by enclosing it in a new procedure:
+Remembering our mandate of modularity, we want to avoid adding this code directly in `create-map`. Rather, we can implement it in a cleaner way by enclosing it in a new procedure:
 
 ```NetLogo
 to smooth-coast-line
@@ -532,7 +532,7 @@ to smooth-coast-line
       ; water patch
       if (count neighbors with [pcolor = 54] >= coastLineSmoothThreshold)
       [
-        ; water patch has a certain number of land neighbors
+        ; water patch has a certain number of land neighbours
         set pcolor 54 ; converted to land
       ]
     ]
@@ -540,7 +540,7 @@ to smooth-coast-line
       ; land patch
       if (count neighbors with [pcolor = 106] >= coastLineSmoothThreshold)
       [
-        ; land patch has a certain number of water neighbors
+        ; land patch has a certain number of water neighbours
         set pcolor 106 ; converted to water
       ]
     ]
@@ -549,7 +549,7 @@ to smooth-coast-line
 end
 ```
 
-We can then used it by calling `smooth-coast-line` after `create-map`, either through the console or, better, by adding a button in the interface. Testing it for each `noiseType`:
+We can then use it by calling `smooth-coast-line` after `create-map`, either through the console or, better, by adding a button in the interface. Testing it for each `noiseType`:
 
 |  |  |
 | --- | --- |
@@ -557,11 +557,11 @@ We can then used it by calling `smooth-coast-line` after `create-map`, either th
 | uniform | <img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_uniformAndSmooth.png" width="200"> |
 | normal | <img src="assets/screenshots/BlockA_PondTrade_step04_design-alternatives-and-iterations-and-printing_normalAndSmooth.png" width="200"> |
 
-Notice that there is no effect visible on the no noise option, but we significantly modify the outcome of the others.
+Notice that the no-noise option has no visible effect, but we significantly change the outcome of the others.
 
 ## Step 4e: iterative structures
 
-Try pressing the new `smooth-coast-line` button more than once after `create-map`. The coastline will become smoother and smoother, until it becomes stable. This behaviour indicates that we have a good opportunity for implementing and iterative structure. NetLogo has a easy option for this using the follow structure: `repeat <NUMBER OF ITERATIONS> [ <COMMANDS> ]`, requiring that we expose another parameter specifying the number of iterations, which we will call `smoothIterations`.
+Try pressing the new `smooth-coast-line` button more than once after `create-map`. The coastline will become smoother and smoother until it stabilises. This behaviour indicates a good opportunity to implement an iterative structure. NetLogo has an easy option for this using the following structure: `repeat <NUMBER OF ITERATIONS> [ <COMMANDS> ]`, requiring that we expose another parameter specifying the number of iterations, which we will call `smoothIterations`.
 
 ```NetLogo
 to smooth-coast-line
@@ -576,7 +576,7 @@ to smooth-coast-line
         ; water patch
         if (count neighbors with [pcolor = 54] >= coastLineSmoothThreshold)
         [
-          ; water patch has a certain number of land neighbors
+          ; water patch has a certain number of land neighbours
           set pcolor 54 ; converted to land
         ]
       ]
@@ -584,7 +584,7 @@ to smooth-coast-line
         ; land patch
         if (count neighbors with [pcolor = 106] >= coastLineSmoothThreshold)
         [
-          ; land patch has a certain number of water neighbors
+          ; land patch has a certain number of water neighbours
           set pcolor 106 ; converted to water
         ]
       ]
@@ -596,7 +596,7 @@ end
 
 ## Step 4f: using the `clear-all` command
 
-At this point, we should make sure that everything in our code is actually being applied in a completely new "world" every time, to avoid any unintended interference between consecutive executions. To do this we should add the command `clear-all` before doing any operation involving patch attributes:
+At this point, we should make sure everything in our code is applied in a completely new "world" every time to avoid unintended interference between consecutive executions. To do this, we should add the command `clear-all` before doing any operation involving patch attributes:
 
 ```NetLogo
 to create-map
@@ -609,11 +609,11 @@ to create-map
 end
 ```
 
-Normally, we should have done this as a default at the very beginning of coding, since it is something you would most likely require for any simulation model.
+Normally, we should have done this by default at the very beginning of coding, since you would most likely need it for any simulation model.
 
 ## Step 4g: printing event messages 
 
-Since we are expanding considerably the complexity of our code, this is a good moment to consider printing messages for us to know what is happening in the background after pressing the buttons in the interface. This will be valuable specially when the code is encountering an error or outputting an unexpected result (i.e. *debugging*).
+Since we are expanding the complexity of our code considerably, this is a good time to print messages so we know what is happening in the background after pressing the buttons in the interface. This will be valuable, especially when the code encounters an error or produces an unexpected result (i.e., *debugging*).
 
 ```NetLogo
 to create-map
@@ -632,7 +632,7 @@ to create-map
 
   let coastThreshold minDistOfLandToCenter ; defaults to the basic value
 
-  ;; add noise to coast line
+  ;; add noise to coastline
   ; set general noise range depending on UI's coastalNoiseLevel and the size of world
   let noiseRange (halfSmallerDimension * coastalNoiseLevel / 100)
 
@@ -671,7 +671,7 @@ to smooth-coast-line
 
   print "Smoothing..."
 
-  ; smooth coast line
+  ; smooth coastline
   repeat smoothIterations
   [
     ask patches
@@ -681,7 +681,7 @@ to smooth-coast-line
         ; water patch
         if (count neighbors with [pcolor = 54] >= coastLineSmoothThreshold)
         [
-          ; water patch has a certain number of land neighbors
+          ; water patch has a certain number of land neighbours
           set pcolor 54 ; converted to land
         ]
       ]
@@ -689,7 +689,7 @@ to smooth-coast-line
         ; land patch
         if (count neighbors with [pcolor = 106] >= coastLineSmoothThreshold)
         [
-          ; land patch has a certain number of water neighbors
+          ; land patch has a certain number of water neighbours
           set pcolor 106 ; converted to water
         ]
       ]
@@ -700,7 +700,7 @@ to smooth-coast-line
 end
 ```
 
-We just consolidated a version of our script that is able to create interesting (and more realistic) water body shapes with stochasticity, while being able to vary the output with a set of five parameters clearly displayed and no grave magic number unexposed.
+We consolidated a version of our script that creates interesting (and more realistic) water body shapes with stochasticity, varying the output with five clearly displayed parameters and no hidden magic number of consequence.
 
 ## Checking the milestone File (step 4)
 
@@ -709,16 +709,16 @@ We just consolidated a version of our script that is able to create interesting 
 
 ## Step 5: refactoring (again) 
 
-We reached our initial objective, to have a realistic procedurally-generated terrain upon which we can build Pond Trade. As before, we should now stop ourselves and think about refactoring, again.
+We reached our initial objective: a realistic, procedurally generated terrain on which we can build Pond Trade. As before, we should now stop ourselves and think about refactoring again.
 
 Here is a summary of the improvements we can make:
 
 - Control the RNG seed and expose it in the interface
 - Move the initialisation of `coastThreshold` and `noiseRange` before `ask patches`
-- Declare a new patch Boolean variable called `isLand` and use it to replace color in the procedures for creating terrains
-- Define a new procedure `paint-patches` dedicated only to set patch colors based on `isLand`
+- Declare a new patch Boolean variable called `isLand` and use it to replace colour in the procedures for creating terrains
+- Define a new procedure `paint-patches` dedicated only to setting patch colours based on `isLand`
 - Call `smooth-coast-line` and `paint-patches` at the end of `create-map`
-- In the evaluation of `coastLineSmoothThreshold` used in `smooth-coast-line`, consider it in relation to the actual number of neighbors  instead of as an absolute number (to avoid having isolated water bodies adjacent to the world edges, where there are less than 8 neighbors)
+- In the evaluation of `coastLineSmoothThreshold` used in `smooth-coast-line`, consider it in relation to the actual number of neighbours  instead of as an absolute number (to avoid having isolated water bodies adjacent to the world edges, where there are fewer than 8 neighbours)
 - Rearrange the interface elements to set apart the parameters we will be using for terrain generation 
 
 ```NetLogo
@@ -746,7 +746,7 @@ to create-map
 
   let coastThreshold minDistOfLandToCenter ; defaults to the basic value
 
-  ;; add noise to coast line
+  ;; add noise to coastline
   ; set general noise range depending on UI's coastalNoiseLevel and the size of world
   let noiseRange (halfSmallerDimension * coastalNoiseLevel / 100)
 
@@ -791,10 +791,10 @@ to smooth-coast-line
       ifelse (isLand = false)
       [
         ; water patch
-        ; consider ratios instead of absolute numbers to avoid having isolated water bodies adjacent to the world limits (less than 8 neighbors)
+        ; consider ratios instead of absolute numbers to avoid having isolated water bodies adjacent to the world limits (less than 8 neighbours)
         if (count neighbors with [isLand = true] / count neighbors >= coastLineSmoothThreshold / 8)
         [
-          ; water patch has a certain number of land neighbors
+          ; water patch has a certain number of land neighbours
           set isLand true ; converted to land
         ]
       ]
@@ -802,7 +802,7 @@ to smooth-coast-line
         ; land patch
         if (count neighbors with [isLand = false] / count neighbors >= coastLineSmoothThreshold / 8)
         [
-          ; land patch has a certain number of water neighbors
+          ; land patch has a certain number of water neighbours
           set isLand false ; converted to water
         ]
       ]
