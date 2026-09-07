@@ -547,7 +547,7 @@
     "href": "dev-netlogo-intro.html#preparation",
     "title": "11  Introduction to NetLogo",
     "section": "",
-    "text": "Download or ‘clone’ the contents of this repository into a local folder. Select  in the top right of the repository page in GitHub, and choose one of the options given.\nDownload and install NetLogo latest version (only if working in your own computer). Currently, it is NetLogo 7.0.2 (file extension .nlogox), but consider that lab computers might have a previous version (file extension .nlogo). The operating system-specific installation files are found here: https://ccl.northwestern.edu/netlogo/download.shtml",
+    "text": "Download or ‘clone’ the contents of this repository into a local folder. Select  in the top right of the repository page in GitHub, and choose one of the options given.\nDownload and install the latest version of NetLogo (only if working on your own computer). Currently, it is NetLogo 7.0.4 (file extension .nlogox), but lab computers may have an older version (file extension .nlogo). You won’t run into major compatibility issues if you use NetLogo 7.0.0 or higher. The operating system-specific installation files are found here: https://ccl.northwestern.edu/netlogo/download.shtml",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Introduction to NetLogo</span>"
@@ -558,7 +558,7 @@
     "href": "dev-netlogo-intro.html#excursion-to-abma",
     "title": "11  Introduction to NetLogo",
     "section": "11.2 Excursion to ABMA",
-    "text": "11.2 Excursion to ABMA\nBefore even opening NetLogo in your computer, let us take advantage of the materials available at the Agent-Based Modeling for Archaeologists (ABMA) portal. These were created as a Erasmus+ project by a group of esteemed colleagues, with the goal of further the education on the use of simulation and agent-based modelling in archaeology.\n\n\n\nABMA portal\n\n\nVisit “Tutorials” and then “Open Tutorials”. You will access a interactive web application presenting a few basic concepts of simulation and agent-based modelling, as well as familiarise you with NetLogo’s interface. The latter is done with NetLogo Web, but it broadly corresponds to what you will see when opening a local installation in your computer.\nPlease perform all four lessons (approx. 30 min).",
+    "text": "11.2 Excursion to ABMA\nBefore opening NetLogo on your computer, take advantage of the materials available at the Agent-Based Modelling for Archaeologists (ABMA) portal. These were created as an Erasmus+ project by a group of esteemed colleagues to further education on using simulation and agent-based modelling in archaeology.\n\n\n\nABMA portal\n\n\nVisit “Tutorials” and then “Open Tutorials”. You will access an interactive web application that presents a few basic concepts of simulation and agent-based modelling, and familiarises you with NetLogo’s interface. You’ll do this in NetLogo Web, but it broadly corresponds to what you will see when you open a local installation on your computer.\nPlease perform all four lessons (approx. 30 min).",
     "crumbs": [
       "Preparing as a software developer",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Introduction to NetLogo</span>"
