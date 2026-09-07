@@ -84,6 +84,7 @@ By the end of this course, students will be able to:
 - Manage complex simulation codebases collaboratively using industry-standard version control systems (GitHub), including branching, forking, and documented commit histories.  
 - Develop and implement programmatic simulation code within the NetLogo environment, translating abstract conceptual designs into functional code architectures.  
 - Deconstruct existing codebase modules to adapt, integrate, and extend foundational algorithmic patterns into customised model functionalities.  
+
 ## Acquired Competencies  
 
 Upon successful completion of the course, students will have developed the following competencies:
