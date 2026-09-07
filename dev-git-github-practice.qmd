@@ -1,6 +1,6 @@
 # Creating your simulation model repository {#dev-git-github-practice}
 
-This chapter puts into practice the workflow introduced earlier. You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a **living record** of your project’s evolution — from conceptualisation and first prototype to final publication.
+This chapter puts the workflow introduced earlier into practice. You will now create a proper, version-controlled home for your simulation model. Your repository will serve as a **living record** of your project’s evolution — from conceptualisation and first prototype to final publication.
 
 ---
 
@@ -9,7 +9,7 @@ This chapter puts into practice the workflow introduced earlier. You will now cr
 * [ ] Created a **GitHub account**.
 * [ ] Created a **Zenodo account**.
 
-In this session, we will be using the browser interface only. But do consider installing and configuring the rest of the software in order to be able to work locally in your own computer
+In this session, we will be using the browser interface only. But do consider installing and configuring the rest of the software in order to be able to work locally on your own computer
 
 ---
 
@@ -22,7 +22,7 @@ All course repositories are hosted under
 2. Once inside the organisation, you can see the list of other student projects.
 3. You can also create repositories under your own GitHub username if you prefer, and later transfer them to the organisation.
 
-> 💡 *Being part of the organisation helps with collaboration, visibility, and the use of shared templates.*
+> 💡 *Being part of the organisation helps with collaboration, visibility, and shared templates.*
 
 ---
 
@@ -31,7 +31,7 @@ All course repositories are hosted under
 You can create your repository **entirely through the GitHub web interface**, no local software required.
 
 1. Go to your GitHub homepage → **Repositories → New**.
-2. Choose owner as your user (you can later create a fork in the course organisation)
+2. Choose the owner as your user (you can later create a fork in the course organisation)
 3. Name it following the convention:
    `project2025_<model-name>`
    (use only lowercase letters, digits, and underscores).
@@ -70,7 +70,7 @@ project2025_<model-name>/
 ```
 
 If you work **in the browser**, use GitHub’s “Add file → Create new file” to add folders and files.
-Each new file can be created and edited directly online.
+You can create and edit each new file directly online.
 
 When you edit a file:
 
@@ -86,7 +86,7 @@ This saves and versions your work immediately.
 
 ## Publishing version 0.1
 
-Despite your repository might be empty, you may want to practice publishing your repositories in Zenodo or at least make sure that everything is ready for later publication.
+Although your repository might be empty, you may want to practice publishing in Zenodo, or at least make sure everything is ready for later publication.
 
 Once your initial structure is in place:
 
@@ -151,7 +151,7 @@ Your history and Zenodo releases will remain intact — this is a seamless trans
 | Publish release and DOI  | Connect to Zenodo                                         | ✅            |
 | Clone locally (optional) | Use Git on your computer                                  | ❌            |
 
-> 🧭 **Goal:** By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artifact — even if you never installed Git.
+> 🧭 **Goal:** By the end of this chapter, your simulation project exists as a structured, public, versioned, and citable research artefact — even if you never installed Git.
 
 ## Writing your README file
 
@@ -178,7 +178,7 @@ Sections marked with `<!-- comments -->` are suggestions to help you fill in the
 
 <!-- Briefly describe your simulation model in 2–3 sentences. -->
 This project develops an agent-based model (ABM) that explores [process or phenomenon, e.g., settlement dynamics and trade interactions] in an archaeological context.  
-It was created as part of the MA course *Agent-based Modelling for Archaeologists* at the University of [Your Institution].
+I created it as part of the MA course *Agent-based Modelling for Archaeologists* at the University of [Your Institution].
 
 ## Concept and objectives
 
