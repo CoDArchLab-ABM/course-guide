@@ -580,7 +580,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="set-up-r-environment" class="level2" data-number="33.2">
 <h2 data-number="33.2" class="anchored" data-anchor-id="set-up-r-environment"><span class="header-section-number">33.2</span> Set up R environment</h2>
-<p>To start, we should load and define all necessary elements in R that will be used through out our script:</p>
+<p>To start, we should load and define all necessary elements in R that will be used throughout our script:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -675,7 +675,7 @@ lgl (1): historic-view?
 </section>
 <section id="first-overview" class="level2" data-number="33.4">
 <h2 data-number="33.4" class="anchored" data-anchor-id="first-overview"><span class="header-section-number">33.4</span> First overview</h2>
-<p>In R, there are many ways of having our first look at the data. An useful function from the <code>tidyverse</code> family is <code>glimpse</code>.</p>
+<p>In R, there are many ways to have our first look at the data. A useful function from the <code>tidyverse</code> family is <code>glimpse</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(results_single)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -751,7 +751,7 @@ $ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 
 <p>This initial inspection confirms:</p>
 <ul>
 <li>how many runs were executed,</li>
-<li>was every time step recorded,</li>
+<li>whether every time step was recorded,</li>
 <li>whether repetitions are present,</li>
 <li>which parameters and outputs are available.</li>
 </ul>
@@ -799,7 +799,7 @@ $ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 
 </section>
 <section id="comparing-parameter-settings" class="level2" data-number="33.6">
 <h2 data-number="33.6" class="anchored" data-anchor-id="comparing-parameter-settings"><span class="header-section-number">33.6</span> Comparing parameter settings</h2>
-<p>When parameters were varied systematically, we can compare outcomes across settings.</p>
+<p>When we vary parameters systematically, we can compare outcomes across settings.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> results_harvest_adj <span class="sc">|&gt;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span>))</span>
@@ -876,7 +876,7 @@ $ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 
 </section>
 <section id="time-series-and-trajectories" class="level2" data-number="33.8">
 <h2 data-number="33.8" class="anchored" data-anchor-id="time-series-and-trajectories"><span class="header-section-number">33.8</span> Time series and trajectories</h2>
-<p>When metrics are recorded at every time step, trajectories become central.</p>
+<p>When you record metrics at every time step, trajectories become central.</p>
 <p>To plot a single run:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname_single, <span class="st">"-trajectories.png"</span>)</span>
@@ -971,7 +971,7 @@ $ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 
 </section>
 <section id="linking-parameters-and-outcomes" class="level2" data-number="33.9">
 <h2 data-number="33.9" class="anchored" data-anchor-id="linking-parameters-and-outcomes"><span class="header-section-number">33.9</span> Linking parameters and outcomes</h2>
-<p>For randomly sampled parameter sets, scatter plots are particularly useful (see chapter on sensitivity analysis). However, it might still offer some insight when applied to regularly sampled parameters; unlike boxplots, scatter plots exposes the true variation of data points.</p>
+<p>For randomly sampled parameter sets, scatter plots are particularly useful (see chapter on sensitivity analysis). However, they can still offer insight when applied to regularly sampled parameters; unlike boxplots, scatter plots show the true variation of data points.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>final_results <span class="ot">&lt;-</span> results_harvest_adj_var <span class="sc">|&gt;</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span> <span class="sc">==</span> <span class="fu">max</span>(<span class="st">`</span><span class="at">[step]</span><span class="st">`</span>))</span>
@@ -1010,7 +1010,7 @@ $ `historical-total-households` &lt;dbl&gt; 14, 14, 14, 14, 14, 14, 14, 14, 14, 
 <p>Wide vertical spread suggests strong stochastic effects or interactions with other parameters.</p>
 </div>
 </div>
-<p>We may also want to detect effects that are only visible in the full trajectory of simulations. For this, we can use line plots as before, but there will be strong limits to how many runs can be included so that the plot is legible.</p>
+<p>We may also want to detect effects visible only in the full simulation trajectory. For this, we can use line plots as before, but we will be limited in how many runs we can include to keep the plot legible.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plot_name <span class="ot">&lt;-</span> <span class="fu">paste0</span>(experiments_path, expname_harvest_adj, <span class="st">"-trajectories.png"</span>)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
