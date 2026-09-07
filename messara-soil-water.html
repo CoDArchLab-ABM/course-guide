@@ -520,11 +520,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Let us build the next module, <code>ARID</code>, over what we just implemented in the <code>load-weather-data</code> module.</p>
+<p>Let us build the next module, <code>ARID</code>, on top of what we just implemented in the <code>load-weather-data</code> module.</p>
 <section id="module-variables-and-parameters" class="level2" data-number="27.1">
 <h2 data-number="27.1" class="anchored" data-anchor-id="module-variables-and-parameters"><span class="header-section-number">27.1</span> Module variables and parameters</h2>
-<p>Besides the weather variables we have on our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al.&nbsp;2019).</p>
-<p>Notice that we are also introducing one way of dealing with multiple approaches to parameter setting. We create a chooser named <code>experiment-type</code> in the interface and use it to activate one of two approaches: “user-defined”, which takes the values of sliders in the interface, and “random”, which samples these values randomly within a predetermined range. We also introduce two useful procedures, <code>parameters-check</code> and <code>parameters-to-default</code>, to help us define and return to an specific “default” parameter configuration used as a point of reference.</p>
+<p>In addition to the weather variables in our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al.&nbsp;2019).</p>
+<p>We also introduce a way to handle multiple approaches to parameter setting. We create a chooser named <code>experiment-type</code> in the interface and use it to activate one of two approaches: “user-defined”, which takes the values of sliders in the interface, and “random”, which samples these values randomly within a predetermined range. We also introduce two useful procedures, <code>parameters-check</code> and <code>parameters-to-default</code>, to help us define and return to a specific “default” parameter configuration used as a point of reference.</p>
 <pre class="netlogo"><code>globals
 [
   ...
@@ -576,7 +576,7 @@ patches-own
 </section>
 <section id="setting-module-parameters" class="level2" data-number="27.2">
 <h2 data-number="27.2" class="anchored" data-anchor-id="setting-module-parameters"><span class="header-section-number">27.2</span> Setting module parameters</h2>
-<p>We will use a randomised configuration of most of these patch variables using hyperparameters giving the envelope of variation. The Indus Village eventually escapes this initial solution by calculating these variables based on various datasets and submodels. We will, however, use it for the sake of simplicity. As Wallach et al.&nbsp;(2019), we will use two global variables as constants (<code>MUF</code> and <code>WP</code>) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (<code>parameters-check</code> and <code>parameters-to-default</code>).</p>
+<p>We use a randomised configuration of most of these patch variables, using hyperparameters to define the envelope of variation. Indus Village eventually escapes this initial solution by calculating these variables from various datasets and submodels. However, for simplicity, we will use it as-is. As Wallach et al.&nbsp;(2019), we will use two global variables as constants (<code>MUF</code> and <code>WP</code>) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (<code>parameters-check</code> and <code>parameters-to-default</code>).</p>
 <pre class="netlogo"><code>to set-constants
 
   ; "constants" are variables that will not be explored as parameters
@@ -826,7 +826,7 @@ end</code></pre>
 </section>
 <section id="merging-with-spatial-data-module" class="level2" data-number="27.5">
 <h2 data-number="27.5" class="anchored" data-anchor-id="merging-with-spatial-data-module"><span class="header-section-number">27.5</span> Merging with spatial data module</h2>
-<p>Until this point, we are still lacking our spatial data. Let us implement the necessary code to be able to import the processed data we output from the <code>flows</code> module.</p>
+<p>So far, we still lack spatial data. Let us implement the necessary code to import the processed data we output from the <code>flows</code> module.</p>
 <pre class="netlogo"><code>extensions [ csv gis ]
 
 ...
@@ -904,7 +904,7 @@ end
 </section>
 <section id="visualisation" class="level2" data-number="27.6">
 <h2 data-number="27.6" class="anchored" data-anchor-id="visualisation"><span class="header-section-number">27.6</span> Visualisation</h2>
-<p>Before advancing, we can implement a display procedure expanding it also to be able to paint patches according to the new patch variables, using the “chooser” parameter <code>display-mode</code>:</p>
+<p>Before advancing, we can implement a display procedure, expanding it also to be able to paint patches according to the new patch variables, using the “chooser” parameter <code>display-mode</code>:</p>
 <pre class="netlogo"><code>
 to refresh-view
   
@@ -1031,7 +1031,7 @@ end</code></pre>
 </section>
 <section id="combining-with-flow-accumulation-algorithm" class="level2" data-number="27.7">
 <h2 data-number="27.7" class="anchored" data-anchor-id="combining-with-flow-accumulation-algorithm"><span class="header-section-number">27.7</span> Combining with flow accumulation algorithm</h2>
-<p>Last, we finalise this module by implementing a solution that uses <code>flow_accumulation</code> to modulate the variation in ARID, as a proxy of the effect of the regional hydrology on the local soil water balance. The solution use the patch variable <code>ARID_modifier</code>, set during setup according to the parameter <code>ARID-decrease-per-flow-accumulation</code> and the local relative flow accumulation (flow_accumulation / maxFlowAccumulation). It then modifies <code>ARID</code> each day as a simple scalar.</p>
+<p>Finally, we finalise this module by implementing a solution that uses <code>flow_accumulation</code> to modulate variation in ARID as a proxy for the effect of regional hydrology on the local soil water balance. The solution uses the patch variable <code>ARID_modifier</code>, set during setup according to the parameter <code>ARID-decrease-per-flow-accumulation</code> and the local relative flow accumulation (flow_accumulation / maxFlowAccumulation). It then modifies <code>ARID</code> each day as a simple scalar.</p>
 <pre class="netlogo"><code>patches-own
 [
   ...
@@ -1133,7 +1133,7 @@ end</code></pre>
 </section>
 <section id="checking-the-milestone-file-module-4" class="level2" data-number="27.8">
 <h2 data-number="27.8" class="anchored" data-anchor-id="checking-the-milestone-file-module-4"><span class="header-section-number">27.8</span> Checking the milestone File (module 4)</h2>
-<p>Our solution to link <code>flow_accumulation</code> and <code>ARID</code> is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we are good enough to go forward.</p>
+<p>Our solution to link <code>flow_accumulation</code> and <code>ARID</code> is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we can move forward.</p>
 <p><img src="assets/screenshots/BlockC_module4_ARID interface_tick100.png" class="img-fluid" alt="Screenshot of the ‘ARID’ module (tick 100)"><br>
 <em>Screenshot of the ‘ARID’ module (tick 100)</em></p>
 <p><img src="assets/screenshots/BlockC_module4_ARID interface_tick150.png" class="img-fluid" alt="Screenshot of the ‘ARID’ module (tick 150)"><br>
