@@ -49,9 +49,9 @@ session_data$Date <- factor(session_data$Date, unique(session_data$Date))
 
 [Agent-based modelling for archaeologists. From concept to application and publication (14436.0398)](https://vvz.ruhr-uni-bochum.de/campus/all/event.asp?gguid=0xE2AAF8DAB10F4972B8854C6EDC49A4DD&from=&tabID=1&tguid=0x5980070F0C7A42899012ACFE7660AC4B&objgguid=NEW&lang=de)
 
-**Time slot**: Monday, 10:00-11:30
+**Time slot**: Friday, 14:00-15:30
 
-**Place**: Küpperstift, Kerpener Str., 30, 2nd floor (125/02) [CoDArchLab](https://archaeologie.phil-fak.uni-koeln.de/institut/fachgebiete/archaeoinformatik/codarchlab)
+**Place**: Küpperstift, Kerpener Str., 30, 2nd floor (125/02) [CoDArchLab](https://archaeologie.phil-fak.uni-koeln.de/institut/fachgebiete/archaeoinformatik/codarchlab) / Virtual
 
 **Course instructor**: Andreas Angourakis
 
@@ -59,11 +59,11 @@ session_data$Date <- factor(session_data$Date, unique(session_data$Date))
 
 This course introduces the basic concepts and workflow of simulation and agent-based modelling (ABM), as used in archaeology.
 
-More specifically, we will cover the prototyping of a conceptual model into a working simulation model, the 'refactoring' of code (cleaning, restructuring, optimizing), the re-use of published model parts and algorithms, the exploration of alternative designs, and the use of geographic, climatic and archaeological data to frame the model in a specific case study.
+More specifically, we will cover the prototyping of a conceptual model into a working simulation model, the 'refactoring' of code (cleaning, restructuring, optimising), the re-use of published model parts and algorithms, the exploration of alternative designs, and the use of geographic, climatic and archaeological data to frame the model in a specific case study.
 
-This tutorial uses [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible well-established modelling platform known for its relatively low-level entry requirements in terms of programming experience. It has been particularly used in social sciences and ecology for research and educational purposes.
+This tutorial uses [NetLogo](https://ccl.northwestern.edu/netlogo/), a flexible, well-established modelling platform known for its relatively low entry requirements in programming experience. It is widely used in social sciences and ecology for research and educational purposes.
 
-The course offers implementation examples of least path cost algorithms, hydrological and land productivity modelling, network dynamics, and cultural evolution. Additionally, we learn the basics of Git and GitHub for version control, which will help us organize, maintain, and share models and related materials.
+The course includes implementation examples of least-path-cost algorithms, hydrological and land productivity modelling, network dynamics, and cultural evolution. We also cover the basics of Git and GitHub for version control, which will help us organise, maintain, and share models and related materials.
 
 ## Course schedule
 
@@ -79,19 +79,19 @@ Attendance and completion of small exercises, individually or as a group.
 
 There are mainly three types of activities to address:
 
-**Conceptual modelling**: Create your own conceptual model and document it as a text description or a diagram (task in chapter 7). If not developing an entirely new idea, consider a published ABM model applied to archaeology or keen disciplines (see References), summarise the corresponding conceptual model using text and diagrams and propose one or more modifications to the original design. You are welcome to use conventions such as UML diagrams and the ODD protocol if you need a more structured guideline for describing a model (see chapters 4 and 5).
+**Conceptual modelling**: Create your own conceptual model and document it as a text description or a diagram (task in chapter 7). If not developing an entirely new idea, consider a published ABM model applied to archaeology or keen disciplines (see References), summarise the corresponding conceptual model using text and diagrams and propose one or more modifications to the original design. You may use conventions such as UML diagrams and the ODD protocol if you need a more structured guideline for describing a model (see chapters 4 and 5).
 
-**GitHub repository for a model**: Create your simulation model repository (task in chapter 10). It should eventually include files related to the conceptual model and the NetLogo implementation (see the next point). If you are extending a published model, upload a copy of the reference model you chose, or fork the original repository on GitHub if it exists. The work done will be checked directly in GitHub, so do not forget to commit and push everything you have done, even if the work is in progress.
+**GitHub repository for a model**: Create your simulation model repository (task in chapter 10). It should eventually include files related to the conceptual model and the NetLogo implementation (see the next point). If you are extending a published model, upload a copy of the reference model you chose, or fork the original repository on GitHub if it exists. We will check your work directly in GitHub, so commit and push everything you do, even if it's in progress.
 
-**Implementing a model in NetLogo**: When working with your own model, create a minimal NetLogo version that can run simulations that represent your conceptual model. At a minimum, the implementation code should contain all the basic elements required by an ABM model: global parameters and variables, any agent variables (both patches and turtles), and the main procedures, even if unfinished. When extending a previously published model, such as the Pond Trade or Messara Trade models, propose at least one modification or extension to the original code, based on the changes proposed in the conceptual model. Try implementing the necessary changes and testing them. Document your changes and briefly explain the reasoning behind them (images or text). To create new functionalities, you may use any code snippet or modules from the Pond Trade and Messara Trade examples (chapters 15-30), as well as any other sources of code elsewhere. Store all files in your repository according to the logic explained in Chapter 10.
+**Implementing a model in NetLogo**: When working with your own model, create a minimal NetLogo version that can run simulations that represent your conceptual model. At a minimum, the implementation code should contain all the basic elements required by an ABM model: global parameters and variables, any agent variables (both patches and turtles), and the main procedures, even if unfinished. When extending a previously published model, such as the Pond Trade or Messara Trade models, propose at least one modification or extension to the original code, based on the changes proposed in the conceptual model. Implement the necessary changes and test them. Document your changes and briefly explain the reasoning behind them (images or text). To create new functionalities, you may use any code snippet or modules from the Pond Trade and Messara Trade examples (chapters 15-30), as well as any other sources of code elsewhere. Store all files in your repository according to the logic explained in Chapter 10.
 
 ## Acknowledgements
 
-The conception of the course structure, as well as the short summaries, exercises, and images shown in each chapter, greatly benefited from [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) used as companion writer and programmer. As such, we own greatly to the current richness of reference information freely available on Internet.
+The conception of the course structure, as well as the short summaries, exercises, and images shown in each chapter, greatly benefited from [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) used as companion writer and programmer, as well as language corrector. As such, we owe much to the current richness of reference information freely available on the Internet.
 
 The models and services used are:
 
 - [ChatGPT](https://chatgpt.com/) (GPT-4o) by OpenAI for brainstorming, text and code drafting and writing suggestions, code refactoring and documentation, and collection and articulation of references.  
-- [Google NotebookLM](https://notebooklm.google/) for summary of references and text writing suggestions.
+- [Google NotebookLM](https://notebooklm.google/) for summaries of references and text writing suggestions.
 - [WebChatGPT](https://tools.zmo.ai/webchatgpt), a free browser extension that enhances ChatGPT by providing Internet access directly within the chat interface, used to aid Internet search.
 - [Leonardo.ai](https://app.leonardo.ai/) (user tokens) for generating purely aesthetic visual assets.
