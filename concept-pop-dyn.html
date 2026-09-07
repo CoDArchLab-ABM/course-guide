@@ -608,7 +608,7 @@ Population (variable) is a function (depends on) immigration (variable) as a pos
 </section>
 <section id="towards-a-balance-between-representation-and-complexity" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="towards-a-balance-between-representation-and-complexity"><span class="header-section-number">6.2</span> Towards a balance between representation and complexity</h2>
-<p>Do you think this satisfactorily describes our explanation? Does it leave out something we implicitly assumed with our first informal explanation? Does it go too far, stating something we did not intend in the first place? Answering these questions pushes us away from informal explanations and into the realm of <strong>logic</strong> and broader <strong>contextual knowledge</strong>.</p>
+<p>Does this satisfactorily describe our explanation? Does it leave out something we implicitly assumed with our first informal explanation? Does it go too far, stating something we did not intend in the first place? Answering these questions pushes us away from informal explanations and into <strong>logic</strong> and broader <strong>contextual knowledge</strong>.</p>
 <p>In our example, we can immediately detect that our variables must be expressed in at least two different units (e.g., <span class="math inline">\(m^{2}\)</span> and individuals). We must add a parameter (a variable that remains constant throughout the process) to convert population into settlement size. We will call it <em>areaPerInhabitant</em>:</p>
 <blockquote class="blockquote">
 <p>settlementSize = <em>f</em>(areaPerInhabitant * population)</p>
@@ -635,7 +635,7 @@ immigration = <em>h</em>(immigrationRate, <strong>time</strong>)</p>
 <figcaption>Conceptual model after adding a few parameters</figcaption>
 </figure>
 </div>
-<p>After a few iterations of this reasoning process, our formal expressions will undoubtedly become more complex. The more variables and parameters an explanatory model includes, the more realistic and rich the scenarios it will allow. However, evidence should then control variables and parameters or, at the very least, define them in a meaningful way.</p>
+<p>After a few iterations of this reasoning process, our formal expressions will undoubtedly become more complex. The more variables and parameters an explanatory model includes, the more realistic and rich the scenarios it will allow. However, evidence should then control variables and parameters or, at the very least, define them meaningfully.</p>
 <p>Remember, while defining a parameter adds complexity, it also marks the point in a branch of thought where modelling <em>stops</em>: where something that could certainly be described as complex and dynamic is reduced to a fixed value.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -725,7 +725,7 @@ settlementSize = areaPerInhabitant * population</p>
 </section>
 <section id="representing-distributed-and-social-mechanisms" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="representing-distributed-and-social-mechanisms"><span class="header-section-number">6.6</span> Representing distributed and social mechanisms</h2>
-<p>If we want a formal model that can account for distributed processes (occurring in parallel through the action of multiple entities) and more complex social mechanisms (i.e.&nbsp;multi-dimensional, non-linear), our conceptual model should move toward an <strong>object</strong>-based and, eventually, <strong>agent</strong>-based framework. We can represent distributed processes in many ways, such as formulating variables as <strong>vectors</strong> and <strong>matrices</strong>if equations remain a viable format, or drawing flowcharts to prescribe the behaviour of entities and their potential interactions.</p>
+<p>If we want a formal model that can account for distributed processes (occurring in parallel through the action of multiple entities) and more complex social mechanisms (i.e.&nbsp;multi-dimensional, non-linear), our conceptual model should move toward an <strong>object</strong>-based and, eventually, <strong>agent</strong>-based framework. We can represent distributed processes in many ways, such as formulating variables as <strong>vectors</strong> and <strong>matrices</strong>, if equations remain a viable format, or drawing flowcharts to prescribe the behaviour of entities and their potential interactions.</p>
 <p>If our population model were to be formulated as agent-based, considering households as the primary units of the process, we would need to define their behaviour in a way that, in aggregate, still represents the essence of the causal relationship we seek to formalise:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
