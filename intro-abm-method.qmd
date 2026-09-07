@@ -91,7 +91,7 @@ A short disclaimer before we start: the approach used here for conceptual modell
 
 In the bibliography, you will find many other recommendations and examples, particularly those converging into the practices closer to Computer Science and Ecology. For example, many consider a necessary standard to be the [Unified Modeling Language (UML)](https://en.wikipedia.org/wiki/Unified_Modeling_Language), which includes many types of diagrams.
 
-<a title="Derfel73; Pmerson, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:UML_diagrams_overview.svg"><img width="512" alt="UML diagrams overview" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/512px-UML_diagrams_overview.svg.png?20161201151843"></a>
+<a title="Derfel73; Pmerson, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:UML_diagrams_overview.svg"><img width="330" alt="UML diagrams overview" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/330px-UML_diagrams_overview.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail"></a>
 <br>
 <span style="font-size:small; text-align: right;">Derfel73; Pmerson, Public domain, via Wikimedia Commons</span>
 
