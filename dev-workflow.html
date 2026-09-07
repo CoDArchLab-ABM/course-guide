@@ -81,10 +81,11 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="site_libs/viz-1.8.2/viz.js"></script>
 <link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="site_libs/grViz-binding-1.0.12/grViz.js"></script>
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -538,8 +539,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
 <li><strong>Implementation or “implemented model”:</strong> Translate the conceptual model into executable code (e.g., in NetLogo). Expanded through “coding sessions”.<br>
 </li>
-<li><strong>Version control:</strong> After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly in the remote repository in your browser, you will need to commit changes to each file individually. When changing your model in NetLogo, you will have to open the <code>.nlogo</code> or <code>.nlogox</code> file in a text editor and copy-paste its contents into the remote version (not recommended).</li>
-<li><strong>Experimentation:</strong> Run simulations manually in NetLogo, or systematic experiments using NetLogo’s <em>BehaviorSpace</em> or custom procedures in NetLogo, external files (e.g., datasets generated in R), or executing NetLogo from R.<br>
+<li><strong>Version control:</strong> After each coding session, commit your changes with Git (locally) and push them to a remote repository in GitHub. When working directly in the remote repository in your browser, you will need to commit changes to each file individually. When changing your model in NetLogo, you will have to open the <code>.nlogo</code> or <code>.nlogox</code> file in a text editor and copy and paste its contents into the remote version (not recommended).</li>
+<li><strong>Experimentation:</strong> Run simulations manually in NetLogo, or run systematic experiments using NetLogo’s <em>BehaviorSpace</em> or custom procedures in NetLogo, external files (e.g., datasets generated in R), or executing NetLogo from R.<br>
 </li>
 <li><strong>Analysis:</strong> Process and visualise simulation outputs in R, write up results.<br>
 </li>
@@ -547,34 +548,34 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4f0afbe1b84767b591be" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-4f0afbe1b84767b591be">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-3e7faa4f0c25f793f13b" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-3e7faa4f0c25f793f13b">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\n\nA -> B -> C -> D -> E -> F -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In practice, these stages overlap and repeat. Conceptual choices affect implementation; analysis reveals bugs or design flaws; revisions are documented in version control.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-6fe158d3c085caeb1883" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-6fe158d3c085caeb1883">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-7ec73999b3dde8aeeaa6" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-7ec73999b3dde8aeeaa6">{"x":{"diagram":"\ndigraph dev_workflow {\n\ngraph [layout = dot, rankdir = TB, overlap = false]\n\nnode [shape = box]\nA [label = \"💡 Conceptualise\"]\nB [label = \"📝 Design\"]\nC [label = \"🧱 Programme\"]\nD [label = \"🔄 Commit changes\"]\nE [label = \"🧪 Experiment/simulate\"]\nF [label = \"📊 Analyse\"]\nG [label = \"📢 Publish\"]\nH [label = \"🔁 Revise\", shape = circle]\n\nA -> B -> C -> D -> E -> F -> G\nC -> H D -> H E -> H F -> H G -> H\nH -> B H -> C H -> D H -> E H -> F H -> G\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p>The goal is <em>incremental improvement</em> rather than perfection at once. Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
-<p>In practice, your workflow should go over these steps in time in a safe, but tentative way:</p>
+<p>The goal is <em>incremental improvement</em>, not perfection at once. Treat this as a <em>living process</em>: your repository should tell the story of how your model evolved.</p>
+<p>In practice, your workflow should go over these steps in time in a safe but tentative way:</p>
 <pre><code>💡📝 First conceptual model with enough definitions (variables, parameters, agents, functions)
         ↓
 🧱 First programming session creating a few model elements (not runnable)
         ↓
-🔄 Commit changes: "add netlogo file"
+🔄 Commit changes: "add NetLogo file"
         ↓
 🔁📝 Rethinking a few definitions
         ↓
 🧱 Second programming session updating the model with new definitions (not runnable)
         ↓
-🔄 Commit changes: "update netlogo file"
+🔄 Commit changes: "update NetLogo file"
         ↓
 🧱 Third programming session creating a minimal set of procedures for initialisation (runnable)
         ↓
-🔄 Commit changes: "update netlogo file"
+🔄 Commit changes: "update NetLogo file"
         ↓
 ...
         ↓
@@ -670,7 +671,7 @@ ul.task-list li input[type="checkbox"] {
 <td></td>
 <td>a general-purpose IDE (e.g.&nbsp;<strong>VS Code</strong>)</td>
 <td>Quick edit and manage all files with easy git integration and other features. Particularly useful for editing files not directly related to NetLogo or R.</td>
-<td>integrated file editing and management, essential when using other programming languages (e.g.&nbsp;HTML, Python).</td>
+<td>Integrated file editing and management, essential when using other programming languages (e.g.&nbsp;HTML, Python).</td>
 </tr>
 <tr class="even">
 <td><strong>Collaboration and feedback</strong></td>
