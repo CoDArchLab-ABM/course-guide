@@ -520,8 +520,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="water-flow-algorithm" class="level2" data-number="25.1">
 <h2 data-number="25.1" class="anchored" data-anchor-id="water-flow-algorithm"><span class="header-section-number">25.1</span> Water flow algorithm</h2>
-<p>Towards our calculation of land productivity, we advance using our GIS data in combination with parts of the Land submodel in the <a href="https://github.com/Andros-Spica/indus-village-model">Indus Village model</a> (Angourakis 2021). Our objective in this step is to reach a flow accumulation value for each patch according to their relative elevation within the terrain. This will serve as a proxy of the region hydrology beyond the data we have on rivers.</p>
-<p>The submodel is based on the algorithm described in Jenson &amp; Domingue (1988) through the implementation used by Huang &amp; Lee (2015).</p>
+<p>To calculate land productivity, we use our GIS data combined with parts of the Land submodel in the <a href="https://github.com/Andros-Spica/indus-village-model">Indus Village model</a> (Angourakis 2021). In this step, we aim to assign a flow accumulation value to each patch based on its relative elevation within the terrain. This serves as a proxy for the region’s hydrology beyond the river data we have.</p>
+<p>The submodel is based on the algorithm described in Jenson &amp; Domingue (1988), as implemented by Huang &amp; Lee (2015).</p>
 <blockquote class="blockquote">
 <p>Jenson, S. K., and J. O. Domingue. 1988. ‘Extracting Topographic Structure from Digital Elevation Data for Geographic Information System Analysis’. Photogrammetric Engineering and Remote Sensing 54 (11): 1593–1600.</p>
 </blockquote>
@@ -531,7 +531,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="adding-the-main-procedures" class="level2" data-number="25.2">
 <h2 data-number="25.2" class="anchored" data-anchor-id="adding-the-main-procedures"><span class="header-section-number">25.2</span> Adding the main procedures</h2>
-<p>The algorithm uses a numeric codification of the eight neighbour directions and a tag that classifies patches as “start”, “pending”, “done”, progressively converting the formers into the latter. Patches on the edge of the map are directed automatically towards the outside. Because this is an significant piece of code based on a specific reference, we will enclose all related procedures within a especial commentary note:</p>
+<p>The algorithm uses a numeric codification of the eight neighbour directions and a tag that classifies patches as “start”, “pending”, “done”, progressively converting the former into the latter. Patches on the edge of the map are automatically directed toward the outside. Because this is a significant piece of code based on a specific reference, we will enclose all related procedures within a special commentary note:</p>
 <pre class="netlogo"><code>globals
 [
   ...
@@ -769,7 +769,7 @@ end
 ;;; A simple depression-filling method for raster and irregular elevation datasets
 ;;; J. Earth Syst. Sci. 124 1653–65
 ;=======================================================================================================</code></pre>
-<p>Outside this enclosed section, we add the two main procedures <code>set-flow-directions</code> and <code>set-flow-accumulations</code> inside a higher level <code>setup-flows</code>:</p>
+<p>Outside this enclosed section, we add the two main procedures <code>set-flow-directions</code> and <code>set-flow-accumulations</code> inside a higher-level <code>setup-flows</code>:</p>
 <pre class="netlogo"><code>to setup-flows
 
   fill-sinks
@@ -782,11 +782,11 @@ end
   set maxFlowAccumulation max [flow_accumulation] of patchesWithElevationData
 
 end</code></pre>
-<p>We add a last step to get <code>maxFlowAccumulation</code>, which we will need for scaling purposes.</p>
+<p>We add a final step to get <code>maxFlowAccumulation</code>, which we need for scaling.</p>
 </section>
 <section id="visualising-flow-accumulation" class="level2" data-number="25.3">
 <h2 data-number="25.3" class="anchored" data-anchor-id="visualising-flow-accumulation"><span class="header-section-number">25.3</span> Visualising flow accumulation</h2>
-<p>As usual, we need to implement some extra code to be able to visualise the outcome. In this case, however, we would like to observe simultaneously flow direction, flow accumulation <em>and</em> elevation. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.</p>
+<p>As usual, we need to add some extra code to visualise the outcome. In this case, however, we want to observe flow direction, flow accumulation, and elevation simultaneously. For this, we will use an accessory agent type whose only function is representing the flow of patches on top of its colour.</p>
 <pre class="netlogo"><code>breed [ flowHolders flowHolder ]
 
 ...
@@ -864,14 +864,14 @@ to-report get-angle-in-flow-direction [ neighborEncoding ]
   report nobody
 
 end</code></pre>
-<p>Flow accumulation is visualized using links between <code>flowHolder</code> agents that are created on patches. The thickness and color of the links represent the flow accumulation values.</p>
-<p>Now, press “setup”. The calculation of variables is made relatively fast, but displaying all flowHolders will take some time.</p>
+<p>Flow accumulation is visualised as links between <code>flowHolder</code> agents created on patches. The links’ thickness and colour represent the flow accumulation values.</p>
+<p>Now, press “setup”. Calculating the variables is relatively fast, but displaying all flowHolders takes some time.</p>
 <p><img src="assets/screenshots/BlockC_module2_flows.png" class="img-fluid" alt="View of flow direction and accumulation, calculated with ‘flows’ module"><br>
 <em>View of flow direction and accumulation, calculated with ‘flows’ module</em></p>
 </section>
 <section id="assessing-fit" class="level2" data-number="25.4">
 <h2 data-number="25.4" class="anchored" data-anchor-id="assessing-fit"><span class="header-section-number">25.4</span> Assessing fit</h2>
-<p>To better visualise how much <code>flow_accumulation</code> actually gets accumulated, let us run the following “highlight” command directly in the console:</p>
+<p>To better visualise how much <code>flow_accumulation</code> actually accumulates, let us run the following “highlight” command directly in the console:</p>
 <pre class="netlogo"><code>ask patches with [flow_accumulation &gt; 10] [ set pcolor red ]</code></pre>
 <p><img src="assets/screenshots/BlockC_module2_flows-accumulation-more-than-10.png" class="img-fluid" alt="Highlight of patches with flow accumulation greater than 10"><br>
 <em>Highlight of patches with flow accumulation greater than 10</em></p>
@@ -914,13 +914,13 @@ end</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Our approximation of the region’s hydrological system is definitely not perfect. As a minimum, we want the main river, Lithaíos, to emerge, even if following an approximated path. The problem is most likely generated by our previous step: reducing the resolution of the original DEM. The height map we are using has many “sinks” in it (<em>i.e.</em>, patches not at the edge with the lowest elevation among its neighbours).</p>
+<p>Our approximation of the region’s hydrological system is definitely not perfect. At a minimum, we want the main river, Lithaíos, to emerge, even if following an approximated path. The problem likely comes from our previous step: reducing the resolution of the original DEM. The height map we are using has many “sinks” (<em>i.e.</em>, patches not at the edge with the lowest elevation among their neighbours).</p>
 <p>Worse, it might be that the roughness of the terrain escapes even the lowest of the resolutions treatable at this scale, to a point where the pathways of rivers cannot be retraced using height maps. Let us work with the first hypothesis and address the sinks in our processed height map.</p>
 </section>
 <section id="improving-fit-with-fill-sink" class="level2" data-number="25.5">
 <h2 data-number="25.5" class="anchored" data-anchor-id="improving-fit-with-fill-sink"><span class="header-section-number">25.5</span> Improving fit with <code>fill-sink</code></h2>
-<p>Our result could be improved by using the <code>fill-sink</code> procedure in the original Land model implementation (see code in the <a href="https://github.com/Andros-Spica/indus-village-model/tree/master/03-land-model">Indus Village repository</a>), which is based on Huang &amp; Lee (2015).</p>
-<p>This procedure fills up the elevation of “sink” patches so flow can continue moving, until it reaches the edge of the map.</p>
+<p>We can improve our results by using the <code>fill-sink</code> procedure in the original Land model implementation (see code in the <a href="https://github.com/Andros-Spica/indus-village-model/tree/master/03-land-model">Indus Village repository</a>), based on Huang &amp; Lee (2015).</p>
+<p>This procedure fills up the elevation of “sink” patches so flow can continue moving until it reaches the edge of the map.</p>
 <p>First, we can identify sink patches with the following procedure:</p>
 <pre class="netlogo"><code>to-report is-sink ; ego = patch
 
@@ -945,24 +945,24 @@ end</code></pre>
   ]
 
 end</code></pre>
-<p>After running <code>setup</code> again, we obtain a much better result. We can now clearly identify what should be the Lithaíos river and its path is not too far from our original river data.</p>
+<p>After running <code>setup</code> again, we obtain a much better result. We can now clearly identify what should be the Lithaíos River, and its path is close to our original river data.</p>
 <p><img src="assets/screenshots/BlockC_module2_flows_withFillSinks.png" class="img-fluid" alt="View of flow direction and accumulation, calculated with ‘flows’ module with the fill-sinks procedure"><br>
 <em>View of flow direction and accumulation, calculated with ‘flows’ module with the <code>fill-sinks</code> procedure</em></p>
 <p><img src="assets/screenshots/BlockC_module2_flows_withFillSinks_accumulation-more-than-10.png" class="img-fluid" alt="Highlight of patches with flow accumulation greater than 10"><br>
 <em>Highlight of patches with flow accumulation greater than 10, after we include the <code>fill-sinks</code> procedure</em></p>
-<p>We should remember that this algorithm modifies our original DEM heightmap and costs more computation resources/time.</p>
+<p>We should remember that this algorithm modifies our original DEM heightmap and costs more computational resources/time.</p>
 </section>
 <section id="implementing-a-feature-to-export-and-import-world" class="level2" data-number="25.6">
 <h2 data-number="25.6" class="anchored" data-anchor-id="implementing-a-feature-to-export-and-import-world"><span class="header-section-number">25.6</span> Implementing a feature to export and import <code>world</code></h2>
-<p>We do not want to repeat this every time we initialise a simulation run. Therefore, we will export the entire map configuration to a file for later use. We do this quickly with “File &gt; Export… &gt; Export World” and selecting the data folder. We could write procedures specific for exporting (and importing) a subset of data. Still, this option is much faster, given that this is the initial spatial data we want for all further versions.</p>
+<p>We do not want to repeat this every time we initialise a simulation run. Therefore, we will export the entire map configuration to a file for later use. We do this quickly with “File &gt; Export… &gt; Export World” and selecting the data folder. We could write procedures to export (and import) a subset of data. Still, this option is much faster, since this is the initial spatial data we want for all future versions.</p>
 <p>Still, if you need to do this several times and want to keep track of the directory and file you are using, you can add a button to the interface with the following code, which is equivalent to the built-in option in the menu:</p>
 <pre class="netlogo"><code>export-world "data/terrainWithFlows/BlockC_module2_flows world.csv"</code></pre>
-<p>The same can be done to import the same file. Inside a new button, add:</p>
+<p>You can do the same to import the file. Inside a new button, add:</p>
 <pre class="netlogo"><code>clear-all
 import-world "data/terrainWithFlows/BlockC_module2_flows world.csv"</code></pre>
-<p>Now, you should be able to export and import your map with flows.</p>
+<p>Now you can export and import your map with flows.</p>
 <p>See the fully implemented version of this module: <code>BlockC_module2_flows.nlogo</code>.</p>
-<p>For the sake of this example, we will assume our approximation to be sufficient. Still, tackling this kind of problem exploring other solutions in your own time could be an excellent exercise for improving your skills.</p>
+<p>For the sake of this example, we will assume our approximation is sufficient. Still, tackling this kind of problem and exploring other solutions in your own time could be an excellent exercise for improving your skills.</p>
 
 
 </section>
