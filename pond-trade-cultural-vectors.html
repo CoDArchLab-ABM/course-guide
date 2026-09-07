@@ -541,7 +541,7 @@ div.csl-indent {
 
 <section id="second-tier-model-pond-trade-with-cultural-evolution" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="second-tier-model-pond-trade-with-cultural-evolution"><span class="header-section-number">20.1</span> Second-tier model: Pond Trade with cultural evolution</h2>
-<p>We will now go over the implementation of the second-tier Pond Trade model (steps 10-13). The pace in this section will be significantly faster. I would like you to focus only on the main aspects added at each step, and not worry about the files already in the root directory.</p>
+<p>We will now go over the implementation of the second-tier Pond Trade model (steps 10-13). The pace in this section will be significantly faster. Focus only on the main aspects added at each step, and don’t worry about the files already in the root directory.</p>
 <p>Could you remember the conceptual model for this tier that we defined at the beginning?</p>
 <p><img src="assets/images/0_conceptAtStart_secondTier.png" class="img-fluid" alt="Pond Trade conceptual model at start (second tier)"><br>
 <em>Pond Trade conceptual model at start (second tier)</em></p>
@@ -583,7 +583,7 @@ Note
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Let us start with implementing the settlements’ cultural vector (<code>culturalVector</code>). Since there is, for now, no meaning of traits, we can use this new variable to hold the values of the three numbers defining an RGB colour (<em>i.e.</em>, red, green, blue; values between 0 and 255) that will then be shown as the icon colour of the settlement.</p>
+<p>Let us start with implementing the settlements’ cultural vector (<code>culturalVector</code>). Since there is, for now, no meaning to traits, we can use this new variable to hold the values of the three numbers defining an RGB colour (<em>i.e.</em>, red, green, blue; values between 0 and 255) that will then be shown as the icon colour of the settlement.</p>
 <pre class="netlogo"><code>settlements-own
 [
   ...
@@ -608,8 +608,8 @@ to create-coastal-settlements
         set stock 0
         set frequencyOverQuality random-float 1
         set culturalVector extract-rgb color
-        ; for now, we represent three continuos cultural traits of settlements
-        ; initialized as the rgb values of the settlement color.
+        ; for now, we represent three continuous cultural traits of settlements
+        ; initialised as the RGB values of the settlement colour.
 
         set shape "circle 2"
       ]
@@ -716,7 +716,7 @@ end</code></pre>
 </section>
 <section id="converting-parameters-into-functional-agent-traits" class="level2" data-number="20.4">
 <h2 data-number="20.4" class="anchored" data-anchor-id="converting-parameters-into-functional-agent-traits"><span class="header-section-number">20.4</span> Converting parameters into functional agent traits</h2>
-<p>According to our initial conceptual model, the logical next step would be to implement a mechanism for undirected variation. We can easily include this by adding noise to each trait’s value at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, we may already have too many global parameters, which we can easily conceive as varying widely across settlements. Thus, we break our plan once again to explore an idea emerging during implementation, like when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters regulating settlement and trader properties were implemented as traits at the settlement level, recorded in <code>culturalVector</code>, and allowed to evolve? 🤯 Doing this would enable us to represent a more realistic diversity among settlements (i.e.&nbsp;<em>traditions</em>), as well as explore the implications of cultural transmission in trade when traits are <em>not</em> neutral. Will any kind of selection process be observable?</p>
+<p>According to our initial conceptual model, the next logical step is to implement a mechanism for undirected variation. We can easily include this by adding noise to each trait’s value at each time step. As with transmission, we could regulate it by a global parameter for trait mutation rate. However, we may already have too many global parameters, which we can easily conceive as varying widely across settlements. Thus, we break our plan once again to explore an idea emerging during implementation, like when we defined <code>frequencyOverQuality</code>: <em>what if</em> most of the parameters regulating settlement and trader properties were implemented as traits at the settlement level, recorded in <code>culturalVector</code>, and allowed to evolve? 🤯 Doing this would enable us to represent a more realistic diversity among settlements (i.e.&nbsp;<em>traditions</em>), as well as explore the implications of cultural transmission in trade when traits are <em>not</em> neutral. Will any kind of selection process be observable?</p>
 <p>To internalise most parameters as trait values in <code>culturalVector</code>, we must convert all former parameters into <em>hyperparameters</em>, <em>i.e.</em> those values that will be used only to set a range of variation of the settlement-specific values.</p>
 <table class="caption-top table">
 <thead>
@@ -748,7 +748,7 @@ end</code></pre>
 </tr>
 </tbody>
 </table>
-<p>We will also further exploit this opportunity and create two additional elements, which we will refer to as land and port technology, to modify how <code>pathCost</code> affects traders’ decisions and movements. For these, we need to introduce two extra hyperparameters, <code>landTechVariation</code> and <code>portTechVariation</code>. Notice that we could do the same for the path cost in water, though it would affect the model’s rhythm more drastically.</p>
+<p>We will also exploit this opportunity by creating two additional elements, which we will refer to as land and port technology, to modify how <code>pathCost</code> affects traders’ decisions and movements. For these, we need to introduce two extra hyperparameters, <code>landTechVariation</code> and <code>portTechVariation</code>. We could do the same for path cost in water, though it would affect the model’s rhythm more drastically.</p>
 </section>
 <section id="implementing-new-settlement-traits" class="level2" data-number="20.5">
 <h2 data-number="20.5" class="anchored" data-anchor-id="implementing-new-settlement-traits"><span class="header-section-number">20.5</span> Implementing new settlement traits 🤔</h2>
@@ -799,7 +799,7 @@ Note
         set stock 0
 
         set culturalVector extract-rgb color ; 0#, 1# and 2#
-        ; We add seven continuos cultural traits to the neutral RGB traits,
+        ; We add seven continuous cultural traits to the neutral RGB traits,
         ; representing their attitude and ability involving
         ; aspects we previously fixed as parameters and one variable:
         ; 3# relativePathCostInLand (normal distribution around global parameter)
@@ -810,11 +810,11 @@ Note
         set culturalVector lput (random-float maxSettlementSizeDecayRate) culturalVector
         ; 6# stockDecayRate [0 - maxStockDecayRate)
         set culturalVector lput (random-float maxStockDecayRate) culturalVector
-        ; 7# produtionRate [0 - maxProductionRate)
+        ; 7# productionRate [0 - maxProductionRate)
         set culturalVector lput (random-float maxProductionRate) culturalVector
         ; 8# frequencyOverQuality [0 - 1)
         set culturalVector lput (random-float 1) culturalVector
-        ; 9# traitTransmissionRate [0 - maxTraitTransmissionRate) *** now, it means specifically the 'openess' of a settlement towards other variants of a trait
+        ; 9# traitTransmissionRate [0 - maxTraitTransmissionRate) *** now, it means specifically the 'openness' of a settlement towards other variants of a trait
         set culturalVector lput (random-float maxTraitTransmissionRate) culturalVector
         ; 10# mutationVariation [0 - maxMutationVariation)
         set culturalVector lput (random-float maxMutationVariation) culturalVector
@@ -837,18 +837,18 @@ to update-settlements
   [
     let thisSettlement self
 
-    ; the sizeLevel of settlements decays with a constant rate, up to 1 (minimum)
+    ; the sizeLevel of settlements decays at a constant rate, up to 1 (minimum)
     set sizeLevel max (list 1 (sizeLevel * (1 - ((item 5 culturalVector) / 100)) ) )
-    ; production in stock also decays with a constant rate
+    ; production in stock also decays at a constant rate
     set stock stock * (1 - ((item 6 culturalVector) / 100))
-    ; prodution is generated in proportion to sizeLevel, following a constant rate
+    ; production is generated in proportion to sizeLevel, following a constant rate
     set stock stock + sizeLevel * ((item 7 culturalVector) / 100)
 
     ; determine the current and potential number of traders
     set currentNumberOfTraders get-current-number-of-traders
     set potentialNumberOfTraders get-potential-number-of-traders
 
-    ; conditions favors the creation of new traders
+    ; conditions favour the creation of new traders
     if (random-float 1 &gt; currentNumberOfTraders / potentialNumberOfTraders )
     [
       ; create a new trader or activate an old one
@@ -936,7 +936,7 @@ end</code></pre>
 </section>
 <section id="implementing-undirected-variation" class="level2" data-number="20.6">
 <h2 data-number="20.6" class="anchored" data-anchor-id="implementing-undirected-variation"><span class="header-section-number">20.6</span> Implementing undirected variation 🤔</h2>
-<p>To have proper cultural evolution, we need to include another mechanism that modifies cultural vectors randomly through time (undirected variation).</p>
+<p>For proper cultural evolution, we need another mechanism that modifies cultural vectors randomly over time (undirected variation).</p>
 <p>Our goal here will be to implement the following:</p>
 <ul>
 <li>A mechanism that adds random variation to the cultural traits of settlements at each time step</li>
@@ -962,7 +962,7 @@ Note
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>We add a new procedure that applies random (normally-distributed) mutations to all traits separately and call it in the <code>update-settlements</code> procedure:</p>
+<p>We add a new procedure that applies random (normally distributed) mutations to all traits separately and call it in the <code>update-settlements</code> procedure:</p>
 <pre class="netlogo"><code>to update-settlements
 
   ask settlements
@@ -993,7 +993,7 @@ to mutate-traits
   set culturalVector replace-item 3 culturalVector mutate-trait (item 3 culturalVector) (-1 * relativePathCostInLand + 1) 100 mutationVariationToApply ; arbitrary maximum
   set culturalVector replace-item 4 culturalVector mutate-trait (item 4 culturalVector) (-1 * relativePathCostInPort + 1) 100 mutationVariationToApply ; arbitrary maximum
 
-  ; #5, #6 and #6 (settlementSizeDecayRate, stockDecayRate, produtionRate)
+  ; #5, #6 and #6 (settlementSizeDecayRate, stockDecayRate, productionRate)
   set culturalVector replace-item 5 culturalVector mutate-trait (item 5 culturalVector) 0 maxSettlementSizeDecayRate mutationVariationToApply
   set culturalVector replace-item 6 culturalVector mutate-trait (item 6 culturalVector) 0 maxStockDecayRate mutationVariationToApply
   set culturalVector replace-item 7 culturalVector mutate-trait (item 7 culturalVector) 0 maxProductionRate mutationVariationToApply
@@ -1012,7 +1012,7 @@ to-report mutate-trait [ traitValue minValue maxValue mutationVar ]
   report (max (list minValue min (list maxValue (traitValue + (random-normal 0 mutationVar) * (maxValue - minValue)))))
 
 end</code></pre>
-<p>To better visualise the distribution of traits along with the simulation, we add four new Plots to our interface. These are histograms of the values for each trait and settlement, giving us a sense of both convergence (or <em>cultural integration</em>) and possibly revealing evolutionary trends driven by trait selection. For instance, we would expect high selective pressure on settlements with higher production rates, since they are part of the positive feedback loops we implemented earlier in the first tier.</p>
+<p>To better visualise trait distributions alongside the simulation, we add four new Plots to our interface. These are histograms of the values for each trait and settlement, giving us a sense of both convergence (or <em>cultural integration</em>) and possibly revealing evolutionary trends driven by trait selection. For instance, we would expect high selective pressure on settlements with higher production rates, since they are part of the positive feedback loops we implemented earlier in the first tier.</p>
 </div>
 </div>
 </div>
