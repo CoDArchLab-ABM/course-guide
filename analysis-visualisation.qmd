@@ -24,7 +24,7 @@
 
 ## Set up R environment
 
-To start, we should load and define all necessary elements in R that will be used through out our script:
+To start, we should load and define all necessary elements in R that will be used throughout our script:
 
 ```{r}
 library(tidyverse)
@@ -73,7 +73,7 @@ results_harvest_adj_var <- readr::read_csv(paste0(experiments_path, expname_harv
 
 ## First overview
 
-In R, there are many ways of having our first look at the data. An useful function from the `tidyverse` family is `glimpse`.
+In R, there are many ways to have our first look at the data. A useful function from the `tidyverse` family is `glimpse`.
 
 ```{r}
 glimpse(results_single)
@@ -94,7 +94,7 @@ glimpse(results_harvest_adj_var)
 This initial inspection confirms:
 
 * how many runs were executed,
-* was every time step recorded,
+* whether every time step was recorded,
 * whether repetitions are present,
 * which parameters and outputs are available.
 
@@ -130,7 +130,7 @@ coexistence of persistence and collapse trajectories.
 
 ## Comparing parameter settings
 
-When parameters were varied systematically, we can compare outcomes across settings.
+When we vary parameters systematically, we can compare outcomes across settings.
 
 ```{r}
 final_results <- results_harvest_adj |>
@@ -191,7 +191,7 @@ This shifts attention from *individual histories* to *typical outcomes and robus
 
 ## Time series and trajectories
 
-When metrics are recorded at every time step, trajectories become central.
+When you record metrics at every time step, trajectories become central.
 
 To plot a single run:
 
@@ -265,7 +265,7 @@ Plotting a **small sample of runs** avoids overplotting while revealing:
 
 ## Linking parameters and outcomes
 
-For randomly sampled parameter sets, scatter plots are particularly useful (see chapter on sensitivity analysis). However, it might still offer some insight when applied to regularly sampled parameters; unlike boxplots, scatter plots exposes the true variation of data points.
+For randomly sampled parameter sets, scatter plots are particularly useful (see chapter on sensitivity analysis). However, they can still offer insight when applied to regularly sampled parameters; unlike boxplots, scatter plots show the true variation of data points.
 
 ```{r}
 final_results <- results_harvest_adj_var |>
@@ -294,7 +294,7 @@ Wide vertical spread suggests strong stochastic effects or interactions with oth
 
 :::
 
-We may also want to detect effects that are only visible in the full trajectory of simulations. For this, we can use line plots as before, but there will be strong limits to how many runs can be included so that the plot is legible.
+We may also want to detect effects visible only in the full simulation trajectory. For this, we can use line plots as before, but we will be limited in how many runs we can include to keep the plot legible.
 
 ```{r}
 plot_name <- paste0(experiments_path, expname_harvest_adj, "-trajectories.png")
