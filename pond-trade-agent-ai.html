@@ -488,7 +488,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#modelling-behaviour" id="toc-modelling-behaviour" class="nav-link active" data-scroll-target="#modelling-behaviour"><span class="header-section-number">18.1</span> Modelling behaviour</a></li>
-  <li><a href="#implementing-path-finding" id="toc-implementing-path-finding" class="nav-link" data-scroll-target="#implementing-path-finding"><span class="header-section-number">18.2</span> Implementing path finding 🤔</a></li>
+  <li><a href="#implementing-pathfinding" id="toc-implementing-pathfinding" class="nav-link" data-scroll-target="#implementing-pathfinding"><span class="header-section-number">18.2</span> Implementing pathfinding 🤔</a></li>
   <li><a href="#testing-the-a-path-finding" id="toc-testing-the-a-path-finding" class="nav-link" data-scroll-target="#testing-the-a-path-finding"><span class="header-section-number">18.3</span> Testing the A* path-finding</a></li>
   <li><a href="#finding-all-routes" id="toc-finding-all-routes" class="nav-link" data-scroll-target="#finding-all-routes"><span class="header-section-number">18.4</span> Finding all routes</a></li>
   <li><a href="#decision-making" id="toc-decision-making" class="nav-link" data-scroll-target="#decision-making"><span class="header-section-number">18.5</span> Decision making 🤔</a></li>
@@ -523,7 +523,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="modelling-behaviour" class="level2" data-number="18.1">
 <h2 data-number="18.1" class="anchored" data-anchor-id="modelling-behaviour"><span class="header-section-number">18.1</span> Modelling behaviour</h2>
-<p>We advance into implementing the behaviour rules, <em>i.e.</em> Artificial Intelligence, of each agent type, particularly <code>traders</code>. Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and act like humans (or anything we consider intelligent). In the context of ABM, AI refers to the rules and decision-making processes that govern the behaviour of individual agents within the model.</p>
+<p>We now implement the behaviour rules, <em>i.e.</em> the Artificial Intelligence, for each agent type, particularly <code>traders</code>. Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and act like humans (or anything we consider intelligent). In the context of ABM, AI refers to the rules and decision-making processes that govern the behaviour of individual agents within the model.</p>
 <p>For our model, based on the conceptual model, we will implement simple behaviour for two agent types:</p>
 <ul>
 <li><code>settlements</code>:
@@ -538,16 +538,16 @@ ul.task-list li input[type="checkbox"] {
 <li>Traders will then return with goods from that settlement back to the base and restart the cycle.</li>
 </ul></li>
 </ul>
-<p>Implementing this will take us several steps in development (up to step 9).</p>
+<p>Implementing this will take several development steps (up to step 9).</p>
 </section>
-<section id="implementing-path-finding" class="level2" data-number="18.2">
-<h2 data-number="18.2" class="anchored" data-anchor-id="implementing-path-finding"><span class="header-section-number">18.2</span> Implementing path finding 🤔</h2>
+<section id="implementing-pathfinding" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="implementing-pathfinding"><span class="header-section-number">18.2</span> Implementing pathfinding 🤔</h2>
 <p>Given the importance and potential complexity of these behaviours, let us start by implementing the most fundamental aspect: the traders’ criterion for choosing a destination settlement. We have mentioned “distance”, yet how should traders measure such distance in a heterogeneous terrain?</p>
 <p>In the original repository of the Pond Trade model, you will notice an initial attempt to approach this aspect through a simple network implementation, using NetLogo’s <code>links</code> (<a href="https://github.com/Andros-Spica/PondTrade/blob/master/PondTrade_step07_agent%20AI%20v1_links.nlogo">PondTrade_step07_agent AI v1_links.nlogo</a>). This approach is similar to other ABM and network-based models applied to topics of trade and settlement interactions.</p>
-<p>However, as you may know, there can be a significant difference between a straight line measurement (Euclidean distance) and a more complex path cost calculation that uses terrain data. As the Pond Trade model eventually did, we will to “complicate” our design and make a proper “least-cost route” calculation using this as a perfect excuse for learning.</p>
-<p>But how should we implement a least-cost path algorithm in NetLogo? We follow our modular philosophy, search and find an implementation of the <a href="http://ccl.northwestern.edu/netlogo/models/community/Astardemo1">A* (A-star) algorithm in NetLogo User Community Models</a>.</p>
+<p>However, as you may know, there can be a significant difference between a straight-line measurement (Euclidean distance) and a more complex path cost calculation that uses terrain data. As the Pond Trade model eventually did, we will “complicate” our design and make a proper “least-cost route” calculation, using this as a perfect excuse for learning.</p>
+<p>But how should we implement a least-cost path algorithm in NetLogo? We follow our modular philosophy and look for an implementation of the <a href="http://ccl.northwestern.edu/netlogo/models/community/Astardemo1">A* (A-star) algorithm in NetLogo User Community Models</a>.</p>
 <p>We get the main fragment of the code from this and adapt it to our purposes, making sure we keep a clear reference to the source as a commentary header:</p>
-<p>Note: Try to walk through this code and understand it; but don’t panic if you don’t!</p>
+<p>Note: Try to walk through this code and understand it, but don’t panic if you don’t!</p>
 <pre class="netlogo"><code>patches-own
 [
   isLand
@@ -727,7 +727,7 @@ to assign-path-cost
   ]
 
 end</code></pre>
-<p>We are forced then to introduce another parameter, <code>relativePathCostInLand</code>, which specifies how much the movement on land costs in relation to the movement on the water. Add a slider in the interface (from 0 to 100, by 0.01, default value at 50).</p>
+<p>We are then forced to introduce another parameter, <code>relativePathCostInLand</code>, which specifies how much movement on land costs relative to movement in water. Add a slider in the interface (from 0 to 100, in steps of 0.01, default value 50).</p>
 </div>
 </div>
 </div>
@@ -746,7 +746,7 @@ Note
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Given the special circumstance of traders arriving and leaving settlements, let us introduce a differential value for <code>pathCost</code> in patches with settlements. For this we should modify <code>create-coastal-settlements</code> and introduce the parameter <code>relativePathCostInPort</code> (from 0 to 100, by 0.01, default value at 10):</p>
+<p>Given the special circumstance of traders arriving and leaving settlements, let us introduce a differential value for <code>pathCost</code> in patches with settlements. For this, we should modify <code>create-coastal-settlements</code> and introduce the parameter <code>relativePathCostInPort</code> (from 0 to 100, in increments of 0.01, default value 10):</p>
 <pre class="netlogo"><code>to create-coastal-settlements
 
   ; consider only coastal patches
@@ -781,9 +781,9 @@ end</code></pre>
 <section id="testing-the-a-path-finding" class="level2" data-number="18.3">
 <h2 data-number="18.3" class="anchored" data-anchor-id="testing-the-a-path-finding"><span class="header-section-number">18.3</span> Testing the A* path-finding</h2>
 <p>You can now experiment with the A* algorithm by running <code>setup</code>as it is, and then <code>find-a-path</code> between two patches of your choosing.</p>
-<p>Follow these steps: - Uncomment the lines involving <code>set pcolor ...</code> in the <code>find-a-path</code> procedure to visualise the search process - reduce the simulation speed to see the search process - run <code>setup</code> (which now sets <code>pathCost</code>) - In the command center, run:</p>
+<p>Follow these steps: - Uncomment the lines involving <code>set pcolor ...</code> in the <code>find-a-path</code> procedure to visualise the search process - Reduce the simulation speed to see the search process - Run <code>setup</code> (which now sets <code>pathCost</code>) - In the Command Center, run:</p>
 <pre class="netlogo"><code>show find-a-path (patch -30 -30) (patch 30 -30)</code></pre>
-<p>Try various coordinates to see how the search process work with different contexts.</p>
+<p>Try various coordinates to see how the search process works with different contexts.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -804,14 +804,14 @@ end</code></pre>
 </section>
 <section id="finding-all-routes" class="level2" data-number="18.4">
 <h2 data-number="18.4" class="anchored" data-anchor-id="finding-all-routes"><span class="header-section-number">18.4</span> Finding all routes</h2>
-<p>Now that we have confirmed the code we just introduced let us implement everything we will need to call A* and keep track of all routes between settlements. Given that A* takes time to compute, we should make everything possible to avoid repeating the calculation of routes.</p>
+<p>Now that we have confirmed the code we just introduced, let us implement everything we will need to call A* and keep track of all routes between settlements. Given that A* takes time to compute, we should make everything possible to avoid repeating the calculation of routes.</p>
 <p>Our plan is to implement a new procedure, <code>set-routes</code>, that will:</p>
 <ul>
-<li>be called during in <code>setup</code> after creating the settlements<br>
+<li>be called during <code>setup</code> after creating the settlements<br>
 </li>
-<li>will ask each settlement to find the best routes to every other settlements<br>
+<li>ask each settlement to find the best routes to every other settlement<br>
 </li>
-<li>will store the path in a new global variable <code>routes</code></li>
+<li>store the path in a new global variable <code>routes</code></li>
 </ul>
 <p>This involves:</p>
 <ol type="1">
@@ -821,7 +821,7 @@ end</code></pre>
 </li>
 <li>calling <code>set-routes</code> in <code>setup</code><br>
 </li>
-<li>asking each settlement to find the best routes to every other settlements<br>
+<li>asking each settlement to find the best routes to every other settlement<br>
 </li>
 <li>storing the path in a new global variable <code>routes</code></li>
 </ol>
@@ -889,18 +889,18 @@ to set-routes
   ]
 
 end</code></pre>
-<p>Running the code as it is will generate the maximum number of routes given the settlements present (<em>e.g.</em>, if <code>numberOfSettlements = 10</code>, it will be 45 or 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1). We store each route as a <code>list</code> of <code>patches</code>, and all routes as a <code>list</code> of routes (<code>routes</code>). These will be globally accessible by all traders in our model.</p>
-<p>Notice that it takes a considerable time to calculate all possible routes, and the number of settlements increases this time exponentially. At this point, we should be aware of how to stop NetLogo while still running a long command. Go to Tools &gt; Halt. This might not work if NetLogo interface is unresponsive. Then the only options are to wait or quit or force-quit NetLogo.</p>
+<p>Running the code as-is generates the maximum number of routes given the settlements present (<em>e.g.</em>, if <code>numberOfSettlements = 10</code>, it will be 45, or 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1). We store each route as a <code>list</code> of <code>patches</code>, and all routes as a <code>list</code> of routes (<code>routes</code>). These will be globally accessible by all traders in our model.</p>
+<p>Notice that calculating all possible routes takes considerable time, and the number of settlements increases this time exponentially. At this point, we should know how to stop NetLogo while it’s running a long command. Go to Tools &gt; Halt. This might not work if the NetLogo interface is unresponsive. Then the only options are to wait, quit, or force-quit NetLogo.</p>
 </section>
 <section id="decision-making" class="level2" data-number="18.5">
 <h2 data-number="18.5" class="anchored" data-anchor-id="decision-making"><span class="header-section-number">18.5</span> Decision making 🤔</h2>
-<p>Having the calculation of routes solved, we now must use them to inform the decision of traders. How would you do that?</p>
+<p>Now that we’ve solved the route calculations, we must use them to inform traders’ decisions. How would you do that?</p>
 <p>Before looking at the solution, try to write the code yourself (this is a hard one!):</p>
 <ul>
 <li>Create a new procedure <code>choose-destination</code> for the <code>trader</code> breed</li>
 <li>The procedure should:
 <ul>
-<li>calculate a “attractiveness” score for each settlement (excluding the base settlement)</li>
+<li>calculate an “attractiveness” score for each settlement (excluding the base settlement)</li>
 <li>choose the destination settlement with the best attractiveness score</li>
 </ul></li>
 <li>The attractiveness score should consider:
@@ -988,7 +988,7 @@ to-report get-route [ settlement1 settlement2 ] ; accepts two settlements and re
 
 end
 
-to-report get-routes-from-settlement [ aSettlement ] ; accepts a settlement and return a list of routes
+to-report get-routes-from-settlement [ aSettlement ] ; accepts a settlement and returns a list of routes
 
   report filter
   [ ?1 -&gt;
@@ -1021,7 +1021,7 @@ to-report benefit-cost-of-route [ aRoute ] ; accepts a route and returns a numbe
 
 end</code></pre>
 <p>Notice that <code>get-route</code> is only helpful for debugging and querying the information in <code>routes</code>.</p>
-<p>To inform the traders’ decisions, we specify a very simple calculation of the potential gain of a route (sum of sizeLevel of origin and destination) and calculate a ratio between the benefit and cost of routes. Traders will then compare these ratios for all possible routes from its base settlement and choose the one with the highest value.</p>
+<p>To inform traders’ decisions, we define a simple calculation of a route’s potential gain (the sum of the sizeLevel of the origin and destination) and calculate a benefit-to-cost ratio for each route. Traders will then compare these ratios for all possible routes from their base settlement and choose the one with the highest value.</p>
 </div>
 </div>
 </div>
@@ -1029,8 +1029,8 @@ end</code></pre>
 <section id="movement" class="level2" data-number="18.6">
 <h2 data-number="18.6" class="anchored" data-anchor-id="movement"><span class="header-section-number">18.6</span> Movement 🤔</h2>
 <p>Once a destination is decided, traders must move towards it and then, once there, start the return trip. Are you up to this challenge?</p>
-<p>Before looking at the solution, try to write the code yourself (this is VERY hard!): - Create a new procedure <code>move-to-destination</code> for the <code>trader</code> breed - The procedure should: - move the trader along the selected route towards the destination settlement (or back) - check if the trader is at the destination or base settlement and choose the right direction - check if in a patch centre (round coordinates) to move to the next patch in the route - move progressivelly towards the next patch in the route (not teleporting) - speed should be dependent on the pathCost of the patch-here</p>
-<p>Things to consider: - How to keep track of the direction of movement? - How to keep track of the progress of movement? - How to check if the trader is at the destination or base settlement? - How to check if the trader is in a patch centre? - How to move progressivelly one patch centre to another? - How to make the speed dependent on the pathCost of the patch-here?</p>
+<p>Before looking at the solution, try to write the code yourself (this is VERY hard!): - Create a new procedure <code>move-to-destination</code> for the <code>trader</code> breed - The procedure should: - move the trader along the selected route towards the destination settlement (or back) - check if the trader is at the destination or base settlement and choose the right direction - check if in a patch centre (round coordinates) to move to the next patch in the route - move progressively towards the next patch in the route (not teleporting) - speed should be dependent on the pathCost of the patch-here</p>
+<p>Things to consider: - How to keep track of the direction of movement? - How to keep track of the progress of movement? - How to check if the trader is at the destination or base settlement? - How to check if the trader is in a patch centre? - How to move progressively from one patch centre to another? - How to make the speed dependent on the pathCost of the patch-here?</p>
 <p><strong>Solution</strong>:</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
@@ -1044,7 +1044,7 @@ Note
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>We implement this behaviour assuming that movement must go through each patch centre in the route and that traders move at a maximum speed of <code>1 / [pathCost] of patch-here</code>, meaning they will be delayed in proportion to the local value of <code>pathCost</code>.</p>
+<p>We implement this behaviour assuming movement must go through each patch centre in the route, and that traders move at a maximum speed of <code>1 / [pathCost] of patch-here</code>, meaning they are delayed in proportion to the local value of <code>pathCost</code>.</p>
 <pre class="netlogo"><code>to move-to-destination ; ego = trader
 
   ; update lastPosition if in a patch center
@@ -1092,14 +1092,14 @@ end</code></pre>
   ]
 
 end</code></pre>
-<p>As we specified in our conceptual model, traders will choose a destination whenever they are at their base and move towards their current destination.</p>
+<p>As specified in our conceptual model, traders choose a destination whenever they are at their base and move toward their current destination.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="enhancing-visualisation" class="level2" data-number="18.7">
 <h2 data-number="18.7" class="anchored" data-anchor-id="enhancing-visualisation"><span class="header-section-number">18.7</span> Enhancing visualisation</h2>
-<p>To help visualise routes, implement the following version of <code>update-display</code>, call it at the end of <code>setup</code>, and add two switches, <code>showRoutes</code> and <code>showActiveRoutes</code> to the interface:</p>
+<p>To help visualise routes, implement the following version of <code>update-display</code>, call it at the end of <code>setup</code>, and add two switches, <code>showRoutes</code> and <code>showActiveRoutes</code>, to the interface:</p>
 <pre class="netlogo"><code>to setup
 
   clear-all
@@ -1222,7 +1222,7 @@ end</code></pre>
   ]
 
 ; the previous code for creating traders can be commented out
-; by adding ';' at the beggining of each line, or
+; by adding ';' at the beginning of each line, or
 ; by selecting several lines and either selecting 'Edit &gt; Comment' or pressing 'ctrl + ;'.
 ;  ask settlements
 ;  [
