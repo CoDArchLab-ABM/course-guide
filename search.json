@@ -2240,7 +2240,7 @@
     "href": "sim-behavior-space.html#workflow",
     "title": "31  Using NetLogo’s Behaviour Space",
     "section": "",
-    "text": "⚙️ Model setup: NetLogo model ready\n        ↓\n🎛️ Define experiment: BehaviorSpace parameters & settings\n        ↓\n▶️ Run experiments: Multiple model runs with varied parameters\n        ↓\n💾 Export results: CSV output files\n        ↓\n📊 Analyse results: R scripts for plots & statistics\n        ↓\n🧩 Interpret results: Compare to hypotheses or data\n        ↺\n🔁 Refine model or experiment: Adjust parameters, mechanisms",
+    "text": "Reproducible NetLogo Experiment Pipeline",
     "crumbs": [
       "Designing and running Simulation experiments",
       "<span class='chapter-number'>31</span>  <span class='chapter-title'>Using NetLogo's Behaviour Space</span>"
