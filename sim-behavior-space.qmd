@@ -30,21 +30,7 @@ For simplicity, in this and the following chapters, we will refer to the Artific
 
 Before you start, always keep in mind the general workflow when doing simulation experiments with NetLogo's Behavior Space:
 
-```
-⚙️ Model setup: NetLogo model ready
-        ↓
-🎛️ Define experiment: BehaviorSpace parameters & settings
-        ↓
-▶️ Run experiments: Multiple model runs with varied parameters
-        ↓
-💾 Export results: CSV output files
-        ↓
-📊 Analyse results: R scripts for plots & statistics
-        ↓
-🧩 Interpret results: Compare to hypotheses or data
-        ↺
-🔁 Refine model or experiment: Adjust parameters, mechanisms
-```
+![Reproducible NetLogo Experiment Pipeline](assets/images/ChatGPT%20Image%20Sep%2011,%202026,%2003_11_29%20PM.png)
 
 ## Creating a new experiment
 
