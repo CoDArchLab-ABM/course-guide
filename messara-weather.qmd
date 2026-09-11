@@ -2,13 +2,13 @@
 
 ## Calculating ARID using weather data
 
-To compromise model complexity and precision, we will regulate land productivity by combining flow accumulation with the Agricultural reference index of drought (ARID). We will calculate a time-series of ARID for each day-of-year and patch using a modified version of the Soil Water (sub)model, again in the [Indus Village model](https://github.com/Andros-Spica/indus-village-model) (Angourakis 2021). This submodel is a NetLogo implementation of the model defined by Wallach et al. 2019, which is based on Woli et al. 2012.
+To compromise model complexity and precision, we will regulate land productivity by combining flow accumulation with the Agricultural Reference Index of Drought (ARID). We will calculate a time series of ARID for each day-of-year and patch using a modified version of the Soil Water (sub)model, again in the [Indus Village model](https://github.com/Andros-Spica/indus-village-model) (Angourakis 2021). This submodel is a NetLogo implementation of the model defined by Wallach et al. (2019), based on Woli et al. (2012).
 
 > Wallach, Daniel, David Makowski, James W. Jones, and Francois Brun. 2019. Working with Dynamic Crop Models (Third Edition). Academic Press. https://doi.org/10.1016/C2016-0-01552-8.
 
 > Woli, Prem, James W. Jones, Keith T. Ingram, and Clyde W. Fraisse. 2012. ‘Agricultural Reference Index for Drought (ARID)’. Agronomy Journal 104 (2): 287. https://doi.org/10.2134/agronj2011.0286.
 
-We will introduce here a way to import daily weather data (solar radiation, temperature, precipitation) from an external dataset, and use it to calculate ARID, which we will cover in the next chapter.
+We will introduce here a way to import daily weather data (solar radiation, temperature, precipitation) from an external dataset and use it to calculate ARID, which we will cover in the next chapter.
 
 ## The input dataset
 
@@ -26,13 +26,13 @@ The dataset metadata is as follows:
 
 *Variables*:
 - YEAR, MO, DY: year (number), month (index in year) and day (index in month) of observation/row
-- PRECTOTCORR: The bias corrected average of total precipitation at the surface of the earth in water mass (includes water content in snow).  
+- PRECTOTCORR: The bias-corrected average of total precipitation at the surface of the Earth in water mass (includes water content in snow).  
 - T2M_MIN, T2M_MAX: The maximum/minimum/average hourly air (dry bulb) temperature at 2 meters above the surface of the earth.  
-- ALLSKY_SFC_SW_DWN: The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the earth under all sky conditions. An alternative term for the total solar irradiance is the "Global Horizontal Irradiance" or GHI.  
+- ALLSKY_SFC_SW_DWN: The total solar irradiance incident (direct plus diffuse) on a horizontal plane at the surface of the Earth under all sky conditions. An alternative term for total solar irradiance is "Global Horizontal Irradiance" (GHI).  
 
 ## Loading the input dataset
 
-The original implementation in the Indus Village repository includes a procedure only for loading, running, and displaying the dataset as simulation input data.
+The original implementation in the Indus Village repository includes a procedure only to load, run, and display the dataset as simulation input data.
 
 This module uses the data structure `list` to hold and process the data. The dataset is loaded from the original CSV file into several global variables (using the CSV NetLogo extension). You may need to look at NetLogo's Dictionary several times to understand every step in this procedure.
 
@@ -139,7 +139,7 @@ to load-weather-input-data-table
   set weatherInputData_lastYear last weatherInputData_YEARS
 
   ;;; extract parameter values from the given column
-  ;;; NOTE: read-from-string might be required if the original file is formated in a way that NetLogo interprets values as strings.
+  ;;; NOTE: read-from-string might be required if the original file is formatted in a way that NetLogo interprets values as strings.
 
   set weatherInputData_solarRadiation map [row -> item solarRadiationColumn row ] weatherData
 
@@ -154,11 +154,11 @@ to load-weather-input-data-table
 end
 ```
 
-There are other ways of doing this in NetLogo and many possible variations within this specific approach. The most important things here are to make sure that variable names are intelligible and all references to the internal structure of the CSV file are kept updated if any changes are made directly to the file. Abundant comments are also welcomed in this type of procedure. 
+There are other ways to do this in NetLogo, and many possible variations within this approach. The most important things are to keep variable names intelligible and to keep references to the CSV file's internal structure updated if you change the file directly. Abundant comments are also welcome in this type of procedure. 
 
-## Keeping tract of time in cycles
+## Keeping track of time in cycles
 
-This module also introduces an aspect that may be relevant when inputting or generating time series: calendar time keeping. This may seem trivial, but it has often been a weak point in models relying on input data.
+This module also introduces an aspect that may be relevant when inputting or generating time series: calendar timekeeping. This may seem trivial, but it has often been a weak point in models relying on input data.
 
 ```Netlogo
 to advance-time
@@ -176,7 +176,7 @@ end
 
 ## Setting daily weather values
 
-The module than allows us to update the value of weather variables according to the synchronised calendar and simulation times, using `year` and `dayOfYear` as index:
+The module then allows us to update the value of weather variables according to the synchronised calendar and simulation times, using `year` and `dayOfYear` as index:
 
 ```Netlogo
 to set-day-weather-from-input-data [ dayOfYear year ]
@@ -221,9 +221,9 @@ to set-day-weather-from-input-data [ dayOfYear year ]
 end
 ```
 
-## Wrapping everying together
+## Wrapping everything together
 
-Press "setup" and then "go" (continuous run). NetLogo will run until it reaches the last day of the last year included in the dataset. This is because we have added in `go` a stop condition.
+Press "setup" and then "go" (continuous run). NetLogo will run until it reaches the last day of the last year included in the dataset. This is because we have added a stop condition to `go`.
 
 ```NetLogo
 to go
@@ -247,4 +247,4 @@ end
 ![Screenshot of the 'load-weather-data' module](assets/screenshots/BlockC_module3_load-weather-data interface.png)  
 *Screenshot of the 'load-weather-data' module*
 
-See the fully implemented version of this module: `BlockC_module3_load-weather-data.nlogo`. Check the widgets in the interface for how to reproduce the plots.
+See the fully implemented version of this module: `BlockC_module3_load-weather-data.nlogo`. Check the interface widgets to reproduce the plots.

@@ -1,12 +1,12 @@
 # Calculating ARID {#messara-soil-water}
 
-Let us build the next module, `ARID`, over what we just implemented in the `load-weather-data` module.
+Let us build the next module, `ARID`, on top of what we just implemented in the `load-weather-data` module.
 
 ## Module variables and parameters
 
-Besides the weather variables we have on our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al. 2019).
+In addition to the weather variables in our dataset, ARID requires several other variables related to soil properties and cover. We will make an exception to our code legibility rule and use the notation from the original implementation (Wallach et al. 2019).
 
-Notice that we are also introducing one way of dealing with multiple approaches to parameter setting. We create a chooser named `experiment-type` in the interface and use it to activate one of two approaches: "user-defined", which takes the values of sliders in the interface, and "random", which samples these values randomly within a predetermined range. We also introduce two useful procedures, `parameters-check` and `parameters-to-default`, to help us define and return to an specific "default" parameter configuration used as a point of reference.
+We also introduce a way to handle multiple approaches to parameter setting. We create a chooser named `experiment-type` in the interface and use it to activate one of two approaches: "user-defined", which takes the values of sliders in the interface, and "random", which samples these values randomly within a predetermined range. We also introduce two useful procedures, `parameters-check` and `parameters-to-default`, to help us define and return to a specific "default" parameter configuration used as a point of reference.
 
 ```Netlogo
 globals
@@ -61,7 +61,7 @@ patches-own
 
 ## Setting module parameters
 
-We will use a randomised configuration of most of these patch variables using hyperparameters giving the envelope of variation. The Indus Village eventually escapes this initial solution by calculating these variables based on various datasets and submodels. We will, however, use it for the sake of simplicity. As Wallach et al. (2019), we will use two global variables as constants (`MUF` and `WP`) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (`parameters-check` and `parameters-to-default`).
+We use a randomised configuration of most of these patch variables, using hyperparameters to define the envelope of variation. Indus Village eventually escapes this initial solution by calculating these variables from various datasets and submodels. However, for simplicity, we will use it as-is. As Wallach et al. (2019), we will use two global variables as constants (`MUF` and `WP`) and create some extra procedures that will help us register and apply a default configuration of the hyperparameters (`parameters-check` and `parameters-to-default`).
 
 ```NetLogo
 to set-constants
@@ -319,7 +319,7 @@ end
 
 ## Merging with spatial data module
 
-Until this point, we are still lacking our spatial data. Let us implement the necessary code to be able to import the processed data we output from the `flows` module.
+So far, we still lack spatial data. Let us implement the necessary code to import the processed data we output from the `flows` module.
 
 ```NetLogo
 extensions [ csv gis ]
@@ -400,7 +400,7 @@ end
 
 ## Visualisation
 
-Before advancing, we can implement a display procedure expanding it also to be able to paint patches according to the new patch variables, using the "chooser" parameter `display-mode`:
+Before advancing, we can implement a display procedure, expanding it also to be able to paint patches according to the new patch variables, using the "chooser" parameter `display-mode`:
 
 ```NetLogo
 
@@ -530,7 +530,7 @@ end
 
 ## Combining with flow accumulation algorithm
 
-Last, we finalise this module by implementing a solution that uses `flow_accumulation` to modulate the variation in ARID, as a proxy of the effect of the regional hydrology on the local soil water balance. The solution use the patch variable `ARID_modifier`, set during setup according to the parameter `ARID-decrease-per-flow-accumulation` and the local relative flow accumulation (flow_accumulation / maxFlowAccumulation). It then modifies `ARID` each day as a simple scalar.
+Finally, we finalise this module by implementing a solution that uses `flow_accumulation` to modulate variation in ARID as a proxy for the effect of regional hydrology on the local soil water balance. The solution uses the patch variable `ARID_modifier`, set during setup according to the parameter `ARID-decrease-per-flow-accumulation` and the local relative flow accumulation (flow_accumulation / maxFlowAccumulation). It then modifies `ARID` each day as a simple scalar.
 
 ```NetLogo
 patches-own
@@ -635,7 +635,7 @@ end
 
 ## Checking the milestone File (module 4)
 
-Our solution to link `flow_accumulation` and `ARID` is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we are good enough to go forward.
+Our solution to link `flow_accumulation` and `ARID` is undoubtedly arbitrary. Such solutions should always be temporary and prompt further research and coding excursions. For the tutorial, however, we can move forward.
 
 ![Screenshot of the 'ARID' module (tick 100)](assets/screenshots/BlockC_module4_ARID interface_tick100.png)  
 *Screenshot of the 'ARID' module (tick 100)*

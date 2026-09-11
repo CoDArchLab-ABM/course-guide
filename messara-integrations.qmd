@@ -4,7 +4,7 @@ Finally, after much of the modelling equivalent of *blood and sweat*, we reach t
 
 ## Integrating module 4 (ARID) and 5 (routes)
 
-We use module 4 - ARID as the starting template and add `import-routes-from-file` and all route related procedures. We should be able to import the routes data saved before and load it during set up, as the last step before `setup-patches`:
+We use module 4 (ARID) as the starting template and add `import-routes-from-file` and all route-related procedures. We should be able to import the route data saved before and load it during setup, as the last step before `setup-patches`:
 
 ```NetLogo
 globals
@@ -72,7 +72,7 @@ to paint-routes
 
   ;;; define list of shades of red in NetLogo
   let redShades (list 11 12 13 14 15 16 17 18 19)
-  ;;; NOTE: this is needed because rgb colors based on elevation are a list
+  ;;; NOTE: this is needed because RGB colours based on elevation are a list
   ;;; while NetLogo color are numbers
 
   ; resets route patches to the terrain color
@@ -97,7 +97,7 @@ to paint-routes
       [
         if (showRoutes)
         [
-          ifelse (not member? pcolor redShades) ; if its the first route crossing the patch
+          ifelse (not member? pcolor redShades) ; if it's the first route crossing the patch
           [
             set pcolor 11
           ]
@@ -140,10 +140,10 @@ end
 
 ## Integrating Pond Trade (step 13)
 
-Next, we bring all the extra code and interface objects present in Pond Trade (step 13). Most procedures require no modifications. The exceptions are:
+Next, bring in all the extra code and interface objects from Pond Trade (step 13). Most procedures require no modifications. The exceptions are:
 
-- There is no `isLand` variable here and, given that there is no water patches, we should simply erase the code that distinguishes it.
-- Since there is only land patches and we are using the standard deviation of elevations to assign `pathCost`, there are no `relativePathCostInLand` or `relativePathCostInPort`. We can erase all reference to these two parameters, which will leave the corresponding cultural traits of transport technology as the sole modifiers of `pathCost`.
+- There is no `isLand` variable here and, given that there are no water patches, we should simply erase the code that distinguishes it.
+- Since there are only land patches and we are using the standard deviation of elevations to assign `pathCost`, there are no `relativePathCostInLand` or `relativePathCostInPort`. We can remove all references to these two parameters, leaving the corresponding cultural traits of transport technology as the sole modifiers of `pathCost`.
 
 We carefully organise the scheduling of calls in `setup` and `go`:
 
@@ -194,9 +194,9 @@ end
 
 ## ARID as a factor of settlement productivity
 
-Last, we need to connect ARID to settlement productivity.
+Finally, we connect ARID to settlement productivity.
 
-We first calculate the value of two new settlement variables, `catchmentArea` and `ARIDinCatchmentArea`. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on `sizeLevel` and two parameters, `catchmentSlope` and `catchmentRadiusMaximum`. This is a *very* preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.
+First, we calculate two new settlement variables: `catchmentArea` and `ARIDinCatchmentArea`. The latter is the average ARID within the settlement catchment area. In turn, the catchment area is calculated using a gradient decay function, dependent on `sizeLevel` and two parameters, `catchmentSlope` and `catchmentRadiusMaximum`. This is a *very* preliminary solution, but will suffice for us to observe the dynamics of Pond Trade playing out over the Messara Valley.
 
 ```NetLogo
 settlements-own
@@ -214,11 +214,11 @@ to update-settlements
   [
     let thisSettlement self
 
-    ; the sizeLevel of settlements decays with a constant rate, up to 1 (minimum)
+    ; the sizeLevel of settlements decays at a constant rate, up to 1 (minimum)
     set sizeLevel max (list 1 (sizeLevel * (1 - ((item 5 culturalVector) / 100)) ) )
-    ; production in stock also decays with a constant rate
+    ; production in stock also decays at a constant rate
     set stock stock * (1 - ((item 6 culturalVector) / 100))
-    ; prodution is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
+    ; production is generated in proportion to sizeLevel, following a constant rate and the average ARID within the settlement catchment area
     update-ARIDinCatchmentArea
     update-catchmentArea
     set stock stock + sizeLevel * ((item 7 culturalVector) / 100) * ARIDinCatchmentArea
@@ -258,11 +258,11 @@ And *voilà*! We can now run our boosted Pond Trade model within the context of 
 ## Checking the milestone File (module 6)
 
 ![View of MesaraTrade after set up](assets/screenshots/BlockC_module6_MesaraTrade view.png)  
-*View of MesaraTrade after set up*
+*View of MesaraTrade after setup*
 
 ![View of MesaraTrade interface](assets/screenshots/BlockC_module6_MesaraTrade interface.png)  
 *View of MesaraTrade interface*
 
-Run the model for a few years using the default configuration. Observe the behaviour of traders and the overall dynamics of settlements' economical size and the trade between them. Is there something off about how the new version is running? 
+Run the model for a few years using the default configuration. Observe trader behaviour and the overall dynamics of settlement size and trade between them. Is there something off about how the new version is running? 
 
 Think about the case study and the mechanisms targeted by the original Pond Trade model. What aspects do you find problematic?

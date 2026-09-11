@@ -80,7 +80,7 @@ Structured exploration is intuitive and easy to interpret, but it scales poorly 
 
 ## Alternative designs or input data
 
-Some times existing alternative design or "competing" versions of the model can be worth exploring. for this we can use the mediation of nominal parameters, which in NetLogo would typically reside in the interface as switches and choosers widgets. This is not available in the Artificial Anasazi, but the chooser `simulation-period` in the Mesara Trade could be considered in this way.
+Sometimes existing alternative designs, or "competing" versions of the model, are worth exploring. For this, we can use the mediation of nominal parameters, which in NetLogo would typically reside in the interface as switches and chooser widgets. This is not available in the Artificial Anasazi, but the `simulation-period` chooser in the Mesara Trade could be considered this way.
 
 ## Random and quasi-random sampling
 
@@ -115,7 +115,7 @@ to ask which combinations tend to produce persistence versus collapse.
 
 ## Defining plausible parameter ranges
 
-Before sampling, parameter ranges must be defined carefully.
+Before sampling, define parameter ranges carefully.
 
 For archaeological models, this step is *theoretical*, not technical. Ranges should reflect:
 
@@ -138,7 +138,7 @@ Wide parameter ranges increase coverage, but also increase the risk of generatin
 
 ## Systematic random sampling in R
 
-Once parameter ranges are defined, R can be used to generate a **design of experiments** that is then passed to NetLogo.
+Once you define parameter ranges, R can generate a **design of experiments** that you can pass to NetLogo.
 
 A simple random sampling workflow in R involves:
 
@@ -171,7 +171,7 @@ These configurations can then be:
 
 ### Interpreting sampled results
 
-Unlike structured sweeps, random sampling does not produce neatly ordered results. Interpretation therefore, relies on:
+Unlike structured sweeps, random sampling does not produce neatly ordered results. Interpretation therefore relies on:
 
 * visualisation (scatter plots, density plots),
 * summary statistics,
@@ -224,7 +224,7 @@ List three parameters of the Artificial Anasazi model.
 
 ## Exercise 2: Design
 
-Define plausible ranges for two parameters of the model.
+Define plausible ranges for two model parameters.
 
 * Justify your choices in archaeological terms.
 * Discuss what kinds of outcomes you expect at the extremes.
