@@ -1,6 +1,6 @@
 # ABM in archaeology {#intro-abm-arch}
 
-ABM has conceptual roots and applications in other fields dating back to the early days of computer science. However, this methodology took its current form and was introduced more broadly into the social sciences only in the 1990s.
+ABM has conceptual roots and applications in other fields dating back to the early days of computer science. However, this methodology took its current form and was introduced more broadly into the social sciences only in the 1990s. You can learn more about the interesting history of this approach through <a href="https://www.santafe.edu/features/agent-based-modeling-worlds-within-worlds" target="_blank">the perspective of one of its epicentres, the Santa Fe Institute</a>.
 
 ABM has been exceptionally well accepted by archaeologists, given its pre-adaptation to distributed and stochastic processes. Most phenomena of interest to archaeology can be represented with ABM, to archaeologists' satisfaction. Other modelling and simulation approaches (*e.g.*, Dynamic Systems) were, and still are, used but often encounter strong resistance because of their higher abstraction and simplification.  
 
