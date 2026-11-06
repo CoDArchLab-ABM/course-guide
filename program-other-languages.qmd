@@ -72,7 +72,7 @@ Below are some of the most relevant ABM platforms and libraries beyond NetLogo. 
 ## Other frameworks and resources
 
 Many more ABM frameworks exist across different domains and programming languages.
-The **SWARM.org** community maintains an updated list of simulation platforms, including older but historically significant systems such as **Swarm**.
+The **SWARM.org** community published a longer list of simulation platforms, including older but historically significant systems such as **Swarm**.
 
 ➡️ Explore: [https://www.swarm.org/wiki/ABM_Resources](https://www.swarm.org/wiki/ABM_Resources)
 
