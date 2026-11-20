@@ -366,7 +366,7 @@ Stochasticity is intrinsic in NetLogo. We were already dealing with random proce
 
 ![](assets/screenshots/BlockA_PondTrade_step03_hidden-noise.png)
 
-You will observe each patch changing colour, one at a time. This is also a nice example of using stochasticity to ensure that an aggregated outcome (*i.e.* blue circle) is not a mere artefact of any particular schedule of processes (*i.e.* the order in which patches change colours). Remember, sequences will differ every time we run our simulation unless we pre-set the RNG using a specific 'seed' (see https://docs.netlogo.org/dict/random-seed.html).
+You will observe each patch changing colour, one at a time. This is also a nice example of using stochasticity to ensure that an aggregated outcome (*i.e.* blue circle) is not a mere artefact of any particular schedule of processes (*i.e.* the order in which patches change colours). Remember, sequences will differ every time we run our simulation unless we pre-set the RNG using a specific 'seed' (see [NetLogo Documentation](https://docs.netlogo.org/7.0.4/programming#random-numbers)).
 
 But is a random order so important? In our script so far, it is completely irrelevant. Our goal was to draw a blue circle; it does not matter which patch assumes the role of land or water first. However, this will become increasingly relevant as we advance in creating a proper agent-based model, because *agents' states DO normally depend on other agents' states*.
 
@@ -449,7 +449,7 @@ We can now generate strange "spray ponds". More importantly, we made the generat
 
 ## Step 4b: design alternatives 
 
-Because a "spray pond" is not exactly what we want, let us implement another alternative to add stochasticity. NetLogo offers the `random-normal` primitive, which samples a random "float-point number" given the mean and standard deviation of a normal distribution, using the structure `random-normal <MEAN> <STD.DEV>` (https://ccl.northwestern.edu/netlogo/docs/dictionary.html#random-reporters). In this context, we can reuse the `coastalNoiseLevel` parameter for the latter and use `minDistOfLandToCenter` as the mean.
+Because a "spray pond" is not exactly what we want, let us implement another alternative to add stochasticity. NetLogo offers the `random-normal` primitive, which samples a random "float-point number" given the mean and standard deviation of a normal distribution, using the structure `random-normal <MEAN> <STD.DEV>` ([NetLogo Dictionary](https://docs.netlogo.org/7.0.4/dict/random)). In this context, we can reuse the `coastalNoiseLevel` parameter for the latter and use `minDistOfLandToCenter` as the mean.
 
 Comment out the line with `random-float` and add the following:
 
