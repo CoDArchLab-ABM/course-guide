@@ -50,11 +50,11 @@ The initial inspiration for a model design may be theoretically profound, empiri
 **Preliminary rules**:   
 - Coastal settlements of variable size around a rounded water body (“pond”)  
 - Traders travel between the settlements  
-- Traders travel faster or slower depending on the terrain
+- Traders travel faster or slower depending on the terrain.  
 - Once in their base settlement, traders evaluate all possible trips and choose the one with the greater cost-benefit ratio  
-- Traders carry economic value and cultural traits between the base and destination settlements
-- Settlement size depends on the economic value received from trading
-- The economic value produced in a settlement depends on its size
+- Traders carry economic value and cultural traits between the base and destination settlements.  
+- Settlement size depends on the economic value received from trading.  
+- The economic value produced in a settlement depends on its size.  
 - The number of traders per settlement depends on its size
 
 **Targeted dynamics**:  
