@@ -6,7 +6,7 @@ Prepare and keep in mind the following instructions:
 
 **Where**:
 
-- Download or clone the course guide repository (https://github.com/CoDArchLab-ABM/course-guide). You can also manually download the files from "assets/netlogo" as you need for advancing through the chapters. If you clone it using Git, you can quickly synchronise any changes to the model files made during the course.  
+- Download or clone the [course guide repository](https://github.com/CoDArchLab-ABM/course-guide). You can also manually download the files from "assets/netlogo" as you need for advancing through the chapters. If you clone it using Git, you can quickly synchronise any changes to the model files made during the course.  
 - Start your own NetLogo file (placed at the root directory of your course repository), name it something like "Pond Trade replica", and advance the implementation steps progressively using this file.  
 - Place the NetLogo file inside your own repository if working with Git locally   
 - When in doubt, create new file versions and accumulate failed attempts for learning purposes; it is not pretty, but it is useful!  
