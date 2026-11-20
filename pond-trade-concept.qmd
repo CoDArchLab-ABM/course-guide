@@ -33,7 +33,8 @@ The Pond Trade model's core idea is inspired by the premise that the settlement 
 The initial inspiration for a model design may be theoretically profound, empirically grounded, or well connected to discussions in the academic literature. However, a model's core mechanism must narrow to a straightforward, intelligible process. In this case, the focus is to represent a positive feedback loop between settlement size and the trade volumes coming in and out, which can be described as follows:
 
 **Core mechanism**:  
-- Traders choose their destination trying to maximise the value of their cargo by considering settlement size and distance from their base settlement;  
+
+- Traders choose their destination trying to maximise the value of their cargo by considering settlement size and distance from their base settlement; 
 - An active trade route will increase the economic size of settlements at both ends  
 - An increase in size will increase trade by:  
   - Making a settlement more attractive to traders from other settlements  
@@ -41,6 +42,7 @@ The initial inspiration for a model design may be theoretically profound, empiri
 - An active trade route will increase the cultural similarity between two settlements through the movement of traders and goods from one settlement to the other (cultural transmission)  
 
 **Elements** (potentially entities):  
+
 - settlements  
 - traders  
 - terrain  
@@ -48,6 +50,7 @@ The initial inspiration for a model design may be theoretically profound, empiri
 - goods  
 
 **Preliminary rules**:   
+
 - Coastal settlements of variable size around a rounded water body (“pond”)  
 - Traders travel between the settlements  
 - Traders travel faster or slower depending on the terrain.  
@@ -58,6 +61,7 @@ The initial inspiration for a model design may be theoretically profound, empiri
 - The number of traders per settlement depends on its size
 
 **Targeted dynamics**:  
+
 Settlements that become trade hubs will grow in size and exert greater cultural influence over their trade partners, though they also receive much of their aggregated influence.
 
 Or, stated more systematically:
