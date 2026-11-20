@@ -348,9 +348,9 @@ This version is less redundant, uses two instead of three local variables, and m
 
 ## Step 2c: Colors and shades
 
-Last, we replace the text reference for colours with NetLogo's numerical codes. Using this numeric system allows us to use many shades of any given colour. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the colour codes in "Tools" > "Color Picker" or in https://docs.netlogo.org/colorpicker.html:
+Last, we replace the text reference for colours with NetLogo's numerical codes. Using this numeric system allows us to use many shades of any given colour. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the colour codes in "Tools" > "Color Picker" or in [NetLogo Documentation](https://docs.netlogo.org/7.0.4/colorpicker):
 
-![](https://docs.netlogo.org/images/colorpicker/colorpickersimple.png)
+![](https://docs.netlogo.org/7.0.4/colorpicker)
 
 
 ## Checking the milestone File (step 2)
