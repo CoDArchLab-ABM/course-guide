@@ -997,7 +997,7 @@
     "href": "pond-trade-terrain.html#step-2c-colors-and-shades",
     "title": "16  Getting started with NetLogo: Creating a “pond” terrain",
     "section": "16.8 Step 2c: Colors and shades",
-    "text": "16.8 Step 2c: Colors and shades\nLast, we replace the text reference for colours with NetLogo’s numerical codes. Using this numeric system allows us to use many shades of any given colour. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the colour codes in “Tools” &gt; “Color Picker” or in https://docs.netlogo.org/colorpicker.html:",
+    "text": "16.8 Step 2c: Colors and shades\nLast, we replace the text reference for colours with NetLogo’s numerical codes. Using this numeric system allows us to use many shades of any given colour. In this case, we are selecting slightly different shades of blue (106) and green (54). You can consult the colour codes in “Tools” &gt; “Color Picker” or in NetLogo Documentation:",
     "crumbs": [
       "Pond Trade (I): basics and cellular automata",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Getting started with NetLogo: Creating a \"pond\" terrain</span>"
