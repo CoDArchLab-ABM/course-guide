@@ -79,13 +79,21 @@ The Pond Trade model requires a "geography" of discrete spatial units. For simpl
 To pace the complexity of the modelling process, we organise the further development of the Pond Trade conceptual model in two tiers. The first tier will aim to cover only some aspects of our initial formulation:
 
 *Mechanisms*:
+
 - ↑ global level of productivity → ↑ settlement production  
+
 - ↑ number of settlements → ↓ distance between settlements
+
 - ↑ settlement size → ↑ settlement production → ↑ trade flow from/to settlement → ↑ settlement size  
+
 - ↑ settlement size → ↑ number of traders based in settlement → ↑ trade flow from/to settlement → ↑ settlement size  
+
 - ↑ trade attractiveness of route A to B → ↑ trade flow A to B  
+
 - ↑ distance A to B → ↓ trade attractiveness A to B
+
 - ↑ size B → ↑trade attractiveness A to B
+
 - ↑ trade flow A to B → ↑ trade flow B to A  
 
 ![Pond Trade conceptual model at start (first tier)](assets/images/0_conceptAtStart_firstTier.png)  
@@ -102,7 +110,9 @@ To reach the full version of the Pond Trade model, we also need to address the a
 *Mechanisms*:  
 
 - ↑ global undirected variation in culture → ↑ or ↓ cultural similarity between A and B (cultural drift)  
+
 - ↑ trade flow A to B → ↑ cultural similarity A and B (cultural integration)  
+
 - ↑ global cultural permeability → ↑ cultural similarity between A and B, if A and B are trading (acceleration of cultural integration)  
 
 ![Pond Trade conceptual model at start (second tier)](assets/images/0_conceptAtStart_secondTier.png)  
